@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technician Pending Approval - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --white:#fff;
+}
+
+body{
+  background:linear-gradient(135deg,var(--purple),var(--lilac));
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  animation:fadeIn .6s ease-in;
+}
+
+.container{
+  background:var(--white);
+  padding:30px;
+  border-radius:18px;
+  max-width:420px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+
+.icon{
+  width:80px;
+  height:80px;
+  margin:auto;
+  border-radius:50%;
+  background:var(--lilac);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  color:var(--deep-purple);
+}
+
+h2{
+  margin-top:15px;
+  color:var(--deep-purple);
+}
+
+p{
+  margin-top:10px;
+  font-size:0.9rem;
+  color:#555;
+}
+
+.status{
+  margin-top:20px;
+  text-align:left;
+  background:#fafafa;
+  padding:15px;
+  border-radius:12px;
+}
+
+.status div{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+  font-size:0.85rem;
+}
+
+.status i{
+  color:var(--purple);
+}
+
+.btn{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.refresh{
+  background:linear-gradient(135deg,var(--purple),var(--lilac));
+  color:white;
+}
+
+.logout{
+  background:#eee;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="icon">
+    <i class="fas fa-hourglass-half"></i>
+  </div>
+
+  <h2>Verification in Progress</h2>
+
+  <p>
+    Your account is currently under review.  
+    You’ll be able to access your dashboard once verification is complete.
+  </p>
+
+  <div class="status">
+    <div><i class="fas fa-id-card"></i> Business License Review</div>
+    <div><i class="fas fa-user-check"></i> Identity Verification</div>
+    <div><i class="fas fa-tools"></i> Skill Assessment</div>
+  </div>
+
+  <p style="margin-top:10px;font-size:0.8rem;">
+    This usually takes a few hours to 24 hours.
+  </p>
+
+  <!-- REFRESH BUTTON -->
+  <button class="btn refresh" onclick="checkApproval()">
+    Refresh Status
+  </button>
+
+  <!-- LOGOUT BUTTON -->
+  <button class="btn logout" onclick="logout()">
+    Logout
+  </button>
+
+</div>
+
+<script>
+function checkApproval(){
+  const status = localStorage.getItem('technicianStatus');
+
+  if(status === "approved"){
+    window.location.href = "technician-dashboard.html";
+  } else {
+    alert("Your account is still under review. Redirecting for development purposes...");
+    
+    // DEV OVERRIDE: still redirect
+    window.location.href = "dashboard-technician.html";
+  }
+}
+
+function logout(){
+  window.location.href = "login-technician.html";
+}
+</script>
+
+</body>
+</html>

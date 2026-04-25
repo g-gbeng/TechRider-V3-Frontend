@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Available Jobs - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.wrapper{
+max-width:900px;
+margin:auto;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.back-btn{
+text-decoration:none;
+background:white;
+padding:12px 18px;
+border-radius:12px;
+color:var(--purple);
+font-weight:600;
+}
+
+h2{
+color:var(--deep-purple);
+}
+
+.job-card{
+background:white;
+padding:25px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.job-card h3{
+margin-bottom:15px;
+color:var(--deep-purple);
+}
+
+.job-info{
+margin-bottom:10px;
+font-size:.95rem;
+color:#444;
+}
+
+.job-info i{
+color:var(--purple);
+margin-right:8px;
+}
+
+.job-type{
+display:inline-block;
+margin-bottom:15px;
+padding:8px 14px;
+border-radius:20px;
+font-size:.8rem;
+font-weight:600;
+background:#f3e8ff;
+color:var(--purple);
+}
+
+.actions{
+display:flex;
+gap:15px;
+margin-top:20px;
+flex-wrap:wrap;
+}
+
+button{
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.accept{
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+}
+
+.reject{
+background:#eee;
+}
+
+.empty{
+text-align:center;
+padding:40px;
+background:white;
+border-radius:18px;
+display:none;
+}
+
+@media(max-width:768px){
+
+.actions{
+flex-direction:column;
+}
+
+button{
+width:100%;
+}
+
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<div class="topbar">
+
+<a href="dashboard-rider.html"
+class="back-btn">
+← Back to Dashboard
+</a>
+
+<h2>
+Available Jobs
+</h2>
+
+</div>
+
+
+<!-- JOB 1 -->
+<div class="job-card">
+
+<h3>Assigned Job</h3>
+
+<div class="job-type">
+Pickup
+</div>
+
+<div class="job-info">
+<i class="fas fa-location-dot"></i>
+Address:
+12 Admiralty Way, Lekki
+</div>
+
+<div class="job-info">
+<i class="fas fa-user"></i>
+Customer:
+Tobi Zuuye
+</div>
+
+<div class="job-info">
+<i class="fas fa-phone"></i>
+Phone:
+08012345678
+</div>
+
+<div class="job-info">
+<i class="fas fa-money-bill-wave"></i>
+Fee:
+₦3,500
+</div>
+
+<div class="actions">
+
+<button
+class="accept"
+onclick="acceptJob(
+this,
+'Pickup',
+'Tobi Zuuye',
+'12 Admiralty Way, Lekki',
+'08012345678',
+3500
+)">
+Accept
+</button>
+
+<button
+class="reject"
+onclick="rejectJob(this)">
+Reject
+</button>
+
+</div>
+
+</div>
+
+
+<!-- JOB 2 -->
+<div class="job-card">
+
+<h3>Assigned Job</h3>
+
+<div class="job-type">
+Delivery
+</div>
+
+<div class="job-info">
+<i class="fas fa-location-dot"></i>
+Address:
+20 Yaba Road, Lagos
+</div>
+
+<div class="job-info">
+<i class="fas fa-user"></i>
+Customer:
+Aisha Lawal
+</div>
+
+<div class="job-info">
+<i class="fas fa-phone"></i>
+Phone:
+08087654321
+</div>
+
+<div class="job-info">
+<i class="fas fa-money-bill-wave"></i>
+Fee:
+₦2,800
+</div>
+
+<div class="actions">
+
+<button
+class="accept"
+onclick="acceptJob(
+this,
+'Delivery',
+'Aisha Lawal',
+'20 Yaba Road, Lagos',
+'08087654321',
+2800
+)">
+Accept
+</button>
+
+<button
+class="reject"
+onclick="rejectJob(this)">
+Reject
+</button>
+
+</div>
+
+</div>
+
+
+<div
+class="empty"
+id="emptyState">
+No jobs available.
+</div>
+
+</div>
+
+
+<script>
+
+function rejectJob(btn){
+
+btn
+.closest('.job-card')
+.remove();
+
+checkEmpty();
+
+}
+
+function acceptJob(
+btn,
+jobType,
+customer,
+address,
+phone,
+fee
+){
+
+let activeJobs=
+JSON.parse(
+localStorage.getItem(
+"activeJobs"
+)
+)||[];
+
+activeJobs.push({
+jobType,
+customer,
+address,
+phone,
+fee,
+status:"In Progress"
+});
+
+localStorage.setItem(
+"activeJobs",
+JSON.stringify(activeJobs)
+);
+
+btn
+.closest('.job-card')
+.remove();
+
+checkEmpty();
+
+alert(
+"Job accepted and moved to Active Jobs."
+);
+
+}
+
+function checkEmpty(){
+
+let jobs=
+document.querySelectorAll(
+'.job-card'
+);
+
+if(jobs.length===0){
+
+document
+.getElementById(
+'emptyState'
+)
+.style.display='block';
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

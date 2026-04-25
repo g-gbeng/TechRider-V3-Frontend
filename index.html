@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --light-purple: #f3e8ff;
+      --lilac: #e0aaff;
+      --lilac-dark: #c77dff;
+      --purple: #5a189a;
+      --deep-purple: #240046;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--light-purple);
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* LEFT SIDE */
+    .left {
+      flex: 1;
+      background: linear-gradient(rgba(90, 24, 154, 0.65), rgba(36, 0, 70, 0.85)),
+        url('https://images.unsplash.com/photo-1558980664-10ea7d9e5c8b?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: white;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .left h1 {
+      font-size: 2.4rem;
+      text-align: center;
+      max-width: 400px;
+      line-height: 1.3;
+    }
+
+    /* RIGHT SIDE */
+    .right {
+      flex: 1;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    /* BRAND + WELCOME */
+    .welcome {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .welcome-text h2 {
+      font-size: 1.9rem;
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .welcome-text p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* OPTIONS */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 18px;
+      border-radius: 15px;
+      background: var(--lilac);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      background: var(--lilac-dark);
+    }
+
+    .option-card i {
+      font-size: 1.4rem;
+      color: var(--deep-purple);
+      min-width: 25px;
+    }
+
+    .option-text h3 {
+      color: var(--deep-purple);
+      font-size: 1.05rem;
+    }
+
+    .option-text p {
+      font-size: 0.85rem;
+      color: #4a4a4a;
+    }
+
+    /* ANIMATION */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TABLET */
+    @media (max-width: 900px) {
+      .right {
+        padding: 40px;
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left {
+        height: 35vh;
+        padding: 20px;
+      }
+
+      .left h1 {
+        font-size: 1.6rem;
+      }
+
+      .right {
+        height: auto;
+        padding: 25px 20px 35px;
+      }
+
+      .welcome {
+        align-items: flex-start;
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+      }
+
+      .welcome-text h2 {
+        font-size: 1.4rem;
+      }
+
+      .welcome-text p {
+        font-size: 0.85rem;
+      }
+
+      .option-card {
+        padding: 15px;
+      }
+
+      .option-text h3 {
+        font-size: 1rem;
+      }
+
+      .option-text p {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* SMALL PHONES */
+    @media (max-width: 400px) {
+      .left {
+        height: 30vh;
+      }
+
+      .left h1 {
+        font-size: 1.3rem;
+      }
+
+      .welcome {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .brand-icon {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="left">
+      <h1>Seamless Rides & Smart Repairs</h1>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+
+      <div class="welcome">
+        <div class="brand-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div class="welcome-text">
+          <h2>Welcome to TechRider</h2>
+          <p>Select how you want to use the platform</p>
+        </div>
+      </div>
+
+      <div class="options">
+
+        <a href="signup-customer.html" class="option-card" id="customerOption">
+          <i class="fas fa-user"></i>
+          <div class="option-text">
+            <h3>Customer</h3>
+            <p>Book rides and request technicians easily</p>
+          </div>
+        </a>
+
+        <a href="signup-technician.html" class="option-card" id="technicianOption">
+          <i class="fas fa-tools"></i>
+          <div class="option-text">
+            <h3>Technician</h3>
+            <p>Offer repair services and manage jobs</p>
+          </div>
+        </a>
+
+        <a href="signup-rider.html" class="option-card" id="riderOption">
+          <i class="fas fa-motorcycle"></i>
+          <div class="option-text">
+            <h3>Rider</h3>
+            <p>Accept ride requests and earn</p>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

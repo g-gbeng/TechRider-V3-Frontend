@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+}
+
+body{
+  background:var(--gray);
+  padding:20px;
+  animation:fadeIn .6s ease-in;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.header h2{
+  color:var(--deep-purple);
+}
+
+.back-btn{
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+
+.card{
+  background:var(--white);
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+  line-height:1.7;
+}
+
+.card h3{
+  color:var(--deep-purple);
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+.card p{
+  color:#555;
+  font-size:.95rem;
+}
+
+@media(max-width:768px){
+  body{padding:15px;}
+  .back-btn{width:100%;text-align:center;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h2>Privacy Policy</h2>
+    <a href="signup-customer.html" class="back-btn">← Back</a>
+  </div>
+
+  <div class="card">
+
+    <p>
+      At TechRider, your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our platform.
+    </p>
+
+    <h3>Information We Collect</h3>
+    <p>
+      We may collect personal information such as your name, email address, phone number, and service requests to improve your experience.
+    </p>
+
+    <h3>How We Use Your Information</h3>
+    <p>
+      Your data is used to connect you with technicians, process requests, and improve service delivery across the platform.
+    </p>
+
+    <h3>Data Protection</h3>
+    <p>
+      We implement security measures to protect your personal information from unauthorized access or disclosure.
+    </p>
+
+    <h3>Third-Party Sharing</h3>
+    <p>
+      We do not sell your personal data. Information may only be shared with technicians to fulfill your service requests.
+    </p>
+
+    <h3>Updates</h3>
+    <p>
+      This policy may be updated periodically. Continued use of TechRider means you accept any changes.
+    </p>
+
+  </div>
+
+</div>
+
+</body>
+</html>

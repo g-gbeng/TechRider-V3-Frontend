@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechRider - Technician Signup</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    :root{
+      --purple:#5a189a;
+      --deep-purple:#240046;
+      --lilac:#e0aaff;
+      --white:#fff;
+    }
+
+    body{
+      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:15px;
+      animation:fadeIn 0.6s ease-in;
+    }
+
+    .container{
+      width:100%;
+      max-width:420px;
+      background:var(--white);
+      padding:25px;
+      border-radius:16px;
+      box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:15px;
+    }
+
+    .logo{
+      width:60px;
+      height:60px;
+      background:var(--lilac);
+      color:var(--deep-purple);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      margin:auto;
+      font-size:1.4rem;
+    }
+
+    .header h2{
+      margin-top:10px;
+      color:var(--deep-purple);
+    }
+
+    .top-link{
+      text-align:center;
+      font-size:0.85rem;
+      margin-bottom:15px;
+    }
+
+    .top-link a{
+      color:var(--purple);
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .form{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .group{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    label{
+      font-size:0.85rem;
+      color:#444;
+    }
+
+    input, select{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      outline:none;
+      font-size:0.9rem;
+    }
+
+    input[type="file"]{
+      padding:8px;
+    }
+
+    .password-group{
+      position:relative;
+    }
+
+    .toggle{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      cursor:pointer;
+      color:#777;
+    }
+
+    .btn{
+      margin-top:10px;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .links{
+      text-align:center;
+      font-size:0.85rem;
+      margin-top:10px;
+    }
+
+    .links a{
+      color:var(--purple);
+      text-decoration:none;
+      margin:0 5px;
+      font-weight:500;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">
+      <i class="fas fa-tools"></i>
+    </div>
+    <h2>Technician Signup</h2>
+     <p>Create your TechRider technician account</p>
+  </div>
+
+  <div class="top-link">
+    Already have an account?
+    <a href="login-technician.html">Log in</a>
+  </div>
+
+  <form class="form" id="signupForm">
+
+    <div class="group">
+      <label>Full Name</label>
+      <input type="text" required>
+    </div>
+
+    <div class="group">
+      <label>Email Address</label>
+      <input type="email" required>
+    </div>
+
+    <div class="group">
+      <label>Phone Number</label>
+      <input type="tel" required>
+    </div>
+
+    <div class="group">
+      <label>Address</label>
+      <input type="text" required>
+    </div>
+
+    <div class="group">
+      <label>Specialization</label>
+      <select required>
+        <option value="">Select specialization</option>
+        <option>Phone Repair</option>
+        <option>Laptop Repair</option>
+      </select>
+    </div>
+
+    <div class="group">
+      <label>Years of Experience</label>
+      <input type="number" min="0" placeholder="e.g. 3">
+    </div>
+
+    <div class="group">
+      <label>Upload Business License</label>
+      <input type="file" required>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="group password-group">
+      <label>Password</label>
+      <input 
+        type="password" 
+        id="password" 
+        required
+        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+        title="Must be at least 8 characters, include uppercase, number and special character"
+      >
+      <i class="fas fa-eye toggle" onclick="togglePassword(this)"></i>
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="group password-group">
+      <label>Confirm Password</label>
+      <input type="password" id="confirmPassword" required>
+      <i class="fas fa-eye toggle" onclick="togglePassword(this)"></i>
+    </div>
+
+    <button class="btn" type="submit">Create Technician Account</button>
+
+    <div class="links">
+      <a href="terms-of-service-technician.html">Terms of Service</a> |
+      <a href="privacy-policy-technician.html">Privacy Policy</a>
+    </div>
+
+  </form>
+
+</div>
+
+<script>
+  // SAME CENTRALIZED TOGGLE AS CUSTOMER PAGE
+  function togglePassword(icon){
+    const input = icon.previousElementSibling;
+
+    if(input.type === "password"){
+      input.type = "text";
+      icon.classList.replace("fa-eye","fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.replace("fa-eye-slash","fa-eye");
+    }
+  }
+
+  // VALIDATION + REDIRECT
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    if(password.value !== confirmPassword.value){
+      e.preventDefault();
+      alert("Passwords do not match");
+      return;
+    }
+
+    e.preventDefault();
+    window.location.href = "login-technician.html";
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pending Approvals - TechRider Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .45s ease;
+}
+
+.wrapper{
+max-width:1200px;
+margin:auto;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.back-btn{
+text-decoration:none;
+background:white;
+padding:12px 18px;
+border-radius:12px;
+color:var(--purple);
+font-weight:600;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:22px;
+border-radius:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.metric{
+font-size:2rem;
+font-weight:700;
+color:var(--purple);
+margin-top:8px;
+}
+
+.toolbar{
+background:white;
+padding:18px;
+border-radius:18px;
+margin-bottom:20px;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+input,select{
+padding:12px 14px;
+border:none;
+background:#f6f6f6;
+border-radius:10px;
+}
+
+.table-wrap{
+background:white;
+padding:24px;
+border-radius:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.approval-row{
+display:grid;
+grid-template-columns:1.2fr .8fr .9fr 1.1fr 1.4fr;
+gap:14px;
+align-items:center;
+padding:18px 0;
+border-bottom:1px solid #eee;
+}
+
+.approval-row:last-child{border-bottom:none}
+
+.badge{
+display:inline-block;
+padding:8px 12px;
+border-radius:20px;
+background:#f3e8ff;
+color:var(--purple);
+font-size:.8rem;
+font-weight:600;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.btn{
+border:none;
+padding:10px 14px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+.approve{
+background:linear-gradient(135deg,var(--purple),var(--lilac));
+color:white;
+}
+
+.reject{
+background:#eee;
+}
+
+.review{
+background:#f3e8ff;
+color:var(--purple);
+}
+
+.empty{
+display:none;
+padding:30px;
+text-align:center;
+color:#666;
+}
+
+@media(max-width:950px){
+.approval-row{
+grid-template-columns:1fr;
+background:#fafafa;
+padding:16px;
+border-radius:14px;
+margin-bottom:12px;
+border-bottom:none;
+}
+.stats{
+grid-template-columns:1fr;
+}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<div class="topbar">
+<a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+<h2>Pending Approvals</h2>
+</div>
+
+<div class="stats">
+<div class="card">
+<h4>Pending Technicians</h4>
+<div class="metric" id="techMetric">0</div>
+</div>
+<div class="card">
+<h4>Pending Riders</h4>
+<div class="metric" id="riderMetric">0</div>
+</div>
+<div class="card">
+<h4>Total Queue</h4>
+<div class="metric" id="queueMetric">0</div>
+</div>
+</div>
+
+<div class="toolbar">
+<input id="searchInput" placeholder="Search applicant name">
+<select id="filterType">
+<option value="all">All Types</option>
+<option value="Technician">Technicians</option>
+<option value="Rider">Riders</option>
+</select>
+<button class="btn review" onclick="seedDemoData()">Reload Demo Queue</button>
+</div>
+
+<div class="table-wrap">
+<div id="approvalList"></div>
+<div class="empty" id="emptyState">No pending approvals remaining.</div>
+</div>
+
+</div>
+
+<script>
+/* initialize shared dashboard counts */
+if(!localStorage.getItem('pendingTechCount')){
+localStorage.setItem('pendingTechCount','2');
+}
+if(!localStorage.getItem('pendingRiderCount')){
+localStorage.setItem('pendingRiderCount','2');
+}
+
+function defaultQueue(){
+return [
+{id:1,name:'Chinedu Okafor',type:'Technician',docs:'Business License + ID',status:'Awaiting Review'},
+{id:2,name:'Musa Bello',type:'Rider',docs:'License + Facial Image',status:'Awaiting Review'},
+{id:3,name:'Amina Yusuf',type:'Technician',docs:'Business License + ID',status:'Awaiting Review'},
+{id:4,name:'Tunde Ade',type:'Rider',docs:'License + Facial Image',status:'Awaiting Review'}
+];
+}
+
+if(!localStorage.getItem('pendingApprovalsQueue')){
+localStorage.setItem('pendingApprovalsQueue',JSON.stringify(defaultQueue()));
+}
+
+function getQueue(){
+return JSON.parse(localStorage.getItem('pendingApprovalsQueue'))||[];
+}
+
+function saveQueue(q){
+localStorage.setItem('pendingApprovalsQueue',JSON.stringify(q));
+}
+
+function syncMetrics(){
+let tech=parseInt(localStorage.getItem('pendingTechCount'))||0;
+let rider=parseInt(localStorage.getItem('pendingRiderCount'))||0;
+let queue=getQueue().length;
+
+document.getElementById('techMetric').innerText=tech;
+document.getElementById('riderMetric').innerText=rider;
+document.getElementById('queueMetric').innerText=queue;
+}
+
+function decrementType(type){
+if(type==='Technician'){
+let v=Math.max(0,(parseInt(localStorage.getItem('pendingTechCount'))||0)-1);
+localStorage.setItem('pendingTechCount',v);
+}
+if(type==='Rider'){
+let v=Math.max(0,(parseInt(localStorage.getItem('pendingRiderCount'))||0)-1);
+localStorage.setItem('pendingRiderCount',v);
+}
+}
+
+function approveApplicant(id){
+let q=getQueue();
+let item=q.find(x=>x.id===id);
+if(!item) return;
+decrementType(item.type);
+q=q.filter(x=>x.id!==id);
+saveQueue(q);
+renderQueue();
+alert(item.type+' approved. Dashboard counts updated.');
+}
+
+function rejectApplicant(id){
+let q=getQueue();
+let item=q.find(x=>x.id===id);
+if(!item) return;
+decrementType(item.type);
+q=q.filter(x=>x.id!==id);
+saveQueue(q);
+renderQueue();
+alert(item.type+' rejected. Dashboard counts updated.');
+}
+
+function renderQueue(){
+let list=document.getElementById('approvalList');
+let empty=document.getElementById('emptyState');
+let q=getQueue();
+let term=(document.getElementById('searchInput').value||'').toLowerCase();
+let filter=document.getElementById('filterType').value;
+
+q=q.filter(item=>{
+let okName=item.name.toLowerCase().includes(term);
+let okType=filter==='all'||item.type===filter;
+return okName&&okType;
+});
+
+list.innerHTML='';
+
+if(q.length===0){
+empty.style.display='block';
+syncMetrics();
+return;
+}
+empty.style.display='none';
+
+q.forEach(item=>{
+list.innerHTML += `
+<div class="approval-row">
+<div>
+<strong>${item.name}</strong><br>
+<small>${item.docs}</small>
+</div>
+<div><span class="badge">${item.type}</span></div>
+<div>${item.status}</div>
+<div><button class="btn review">Review Docs</button></div>
+<div class="actions">
+<button class="btn approve" onclick="approveApplicant(${item.id})">Approve</button>
+<button class="btn reject" onclick="rejectApplicant(${item.id})">Reject</button>
+</div>
+</div>`;
+});
+
+syncMetrics();
+}
+
+function seedDemoData(){
+localStorage.setItem('pendingTechCount','2');
+localStorage.setItem('pendingRiderCount','2');
+saveQueue(defaultQueue());
+renderQueue();
+}
+
+document.getElementById('searchInput').addEventListener('input',renderQueue);
+document.getElementById('filterType').addEventListener('change',renderQueue);
+
+renderQueue();
+</script>
+</body>
+</html>
+

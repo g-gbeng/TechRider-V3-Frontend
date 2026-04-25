@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Available Jobs - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+}
+
+body{
+  background:var(--gray);
+  padding:20px;
+  animation:fadeIn .5s ease-in;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.header h2{
+  color:var(--deep-purple);
+}
+
+.back{
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:var(--white);
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+}
+
+/* TOP */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.issue{
+  font-weight:600;
+  color:var(--deep-purple);
+}
+
+.badge{
+  background:var(--lilac);
+  color:var(--deep-purple);
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:.75rem;
+}
+
+/* DETAILS */
+.details{
+  margin-top:10px;
+  font-size:.85rem;
+  color:#444;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+/* DESCRIPTION BOX */
+.desc{
+  margin-top:10px;
+  padding:10px;
+  background:#fafafa;
+  border-left:3px solid var(--purple);
+  font-size:.85rem;
+  color:#333;
+  border-radius:8px;
+}
+
+/* ACTIONS */
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.btn{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.accept{
+  background:linear-gradient(135deg,var(--purple),var(--lilac));
+  color:white;
+}
+
+.reject{
+  background:#eee;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h2>Available Repair Jobs</h2>
+    <a href="dashboard-technician.html" class="back">← Dashboard</a>
+  </div>
+
+  <div class="grid">
+
+    <!-- JOB 1 -->
+    <div class="card">
+      <div class="top">
+        <div class="issue">iPhone 13 Screen Issue</div>
+        <div class="badge">Urgent</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> Customer: Alhaji Maleek</div>
+        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
+        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
+      </div>
+
+      <div class="desc">
+        Screen is completely unresponsive after a fall. 
+        Touch works intermittently but display is flickering.
+      </div>
+
+      <div class="actions">
+        <button class="btn accept">Accept</button>
+        <button class="btn reject">Reject</button>
+      </div>
+    </div>
+
+    <!-- JOB 2 -->
+    <div class="card">
+      <div class="top">
+        <div class="issue">Tecno Spark 10 Battery Issue</div>
+        <div class="badge">Normal</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> Customer: Anthony Peters</div>
+        <div><i class="fas fa-mobile-alt"></i> Device: Tecno Spark 10</div>
+        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
+      </div>
+
+      <div class="desc">
+        Phone drains from 100% to 20% within 2 hours. 
+        Heating observed during charging.
+      </div>
+
+      <div class="actions">
+        <button class="btn accept">Accept</button>
+        <button class="btn reject">Reject</button>
+      </div>
+    </div>
+
+    <!-- JOB 2 -->
+    <div class="card">
+      <div class="top">
+        <div class="issue">Tecno Spark 10 Battery Issue</div>
+        <div class="badge">Normal</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> Customer: Frank Samuel</div>
+        <div><i class="fas fa-mobile-alt"></i> Device: Tecno Spark 10</div>
+        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
+      </div>
+
+      <div class="desc">
+        Phone drains from 100% to 20% within 2 hours. 
+        Heating observed during charging.
+      </div>
+
+      <div class="actions">
+        <button class="btn accept">Accept</button>
+        <button class="btn reject">Reject</button>
+      </div>
+    </div>
+
+    <!-- JOB 1 -->
+    <div class="card">
+      <div class="top">
+        <div class="issue">iPhone 13 Screen Issue</div>
+        <div class="badge">Urgent</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> Customer: Stephen Afolabi</div>
+        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
+        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
+      </div>
+
+      <div class="desc">
+        Screen is completely unresponsive after a fall. 
+        Touch works intermittently but display is flickering.
+      </div>
+
+      <div class="actions">
+        <button class="btn accept">Accept</button>
+        <button class="btn reject">Reject</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technician Notifications - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+}
+
+body{
+  background:var(--gray);
+  padding:20px;
+  animation:fadeIn .5s ease-in;
+}
+
+.container{
+  max-width:800px;
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.header h2{
+  color:var(--deep-purple);
+}
+
+.back{
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+
+/* LIST */
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:var(--white);
+  padding:15px;
+  border-radius:14px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+}
+
+/* UNREAD */
+.unread{
+  background:#f9f5ff;
+}
+
+/* ICON */
+.icon{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  flex-shrink:0;
+}
+
+/* TYPES */
+.job{background:var(--purple);}
+.admin{background:#3b82f6;}
+.alert{background:#f59e0b;}
+
+/* CONTENT */
+.content{flex:1;}
+
+.title{
+  font-weight:600;
+  font-size:.9rem;
+  color:var(--deep-purple);
+}
+
+.message{
+  font-size:.8rem;
+  color:#555;
+  margin-top:3px;
+}
+
+.time{
+  font-size:.7rem;
+  color:#999;
+  margin-top:5px;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  margin-top:50px;
+  color:#777;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .back{width:100%;text-align:center;margin-top:10px;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h2>Notifications</h2>
+    <a href="dashboard-technician.html" class="back">← Dashboard</a>
+  </div>
+
+  <div class="list">
+
+    <!-- JOB ASSIGNED -->
+    <div class="card unread">
+      <div class="icon job">
+        <i class="fas fa-tools"></i>
+      </div>
+      <div class="content">
+        <div class="title">New Repair Job Assigned</div>
+        <div class="message">
+          A customer has selected you for an iPhone 13 screen repair.
+        </div>
+        <div class="time">2 mins ago</div>
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div class="card">
+      <div class="icon admin">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div class="content">
+        <div class="title">Account Approved</div>
+        <div class="message">
+          Your technician account has been successfully verified.
+        </div>
+        <div class="time">1 hour ago</div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div class="card unread">
+      <div class="icon alert">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="content">
+        <div class="title">Incomplete Profile</div>
+        <div class="message">
+          Please update your profile details to continue receiving repair requests.
+        </div>
+        <div class="time">Yesterday</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty" style="display:none;">
+    <i class="fas fa-bell-slash" style="font-size:2rem;margin-bottom:10px;"></i>
+    <p>No notifications yet</p>
+  </div>
+
+</div>
+
+</body>
+</html>

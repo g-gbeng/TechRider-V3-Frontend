@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Rider Job History</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.wrapper{
+max-width:900px;
+margin:auto;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.back-btn{
+text-decoration:none;
+background:white;
+padding:12px 18px;
+border-radius:12px;
+color:var(--purple);
+font-weight:600;
+}
+
+h2{
+color:var(--deep-purple);
+}
+
+/* FILTERS */
+.controls{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+input,
+select{
+padding:12px;
+border:none;
+border-radius:10px;
+background:white;
+}
+
+.history-card{
+background:white;
+padding:25px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.job-type{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:#f3e8ff;
+color:var(--purple);
+font-size:.8rem;
+font-weight:600;
+margin-bottom:15px;
+}
+
+.status{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:#eee;
+margin-left:10px;
+font-size:.8rem;
+}
+
+.job-info{
+margin-bottom:10px;
+color:#444;
+}
+
+.job-info i{
+color:var(--purple);
+margin-right:8px;
+}
+
+.empty{
+display:none;
+text-align:center;
+background:white;
+padding:40px;
+border-radius:18px;
+}
+
+@media(max-width:768px){
+
+.controls{
+flex-direction:column;
+}
+
+input,
+select{
+width:100%;
+}
+
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<div class="topbar">
+
+<a href="dashboard-rider.html"
+class="back-btn">
+← Back to Dashboard
+
+<button onclick="resetData()">
+Reset Test Data
+</button>
+</a>
+
+<h2>Job History</h2>
+
+</div>
+
+
+<!-- FILTERS -->
+<div class="controls">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search customer name"
+onkeyup="renderHistory()">
+
+<select
+id="sortSelect"
+onchange="renderHistory()">
+
+<option value="recent">
+Most Recent
+</option>
+
+<option value="oldest">
+Oldest First
+</option>
+
+</select>
+
+</div>
+
+
+<div id="historyContainer"></div>
+
+<div
+id="emptyState"
+class="empty">
+No completed jobs found.
+</div>
+
+</div>
+
+
+<script>
+function resetData(){
+
+localStorage.removeItem("jobHistory");
+localStorage.removeItem("activeJobs");
+localStorage.removeItem("riderEarnings");
+
+location.reload();
+
+}
+let history=
+JSON.parse(
+localStorage.getItem(
+"jobHistory"
+)
+)||[];
+
+function renderHistory(){
+
+let container=
+document.getElementById(
+"historyContainer"
+);
+
+container.innerHTML="";
+
+let keyword=
+document
+.getElementById(
+"searchInput"
+)
+.value
+.toLowerCase();
+
+let sort=
+document
+.getElementById(
+"sortSelect"
+)
+.value;
+
+
+/* FILTER BY CUSTOMER */
+
+let filtered=
+history.filter(job=>
+
+job.customer
+.toLowerCase()
+.includes(keyword)
+
+);
+
+
+/* SORT */
+
+filtered.sort((a,b)=>{
+
+if(sort==="recent"){
+
+return(
+b.completedTimestamp ||0
+)-(
+a.completedTimestamp ||0
+);
+
+}
+
+return(
+a.completedTimestamp ||0
+)-(
+b.completedTimestamp ||0
+);
+
+});
+
+
+if(filtered.length===0){
+
+document
+.getElementById(
+"emptyState"
+)
+.style.display="block";
+
+return;
+
+}
+
+document
+.getElementById(
+"emptyState"
+)
+.style.display="none";
+
+
+filtered.forEach(job=>{
+
+container.innerHTML+=`
+
+<div class="history-card">
+
+<div class="job-type">
+${job.jobType}
+</div>
+
+<div class="status">
+Completed
+</div>
+
+<div class="job-info">
+<i class="fas fa-user"></i>
+Customer:
+${job.customer}
+</div>
+
+<div class="job-info">
+<i class="fas fa-phone"></i>
+Phone:
+${job.phone}
+</div>
+
+<div class="job-info">
+<i class="fas fa-location-dot"></i>
+Address:
+${job.address}
+</div>
+
+<div class="job-info">
+<i class="fas fa-money-bill-wave"></i>
+Fee:
+₦${job.fee}
+</div>
+
+<div class="job-info">
+<i class="fas fa-clock"></i>
+Completed:
+${job.completedAt || 'Recently'}
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+renderHistory();
+
+</script>
+
+</body>
+</html>

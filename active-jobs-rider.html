@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Active Jobs - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.wrapper{
+max-width:900px;
+margin:auto;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.back-btn{
+text-decoration:none;
+background:white;
+padding:12px 18px;
+border-radius:12px;
+color:var(--purple);
+font-weight:600;
+}
+
+h2{
+color:var(--deep-purple);
+}
+
+.job-card{
+background:white;
+padding:25px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.job-type{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:#f3e8ff;
+color:var(--purple);
+font-size:.8rem;
+font-weight:600;
+margin-bottom:15px;
+}
+
+.status{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:#eee;
+margin-left:10px;
+font-size:.8rem;
+}
+
+.job-info{
+margin-bottom:10px;
+color:#444;
+}
+
+.job-info i{
+color:var(--purple);
+margin-right:8px;
+}
+
+.complete-btn{
+margin-top:18px;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.empty{
+display:none;
+text-align:center;
+background:white;
+padding:40px;
+border-radius:18px;
+}
+
+@media(max-width:768px){
+
+.complete-btn{
+width:100%;
+}
+
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<div class="topbar">
+
+<a href="dashboard-rider.html"
+class="back-btn">
+← Back to Dashboard
+</a>
+
+<h2>
+Active Jobs
+</h2>
+
+</div>
+
+<div id="jobsContainer"></div>
+
+<div
+id="emptyState"
+class="empty">
+
+No active jobs.
+
+</div>
+
+</div>
+
+
+<script>
+
+let activeJobs=
+JSON.parse(
+localStorage.getItem(
+"activeJobs"
+)
+)||[];
+
+let container=
+document.getElementById(
+"jobsContainer"
+);
+
+function renderJobs(){
+
+container.innerHTML="";
+
+if(activeJobs.length===0){
+
+document
+.getElementById(
+"emptyState"
+)
+.style.display="block";
+
+return;
+
+}
+
+document
+.getElementById(
+"emptyState"
+)
+.style.display="none";
+
+
+activeJobs.forEach(
+(job,index)=>{
+
+container.innerHTML+=`
+
+<div class="job-card">
+
+<div class="job-type">
+${job.jobType}
+</div>
+
+<div class="status">
+In Progress
+</div>
+
+<div class="job-info">
+<i class="fas fa-user"></i>
+Customer:
+${job.customer}
+</div>
+
+<div class="job-info">
+<i class="fas fa-phone"></i>
+Phone:
+${job.phone}
+</div>
+
+<div class="job-info">
+<i class="fas fa-location-dot"></i>
+Address:
+${job.address}
+</div>
+
+<div class="job-info">
+<i class="fas fa-money-bill-wave"></i>
+Fee:
+₦${job.fee}
+</div>
+
+<button
+class="complete-btn"
+onclick="completeJob(${index})">
+
+Mark Completed
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+function completeJob(index){
+
+let completed=
+activeJobs[index];
+
+/* move to history */
+
+let history=
+JSON.parse(
+localStorage.getItem(
+"jobHistory"
+)
+)||[];
+
+history.push({
+...completed,
+completedAt:new Date().toLocaleString(),
+completedTimestamp: Date.now()
+});
+
+localStorage.setItem(
+"jobHistory",
+JSON.stringify(history)
+);
+
+/* update earnings */
+
+let earnings=
+Number(
+localStorage.getItem(
+"riderEarnings"
+)
+)||0;
+
+earnings+=completed.fee;
+
+localStorage.setItem(
+"riderEarnings",
+earnings
+);
+
+/* remove from active jobs */
+
+activeJobs.splice(
+index,
+1
+);
+
+localStorage.setItem(
+"activeJobs",
+JSON.stringify(activeJobs)
+);
+
+alert(
+"Job completed, moved to history, earnings updated."
+);
+
+renderJobs();
+
+}
+
+renderJobs();
+
+</script>
+
+</body>
+</html>

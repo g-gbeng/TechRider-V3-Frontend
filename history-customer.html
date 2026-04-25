@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider - History</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+    :root{
+      --purple:#5a189a;
+      --deep-purple:#240046;
+      --lilac:#e0aaff;
+      --gray:#f6f6f6;
+      --white:#fff;
+    }
+
+    body{
+      background:var(--gray);
+      padding:20px;
+      display:flex;
+      justify-content:center;
+      animation:fadeIn 0.6s ease-in;
+    }
+
+    .container{
+      width:100%;
+      max-width:1000px;
+    }
+
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .header h2{
+      color:var(--deep-purple);
+    }
+
+    .back-btn{
+      text-decoration:none;
+      background:var(--purple);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      font-size:0.85rem;
+    }
+
+    .history-list{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .history-card{
+      background:var(--white);
+      padding:20px;
+      border-radius:14px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.05);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .left{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+
+    .title{font-weight:600;color:var(--deep-purple);}
+    .meta{font-size:0.85rem;color:#666;}
+
+    .status{
+      padding:6px 10px;
+      border-radius:8px;
+      font-size:0.8rem;
+      font-weight:500;
+    }
+
+    .completed{background:#d4edda;color:#155724;}
+    .pending{background:#fff3cd;color:#856404;}
+    .cancelled{background:#f8d7da;color:#721c24;}
+
+    .empty{
+      text-align:center;
+      margin-top:40px;
+      color:#666;
+    }
+
+    .empty i{
+      font-size:2rem;
+      margin-bottom:10px;
+      color:var(--lilac);
+    }
+
+    @media(max-width:768px){
+      .history-card{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h2>Service History</h2>
+      <a href="dashboard-customer.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+
+    <div class="history-list" id="historyList">
+
+      <div class="history-card">
+        <div class="left">
+          <div class="title">Laptop Screen Repair</div>
+          <div class="meta">12 March 2026 • Ikeja</div>
+        </div>
+        <div class="status completed">Completed</div>
+      </div>
+
+      <div class="history-card">
+        <div class="left">
+          <div class="title">Phone Battery Replacement</div>
+          <div class="meta">2 March 2026 • Yaba</div>
+        </div>
+        <div class="status pending">Pending</div>
+      </div>
+
+      <div class="history-card">
+        <div class="left">
+          <div class="title">Keyboard Fix</div>
+          <div class="meta">20 February 2026 • Lekki</div>
+        </div>
+        <div class="status cancelled">Cancelled</div>
+      </div>
+
+    </div>
+
+    <div class="empty" id="emptyState" style="display:none;">
+      <i class="fas fa-tools"></i>
+      <p>No service history yet</p>
+    </div>
+
+  </div>
+
+  <script>
+    const historyList = document.getElementById('historyList');
+    const emptyState = document.getElementById('emptyState');
+
+    if(historyList.children.length === 0){
+      emptyState.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

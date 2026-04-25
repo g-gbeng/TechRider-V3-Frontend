@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Rider Profile - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.wrapper{
+max-width:900px;
+margin:auto;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.back-btn{
+text-decoration:none;
+background:white;
+padding:12px 18px;
+border-radius:12px;
+color:var(--purple);
+font-weight:600;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-weight:600;
+}
+
+.profile-card{
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+margin-bottom:20px;
+}
+
+h2{
+color:var(--deep-purple);
+margin-bottom:20px;
+}
+
+/* GRID LAYOUT */
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.group{
+display:flex;
+flex-direction:column;
+}
+
+label{
+margin-bottom:8px;
+font-weight:600;
+color:#444;
+}
+
+input,
+select{
+width:100%;
+padding:14px;
+border:none;
+background:#f6f6f6;
+border-radius:10px;
+}
+
+input[readonly]{
+background:#eee;
+}
+
+/* PASSWORD */
+.password-wrap{
+position:relative;
+}
+
+.password-wrap input{
+padding-right:48px;
+}
+
+.toggle-pass{
+position:absolute;
+right:16px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+color:#666;
+}
+
+/* VERIFY */
+.verify-box{
+padding:14px;
+border-radius:10px;
+background:#f3e8ff;
+color:var(--purple);
+font-weight:500;
+}
+
+/* BUTTON */
+.save-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(135deg,var(--purple),var(--lilac));
+color:white;
+margin-top:10px;
+}
+
+.section-title{
+margin:30px 0 20px;
+font-size:1.1rem;
+font-weight:600;
+color:var(--deep-purple);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.profile-card{
+padding:22px;
+}
+
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="topbar">
+
+<a href="dashboard-rider.html"
+class="back-btn">
+← Back to Dashboard
+</a>
+
+<div class="avatar">R</div>
+
+</div>
+
+<div class="profile-card">
+
+<h2>Rider Profile</h2>
+
+<!-- PROFILE GRID -->
+<div class="grid">
+
+<div class="group">
+<label>Full Name</label>
+<input type="text" value="Test Rider">
+</div>
+
+<div class="group">
+<label>Email Address</label>
+<input type="email" value="rider@email.com" readonly>
+</div>
+
+<div class="group">
+<label>Phone Number</label>
+<input type="text" value="08012345678" readonly>
+</div>
+
+<div class="group">
+<label>Address</label>
+<input type="text" value="Lekki, Lagos" readonly>
+</div>
+
+<div class="group">
+<label>Plate Number</label>
+<input type="text" value="ABC-123XY" readonly>
+</div>
+
+<div class="group">
+<label>Vehicle Type</label>
+<input type="text" value="Motorcycle" readonly>
+</div>
+
+</div>
+
+<div class="group" style="margin-top:18px;">
+<label>Driver’s License</label>
+<div class="verify-box">Verified Document Uploaded</div>
+</div>
+
+<div class="group">
+<label>Facial Verification</label>
+<div class="verify-box">Verified Image Uploaded</div>
+</div>
+
+<button class="save-btn">
+Update Name
+</button>
+
+
+<div class="section-title">
+Change Password
+</div>
+
+<div class="grid">
+
+<div class="group">
+<label>Current Password</label>
+
+<div class="password-wrap">
+<input id="currentPassword"
+type="password"
+placeholder="Enter current password">
+
+<i class="fas fa-eye toggle-pass"
+onclick="togglePassword('currentPassword',this)"></i>
+</div>
+</div>
+
+<div class="group">
+<label>New Password</label>
+
+<div class="password-wrap">
+<input id="newPassword"
+type="password"
+placeholder="Enter new password">
+
+<i class="fas fa-eye toggle-pass"
+onclick="togglePassword('newPassword',this)"></i>
+</div>
+</div>
+
+<div class="group">
+<label>Confirm New Password</label>
+
+<div class="password-wrap">
+<input id="confirmPassword"
+type="password"
+placeholder="Confirm new password">
+
+<i class="fas fa-eye toggle-pass"
+onclick="togglePassword('confirmPassword',this)"></i>
+</div>
+</div>
+
+</div>
+
+<button class="save-btn"
+onclick="validatePassword()">
+Update Password
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function togglePassword(id,icon){
+
+let field=document.getElementById(id);
+
+if(field.type==="password"){
+field.type="text";
+icon.classList.replace("fa-eye","fa-eye-slash");
+}else{
+field.type="password";
+icon.classList.replace("fa-eye-slash","fa-eye");
+}
+
+}
+
+function validatePassword(){
+
+let newPass=document.getElementById("newPassword").value;
+let confirmPass=document.getElementById("confirmPassword").value;
+
+let rule=/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+if(!rule.test(newPass)){
+alert("Password must be at least 8 characters, include 1 uppercase letter, 1 number and 1 special character.");
+return;
+}
+
+if(newPass!==confirmPass){
+alert("Passwords do not match.");
+return;
+}
+
+alert("Password updated successfully (frontend only).");
+
+}
+
+</script>
+
+</body>
+</html>

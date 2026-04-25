@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Active Jobs - TechRider</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+  --orange:#f59e0b;
+  --green:#16a34a;
+}
+
+body{
+  background:var(--gray);
+  padding:20px;
+  animation:fadeIn .5s ease-in;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.header h2{
+  color:var(--deep-purple);
+}
+
+.back{
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:var(--white);
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* TOP */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.title{
+  font-weight:600;
+  color:var(--deep-purple);
+}
+
+.badge{
+  font-size:.75rem;
+  padding:5px 10px;
+  border-radius:20px;
+  color:white;
+  background:var(--orange);
+}
+
+/* DETAILS */
+.details{
+  margin-top:10px;
+  font-size:.85rem;
+  color:#444;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+/* DESCRIPTION */
+.desc{
+  margin-top:10px;
+  padding:10px;
+  background:#fafafa;
+  border-left:3px solid var(--purple);
+  border-radius:8px;
+  font-size:.85rem;
+}
+
+/* ACTION */
+.actions{
+  margin-top:15px;
+}
+
+.btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(135deg,var(--purple),var(--lilac));
+  color:white;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h2>Active Jobs</h2>
+    <a href="dashboard-technician.html" class="back">← Dashboard</a>
+  </div>
+
+  <div class="grid">
+
+    <!-- JOB 1 -->
+    <div class="card">
+      <div class="top">
+        <div class="title">iPhone 13 Screen Replacement</div>
+        <div class="badge">In Progress</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> John D.</div>
+        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
+        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
+      </div>
+
+      <div class="desc">
+        Screen replacement currently ongoing.
+      </div>
+
+      <button class="btn" onclick="completeJob(this)">
+        Mark as Completed
+      </button>
+    </div>
+
+    <!-- JOB 2 -->
+    <div class="card">
+      <div class="top">
+        <div class="title">Laptop Overheating Fix</div>
+        <div class="badge">In Progress</div>
+      </div>
+
+      <div class="details">
+        <div><i class="fas fa-user"></i> Sarah K.</div>
+        <div><i class="fas fa-laptop"></i> Device: HP Pavilion</div>
+        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
+      </div>
+
+      <div class="desc">
+        Cleaning cooling system and replacing thermal paste.
+      </div>
+
+      <button class="btn" onclick="completeJob(this)">
+        Mark as Completed
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function completeJob(btn){
+  const card = btn.closest('.card');
+
+  // simulate moving to history
+  card.style.opacity = "0";
+  card.style.transform = "scale(0.95)";
+  card.style.transition = "0.3s";
+
+  setTimeout(()=>{
+    card.remove();
+    alert("Job moved to history");
+  },300);
+}
+</script>
+
+</body>
+</html>

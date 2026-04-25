@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider - Customer Signup</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --light-purple: #f3e8ff;
+      --lilac: #e0aaff;
+      --lilac-dark: #c77dff;
+      --purple: #5a189a;
+      --deep-purple: #240046;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--light-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 470px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(36, 0, 70, 0.15);
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    /* LOGIN LINK */
+    .top-link {
+      text-align: center;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .top-link a {
+      color: var(--purple);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-link a:hover {
+      text-decoration: underline;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .header .icon {
+      width: 55px;
+      height: 55px;
+      margin: 0 auto 10px;
+      border-radius: 14px;
+      background: var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+    }
+
+    .header h2 {
+      color: var(--purple);
+      font-size: 1.6rem;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--deep-purple);
+    }
+
+    input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(90, 24, 154, 0.15);
+    }
+
+    /* PASSWORD TOGGLE */
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 38px;
+      cursor: pointer;
+      color: #777;
+    }
+
+    .btn {
+      margin-top: 10px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--purple), var(--lilac-dark));
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    /* LINKS */
+    .bottom-links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .bottom-links a {
+      color: var(--purple);
+      text-decoration: none;
+    }
+
+    .bottom-links a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.78rem;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    
+
+    <div class="header">
+      <div class="icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <h2>Customer Signup</h2>
+      <p>Create your TechRider customer account</p>
+    </div>
+<!-- LOGIN LINK -->
+    <div class="top-link">
+      Already have an account? <a href="login-customer.html">Log in</a>
+    </div>
+    <form id="signupForm">
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Create password" required>
+        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+        <div class="error" id="passwordError">
+          Password must be 8+ chars, include uppercase, number & special character
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+        <i class="fas fa-eye toggle-password" id="toggleConfirm"></i>
+        <div class="error" id="matchError">
+          Passwords do not match
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="createBtn">Create Account</button>
+
+      <div class="bottom-links">
+        <a href="terms-of-service-customer.html">Terms of Service</a>
+        <a href="privacy-policy-customer.html">Privacy Policy</a>
+      </div>
+
+    </form>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+    const matchError = document.getElementById('matchError');
+
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirm = document.getElementById('toggleConfirm');
+
+    togglePassword.addEventListener('click', () => {
+      const type = password.type === 'password' ? 'text' : 'password';
+      password.type = type;
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    toggleConfirm.addEventListener('click', () => {
+      const type = confirmPassword.type === 'password' ? 'text' : 'password';
+      confirmPassword.type = type;
+      toggleConfirm.classList.toggle('fa-eye-slash');
+    });
+
+    function validatePassword(pwd) {
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasNumber = /[0-9]/.test(pwd);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+      return pwd.length >= 8 && hasUpper && hasNumber && hasSpecial;
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const pwd = password.value;
+      const confirmPwd = confirmPassword.value;
+
+      let valid = true;
+
+      if (!validatePassword(pwd)) {
+        passwordError.style.display = 'block';
+        valid = false;
+      } else {
+        passwordError.style.display = 'none';
+      }
+
+      if (pwd !== confirmPwd) {
+        matchError.style.display = 'block';
+        valid = false;
+      } else {
+        matchError.style.display = 'none';
+      }
+
+      if (valid) {
+        window.location.href = "login-customer.html";
+      }
+    });
+  </script>
+
+</body>
+</html>

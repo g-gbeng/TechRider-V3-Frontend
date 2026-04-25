@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechRider - Customer Profile</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    :root{
+      --purple:#5a189a;
+      --deep-purple:#240046;
+      --lilac:#e0aaff;
+      --gray:#f6f6f6;
+      --white:#fff;
+    }
+
+    body{
+      background:var(--gray);
+      min-height:100vh;
+      padding:15px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:900px;
+      background:var(--white);
+      border-radius:18px;
+      box-shadow:0 18px 45px rgba(0,0,0,0.08);
+      overflow:hidden;
+      animation:fadeIn 0.6s ease-in;
+    }
+
+    /* HEADER */
+    .header{
+      background:linear-gradient(135deg,var(--purple),var(--deep-purple));
+      color:white;
+      padding:25px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:15px;
+    }
+
+    .profile-info{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      min-width:0;
+    }
+
+    .avatar{
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      background:var(--lilac);
+      color:var(--deep-purple);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      font-size:1.2rem;
+      flex-shrink:0;
+    }
+
+    .name h2{
+      font-size:1.2rem;
+      word-break:break-word;
+    }
+
+    .name p{
+      font-size:0.8rem;
+      opacity:0.8;
+    }
+
+    .back-btn{
+      background:white;
+      color:var(--purple);
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-size:0.8rem;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    /* BODY */
+    .body{
+      padding:20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .card{
+      background:var(--gray);
+      padding:18px;
+      border-radius:14px;
+    }
+
+    .card h3{
+      color:var(--deep-purple);
+      margin-bottom:10px;
+      font-size:1rem;
+    }
+
+    .item{
+      display:flex;
+      justify-content:space-between;
+      padding:8px 0;
+      border-bottom:1px solid #ddd;
+      font-size:0.85rem;
+      gap:10px;
+    }
+
+    .item:last-child{
+      border-bottom:none;
+    }
+
+    .label{
+      color:#555;
+    }
+
+    .value{
+      font-weight:500;
+      text-align:right;
+      word-break:break-word;
+    }
+
+    /* ACTIONS */
+    .actions{
+      grid-column:span 2;
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .btn{
+      flex:1;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      font-size:0.9rem;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      color:white;
+    }
+
+    .btn.danger{
+      background:#ff4d4d;
+      color:white;
+    }
+
+    /* MOBILE FIX */
+    @media(max-width:768px){
+
+      body{
+        padding:10px;
+      }
+
+      .header{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .back-btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .body{
+        grid-template-columns:1fr;
+      }
+
+      .actions{
+        flex-direction:column;
+        grid-column:span 1;
+      }
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+      <div class="profile-info">
+        <div class="avatar" id="avatar"></div>
+        <div class="name">
+          <h2 id="name"></h2>
+          <p>Customer Account</p>
+        </div>
+      </div>
+
+      <a href="dashboard-customer.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+      <div class="card">
+        <h3>Account Details</h3>
+        <div class="item"><span class="label">Email</span><span class="value">customer@email.com</span></div>
+        <div class="item"><span class="label">Phone</span><span class="value">+234 XXX XXX XXXX</span></div>
+        <div class="item"><span class="label">Status</span><span class="value">Active</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Activity</h3>
+        <div class="item"><span class="label">Total Requests</span><span class="value">0</span></div>
+        <div class="item"><span class="label">Completed</span><span class="value">0</span></div>
+        <div class="item"><span class="label">Cancelled</span><span class="value">0</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" onclick="location.href='repair-request.html'">
+          Request Repair
+        </button>
+        <button class="btn danger" onclick="location.href='login-customer.html'">
+          Logout
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const customerName = "User";
+
+    function getInitials(name){
+      return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    }
+
+    document.getElementById('avatar').innerText = getInitials(customerName);
+    document.getElementById('name').innerText = customerName;
+  </script>
+
+</body>
+</html>
