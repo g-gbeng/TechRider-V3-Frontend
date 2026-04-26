@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+<title>TechRider - Admin Customers</title>
+<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{--purple:#5a189a;--deep-purple:#240046;--lilac:#e0aaff;--gray:#f6f6f6}
+body{background:var(--gray);min-height:100vh;display:flex;animation:fadeIn .45s ease}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:900}.overlay.show{display:block}
+.sidebar{width:270px;background:linear-gradient(180deg,var(--purple),var(--deep-purple));color:#fff;padding:20px;position:fixed;height:100vh;overflow:auto;z-index:1000;transition:.3s}
+.sidebar.collapsed{width:72px}.brand{display:flex;gap:12px;align-items:center;cursor:pointer;margin-bottom:25px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--lilac);display:flex;align-items:center;justify-content:center;color:var(--deep-purple);font-weight:700}
+.sidebar.collapsed .text{display:none}
+.nav{display:flex;flex-direction:column;gap:10px}.nav a{color:#fff;text-decoration:none;padding:12px;border-radius:12px;display:flex;gap:12px;align-items:center}.nav a.active,.nav a:hover{background:rgba(255,255,255,.14)}
+.main{margin-left:270px;width:calc(100% - 270px);padding:20px}
+.topbar{background:#fff;padding:16px 18px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.hamburger{display:none;cursor:pointer}.avatar{width:42px;height:42px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:20px}
+.card{background:#fff;padding:22px;border-radius:18px;box-shadow:0 5px 18px rgba(0,0,0,.05)}
+.metric{font-size:2rem;font-weight:700;color:var(--purple);margin-top:8px}
+.toolbar{background:#fff;padding:18px;border-radius:18px;display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.toolbar input,.toolbar select{padding:12px;border:1px solid #ddd;border-radius:10px;flex:1;min-width:180px}
+.tableWrap{background:#fff;border-radius:18px;padding:20px;overflow-x:auto;box-shadow:0 5px 18px rgba(0,0,0,.05)}
+table{width:100%;border-collapse:collapse;min-width:980px}
+th,td{text-align:left;padding:16px;border-bottom:1px solid #eee}
+th{color:var(--deep-purple);font-weight:700}
+.status{padding:7px 12px;border-radius:20px;font-size:.75rem;font-weight:600;display:inline-block}
+.activeStat{background:#e9d8fd;color:var(--purple)}
+.suspendedStat{background:#ffe5e5;color:#b00020}
+.actions{display:flex;gap:8px}
+.btn{border:none;padding:9px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+.btnPrimary{background:linear-gradient(135deg,var(--purple),var(--lilac));color:#fff}
+.btnGhost{background:#f2ecff;color:var(--purple)}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);width:270px!important}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.hamburger{display:block}.cards{grid-template-columns:1fr}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class='overlay' id='overlay'></div>
+<div class='sidebar collapsed' id='sidebar'>
+<div class='brand' onclick='toggleSidebar()'><div class='logo'>A</div><span class='text'>Admin Panel</span></div>
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="riders-admin.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="jobs-monitoring-admin.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="communications-admin.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="reports-admin.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-technicians-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+<div class='main'>
+<div class='topbar'>
+<div class='hamburger' id='hamburger'><i class='fas fa-bars'></i></div>
+<h3>Customer Management</h3>
+<div class='avatar'>A</div>
+</div>
+<div class='cards'>
+<div class='card'><h4>Total Customers</h4><div class='metric' id='totalUsers'>512</div></div>
+<div class='card'><h4>Active Accounts</h4><div class='metric' id='activeUsers'>503</div></div>
+<div class='card'><h4>Suspended</h4><div class='metric' id='suspendedUsers'>9</div></div>
+<div class='card'><h4>New This Week</h4><div class='metric'>14</div></div>
+</div>
+<div class='toolbar'>
+<input id='searchBox' placeholder='Search customer name'>
+<select id='statusFilter'>
+<option value='all'>All Statuses</option>
+<option value='active'>Active</option>
+<option value='suspended'>Suspended</option>
+</select>
+<select id='sortFilter'>
+<option value='newest'>Newest Joined</option>
+<option value='oldest'>Oldest Joined</option>
+<option value='requests'>Most Requests</option>
+<option value='alpha'>Alphabetical</option>
+</select>
+</div>
+<div class='tableWrap'>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Requests</th>
+<th>Status</th>
+<th>Joined</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id='customerTable'>
+<!-- Most recent customers listed first -->
+<tr data-name='Kunle' data-status='active' data-joined='2026-01-02' data-requests='2'>
+<td>Kunle</td>
+<td>kunle@email.com</td>
+<td>08030000002</td>
+<td>2</td>
+<td><span class='status activeStat'>Active</span></td>
+<td>Jan 2</td>
+<td><div class='actions'><button class='btn btnGhost' onclick='viewHistory("Kunle")'>History</button><button class='btn btnPrimary' onclick='toggleSuspend(this)'>Suspend</button></div></td>
+</tr>
+<tr data-name='Adaobi' data-status='active' data-joined='2026-01-12' data-requests='6'>
+<td>Adaobi</td>
+<td>adaobi@email.com</td>
+<td>08030000001</td>
+<td>7</td>
+<td><span class='status activeStat'>Active</span></td>
+<td>Feb 03</td>
+<td><div class='actions'><button class='btn btnGhost' onclick='viewHistory("Kunle")'>History</button><button class='btn btnPrimary' onclick='toggleSuspend(this)'>Suspend</button></div></td>
+</tr>
+<tr data-name='Fatima' data-status='suspended' data-joined='2026-03-19' data-requests='4'>
+<td>Fatima</td>
+<td>fatima@email.com</td>
+<td>08030000003</td>
+<td>4</td>
+<td><span class='status suspendedStat'>Suspended</span></td>
+<td>Mar 19</td>
+<td><div class='actions'><button class='btn btnGhost' onclick='viewHistory("Fatima")'>History</button><button class='btn btnPrimary' onclick='toggleSuspend(this)'>Reactivate</button></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<script>
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const hamburger=document.getElementById('hamburger');
+function toggleSidebar(){sidebar.classList.toggle('collapsed')}
+hamburger.addEventListener('click',()=>{sidebar.classList.add('open');overlay.classList.add('show')});
+overlay.addEventListener('click',()=>{sidebar.classList.remove('open');overlay.classList.remove('show')});
+if(!localStorage.getItem('totalUsers')){localStorage.setItem('totalUsers','512')}
+document.getElementById('totalUsers').innerText=localStorage.getItem('totalUsers');
+function viewHistory(name){alert('Open repair history for '+name+' (frontend placeholder).')}
+function toggleSuspend(btn){
+const row=btn.closest('tr');
+const badge=row.querySelector('.status');
+let suspended=parseInt(document.getElementById('suspendedUsers').innerText);
+let active=parseInt(document.getElementById('activeUsers').innerText);
+if(row.dataset.status==='active'){
+row.dataset.status='suspended';
+badge.className='status suspendedStat';
+badge.textContent='Suspended';
+btn.textContent='Reactivate';
+active--;suspended++;
+}else{
+row.dataset.status='active';
+badge.className='status activeStat';
+badge.textContent='Active';
+btn.textContent='Suspend';
+active++;suspended--;
+}
+document.getElementById('activeUsers').innerText=active;
+document.getElementById('suspendedUsers').innerText=suspended;
+filterRows();
+}
+function applyFiltersAndSort(){
+const q=document.getElementById('searchBox').value.toLowerCase();
+const statusFilter=document.getElementById('statusFilter').value;
+const sortType=document.getElementById('sortFilter').value;
+const tbody=document.getElementById('customerTable');
+let rows=[...tbody.querySelectorAll('tr')];
+rows.forEach(row=>{
+const matchesName=row.dataset.name.toLowerCase().includes(q);
+const matchesStatus=(statusFilter==='all'||row.dataset.status===statusFilter);
+row.style.display=(matchesName&&matchesStatus)?'table-row':'none';
+});
+let visibleRows=rows.filter(r=>r.style.display!=='none');
+visibleRows.sort((a,b)=>{
+if(sortType==='newest') return new Date(b.dataset.joined)-new Date(a.dataset.joined);
+if(sortType==='oldest') return new Date(a.dataset.joined)-new Date(b.dataset.joined);
+if(sortType==='requests') return parseInt(b.dataset.requests)-parseInt(a.dataset.requests);
+if(sortType==='alpha') return a.dataset.name.localeCompare(b.dataset.name);
+return 0;
+});
+visibleRows.forEach(r=>tbody.appendChild(r));
+}
+
+function filterRows(){
+const q=document.getElementById('searchBox').value.toLowerCase();
+const filter=document.getElementById('statusFilter').value;
+document.querySelectorAll('#customerTable tr').forEach(row=>{
+const matchesName=row.dataset.name.toLowerCase().includes(q);
+const matchesStatus=(filter==='all'||row.dataset.status===filter);
+row.style.display=(matchesName&&matchesStatus)?'table-row':'none';
+});
+}
+document.getElementById('searchBox').addEventListener('input',applyFiltersAndSort);
+document.getElementById('statusFilter').addEventListener('change',applyFiltersAndSort);
+document.getElementById('sortFilter').addEventListener('change',applyFiltersAndSort);
+applyFiltersAndSort();
+</script>
+</body>
+</html>

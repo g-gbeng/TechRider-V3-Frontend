@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TechRider - Technicians Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+animation:fadeIn .45s ease;
+}
+
+/* Fade in */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* Overlay */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:900;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* Sidebar */
+.sidebar{
+width:270px;
+background:linear-gradient(180deg,var(--purple),var(--deep-purple));
+color:white;
+padding:20px;
+position:fixed;
+height:100vh;
+overflow:auto;
+transition:.3s;
+z-index:1000;
+}
+
+.sidebar.collapsed{
+width:72px;
+}
+
+.sidebar.collapsed .text{
+display:none;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:25px;
+cursor:pointer;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+color:var(--deep-purple);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+}
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+text-decoration:none;
+color:white;
+padding:12px;
+border-radius:12px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.nav a.active,
+.nav a:hover{
+background:rgba(255,255,255,.14);
+}
+
+/* Main */
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+}
+
+.topbar{
+background:white;
+padding:16px 18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+cursor:pointer;
+font-size:1.2rem;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+/* Metric Cards */
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:22px;
+border-radius:18px;
+}
+
+.metric{
+font-size:2rem;
+font-weight:700;
+color:var(--purple);
+margin-top:8px;
+}
+
+/* Toolbar */
+.toolbar{
+background:white;
+padding:18px;
+border-radius:18px;
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.toolbar input,
+.toolbar select{
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+min-width:170px;
+flex:1;
+}
+
+/* Table */
+.tableWrap{
+background:white;
+border-radius:18px;
+padding:20px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+min-width:1000px;
+border-collapse:collapse;
+}
+
+th,td{
+padding:16px;
+text-align:left;
+border-bottom:1px solid #eee;
+}
+
+th{
+color:var(--deep-purple);
+}
+
+.badge{
+padding:7px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+display:inline-block;
+}
+
+.activeStat{
+background:#e9d8fd;
+color:var(--purple);
+}
+
+.suspendedStat{
+background:#ffe5e5;
+color:#b00020;
+}
+
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.btn{
+border:none;
+padding:9px 12px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+.btnGhost{
+background:#f2ecff;
+color:var(--purple);
+}
+
+.btnPrimary{
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+}
+
+/* Responsive */
+@media(max-width:1100px){
+.cards{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:768px){
+
+.sidebar{
+transform:translateX(-100%);
+width:270px !important;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<div class="sidebar collapsed" id="sidebar">
+
+<div class="brand" onclick="toggleSidebar()">
+<div class="logo">A</div>
+<span class="text">Admin Panel</span>
+</div>
+
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="jobs-monitoring-admin.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="communications-admin.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="reports-admin.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+
+
+<!-- Main -->
+<div class="main">
+
+<div class="topbar">
+<div class="hamburger" id="hamburger">
+<i class="fas fa-bars"></i>
+</div>
+
+<h3>Technician Management</h3>
+
+<div class="avatar">A</div>
+</div>
+
+
+<!-- Metrics -->
+<div class="cards">
+
+<div class="card">
+<h4>Total Technicians</h4>
+<div class="metric">34</div>
+</div>
+
+<div class="card">
+<h4>Available</h4>
+<div class="metric">22</div>
+</div>
+
+<div class="card">
+<h4>Completed Jobs</h4>
+<div class="metric">74</div>
+</div>
+
+<div class="card">
+<h4>Suspended</h4>
+<div class="metric" id="suspendedCount">3</div>
+</div>
+
+</div>
+
+
+<!-- Filters -->
+<div class="toolbar">
+
+<input
+id="searchBox"
+placeholder="Search technician">
+
+<select id="statusFilter">
+<option value="all">All Statuses</option>
+<option value="active">Active</option>
+<option value="suspended">Suspended</option>
+</select>
+
+<select id="sortFilter">
+<option value="newest">Newest Joined</option>
+<option value="oldest">Oldest Joined</option>
+<option value="jobs">Most Completed Jobs</option>
+<option value="alpha">Alphabetical</option>
+</select>
+
+</div>
+
+
+<!-- Table -->
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Specialization</th>
+<th>Completed</th>
+<th>Status</th>
+<th>Joined</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="techTable">
+
+<tr
+data-name="Chinedu"
+data-status="active"
+data-joined="2026-03-20"
+data-jobs="31">
+
+<td>Chinedu</td>
+<td>chinedu@email.com</td>
+<td>Phones</td>
+<td>31</td>
+
+<td>
+<span class="badge activeStat">
+Active
+</span>
+</td>
+
+<td>Mar 20</td>
+
+<td>
+<div class="actions">
+
+<button
+class="btn btnGhost"
+onclick="openProfile('Chinedu')">
+Profile
+</button>
+
+<button
+class="btn btnPrimary"
+onclick="toggleSuspend(this)">
+Suspend
+</button>
+
+</div>
+</td>
+
+</tr>
+
+
+<tr
+data-name="Bola"
+data-status="active"
+data-joined="2026-02-11"
+data-jobs="18">
+
+<td>Bola</td>
+<td>bola@email.com</td>
+<td>Laptops</td>
+<td>18</td>
+
+<td>
+<span class="badge activeStat">
+Active
+</span>
+</td>
+
+<td>Feb 11</td>
+
+<td>
+<div class="actions">
+
+<button
+class="btn btnGhost"
+onclick="openProfile('Bola')">
+Profile
+</button>
+
+<button
+class="btn btnPrimary"
+onclick="toggleSuspend(this)">
+Suspend
+</button>
+
+</div>
+</td>
+
+</tr>
+
+
+<tr
+data-name="Sade"
+data-status="suspended"
+data-joined="2026-01-08"
+data-jobs="25">
+
+<td>Sade</td>
+<td>sade@email.com</td>
+<td>Laptops</td>
+<td>25</td>
+
+<td>
+<span class="badge suspendedStat">
+Suspended
+</span>
+</td>
+
+<td>Jan 08</td>
+
+<td>
+<div class="actions">
+
+<button
+class="btn btnGhost"
+onclick="openProfile('Sade')">
+Profile
+</button>
+
+<button
+class="btn btnPrimary"
+onclick="toggleSuspend(this)">
+Reactivate
+</button>
+
+</div>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+
+
+<script>
+
+/* Sidebar */
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+
+function toggleSidebar(){
+sidebar.classList.toggle('collapsed');
+}
+
+document
+.getElementById('hamburger')
+.addEventListener('click',function(){
+sidebar.classList.add('open');
+overlay.classList.add('show');
+});
+
+overlay.addEventListener('click',function(){
+sidebar.classList.remove('open');
+overlay.classList.remove('show');
+});
+
+
+/* Future profile routing */
+function openProfile(name){
+location.href=
+'admin-records.html?tech='+
+encodeURIComponent(name);
+}
+
+
+/* Suspend toggle */
+function toggleSuspend(btn){
+
+const row=btn.closest('tr');
+const badge=row.querySelector('.badge');
+
+let suspendedCount=
+parseInt(
+document.getElementById(
+'suspendedCount'
+).innerText
+);
+
+if(row.dataset.status==='active'){
+
+row.dataset.status='suspended';
+
+badge.className='badge suspendedStat';
+badge.textContent='Suspended';
+
+btn.textContent='Reactivate';
+
+suspendedCount++;
+
+}else{
+
+row.dataset.status='active';
+
+badge.className='badge activeStat';
+badge.textContent='Active';
+
+btn.textContent='Suspend';
+
+suspendedCount--;
+
+}
+
+document.getElementById(
+'suspendedCount'
+).innerText=suspendedCount;
+
+applyFiltersAndSort();
+
+}
+
+
+/* Combined filters + sorting */
+function applyFiltersAndSort(){
+
+const q=
+document
+.getElementById('searchBox')
+.value
+.toLowerCase();
+
+const status=
+document
+.getElementById('statusFilter')
+.value;
+
+const sort=
+document
+.getElementById('sortFilter')
+.value;
+
+const tbody=
+document.getElementById('techTable');
+
+let rows=[
+...tbody.querySelectorAll('tr')
+];
+
+
+/* filter */
+rows.forEach(row=>{
+
+const nameMatch=
+row.dataset.name
+.toLowerCase()
+.includes(q);
+
+const statusMatch=
+status==='all' ||
+row.dataset.status===status;
+
+row.style.display=
+(nameMatch && statusMatch)
+?'table-row'
+:'none';
+
+});
+
+
+/* sort visible rows only */
+let visibleRows=
+rows.filter(
+r=>r.style.display!=='none'
+);
+
+visibleRows.sort((a,b)=>{
+
+if(sort==='newest'){
+return new Date(
+b.dataset.joined
+)-new Date(
+a.dataset.joined
+);
+}
+
+if(sort==='oldest'){
+return new Date(
+a.dataset.joined
+)-new Date(
+b.dataset.joined
+);
+}
+
+if(sort==='jobs'){
+return parseInt(
+b.dataset.jobs
+)-parseInt(
+a.dataset.jobs
+);
+}
+
+if(sort==='alpha'){
+return a.dataset.name.localeCompare(
+b.dataset.name
+);
+}
+
+return 0;
+
+});
+
+visibleRows.forEach(row=>{
+tbody.appendChild(row);
+});
+
+}
+
+
+/* Events */
+document
+.getElementById('searchBox')
+.addEventListener(
+'input',
+applyFiltersAndSort
+);
+
+document
+.getElementById('statusFilter')
+.addEventListener(
+'change',
+applyFiltersAndSort
+);
+
+document
+.getElementById('sortFilter')
+.addEventListener(
+'change',
+applyFiltersAndSort
+);
+
+
+/* default load */
+applyFiltersAndSort();
+
+</script>
+
+</body>
+</html>

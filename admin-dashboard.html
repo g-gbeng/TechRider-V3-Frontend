@@ -45,23 +45,24 @@ body{background:var(--gray);min-height:100vh;display:flex;animation:fadeIn .45s 
 <div class="brand" onclick="toggleSidebar()"><div class="logo">A</div><span class="text">Admin Panel</span></div>
 <div class="nav">
 <a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
-<a href="users-admin.html"><i class="fas fa-users"></i><span class="text">Users</span></a>
-<a href="technicians-admin.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
-<a href="riders-admin.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
 <a href="jobs-monitoring-admin.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
 <a href="communications-admin.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
 <a href="reports-admin.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="technician-records-admin.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
 <a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
 </div></div>
 <div class="main">
 <div class="topbar">
 <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-<h3>Operations Overview</h3>
+<h3>Dashboard</h3>
 <div class="admin-chip"><div class="avatar">A</div><span>Admin</span></div>
 </div>
 <div class="cards">
-<div class="card"><h4>Pending Tech Approvals</h4><div class="metric" id="techCount">8</div></div>
-<div class="card"><h4>Pending Rider Approvals</h4><div class="metric" id="riderCount">5</div></div>
+<div class="card"><h4>Pending Tech Approvals</h4><div class="metric" id="techCount">2</div></div>
+<div class="card"><h4>Pending Rider Approvals</h4><div class="metric" id="riderCount">2</div></div>
 <div class="card"><h4>Active Repair Jobs</h4><div class="metric">23</div></div>
 <div class="card"><h4>Active Delivery Jobs</h4><div class="metric">14</div></div>
 <div class="card"><h4>Total Users</h4><div class="metric">512</div></div>
@@ -70,9 +71,9 @@ body{background:var(--gray);min-height:100vh;display:flex;animation:fadeIn .45s 
 <div class="panels">
 <div class="panel">
 <h3>Recent Approval Requests</h3>
-<div class="row"><span>Technician — Chinedu</span><button class="btn" onclick="approveTech()">Approve</button></div>
-<div class="row"><span>Rider — Musa</span><button class="btn" onclick="approveRider()">Approve</button></div>
-<div class="row"><span>Technician — Amina</span><a class="action-link" href="pending-approvals-admin.html">Review</a></div>
+<div class="row"><span>Technician — Chinedu</span><a class="action-link" href="admin-pending-approvals.html">Review</a></div>
+<div class="row"><span>Rider — Musa</span><a class="action-link" href="admin-pending-approvals.html">Review</a></div>
+<div class="row"><span>Technician — Amina</span><a class="action-link" href="admin-pending-approvals.html">Review</a></div>
 </div>
 <div class="panel">
 <h3>Live Job Activity</h3>
