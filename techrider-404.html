@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>404 - Page Not Found</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep:#240046;
+--lilac:#e0aaff;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+180deg,
+#f8f4ff,
+#f3eefb
+);
+padding:25px;
+animation:fadeIn .45s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(14px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.container{
+width:100%;
+max-width:900px;
+background:white;
+border-radius:30px;
+padding:50px;
+text-align:center;
+box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.logoWrap{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+margin-bottom:30px;
+}
+
+.logo{
+width:58px;
+height:58px;
+border-radius:16px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep);
+font-size:1.2rem;
+}
+
+.errorCode{
+font-size:7rem;
+font-weight:700;
+color:var(--purple);
+line-height:1;
+margin-bottom:14px;
+}
+
+h1{
+color:var(--deep);
+margin-bottom:14px;
+}
+
+.desc{
+max-width:600px;
+margin:auto;
+line-height:1.8;
+color:#555;
+margin-bottom:35px;
+}
+
+.actions{
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:35px;
+}
+
+.actionBtn{
+text-decoration:none;
+padding:14px 22px;
+border:none;
+border-radius:12px;
+font-weight:600;
+cursor:pointer;
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+}
+
+.links{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-top:20px;
+}
+
+.linkCard{
+background:#faf7ff;
+padding:20px;
+border-radius:18px;
+text-decoration:none;
+color:var(--deep);
+transition:.2s;
+}
+
+.linkCard:hover{
+transform:translateY(-4px);
+}
+
+
+/* Support Modal */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.4);
+z-index:3000;
+}
+
+.modalContent{
+background:white;
+width:90%;
+max-width:500px;
+margin:90px auto;
+padding:35px;
+border-radius:22px;
+text-align:center;
+}
+
+.closeBtn{
+float:right;
+font-size:1.4rem;
+cursor:pointer;
+}
+
+.supportLink{
+display:block;
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+text-decoration:none;
+font-weight:600;
+background:#faf7ff;
+color:var(--purple);
+}
+
+
+@media(max-width:760px){
+
+.container{
+padding:35px 25px;
+}
+
+.errorCode{
+font-size:5rem;
+}
+
+.links{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="container">
+
+
+<div class="logoWrap">
+
+<div class="logo">
+TR
+</div>
+
+<h2>
+TechRider
+</h2>
+
+</div>
+
+
+
+<div class="errorCode">
+404
+</div>
+
+<h1>
+Page Not Found
+</h1>
+
+<p class="desc">
+The page you tried to access may have been moved,
+deleted, or the URL may have been entered incorrectly.
+Use one of the options below to continue.
+</p>
+
+
+
+<div class="actions">
+
+<a
+href="index.html"
+class="actionBtn">
+Return Home
+</a>
+
+
+<a
+href="#"
+onclick="history.back();return false;"
+class="actionBtn">
+Go Back
+</a>
+
+
+<button
+class="actionBtn"
+onclick="openSupport()">
+Contact Support
+</button>
+
+</div>
+
+
+
+<div class="links">
+
+
+<a
+href="login-customer.html"
+class="linkCard">
+
+<i class="fa fa-user"></i>
+<br><br>
+Customer Portal
+
+</a>
+
+
+
+<a
+href="login-technician.html"
+class="linkCard">
+
+<i class="fa fa-tools"></i>
+<br><br>
+Technician Login
+
+</a>
+
+
+
+<a
+href="login-rider.html"
+class="linkCard">
+
+<i class="fa fa-motorcycle"></i>
+<br><br>
+Rider Login
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- Support Popup -->
+
+<div
+class="modal"
+id="supportModal">
+
+<div class="modalContent">
+
+<span
+class="closeBtn"
+onclick="closeSupport()">
+×
+</span>
+
+<h2>
+Contact Support
+</h2>
+
+<p style="
+margin-top:18px;
+line-height:1.7;
+color:#555;">
+Choose how you’d like to reach support.
+</p>
+
+
+<a
+href="tel:+2348001234567"
+class="supportLink">
+📞 Call +234 800 123 4567
+</a>
+
+
+<a
+href="mailto:support@techrider.com"
+class="supportLink">
+✉ Email support@techrider.com
+</a>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+function openSupport(){
+
+document
+.getElementById(
+'supportModal'
+)
+.style.display='block';
+
+}
+
+function closeSupport(){
+
+document
+.getElementById(
+'supportModal'
+)
+.style.display='none';
+
+}
+
+
+/* click outside closes popup */
+
+window.onclick=function(e){
+
+let modal=
+document.getElementById(
+'supportModal'
+);
+
+if(
+e.target===modal
+){
+closeSupport();
+}
+
+};
+
+</script>
+
+</body>
+</html>

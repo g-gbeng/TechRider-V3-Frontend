@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+<title>Admin Disputes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep:#240046;
+--lilac:#e0aaff;
+--gray:#f7f5fb;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+overflow-x:hidden;
+animation:fadeIn .45s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(12px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* overlay */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+z-index:800;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* sidebar */
+
+.sidebar{
+width:270px;
+height:100vh;
+position:fixed;
+background:
+linear-gradient(
+180deg,
+var(--purple),
+var(--deep)
+);
+padding:20px;
+color:white;
+z-index:1000;
+transition:.3s;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.brand{
+display:flex;
+gap:12px;
+align-items:center;
+margin-bottom:30px;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:700;
+color:var(--deep);
+}
+
+.nav{display:flex;flex-direction:column;gap:10px}
+.nav a{text-decoration:none;color:#fff;padding:12px;border-radius:12px;display:flex;align-items:center;gap:12px}
+.nav a:hover{background:rgba(255,255,255,.12)}
+
+
+/* main */
+
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+}
+
+.topbar{
+background:white;
+padding:18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+font-size:1.3rem;
+cursor:pointer;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.filters{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.filterBtn{
+padding:10px 14px;
+border:none;
+border-radius:10px;
+background:#ece4ff;
+font-weight:600;
+cursor:pointer;
+}
+
+/* sections */
+
+.section{
+background:white;
+padding:24px;
+border-radius:22px;
+margin-bottom:24px;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.sectionHead{
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+margin-bottom:20px;
+}
+
+/* tables */
+
+.tableWrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+table-layout:fixed;
+border-collapse:collapse;
+min-width:900px;
+}
+
+th,td{
+padding:16px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#faf7ff;
+}
+th:nth-child(5),
+td:nth-child(5){
+width:28%;
+}
+
+.actionCell{
+display:flex;
+flex-wrap:nowrap;
+align-items:center;
+gap:10px;
+white-space:nowrap;
+}
+
+.btn{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+margin-right:0;
+flex-shrink:0;
+}
+
+@media(max-width:950px){
+
+th:nth-child(5),
+td:nth-child(5){
+width:32%;
+}
+
+.actionCell{
+min-width:220px;
+}
+
+}
+
+.groupRow td{
+background:#faf7ff;
+font-weight:700;
+color:var(--deep);
+padding:18px;
+}
+
+.priority{
+padding:6px 10px;
+border-radius:14px;
+font-size:.8rem;
+font-weight:600;
+display:inline-block;
+}
+
+.high{
+background:#ffe3ea;
+color:#b00020;
+}
+
+.medium{
+background:#fff2d8;
+color:#8a6200;
+}
+
+.btn{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+margin-right:8px;
+}
+
+.viewBtn{
+background:#ece4ff;
+}
+
+.settleBtn{
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+}
+
+.hidden{
+display:none;
+}
+
+/* modals */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.4);
+z-index:3000;
+}
+
+.modalContent{
+background:white;
+width:90%;
+max-width:550px;
+margin:90px auto;
+padding:30px;
+border-radius:18px;
+}
+
+.modalActions{
+margin-top:25px;
+display:flex;
+gap:12px;
+}
+
+/* mobile */
+
+@media(max-width:950px){
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+table{
+min-width:760px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="overlay" id="overlay"></div>
+<div class="sidebar collapsed" id="sidebar">
+<div class="brand" onclick="toggleSidebar()"><div class="logo">A</div><span class="text">Admin Panel</span></div>
+<div class="nav">
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="admin-disputes.html"><i class="fas fa-gavel"></i><span class="text">Disputes</span></a>
+<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+
+
+
+<div class="main">
+
+<div class="topbar">
+
+<div
+class="hamburger"
+onclick="openSidebar()">
+<i class="fas fa-bars"></i>
+</div>
+
+<h3>
+Dispute Resolution Center
+</h3>
+
+<div class="avatar">
+A
+</div>
+</div>
+
+
+
+<div class="filters">
+
+<button class="filterBtn"
+onclick="filterType('all')">
+All
+</button>
+
+<button class="filterBtn"
+onclick="filterType('customer')">
+Customers
+</button>
+
+<button class="filterBtn"
+onclick="filterType('tech')">
+Technicians
+</button>
+
+<button class="filterBtn"
+onclick="filterType('rider')">
+Riders
+</button>
+
+<button class="filterBtn"
+onclick="filterPriority()">
+High Priority
+</button>
+
+</div>
+
+
+
+
+<!-- UNSETTLED -->
+
+<div class="section">
+
+<div class="sectionHead"
+onclick="toggleSection('unsettledWrap')">
+
+<h3>
+Unsettled Disputes
+</h3>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div id="unsettledWrap">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>User</th>
+<th>Issue</th>
+<th>Priority</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="openTable">
+
+<tr class="groupRow">
+<td colspan="5">
+Customer Disputes
+</td>
+</tr>
+
+<tr
+data-type="customer"
+data-priority="high"
+data-message="Customer claims technician returned device with additional damage.">
+
+<td>DSP-001</td>
+<td>Ada</td>
+<td>Device damage claim</td>
+
+<td>
+<span class="priority high">
+High
+</span>
+</td>
+
+<td>
+
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+
+<button
+class="btn settleBtn"
+onclick="confirmSettle(this)">
+Mark Settled
+</button>
+
+</td>
+
+</tr>
+
+
+<tr
+data-type="customer"
+data-priority="medium"
+data-message="Customer requests refund due to unresolved repair.">
+
+<td>DSP-002</td>
+<td>Musa</td>
+<td>Refund dispute</td>
+
+<td>
+<span class="priority medium">
+Medium
+</span>
+</td>
+
+<td>
+
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+
+<button
+class="btn settleBtn"
+onclick="confirmSettle(this)">
+Mark Settled
+</button>
+
+</td>
+
+</tr>
+
+
+
+<tr class="groupRow">
+<td colspan="5">
+Technician Disputes
+</td>
+</tr>
+
+
+<tr
+data-type="tech"
+data-priority="high"
+data-message="Technician disputes underpayment on completed jobs.">
+
+<td>DSP-003</td>
+<td>Chinedu</td>
+<td>Payment dispute</td>
+
+<td>
+<span class="priority high">
+High
+</span>
+</td>
+
+<td>
+
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+
+<button
+class="btn settleBtn"
+onclick="confirmSettle(this)">
+Mark Settled
+</button>
+
+</td>
+
+</tr>
+
+
+
+<tr class="groupRow">
+<td colspan="5">
+Rider Disputes
+</td>
+</tr>
+
+
+<tr
+data-type="rider"
+data-priority="medium"
+data-message="Rider disputes liability due to incorrect customer address.">
+
+<td>DSP-004</td>
+<td>Femi</td>
+<td>Delivery liability</td>
+
+<td>
+<span class="priority medium">
+Medium
+</span>
+</td>
+
+<td>
+
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+
+<button
+class="btn settleBtn"
+onclick="confirmSettle(this)">
+Mark Settled
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- SETTLED -->
+
+<div class="section">
+
+<div class="sectionHead"
+onclick="toggleSection('settledWrap')">
+
+<h3>
+Settled Disputes
+</h3>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div id="settledWrap">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>User</th>
+<th>Issue</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="settledTable">
+
+<tr
+data-message="Delivery dispute resolved and closed.">
+
+<td>DSP-000</td>
+<td>Sade</td>
+<td>Delivery dispute</td>
+<td>Settled</td>
+
+<td>
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- settle confirm -->
+
+<div class="modal"
+id="confirmModal">
+
+<div class="modalContent">
+
+<h3>
+Confirm Settlement
+</h3>
+
+<p style="margin-top:15px;">
+Move dispute into settled records?
+</p>
+
+<div class="modalActions">
+
+<button
+class="btn viewBtn"
+onclick="closeModal()">
+Cancel
+</button>
+
+<button
+class="btn settleBtn"
+onclick="moveDispute()">
+Confirm
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- dispute details -->
+
+<div class="modal"
+id="detailModal">
+
+<div class="modalContent">
+
+<h3>
+Dispute Details
+</h3>
+
+<p
+id="detailText"
+style="
+margin-top:18px;
+line-height:1.8;">
+</p>
+
+<div class="modalActions">
+
+<button
+class="btn settleBtn"
+onclick="closeDetail()">
+Close
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<script>
+
+let pendingRow=null;
+
+
+/* mobile sidebar */
+
+function openSidebar(){
+
+document
+.getElementById(
+'sidebar'
+)
+.classList.add(
+'open'
+);
+
+document
+.getElementById(
+'overlay'
+)
+.classList.add(
+'show'
+);
+
+}
+
+
+
+/* collapse */
+
+function toggleSection(id){
+
+document
+.getElementById(id)
+.classList.toggle(
+'hidden'
+);
+
+}
+
+
+
+/* view dispute */
+
+function viewDispute(btn){
+
+let row=
+btn.closest('tr');
+
+document
+.getElementById(
+'detailText'
+)
+.innerHTML=
+row.dataset.message;
+
+document
+.getElementById(
+'detailModal'
+)
+.style.display='block';
+
+}
+
+function closeDetail(){
+
+document
+.getElementById(
+'detailModal'
+)
+.style.display='none';
+
+}
+
+
+
+/* settle */
+
+function confirmSettle(btn){
+
+pendingRow=
+btn.closest('tr');
+
+document
+.getElementById(
+'confirmModal'
+)
+.style.display='block';
+
+}
+
+function closeModal(){
+
+document
+.getElementById(
+'confirmModal'
+)
+.style.display='none';
+
+}
+
+
+function moveDispute(){
+
+if(!pendingRow) return;
+
+let cells=
+pendingRow.children;
+
+let id=cells[0].innerText;
+let user=cells[1].innerText;
+let issue=cells[2].innerText;
+let msg=pendingRow.dataset.message;
+
+document
+.getElementById(
+'settledTable'
+)
+.insertAdjacentHTML(
+'afterbegin',
+
+`
+<tr data-message="${msg}">
+<td>${id}</td>
+<td>${user}</td>
+<td>${issue}</td>
+<td>Settled</td>
+<td>
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)">
+View
+</button>
+</td>
+</tr>
+`
+
+);
+
+pendingRow.remove();
+
+closeModal();
+
+}
+
+
+
+/* filters */
+
+function filterType(type){
+
+document
+.querySelectorAll(
+'#openTable tr'
+)
+.forEach(row=>{
+
+if(
+row.classList.contains(
+'groupRow'
+)
+){
+row.style.display='';
+return;
+}
+
+row.style.display=
+(type==='all'
+|| row.dataset.type===type)
+?''
+:'none';
+
+});
+
+}
+
+
+
+function filterPriority(){
+
+document
+.querySelectorAll(
+'#openTable tr'
+)
+.forEach(row=>{
+
+if(
+row.classList.contains(
+'groupRow'
+)
+){
+row.style.display='';
+return;
+}
+
+row.style.display=
+row.dataset.priority==='high'
+?''
+:'none';
+
+});
+
+}
+
+
+
+/* click outside */
+
+window.onclick=function(e){
+
+if(
+e.target.id==='confirmModal'
+){
+closeModal();
+}
+
+if(
+e.target.id==='detailModal'
+){
+closeDetail();
+}
+
+if(
+e.target.id==='overlay'
+){
+
+document
+.getElementById(
+'sidebar'
+)
+.classList.remove(
+'open'
+);
+
+document
+.getElementById(
+'overlay'
+)
+.classList.remove(
+'show'
+);
+
+}
+
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep:#240046;
+--lilac:#e0aaff;
+}
+
+body{
+min-height:100vh;
+display:grid;
+grid-template-columns:1fr 1fr;
+background:#f7f5fb;
+animation:fadeIn .45s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(12px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+
+/* LEFT */
+
+.left{
+background:
+linear-gradient(
+180deg,
+var(--purple),
+var(--deep)
+);
+color:white;
+padding:60px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.logoWrap{
+display:flex;
+gap:14px;
+align-items:center;
+margin-bottom:30px;
+}
+
+.logo{
+width:58px;
+height:58px;
+border-radius:16px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep);
+font-size:1.2rem;
+}
+
+.left h1{
+font-size:2.4rem;
+margin-bottom:16px;
+}
+
+.left p{
+line-height:1.7;
+opacity:.92;
+margin-bottom:35px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.stat{
+background:rgba(255,255,255,.12);
+padding:22px;
+border-radius:18px;
+}
+
+.stat h2{
+margin-bottom:8px;
+}
+
+
+
+/* RIGHT */
+
+.right{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:30px;
+}
+
+.loginBox{
+width:100%;
+max-width:470px;
+background:white;
+padding:38px;
+border-radius:24px;
+box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.loginBox h2{
+color:var(--deep);
+margin-bottom:10px;
+}
+
+.notice{
+font-size:.9rem;
+background:#faf7ff;
+padding:12px;
+border-radius:10px;
+margin:18px 0 24px;
+color:#5a189a;
+}
+
+label{
+display:block;
+margin-top:14px;
+margin-bottom:7px;
+font-weight:600;
+}
+
+.inputWrap{
+position:relative;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+.eye{
+position:absolute;
+right:14px;
+top:15px;
+cursor:pointer;
+color:#777;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:18px;
+font-size:.95rem;
+}
+
+.row a{
+text-decoration:none;
+color:var(--purple);
+}
+
+button{
+width:100%;
+margin-top:22px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.error{
+margin-top:14px;
+display:none;
+padding:12px;
+border-radius:10px;
+background:#ffe5ea;
+color:#b00020;
+}
+
+.success{
+margin-top:14px;
+display:none;
+padding:12px;
+border-radius:10px;
+background:#e9fff0;
+color:#087443;
+}
+
+
+@media(max-width:900px){
+
+body{
+grid-template-columns:1fr;
+}
+
+.left{
+padding:35px;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.right{
+padding:20px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="left">
+
+<div class="logoWrap">
+<div class="logo">TR</div>
+<h2>TechRider</h2>
+</div>
+
+<h1>
+Administrative Access Portal
+</h1>
+
+<p>
+Restricted platform access for authorized
+administrators overseeing customers,
+technicians, riders, dispatch and system
+operations.
+</p>
+
+
+<div class="stats">
+
+<div class="stat">
+<h2>248</h2>
+<p>Active Requests</p>
+</div>
+
+<div class="stat">
+<h2>126</h2>
+<p>Verified Technicians</p>
+</div>
+
+<div class="stat">
+<h2>44</h2>
+<p>Riders Online</p>
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="right">
+
+<div class="loginBox">
+
+<h2>
+Admin Sign In
+</h2>
+
+<div class="notice">
+Authorized personnel only.
+Repeated failed login attempts may trigger lockout.
+</div>
+
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="admin@techrider.com">
+
+
+<label>Password</label>
+
+<div class="inputWrap">
+
+<input
+id="password"
+type="password"
+placeholder="Enter password">
+
+<i
+class="fa fa-eye eye"
+onclick="togglePass()">
+</i>
+
+</div>
+
+
+
+<div class="row">
+
+
+
+</div>
+
+
+<button
+id="loginBtn"
+onclick="loginAdmin()">
+Login
+</button>
+
+
+<div
+class="error"
+id="errorBox">
+</div>
+
+<div
+class="success"
+id="successBox">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+let attempts=0;
+
+
+function togglePass(){
+
+let p=
+document.getElementById(
+'password'
+);
+
+p.type=
+p.type==='password'
+?'text'
+:'password';
+
+}
+
+
+
+function loginAdmin(){
+
+let email=
+document.getElementById(
+'email'
+).value.trim();
+
+let pass=
+document.getElementById(
+'password'
+).value.trim();
+
+let err=
+document.getElementById(
+'errorBox'
+);
+
+let ok=
+document.getElementById(
+'successBox'
+);
+
+err.style.display='none';
+ok.style.display='none';
+
+
+if(!email || !pass){
+
+err.innerHTML=
+'Fill in all required fields.';
+
+err.style.display='block';
+
+return;
+
+}
+
+
+if(attempts>=5){
+
+err.innerHTML=
+'Account temporarily locked after too many attempts.';
+
+err.style.display='block';
+
+return;
+
+}
+
+
+/* demo credentials */
+
+if(
+email==='admin@techrider.com'
+&&
+pass==='Admin123!'
+){
+
+let btn=
+document.getElementById(
+'loginBtn'
+);
+
+btn.innerHTML='Signing in...';
+
+setTimeout(function(){
+
+ok.innerHTML=
+'Login successful. Redirecting to dashboard...';
+
+ok.style.display='block';
+
+window.location.href=
+'admin-dashboard.html';
+
+},1500);
+
+}
+
+else{
+
+attempts++;
+
+err.innerHTML=
+'Invalid credentials. Attempt '
++attempts+
+' of 5';
+
+err.style.display='block';
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
