@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>TechRider Communications</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+animation:fadeIn .35s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:900;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:270px;
+background:linear-gradient(
+180deg,
+var(--purple),
+var(--deep-purple)
+);
+padding:20px;
+color:white;
+position:fixed;
+height:100vh;
+overflow:auto;
+z-index:1000;
+transition:.3s;
+}
+
+.sidebar.collapsed{
+width:72px;
+}
+
+.sidebar.collapsed .text{
+display:none;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.brand{
+display:flex;
+gap:12px;
+align-items:center;
+margin-bottom:30px;
+cursor:pointer;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+padding:12px;
+border-radius:12px;
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.nav a.active,
+.nav a:hover{
+background:rgba(255,255,255,.14);
+}
+
+
+/* MAIN */
+
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+}
+
+.topbar{
+background:white;
+padding:18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+cursor:pointer;
+font-size:1.3rem;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:22px;
+align-items:stretch;
+}
+
+.card{
+background:white;
+border-radius:20px;
+padding:24px;
+display:flex;
+flex-direction:column;
+min-height:780px;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.card h3{
+margin-bottom:16px;
+color:var(--deep-purple);
+}
+
+
+/* BLOCKS */
+
+.block{
+border:1px solid #ece7f7;
+border-radius:14px;
+margin-bottom:16px;
+overflow:hidden;
+}
+
+.blockHeader{
+padding:14px 16px;
+background:#faf7ff;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:600;
+}
+
+.blockBody{
+padding:16px;
+}
+
+.block.closed .blockBody{
+display:none;
+}
+
+
+label{
+display:block;
+margin-top:10px;
+margin-bottom:6px;
+font-weight:600;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+textarea{
+min-height:120px;
+resize:none;
+}
+
+.btn{
+margin-top:16px;
+width:100%;
+border:none;
+padding:12px;
+border-radius:10px;
+background:linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.userBox{
+margin-top:12px;
+border:1px solid #ddd;
+border-radius:12px;
+overflow:hidden;
+}
+
+.userList{
+max-height:180px;
+overflow-y:auto;
+}
+
+.userItem{
+padding:12px 14px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}
+
+.userItem.selected{
+background:#f2ecff;
+color:var(--purple);
+font-weight:600;
+}
+
+.userItem:hover{
+background:#faf7ff;
+}
+
+.tableWrap{
+overflow-x:auto;
+margin-top:12px;
+}
+
+table{
+width:100%;
+min-width:600px;
+border-collapse:collapse;
+}
+
+th,
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#faf7ff;
+color:var(--deep-purple);
+}
+
+.badge{
+padding:6px 10px;
+border-radius:15px;
+font-size:.75rem;
+font-weight:600;
+background:#e9d8fd;
+color:var(--purple);
+}
+
+
+/* rider status */
+
+.busyNote{
+font-size:.85rem;
+margin-top:10px;
+color:purple;
+font-weight:600;
+}
+
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card{
+min-height:auto;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay"
+id="overlay"></div>
+
+<div class="sidebar collapsed"
+id="sidebar">
+
+<div class="brand"
+onclick="toggleSidebar()">
+<div class="logo">A</div>
+<span class="text">Admin Panel</span>
+</div>
+
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+
+
+<div class="main">
+
+<div class="topbar">
+
+<div class="hamburger"
+onclick="openSidebar()">
+<i class="fas fa-bars"></i>
+</div>
+
+<h3>Communications Center</h3>
+
+<div class="avatar">
+A
+</div>
+
+</div>
+
+
+
+<div class="grid">
+
+
+<!-- EMAIL -->
+
+<div class="card">
+
+<h3>Broadcast Email</h3>
+
+<div class="block">
+<div class="blockHeader"
+onclick="toggleBlock(this)">
+Collective Email
+</div>
+
+<div class="blockBody">
+
+<label>User Group</label>
+
+<select>
+<option>Customers</option>
+<option>Technicians</option>
+<option>Riders</option>
+<option>All Users</option>
+</select>
+
+<label>Subject</label>
+<input>
+
+<label>Message</label>
+<textarea></textarea>
+
+<button class="btn">
+Send Group Email
+</button>
+
+</div>
+</div>
+
+
+
+<div class="block">
+
+<div class="blockHeader"
+onclick="toggleBlock(this)">
+Individual Email
+</div>
+
+<div class="blockBody">
+
+<label>User Category</label>
+
+<select onchange="switchUsers('email',this.value)">
+<option value="customers">Customers</option>
+<option value="techs">Technicians</option>
+<option value="riders">Riders</option>
+</select>
+
+<input
+id="emailSearch"
+onkeyup="filterUsers('emailSearch','emailUsers')"
+placeholder="Search recipient">
+
+<div class="userBox">
+
+<div class="userList"
+id="emailUsers"></div>
+
+</div>
+
+<label>Subject</label>
+<input>
+
+<label>Message</label>
+<textarea></textarea>
+
+<button class="btn">
+Send Individual Email
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- NOTIFICATIONS -->
+
+<div class="card">
+
+<h3>Direct Notifications</h3>
+
+<div class="block">
+
+<div class="blockHeader"
+onclick="toggleBlock(this)">
+Collective Notifications
+</div>
+
+<div class="blockBody">
+
+<label>Target Group</label>
+
+<select>
+<option>Customers</option>
+<option>Technicians</option>
+<option>Riders</option>
+</select>
+
+<label>Priority</label>
+
+<select>
+<option>Normal</option>
+<option>Urgent</option>
+</select>
+
+<label>Message</label>
+
+<textarea></textarea>
+
+<button class="btn">
+Send Group Notification
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="block">
+
+<div class="blockHeader"
+onclick="toggleBlock(this)">
+Individual Notifications
+</div>
+
+<div class="blockBody">
+
+<label>User Category</label>
+
+<select onchange="switchUsers('notify',this.value)">
+<option value="customers">Customers</option>
+<option value="techs">Technicians</option>
+<option value="riders">Riders</option>
+</select>
+
+<input
+id="notifySearch"
+onkeyup="filterUsers('notifySearch','notifyUsers')"
+placeholder="Search recipient">
+
+<div class="userBox">
+<div class="userList"
+id="notifyUsers"></div>
+</div>
+
+<label>Message</label>
+
+<textarea></textarea>
+
+<button class="btn">
+Send Individual Notification
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- RIDER ASSIGN -->
+
+<div class="card">
+
+<h3>Rider Assignment</h3>
+
+<label>Accepted TR Job ID</label>
+
+<select id="jobSelect">
+
+<option>
+TR-006 — Emeka (Accepted)
+</option>
+
+<option>
+TR-005 — Bisi (Accepted)
+</option>
+
+<option>
+TR-004 — Musa (Accepted)
+</option>
+
+</select>
+
+
+<label>Assign Rider</label>
+
+<select id="riderSelect">
+</select>
+
+<div class="busyNote">
+Busy riders are unavailable for new assignments.
+</div>
+
+
+<label>Assignment Type</label>
+
+<select>
+<option>Pickup</option>
+<option>Delivery</option>
+</select>
+
+<label>Delivery / Pickup Address</label>
+
+<input
+placeholder="Enter address">
+
+
+<label>Instructions</label>
+
+<textarea></textarea>
+
+
+<button class="btn"
+onclick="createAssignment()">
+Assign Rider
+</button>
+
+</div>
+
+
+
+
+<!-- LOG -->
+
+<div class="card">
+
+<h3>Communications Log</h3>
+
+<label>Filter Logs</label>
+
+<select
+id="logFilter"
+onchange="filterLogs()">
+
+<option value="all">
+All
+</option>
+
+<option value="email">
+Emails
+</option>
+
+<option value="notification">
+Notifications
+</option>
+
+<option value="assignment">
+Assignments
+</option>
+
+</select>
+
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Type</th>
+<th>Recipient</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody id="logTable">
+
+<tr data-type="assignment">
+<td>Assignment</td>
+<td>Femi</td>
+<td><span class="badge">Assigned</span></td>
+<td>Just now</td>
+</tr>
+
+<tr data-type="notification">
+<td>Notification</td>
+<td>Riders</td>
+<td><span class="badge">Sent</span></td>
+<td>10 mins ago</td>
+</tr>
+
+<tr data-type="email">
+<td>Email</td>
+<td>Customers</td>
+<td><span class="badge">Sent</span></td>
+<td>1 hr ago</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+const overlay=
+document.getElementById('overlay');
+
+const sidebar=
+document.getElementById('sidebar');
+
+function toggleSidebar(){
+sidebar.classList.toggle(
+'collapsed'
+);
+}
+
+function openSidebar(){
+sidebar.classList.add('open');
+overlay.classList.add('show');
+}
+
+overlay.onclick=function(){
+sidebar.classList.remove('open');
+overlay.classList.remove('show');
+};
+
+
+
+function toggleBlock(el){
+el.parentElement.classList.toggle(
+'closed'
+);
+}
+
+
+
+/* USERS */
+
+const userData={
+
+customers:[
+'Ada Johnson',
+'Musa Bello'
+],
+
+techs:[
+'Chinedu Okafor',
+'Sade Lawal'
+],
+
+riders:[
+'Femi Musa',
+'Amina Yusuf'
+]
+
+};
+
+
+function switchUsers(type,group){
+
+let box=
+type==='email'
+?document.getElementById(
+'emailUsers'
+)
+:document.getElementById(
+'notifyUsers'
+);
+
+box.innerHTML='';
+
+userData[group].forEach(name=>{
+
+box.innerHTML+=
+'<div class="userItem">'+
+name+
+'</div>';
+
+});
+
+bindUserSelect();
+
+}
+
+switchUsers('email','customers');
+switchUsers('notify','customers');
+
+
+function bindUserSelect(){
+
+document
+.querySelectorAll('.userItem')
+.forEach(item=>{
+
+item.onclick=function(){
+
+item.parentElement
+.querySelectorAll(
+'.userItem'
+)
+.forEach(i=>
+i.classList.remove(
+'selected'
+)
+);
+
+item.classList.add(
+'selected'
+);
+
+};
+
+});
+
+}
+
+
+function filterUsers(
+searchId,
+listId
+){
+
+let q=
+document
+.getElementById(searchId)
+.value
+.toLowerCase();
+
+document
+.getElementById(listId)
+.querySelectorAll(
+'.userItem'
+)
+.forEach(item=>{
+
+item.style.display=
+item.innerText
+.toLowerCase()
+.includes(q)
+?'block'
+:'none';
+
+});
+
+}
+
+
+
+/* BUSY RIDERS */
+
+let riders=[
+
+{
+name:'Femi',
+busy:false
+},
+
+{
+name:'Amina',
+busy:false
+},
+
+{
+name:'Samuel',
+busy:false
+}
+
+];
+
+
+function renderRiders(){
+
+let select=
+document.getElementById(
+'riderSelect'
+);
+
+select.innerHTML='';
+
+riders.forEach(r=>{
+
+let opt=
+document.createElement(
+'option'
+);
+
+opt.value=r.name;
+
+opt.text=
+r.busy
+? r.name+' (Busy)'
+: r.name;
+
+opt.disabled=
+r.busy;
+
+select.appendChild(
+opt
+);
+
+});
+
+}
+
+renderRiders();
+
+
+
+function createAssignment(){
+if(!document.getElementById('jobSelect').value || !document.getElementById('riderSelect').value || !document.querySelector('input[placeholder="Enter address"]').value.trim()){ return alert('All fields are required before assigning a rider.'); }
+let rider=
+document.getElementById(
+'riderSelect'
+).value;
+
+if(!rider){
+alert(
+'No available rider.'
+);
+return;
+}
+
+riders.forEach(r=>{
+
+if(r.name===rider){
+r.busy=true;
+}
+
+});
+
+renderRiders();
+
+let row=
+document.createElement(
+'tr'
+);
+
+row.dataset.type=
+'assignment';
+
+row.innerHTML=`
+
+<td>Assignment</td>
+
+<td>${rider}</td>
+
+<td>
+<span class="badge">
+Assigned
+</span>
+</td>
+
+<td>
+Just now
+</td>
+
+`;
+
+document
+.getElementById(
+'logTable'
+)
+.prepend(row);
+
+alert(
+'Rider assigned successfully.'
+);
+
+}
+
+
+
+/* FILTER */
+
+function filterLogs(){
+
+let filter=
+document
+.getElementById(
+'logFilter'
+)
+.value;
+
+document
+.querySelectorAll(
+'#logTable tr'
+)
+.forEach(row=>{
+
+row.style.display=
+(
+filter==='all' ||
+row.dataset.type===filter
+)
+?'table-row'
+:'none';
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

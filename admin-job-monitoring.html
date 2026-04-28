@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>TechRider - Job Monitoring</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:900;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:270px;
+background:linear-gradient(
+180deg,
+var(--purple),
+var(--deep-purple)
+);
+padding:20px;
+color:white;
+position:fixed;
+height:100vh;
+overflow:auto;
+z-index:1000;
+transition:.3s;
+}
+
+.sidebar.collapsed{
+width:72px;
+}
+
+.sidebar.collapsed .text{
+display:none;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:25px;
+cursor:pointer;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+padding:12px;
+border-radius:12px;
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.nav a.active,
+.nav a:hover{
+background:rgba(255,255,255,.14);
+}
+
+/* MAIN */
+
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+}
+
+/* TOPBAR */
+
+.topbar{
+background:white;
+padding:16px 18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+cursor:pointer;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+/* FILTER BAR */
+
+.toolbar{
+background:white;
+padding:18px;
+border-radius:18px;
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.toolbar input,
+.toolbar select{
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+min-width:180px;
+flex:1;
+}
+
+/* SECTIONS */
+
+.section{
+background:white;
+border-radius:18px;
+margin-bottom:20px;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.sectionHeader{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+background:white;
+}
+
+.sectionHeader h3{
+color:var(--deep-purple);
+}
+
+.sectionBody{
+padding:0 20px 20px;
+display:block;
+}
+
+.section.collapsed .sectionBody{
+display:none;
+}
+
+.tableWrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+min-width:1100px;
+border-collapse:collapse;
+}
+
+th,
+td{
+padding:15px;
+text-align:left;
+border-bottom:1px solid #eee;
+}
+
+th{
+background:#faf7ff;
+color:var(--deep-purple);
+}
+
+/* BADGES */
+
+.badge{
+padding:7px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+display:inline-block;
+}
+
+.accepted{
+background:#e9d8fd;
+color:var(--purple);
+}
+
+.transit{
+background:#dff7ea;
+color:#12643a;
+}
+
+.pending{
+background:#fff2cc;
+}
+
+.rejected{
+background:#ffe5e5;
+color:#b00020;
+}
+
+.done{
+background:#e8eefc;
+color:#2449a5;
+}
+
+/* BUTTONS */
+
+.btn{
+border:none;
+padding:10px 12px;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+margin-right:8px;
+margin-bottom:8px;
+}
+
+.viewBtn{
+background:#f2ecff;
+color:var(--purple);
+}
+
+.completeBtn{
+background:#dff7ea;
+color:#12643a;
+}
+
+.deleteBtn{
+background:#ffe5e5;
+color:#b00020;
+}
+
+.timeline{
+display:none;
+margin-top:10px;
+padding:12px;
+background:#faf7ff;
+border-radius:12px;
+line-height:1.7;
+}
+
+.showTimeline .timeline{
+display:block;
+}
+
+.deviceLink{
+color:var(--purple);
+font-weight:600;
+cursor:pointer;
+text-decoration:underline;
+}
+
+.modal{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:18px;
+width:90%;
+max-width:450px;
+display:none;
+z-index:2000;
+box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+
+.modal.show{
+display:block;
+}
+
+.modal button{
+margin-top:18px;
+background:var(--purple);
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="sidebar collapsed" id="sidebar">
+
+<div class="brand" onclick="toggleSidebar()">
+<div class="logo">A</div>
+<span class="text">Admin Panel</span>
+</div>
+
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+
+<div class="main">
+
+<div class="topbar">
+
+<div class="hamburger"
+onclick="openSidebar()">
+<i class="fas fa-bars"></i>
+</div>
+
+<h3>Job Monitoring</h3>
+
+<div class="avatar">
+A
+</div>
+
+</div>
+
+
+
+<div class="toolbar">
+
+<input
+id="searchBox"
+placeholder="Search jobs...">
+
+<select id="sectionFilter">
+<option value="all">All Jobs</option>
+<option value="accepted">Accepted</option>
+<option value="pending">Pending</option>
+<option value="rejected">Rejected</option>
+<option value="completed">Completed</option>
+</select>
+
+</div>
+
+
+
+<!-- ACCEPTED -->
+
+<div class="section filterGroup"
+data-group="accepted">
+<div class="sectionHeader"
+onclick="toggleSection(this)">
+<h3>Accepted Jobs</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+
+<div class="sectionBody">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Customer</th>
+<th>Device</th>
+<th>Tech</th>
+<th>Status</th>
+<th>Rider</th>
+<th>Updated</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="acceptedTable">
+
+<tr data-search="tr-004 emeka tablet sade femi">
+
+<td>TR-004</td>
+<td>Emeka</td>
+
+<td>
+<span class="deviceLink"
+onclick="showIssue('Screen flicker and battery drain.')">
+Tablet
+</span>
+</td>
+
+<td>Sade</td>
+
+<td>
+<span class="badge transit">
+Delivery Transit
+</span>
+</td>
+
+<td>Femi</td>
+
+<td>Just now</td>
+
+<td>
+
+<button class="btn viewBtn"
+onclick="toggleTimeline(this)">
+Timeline
+</button>
+
+<button class="btn completeBtn"
+onclick="markCompleted(this)">
+Mark Completed
+</button>
+
+<div class="timeline">
+Repair done.<br>
+Delivery ongoing.
+</div>
+
+</td>
+
+</tr>
+
+
+
+<tr data-search="tr-005 bisi laptop chinedu amina">
+
+<td>TR-005</td>
+<td>Bisi</td>
+
+<td>
+<span class="deviceLink"
+onclick="showIssue('Laptop overheating.')">
+HP Laptop
+</span>
+</td>
+
+<td>Chinedu</td>
+
+<td>
+<span class="badge accepted">
+In Repair
+</span>
+</td>
+
+<td>Amina</td>
+
+<td>15 min ago</td>
+
+<td>
+
+<button class="btn viewBtn"
+onclick="toggleTimeline(this)">
+Timeline
+</button>
+
+<button class="btn completeBtn"
+onclick="markCompleted(this)">
+Mark Completed
+</button>
+
+<div class="timeline">
+Repair underway.
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- PENDING -->
+
+<div class="section filterGroup collapsed"
+data-group="pending">
+
+<div class="sectionHeader"
+onclick="toggleSection(this)">
+<h3>Pending Requests</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+
+<div class="sectionBody">
+
+<div class="tableWrap">
+
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>Device</th>
+<th>Technician</th>
+<th>Updated</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr data-search="ada iphone chinedu">
+
+<td>Ada</td>
+
+<td>
+<span class="deviceLink"
+onclick="showIssue('Phone not booting.')">
+iPhone 12
+</span>
+</td>
+
+<td>Chinedu</td>
+
+<td>43 min ago</td>
+
+<td>
+<button class="btn deleteBtn"
+onclick="deleteRow(this)">
+Delete
+</button>
+</td>
+
+</tr>
+
+
+<tr data-search="john samsung bola">
+
+<td>John</td>
+
+<td>
+<span class="deviceLink"
+onclick="showIssue('Broken display.')">
+Galaxy A52
+</span>
+</td>
+
+<td>Bola</td>
+
+<td>55 min ago</td>
+
+<td>
+<button class="btn deleteBtn"
+onclick="deleteRow(this)">
+Delete
+</button>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- REJECTED -->
+
+<div class="section filterGroup collapsed"
+data-group="rejected">
+
+<div class="sectionHeader"
+onclick="toggleSection(this)">
+<h3>Rejected Requests</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+
+<div class="sectionBody">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Customer</th>
+<th>Device</th>
+<th>Rejected By</th>
+<th>Updated</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr data-search="kunle galaxy bola">
+
+<td>Kunle</td>
+
+<td>
+<span class="deviceLink"
+onclick="showIssue('Damaged charging port.')">
+Galaxy S22
+</span>
+</td>
+
+<td>Bola</td>
+
+<td>48 min ago</td>
+
+<td>
+<button class="btn deleteBtn"
+onclick="deleteRow(this)">
+Delete
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- COMPLETED -->
+
+<div class="section filterGroup collapsed"
+data-group="completed">
+
+<div class="sectionHeader"
+onclick="toggleSection(this)">
+<h3>Completed Jobs</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+
+<div class="sectionBody">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Customer</th>
+<th>Device</th>
+<th>Tech</th>
+<th>Status</th>
+<th>Rider</th>
+<th>Updated</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="completedTable">
+
+<tr data-search="tr-001 musa iphone">
+
+<td>TR-001</td>
+<td>Musa</td>
+<td>iPhone X</td>
+<td>Sade</td>
+
+<td>
+<span class="badge done">
+Completed
+</span>
+</td>
+<td>Tobi</td>
+<td>Yesterday</td>
+
+<td>
+<button class="btn deleteBtn"
+onclick="deleteRow(this)">
+Delete
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="modal"
+id="issueModal">
+
+<h3>Customer Reported Issue</h3>
+
+<p id="issueText"></p>
+
+<button onclick="closeIssue()">
+Close
+</button>
+
+</div>
+
+
+
+<script>
+
+const sidebar=
+document.getElementById('sidebar');
+
+const overlay=
+document.getElementById('overlay');
+
+function toggleSidebar(){
+sidebar.classList.toggle(
+'collapsed'
+);
+}
+
+function openSidebar(){
+sidebar.classList.add('open');
+overlay.classList.add('show');
+}
+
+overlay.onclick=function(){
+sidebar.classList.remove('open');
+overlay.classList.remove('show');
+};
+
+
+/* accordion */
+
+function toggleSection(el){
+
+el.parentElement.classList.toggle(
+'collapsed'
+);
+
+}
+
+
+/* timeline */
+
+function toggleTimeline(btn){
+
+btn.closest('tr')
+.classList.toggle(
+'showTimeline'
+);
+
+}
+
+
+/* delete */
+
+function deleteRow(btn){
+
+if(confirm(
+'Delete this record?'
+)){
+btn.closest('tr').remove();
+}
+
+}
+
+
+/* mark complete */
+
+function markCompleted(btn){
+
+if(!confirm(
+'Move this job to completed?'
+)) return;
+
+let row=
+btn.closest('tr');
+
+row.querySelector(
+'.completeBtn'
+).remove();
+
+let status=
+row.querySelector(
+'.badge'
+);
+
+status.className=
+'badge done';
+
+status.innerText=
+'Completed';
+
+row.cells[6].innerText=
+'Just now';
+
+document
+.getElementById(
+'completedTable'
+)
+.prepend(row);
+
+}
+
+
+/* issue modal */
+
+function showIssue(issue){
+
+document
+.getElementById(
+'issueText'
+).innerText=issue;
+
+document
+.getElementById(
+'issueModal'
+)
+.classList.add('show');
+
+}
+
+function closeIssue(){
+
+document
+.getElementById(
+'issueModal'
+)
+.classList.remove(
+'show'
+);
+
+}
+
+
+/* filtering */
+
+function applyFilter(){
+
+let q=
+document
+.getElementById(
+'searchBox'
+)
+.value.toLowerCase();
+
+let group=
+document
+.getElementById(
+'sectionFilter'
+)
+.value;
+
+document
+.querySelectorAll(
+'.filterGroup'
+)
+.forEach(section=>{
+
+section.style.display=
+(group==='all' ||
+section.dataset.group===group)
+?'block'
+:'none';
+
+});
+
+document
+.querySelectorAll(
+'tbody tr'
+)
+.forEach(row=>{
+
+let s=
+row.dataset.search||'';
+
+row.style.display=
+s.includes(q)
+?'table-row'
+:'none';
+
+});
+
+}
+
+document
+.getElementById(
+'searchBox'
+)
+.addEventListener(
+'input',
+applyFilter
+);
+
+document
+.getElementById(
+'sectionFilter'
+)
+.addEventListener(
+'change',
+applyFilter
+);
+
+</script>
+
+</body>
+</html>

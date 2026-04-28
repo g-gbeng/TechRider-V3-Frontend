@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Admin Reports</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+animation:fadeIn .45s ease;
+overflow-x:hidden;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+z-index:800;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:270px;
+background:linear-gradient(
+180deg,
+var(--purple),
+var(--deep-purple)
+);
+padding:20px;
+position:fixed;
+height:100vh;
+overflow:auto;
+color:white;
+z-index:1000;
+transition:.3s;
+}
+
+.sidebar.collapsed{
+width:72px;
+}
+
+.sidebar.collapsed .text{
+display:none;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.brand{
+display:flex;
+gap:12px;
+align-items:center;
+margin-bottom:30px;
+cursor:pointer;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+padding:12px;
+display:flex;
+gap:12px;
+border-radius:12px;
+}
+
+.nav a.active,
+.nav a:hover{
+background:rgba(255,255,255,.14);
+}
+
+
+/* Main */
+
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+max-width:100%;
+}
+
+.topbar{
+background:white;
+padding:18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+cursor:pointer;
+font-size:1.3rem;
+}
+
+.dropBtn{
+border:none;
+padding:11px 15px;
+border-radius:10px;
+background:linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.dropdown{
+position:relative;
+}
+
+.dropMenu{
+display:none;
+position:absolute;
+right:0;
+top:50px;
+width:180px;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+z-index:50;
+}
+
+.dropMenu div{
+padding:14px;
+cursor:pointer;
+border-bottom:1px solid #eee;
+}
+
+.dropMenu div:hover{
+background:#faf7ff;
+}
+
+.dropdown.show .dropMenu{
+display:block;
+}
+
+
+/* KPI */
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(210px,1fr));
+gap:18px;
+margin-bottom:22px;
+}
+
+.stat{
+background:white;
+border-radius:18px;
+padding:22px;
+height:145px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.stat h4{
+margin-bottom:8px;
+color:#666;
+}
+
+.stat h2{
+color:var(--deep-purple);
+}
+
+
+/* Modules */
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(430px,1fr));
+gap:22px;
+align-items:stretch;
+}
+
+.card{
+background:white;
+border-radius:20px;
+padding:24px;
+min-height:500px;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.card h3{
+margin-bottom:18px;
+color:var(--deep-purple);
+}
+
+label{
+display:block;
+margin-top:10px;
+margin-bottom:6px;
+font-weight:600;
+}
+
+select{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+button{
+border:none;
+padding:12px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+margin-top:16px;
+background:linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+}
+
+.tableWrap{
+overflow-x:auto;
+margin-top:12px;
+}
+
+table{
+width:100%;
+min-width:500px;
+border-collapse:collapse;
+}
+
+th,
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#faf7ff;
+}
+
+.linkCase{
+color:var(--purple);
+font-weight:600;
+cursor:pointer;
+}
+
+
+/* Modal */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+z-index:3000;
+}
+
+.modalContent{
+background:white;
+width:90%;
+max-width:700px;
+margin:70px auto;
+padding:30px;
+border-radius:18px;
+}
+
+.closeBtn{
+float:right;
+cursor:pointer;
+font-size:1.4rem;
+}
+
+
+/* Responsive */
+
+@media(max-width:950px){
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card{
+min-height:500px;
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.card{
+min-height:auto;
+}
+
+table{
+min-width:100%;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay"
+id="overlay"></div>
+
+
+<div class="sidebar collapsed"
+id="sidebar">
+
+<div class="brand"
+onclick="toggleSidebar()">
+<div class="logo">A</div>
+<span class="text">
+Admin Panel
+</span>
+</div>
+
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+
+
+<div class="main">
+
+<div class="topbar">
+
+<div class="hamburger"
+onclick="openSidebar()">
+<i class="fas fa-bars"></i>
+</div>
+
+<h3>
+Reports Center
+</h3>
+
+<div class="dropdown"
+id="exportDropdown">
+
+<button
+class="dropBtn"
+onclick="toggleExport(event)">
+Export Reports
+</button>
+
+<div class="dropMenu">
+
+<div onclick="exportCSV()">
+Export CSV
+</div>
+
+<div onclick="generatePDF()">
+Export PDF
+</div>
+
+<div onclick="window.print()">
+Print Report
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- KPI -->
+
+<div class="stats">
+
+<div class="stat">
+<h4>Total Customers</h4>
+<h2>1,842</h2>
+</div>
+
+<div class="stat">
+<h4>Total Technicians</h4>
+<h2>126</h2>
+</div>
+
+<div class="stat">
+<h4>Total Riders</h4>
+<h2>44</h2>
+</div>
+
+<div class="stat">
+<h4>Total Requests</h4>
+<h2>248</h2>
+</div>
+
+<div class="stat">
+<h4>Revenue</h4>
+<h2>₦4.6M</h2>
+</div>
+
+<div class="stat">
+<h4>Tech Earnings</h4>
+<h2>₦2.1M</h2>
+</div>
+
+<div class="stat">
+<h4>Rider Payouts</h4>
+<h2>₦780K</h2>
+</div>
+
+<div class="stat">
+<h4>Pending Approvals</h4>
+<h2>4</h2>
+</div>
+
+</div>
+
+
+
+<div class="grid">
+
+
+<!-- Performance -->
+
+<div class="card">
+
+<h3>Performance Reports</h3>
+
+<label>Report Type</label>
+
+<select
+id="reportType"
+onchange="loadPerformance()">
+
+<option value="tech">
+Technician Performance
+</option>
+
+<option value="rider">
+Rider Performance
+</option>
+
+<option value="customer">
+Customer Activity
+</option>
+
+</select>
+
+<label>Period</label>
+
+<select
+id="period"
+onchange="loadPerformance()">
+
+<option value="today">
+Today
+</option>
+
+<option value="7">
+Last 7 Days
+</option>
+
+<option value="30">
+Last 30 Days
+</option>
+
+</select>
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Metric</th>
+<th>Rate</th>
+</tr>
+</thead>
+
+<tbody id="perfTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+
+<!-- Financial -->
+
+<div class="card">
+
+<h3>
+Financial Reports
+</h3>
+
+<table>
+
+<tr>
+<td>Repair Fees</td>
+<td>₦4,600,000</td>
+</tr>
+
+<tr>
+<td>Platform Commission</td>
+<td>₦1,120,000</td>
+</tr>
+
+<tr>
+<td>Technician Earnings</td>
+<td>₦2,100,000</td>
+</tr>
+
+<tr>
+<td>Rider Reconciliation</td>
+<td>₦780,000</td>
+</tr>
+
+<tr>
+<td>Refund Exposure</td>
+<td>₦96,000</td>
+</tr>
+
+</table>
+
+<button
+onclick="generateFinancial()">
+Generate Financial Report
+</button>
+
+</div>
+
+
+
+
+<!-- Incidents -->
+
+<div class="card">
+
+<h3>
+Incident Reports
+</h3>
+
+<table>
+
+<tr>
+<td>Delayed Repairs</td>
+
+<td>
+<span
+class="linkCase"
+onclick="showIncident('delay')">
+6 Cases
+</span>
+</td>
+
+</tr>
+
+<tr>
+<td>Failed Deliveries</td>
+
+<td>
+<span
+class="linkCase"
+onclick="showIncident('delivery')">
+2 Cases
+</span>
+</td>
+
+</tr>
+
+<tr>
+<td>Rejected Repairs</td>
+
+<td>
+<span
+class="linkCase"
+onclick="showIncident('reject')">
+3 Cases
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+
+<!-- Device Analytics -->
+
+<div class="card">
+
+<h3>
+Device Analytics
+</h3>
+
+<table>
+
+<tr>
+<td>iPhone Screens</td>
+<td>42</td>
+</tr>
+
+<tr>
+<td>Samsung Batteries</td>
+<td>28</td>
+</tr>
+
+<tr>
+<td>MacBook Repairs</td>
+<td>18</td>
+</tr>
+
+<tr>
+<td>Windows Laptops</td>
+<td>22</td>
+</tr>
+
+</table>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<div class="modal"
+id="incidentModal">
+
+<div class="modalContent">
+
+<span
+class="closeBtn"
+onclick="closeModal()">
+×
+</span>
+
+<h3 id="modalTitle">
+</h3>
+
+<div id="modalBody">
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* UPDATED PERFORMANCE REPORTS */
+
+const perfData={
+
+tech:{
+today:[
+['Chinedu',8,6,1,1,'75%'],
+['Sade',7,5,1,1,'71%']
+],
+
+'7':[
+['Chinedu',31,26,2,3,'84%'],
+['Sade',28,23,2,3,'82%']
+],
+
+'30':[
+['Chinedu',102,89,5,8,'87%'],
+['Sade',95,81,6,8,'85%']
+]
+},
+
+
+rider:{
+today:[
+['Femi',7,6,1,'86%'],
+['Amina',6,5,1,'83%']
+],
+
+'7':[
+['Femi',31,29,2,'94%'],
+['Amina',28,25,3,'89%']
+],
+
+'30':[
+['Femi',102,96,6,'94%'],
+['Amina',91,84,7,'92%']
+]
+},
+
+
+customer:{
+today:[
+['Ada',3,2,1,'67%'],
+['Musa',2,2,0,'100%']
+],
+
+'7':[
+['Ada',8,7,1,'88%'],
+['Musa',6,5,1,'83%']
+],
+
+'30':[
+['Ada',18,16,2,'89%'],
+['Musa',15,13,2,'87%']
+]
+}
+
+};
+
+
+
+function loadPerformance(){
+
+let t=
+document.getElementById(
+'reportType'
+).value;
+
+let p=
+document.getElementById(
+'period'
+).value;
+
+let head='';
+let rows='';
+
+
+if(t==='tech'){
+
+head=`
+
+<tr>
+<th>Technician</th>
+<th>Total Requested</th>
+<th>Completed</th>
+<th>Rejected</th>
+<th>Failed</th>
+<th>Success %</th>
+</tr>
+
+`;
+
+perfData[t][p].forEach(r=>{
+
+rows+=`
+
+<tr>
+<td>${r[0]}</td>
+<td>${r[1]}</td>
+<td>${r[2]}</td>
+<td>${r[3]}</td>
+<td>${r[4]}</td>
+<td>${r[5]}</td>
+</tr>
+
+`;
+
+});
+
+}
+
+
+if(t==='rider'){
+
+head=`
+
+<tr>
+<th>Rider</th>
+<th>Total Deliveries</th>
+<th>Completed</th>
+<th>Failed</th>
+<th>Success %</th>
+</tr>
+
+`;
+
+perfData[t][p].forEach(r=>{
+
+rows+=`
+
+<tr>
+<td>${r[0]}</td>
+<td>${r[1]}</td>
+<td>${r[2]}</td>
+<td>${r[3]}</td>
+<td>${r[4]}</td>
+</tr>
+
+`;
+
+});
+
+}
+
+
+
+if(t==='customer'){
+
+head=`
+
+<tr>
+<th>Customer</th>
+<th>Total Requests</th>
+<th>Completed</th>
+<th>Cancelled</th>
+<th>Completion %</th>
+</tr>
+
+`;
+
+perfData[t][p].forEach(r=>{
+
+rows+=`
+
+<tr>
+<td>${r[0]}</td>
+<td>${r[1]}</td>
+<td>${r[2]}</td>
+<td>${r[3]}</td>
+<td>${r[4]}</td>
+</tr>
+
+`;
+
+});
+
+}
+
+
+document.querySelector(
+'#perfTable'
+).innerHTML=rows;
+
+document.querySelector(
+'.tableWrap table thead'
+).innerHTML=head;
+
+}
+
+
+loadPerformance();
+
+
+function generateFinancial(){
+
+alert(
+'Financial report generated.'
+);
+
+}
+
+
+/* EXPORT */
+
+function toggleExport(e){
+
+e.stopPropagation();
+
+document
+.getElementById(
+'exportDropdown'
+)
+.classList.toggle(
+'show'
+);
+
+}
+
+function exportCSV(){
+
+let blob=
+new Blob(
+['Sample report data'],
+{type:'text/csv'}
+);
+
+let a=
+document.createElement('a');
+
+a.href=
+URL.createObjectURL(blob);
+
+a.download=
+'report.csv';
+
+a.click();
+
+}
+
+function generatePDF(){
+
+alert(
+'PDF generation initiated.'
+);
+
+}
+
+
+
+/* INCIDENTS */
+
+function showIncident(type){
+
+let title='';
+let body='';
+
+if(type==='delay'){
+title='Delayed Repairs';
+body=
+'Chinedu — iPhone 12 delay<br>Sade — Parts unavailable';
+}
+
+if(type==='delivery'){
+title='Failed Deliveries';
+body=
+'Femi — customer unavailable<br>Amina — wrong address';
+}
+
+if(type==='reject'){
+title='Rejected Repairs';
+body=
+'Bola rejected water damage case';
+}
+
+document.getElementById(
+'modalTitle'
+).innerHTML=title;
+
+document.getElementById(
+'modalBody'
+).innerHTML=body;
+
+document.getElementById(
+'incidentModal'
+).style.display='block';
+
+}
+
+
+function closeModal(){
+
+document
+.getElementById(
+'incidentModal'
+)
+.style.display='none';
+
+}
+
+
+
+/* SIDEBAR */
+
+function toggleSidebar(){
+
+document
+.getElementById(
+'sidebar'
+)
+.classList.toggle(
+'collapsed'
+);
+
+}
+
+function openSidebar(){
+
+document
+.getElementById(
+'sidebar'
+)
+.classList.add(
+'open'
+);
+
+document
+.getElementById(
+'overlay'
+)
+.classList.add(
+'show'
+);
+
+}
+
+
+/* click anywhere closes modules */
+
+document.addEventListener(
+'click',
+function(e){
+
+document
+.getElementById(
+'exportDropdown'
+)
+.classList.remove(
+'show'
+);
+
+if(
+e.target.id==='incidentModal'
+){
+closeModal();
+}
+
+document
+.getElementById(
+'sidebar'
+)
+.classList.remove(
+'open'
+);
+
+document
+.getElementById(
+'overlay'
+)
+.classList.remove(
+'show'
+);
+
+}
+);
+
+</script>
+
+</body>
+</html>
