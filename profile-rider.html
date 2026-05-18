@@ -7,7 +7,7 @@ content="width=device-width,initial-scale=1.0">
 
 <title>Rider Profile - TechRider</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 rel="stylesheet">
 
 <link rel="stylesheet"
@@ -27,67 +27,201 @@ font-family:'Poppins',sans-serif;
 --deep-purple:#240046;
 --lilac:#e0aaff;
 --gray:#f6f6f6;
+--white:#fff;
 }
 
 body{
 background:var(--gray);
 padding:20px;
 animation:fadeIn .5s ease-in;
+overflow-x:hidden;
 }
 
 .wrapper{
-max-width:900px;
+max-width:1100px;
 margin:auto;
 }
+
+/* TOPBAR */
 
 .topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
-flex-wrap:wrap;
+margin-bottom:24px;
 gap:15px;
+flex-wrap:wrap;
 }
 
 .back-btn{
 text-decoration:none;
 background:white;
-padding:12px 18px;
-border-radius:12px;
+padding:13px 18px;
+border-radius:14px;
 color:var(--purple);
 font-weight:600;
+box-shadow:0 5px 16px rgba(0,0,0,.05);
 }
 
 .avatar{
-width:45px;
-height:45px;
+width:52px;
+height:52px;
 border-radius:50%;
 background:var(--purple);
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-font-weight:600;
+font-weight:700;
+font-size:1.1rem;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* LAYOUT */
+
+.profile-layout{
+display:grid;
+grid-template-columns:320px 1fr;
+gap:24px;
+}
+
+/* LEFT SIDEBAR CARD */
+
+.side-card{
+background:white;
+border-radius:24px;
+padding:28px;
+box-shadow:0 8px 24px rgba(0,0,0,.05);
+height:fit-content;
+}
+
+.profile-image-wrap{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.profile-image{
+width:120px;
+height:120px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:2rem;
+font-weight:700;
+color:white;
+overflow:hidden;
+margin-bottom:16px;
+}
+
+.profile-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.profile-name{
+font-size:1.25rem;
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.profile-role{
+margin-top:6px;
+color:#777;
+font-size:.92rem;
+}
+
+.upload-btn{
+margin-top:18px;
+display:inline-block;
+padding:12px 18px;
+border-radius:12px;
+background:#f3e8ff;
+color:var(--purple);
+font-weight:600;
+cursor:pointer;
+font-size:.92rem;
+border:none;
+}
+
+.upload-btn input{
+display:none;
+}
+
+/* ACTION BUTTONS */
+
+.action-buttons{
+margin-top:30px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.action-btn{
+text-decoration:none;
+padding:14px 16px;
+border-radius:14px;
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+transition:.3s;
+}
+
+.jobs-btn{
+background:#f3e8ff;
+color:var(--purple);
+}
+
+.password-btn{
+background:linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+}
+
+.logout-btn{
+background:#ffe9ec;
+color:#d90429;
+}
+
+.action-btn:hover{
+transform:translateY(-2px);
+}
+
+/* MAIN PROFILE CARD */
 
 .profile-card{
 background:white;
 padding:30px;
-border-radius:18px;
-box-shadow:0 5px 18px rgba(0,0,0,.05);
-margin-bottom:20px;
+border-radius:24px;
+box-shadow:0 8px 24px rgba(0,0,0,.05);
 }
 
-h2{
+.section-title{
+font-size:1.3rem;
+font-weight:700;
 color:var(--deep-purple);
-margin-bottom:20px;
+margin-bottom:24px;
 }
 
-/* GRID LAYOUT */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:18px;
+gap:20px;
 }
 
 .group{
@@ -95,84 +229,94 @@ display:flex;
 flex-direction:column;
 }
 
-label{
+.group label{
 margin-bottom:8px;
 font-weight:600;
 color:#444;
+font-size:.95rem;
 }
 
-input,
-select{
-width:100%;
-padding:14px;
-border:none;
-background:#f6f6f6;
-border-radius:10px;
+.info-field{
+background:#f7f7f7;
+padding:15px;
+border-radius:14px;
+color:#555;
+font-size:.95rem;
+word-break:break-word;
+min-height:54px;
+display:flex;
+align-items:center;
 }
 
-input[readonly]{
-background:#eee;
-}
-
-/* PASSWORD */
-.password-wrap{
-position:relative;
-}
-
-.password-wrap input{
-padding-right:48px;
-}
-
-.toggle-pass{
-position:absolute;
-right:16px;
-top:50%;
-transform:translateY(-50%);
-cursor:pointer;
-color:#666;
-}
-
-/* VERIFY */
 .verify-box{
-padding:14px;
-border-radius:10px;
 background:#f3e8ff;
+padding:16px;
+border-radius:14px;
 color:var(--purple);
-font-weight:500;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:10px;
 }
 
-/* BUTTON */
-.save-btn{
+.verify-box i{
+font-size:1rem;
+}
+
+/* IMAGE PREVIEW */
+
+.document-preview{
+margin-top:12px;
 width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-font-weight:600;
-cursor:pointer;
-background:linear-gradient(135deg,var(--purple),var(--lilac));
-color:white;
-margin-top:10px;
+max-width:240px;
+border-radius:14px;
+overflow:hidden;
+border:1px solid #eee;
 }
 
-.section-title{
-margin:30px 0 20px;
-font-size:1.1rem;
-font-weight:600;
-color:var(--deep-purple);
+.document-preview img{
+width:100%;
+display:block;
 }
 
-/* RESPONSIVE */
+/* MOBILE */
+
+@media(max-width:900px){
+
+.profile-layout{
+grid-template-columns:1fr;
+}
+
+}
+
 @media(max-width:768px){
+
+body{
+padding:15px;
+}
+
+.profile-card,
+.side-card{
+padding:22px;
+border-radius:20px;
+}
 
 .grid{
 grid-template-columns:1fr;
 }
 
-.profile-card{
-padding:22px;
+.topbar{
+align-items:flex-start;
+}
+
+.profile-image{
+width:100px;
+height:100px;
 }
 
 }
+
+/* FADE */
 
 @keyframes fadeIn{
 from{
@@ -192,6 +336,8 @@ transform:translateY(0);
 
 <div class="wrapper">
 
+<!-- TOPBAR -->
+
 <div class="topbar">
 
 <a href="dashboard-rider.html"
@@ -199,115 +345,135 @@ class="back-btn">
 ← Back to Dashboard
 </a>
 
-<div class="avatar">R</div>
+<div class="avatar"
+id="topAvatar">
+R
+</div>
 
 </div>
 
+<!-- PROFILE LAYOUT -->
+
+<div class="profile-layout">
+
+<!-- LEFT -->
+
+<div class="side-card">
+
+<div class="profile-image-wrap">
+
+<div class="profile-image"
+id="profileImageContainer">
+R
+</div>
+
+<div class="profile-name"
+id="profileName">
+Rider Name
+</div>
+
+<div class="profile-role">
+Verified TechRider Rider
+</div>
+
+<label class="upload-btn">
+<i class="fas fa-camera"></i>
+Upload Profile Image
+
+<input
+type="file"
+id="profileUpload"
+accept="image/*">
+</label>
+
+</div>
+
+<div class="action-buttons">
+
+<a href="available-jobs-rider.html"
+class="action-btn jobs-btn">
+<i class="fas fa-box"></i>
+Available Jobs
+</a>
+
+<a href="reset-password-customer.html"
+class="action-btn password-btn">
+<i class="fas fa-lock"></i>
+Change Password
+</a>
+
+<a href="login-rider.html"
+class="action-btn logout-btn"
+onclick="logoutRider()">
+<i class="fas fa-sign-out-alt"></i>
+Logout
+</a>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
 <div class="profile-card">
 
-<h2>Rider Profile</h2>
+<div class="section-title">
+Rider Details & Activities
+</div>
 
-<!-- PROFILE GRID -->
 <div class="grid">
 
 <div class="group">
 <label>Full Name</label>
-<input type="text" value="Test Rider">
+<div class="info-field"
+id="fullName">
+-
+</div>
 </div>
 
 <div class="group">
 <label>Email Address</label>
-<input type="email" value="rider@email.com" readonly>
+<div class="info-field"
+id="email">
+-
+</div>
 </div>
 
 <div class="group">
 <label>Phone Number</label>
-<input type="text" value="08012345678" readonly>
+<div class="info-field"
+id="phone">
+-
+</div>
 </div>
 
 <div class="group">
 <label>Address</label>
-<input type="text" value="Lekki, Lagos" readonly>
+<div class="info-field"
+id="address">
+-
+</div>
 </div>
 
 <div class="group">
 <label>Plate Number</label>
-<input type="text" value="ABC-123XY" readonly>
+<div class="info-field"
+id="plateNumber">
+-
+</div>
 </div>
 
 <div class="group">
 <label>Vehicle Type</label>
-<input type="text" value="Motorcycle" readonly>
-</div>
-
-</div>
-
-<div class="group" style="margin-top:18px;">
-<label>Driver’s License</label>
-<div class="verify-box">Verified Document Uploaded</div>
-</div>
-
-<div class="group">
-<label>Facial Verification</label>
-<div class="verify-box">Verified Image Uploaded</div>
-</div>
-
-<button class="save-btn">
-Update Name
-</button>
-
-
-<div class="section-title">
-Change Password
-</div>
-
-<div class="grid">
-
-<div class="group">
-<label>Current Password</label>
-
-<div class="password-wrap">
-<input id="currentPassword"
-type="password"
-placeholder="Enter current password">
-
-<i class="fas fa-eye toggle-pass"
-onclick="togglePassword('currentPassword',this)"></i>
-</div>
-</div>
-
-<div class="group">
-<label>New Password</label>
-
-<div class="password-wrap">
-<input id="newPassword"
-type="password"
-placeholder="Enter new password">
-
-<i class="fas fa-eye toggle-pass"
-onclick="togglePassword('newPassword',this)"></i>
-</div>
-</div>
-
-<div class="group">
-<label>Confirm New Password</label>
-
-<div class="password-wrap">
-<input id="confirmPassword"
-type="password"
-placeholder="Confirm new password">
-
-<i class="fas fa-eye toggle-pass"
-onclick="togglePassword('confirmPassword',this)"></i>
+<div class="info-field"
+id="vehicleType">
+-
 </div>
 </div>
 
 </div>
 
-<button class="save-btn"
-onclick="validatePassword()">
-Update Password
-</button>
+</div>
 
 </div>
 
@@ -315,40 +481,211 @@ Update Password
 
 <script>
 
-function togglePassword(id,icon){
+/* =========================
+CURRENT RIDER
+========================= */
 
-let field=document.getElementById(id);
+const currentRider =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_rider'
+)
+);
 
-if(field.type==="password"){
-field.type="text";
-icon.classList.replace("fa-eye","fa-eye-slash");
+if(!currentRider){
+
+window.location.href =
+'login-rider.html';
+
+}
+
+/* =========================
+GET ELEMENTS
+========================= */
+
+const fullNameEl =
+document.getElementById('fullName');
+
+const emailEl =
+document.getElementById('email');
+
+const phoneEl =
+document.getElementById('phone');
+
+const addressEl =
+document.getElementById('address');
+
+const plateEl =
+document.getElementById('plateNumber');
+
+const vehicleEl =
+document.getElementById('vehicleType');
+
+const profileName =
+document.getElementById('profileName');
+
+const topAvatar =
+document.getElementById('topAvatar');
+
+const profileImageContainer =
+document.getElementById(
+'profileImageContainer'
+);
+
+/* =========================
+POPULATE DETAILS
+========================= */
+
+const fullName =
+currentRider.fullName ||
+'Rider';
+
+const firstName =
+fullName.split(' ')[0];
+
+const initials =
+firstName.charAt(0).toUpperCase();
+
+fullNameEl.textContent =
+fullName;
+
+emailEl.textContent =
+currentRider.email || '-';
+
+phoneEl.textContent =
+currentRider.phone || '-';
+
+addressEl.textContent =
+currentRider.address || '-';
+
+plateEl.textContent =
+currentRider.plateNumber || '-';
+
+vehicleEl.textContent =
+currentRider.vehicleType || '-';
+
+profileName.textContent =
+fullName;
+
+/* =========================
+PROFILE IMAGE
+========================= */
+
+function renderProfileImage(){
+
+if(currentRider.profileImage){
+
+profileImageContainer.innerHTML = `
+<img src="${currentRider.profileImage}">
+`;
+
+topAvatar.innerHTML = `
+<img src="${currentRider.profileImage}">
+`;
+
 }else{
-field.type="password";
-icon.classList.replace("fa-eye-slash","fa-eye");
-}
+
+profileImageContainer.textContent =
+initials;
+
+topAvatar.textContent =
+initials;
 
 }
 
-function validatePassword(){
-
-let newPass=document.getElementById("newPassword").value;
-let confirmPass=document.getElementById("confirmPassword").value;
-
-let rule=/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
-if(!rule.test(newPass)){
-alert("Password must be at least 8 characters, include 1 uppercase letter, 1 number and 1 special character.");
-return;
 }
 
-if(newPass!==confirmPass){
-alert("Passwords do not match.");
-return;
+renderProfileImage();
+
+/* =========================
+UPLOAD PROFILE IMAGE
+========================= */
+
+document.getElementById(
+'profileUpload'
+).addEventListener(
+'change',
+function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+const reader =
+new FileReader();
+
+reader.onload = function(event){
+
+currentRider.profileImage =
+event.target.result;
+
+/* update current rider */
+localStorage.setItem(
+'techrider_current_rider',
+JSON.stringify(currentRider)
+);
+
+/* update riders array */
+let riders =
+JSON.parse(
+localStorage.getItem(
+'techrider_riders'
+)
+) || [];
+
+riders = riders.map(rider => {
+
+if(rider.id === currentRider.id){
+
+return {
+...rider,
+profileImage:
+event.target.result
+};
+
 }
 
-alert("Password updated successfully (frontend only).");
+return rider;
+
+});
+
+localStorage.setItem(
+'techrider_riders',
+JSON.stringify(riders)
+);
+
+renderProfileImage();
+
+};
+
+reader.readAsDataURL(file);
 
 }
+);
+/* =========================
+LOGOUT
+========================= */
+
+function logoutRider(){
+
+localStorage.removeItem(
+'techrider_current_rider'
+);
+
+}
+
+/* =========================
+STORAGE LISTENER
+========================= */
+
+window.addEventListener(
+'storage',
+() => {
+
+location.reload();
+
+}
+);
 
 </script>
 

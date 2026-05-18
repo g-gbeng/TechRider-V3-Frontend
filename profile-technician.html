@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Technician Profile</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>
+  Technician Profile
+</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
 
 :root{
   --purple:#5a189a;
@@ -22,130 +41,305 @@
 body{
   background:var(--gray);
   padding:20px;
-  animation:fadeIn .6s;
+  animation:fadeIn .6s ease;
+  min-height:100vh;
 }
 
-.container{max-width:900px;margin:auto;}
+.container{
+  max-width:950px;
+  margin:auto;
+}
+
+/* HEADER */
 
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:20px;
+  gap:12px;
   flex-wrap:wrap;
-  gap:10px;
 }
 
-.header h2{color:var(--deep-purple);}
+.header h2{
+  color:var(--deep-purple);
+}
 
 .back-btn{
   background:var(--purple);
   color:white;
+  text-decoration:none;
   padding:10px 14px;
   border-radius:10px;
-  text-decoration:none;
   font-size:.85rem;
 }
 
 /* CARD */
+
 .card{
   background:var(--white);
+  border-radius:20px;
   padding:25px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
   margin-bottom:20px;
 }
 
-/* TOP */
+/* TOP PROFILE */
+
 .top{
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:20px;
   flex-wrap:wrap;
+  margin-bottom:25px;
+}
+.top{
+  width:100%;
+}
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+  min-width:0;
 }
 
 .avatar{
-  width:80px;
-  height:80px;
+  width:90px;
+  height:90px;
   border-radius:50%;
   background:var(--purple);
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.5rem;
+  font-size:2rem;
+  font-weight:600;
+  overflow:hidden;
+  position:relative;
+  flex-shrink:0;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.upload-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#f3e8ff;
+  color:var(--deep-purple);
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.85rem;
+  font-weight:600;
+  border:none;
+}
+
+.upload-btn input{
+  display:none;
 }
 
 .name{
+  font-size:1.2rem;
   font-weight:600;
   color:var(--deep-purple);
 }
 
 .badge{
-  font-size:.8rem;
+  margin-top:6px;
+  font-size:.85rem;
   color:#16a34a;
 }
 
-/* FORM */
-.form{
-  margin-top:20px;
+/* DETAILS */
+
+.section-title{
+  color:var(--deep-purple);
+  margin-bottom:18px;
+  font-size:1rem;
+}
+
+.details{
   display:grid;
   grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.item{
+  background:#faf7ff;
+  padding:16px;
+  border-radius:14px;
+}
+
+.item label{
+  display:block;
+  font-size:.78rem;
+  color:#666;
+  margin-bottom:6px;
+}
+
+.item p{
+  color:var(--deep-purple);
+  font-size:.95rem;
+  font-weight:500;
+  word-break:break-word;
+}
+
+/* ACTIONS */
+
+.actions{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
 }
 
-.group{display:flex;flex-direction:column;gap:5px;}
-.group.full{grid-column:span 2;}
-
-label{font-size:.8rem;color:#555;}
-
-input{
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  font-size:.9rem;
-}
-
-input[readonly]{
-  background:#f3f3f3;
-  cursor:not-allowed;
-}
-
-/* PASSWORD */
-.password-group{position:relative;}
-
-.toggle{
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  color:#777;
-}
-
-/* BUTTON */
-.btn{
-  margin-top:20px;
-  padding:14px;
+.action-btn{
   border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--purple),var(--lilac));
+  border-radius:14px;
+  padding:18px;
+  cursor:pointer;
   color:white;
   font-weight:600;
-  cursor:pointer;
+  transition:.3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-decoration:none;
+}
+
+.action-btn:hover{
+  transform:translateY(-2px);
+}
+
+.jobs-btn{
+  background:linear-gradient(
+    135deg,
+    var(--purple),
+    #9d4edd
+  );
+}
+
+.password-btn{
+  background:#ede4ff;
+      color:var(--purple);
+  
+}
+
+.logout-btn{
+  background:linear-gradient(
+    135deg,
+    #d00000,
+    #dc2f02
+  );
 }
 
 /* MOBILE */
+/* MOBILE RESPONSIVE */
 @media(max-width:768px){
-  .form{grid-template-columns:1fr;}
-  .group.full{grid-column:span 1;}
-  .back-btn{width:100%;text-align:center;}
+
+  body{
+    padding:14px;
+  }
+
+  .container{
+    width:100%;
+  }
+
+  .header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .header h2{
+    font-size:1.4rem;
+  }
+
+  .back-btn{
+    width:100%;
+    text-align:center;
+  }
+
+  .card{
+    padding:18px;
+    border-radius:18px;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .profile-left{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    width:100%;
+  }
+
+  .avatar{
+    width:85px;
+    height:85px;
+    font-size:1.7rem;
+  }
+
+  .upload-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .details{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+
+  .item{
+    padding:14px;
+  }
+
+  .item p{
+    font-size:.9rem;
+    line-height:1.5;
+  }
+
+  .actions{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .action-btn{
+    width:100%;
+    padding:16px;
+    font-size:.92rem;
+  }
+
 }
 
+/* ANIMATION */
+
 @keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
 }
+
 </style>
 </head>
 
@@ -153,105 +347,387 @@ input[readonly]{
 
 <div class="container">
 
-<div class="header">
-  <h2>Technician Profile</h2>
-  <a href="dashboard-technician.html" class="back-btn">← Back</a>
-</div>
+  <!-- HEADER -->
 
-<!-- PROFILE INFO -->
-<div class="card">
+  <div class="header">
 
-<div class="top">
-  <div class="avatar">T</div>
-  <div>
-    <div class="name">Technician Name</div>
-    <div class="badge"><i class="fas fa-check-circle"></i> Verified Technician</div>
+    <h2>
+      Technician Profile
+    </h2>
+
+    <a
+      href="dashboard-technician.html"
+      class="back-btn"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
   </div>
-</div>
 
-<form class="form">
+  <!-- PROFILE CARD -->
 
-<div class="group">
-  <label>Full Name</label>
-  <input type="text" value="Technician Name">
-</div>
+  <div class="card">
 
-<div class="group">
-  <label>Email</label>
-  <input type="email" value="tech@example.com" readonly>
-</div>
+    <div class="top">
 
-<div class="group">
-  <label>Phone</label>
-  <input type="text" value="+234XXXXXXXXXX" readonly>
-</div>
+      <div class="profile-left">
 
-<div class="group">
-  <label>Specialization</label>
-  <input type="text" value="Phone Repair" readonly>
-</div>
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          T
+        </div>
 
-<div class="group">
-  <label>Years of Experience</label>
-  <input type="number" value="3" readonly>
-</div>
+        <div>
 
-<div class="group full">
-  <label>Address</label>
-  <input type="text" value="Lagos, Nigeria" readonly>
-</div>
+          <div
+            class="name"
+            id="profileName"
+          >
+            Technician Name
+          </div>
 
-</form>
+          <div class="badge">
 
-<button class="btn">Save Changes</button>
+            <i class="fas fa-check-circle"></i>
+            Verified Technician
 
-</div>
+          </div>
 
-<!-- PASSWORD CHANGE -->
-<div class="card">
+        </div>
 
-<h3 style="color:var(--deep-purple);margin-bottom:10px;">Change Password</h3>
+      </div>
 
-<form class="form">
+      <!-- IMAGE UPLOAD -->
 
-<div class="group password-group full">
-  <label>Current Password</label>
-  <input type="password">
-  <i class="fas fa-eye toggle" onclick="togglePassword(this)"></i>
-</div>
+      <label class="upload-btn">
 
-<div class="group password-group">
-  <label>New Password</label>
-  <input type="password">
-  <i class="fas fa-eye toggle" onclick="togglePassword(this)"></i>
-</div>
+        <i class="fas fa-camera"></i>
+        Upload Photo
 
-<div class="group password-group">
-  <label>Confirm New Password</label>
-  <input type="password">
-  <i class="fas fa-eye toggle" onclick="togglePassword(this)"></i>
-</div>
+        <input
+          type="file"
+          id="profileUpload"
+          accept="image/*"
+        >
 
-<button class="btn">Update Password</button>
+      </label>
 
-</form>
+    </div>
 
-</div>
+    <!-- DETAILS -->
+
+    <h3 class="section-title">
+      Technician Details
+    </h3>
+
+    <div class="details">
+
+      <div class="item">
+        <label>Full Name</label>
+        <p id="fullName">
+          -
+        </p>
+      </div>
+
+      <div class="item">
+        <label>Email Address</label>
+        <p id="email">
+          -
+        </p>
+      </div>
+
+      <div class="item">
+        <label>Phone Number</label>
+        <p id="phone">
+          -
+        </p>
+      </div>
+
+      <div class="item">
+        <label>Specialization</label>
+        <p id="specialization">
+          -
+        </p>
+      </div>
+
+      <div class="item">
+        <label>Location</label>
+        <p id="location">
+          -
+        </p>
+      </div>
+
+      <div class="item">
+        <label>Experience</label>
+        <p id="experience">
+          -
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+      <a
+        href="available-jobs-technician.html"
+        class="action-btn jobs-btn"
+      >
+        <i class="fas fa-briefcase"></i>
+        Available Jobs
+      </a>
+
+      <a
+        href="reset-password-technician.html"
+        class="action-btn password-btn"
+      >
+        <i class="fas fa-lock"></i>
+        Change Password
+      </a>
+
+      <a
+        href="login-technician.html"
+        class="action-btn logout-btn"
+        onclick="logoutTechnician()"
+      >
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </a>
+
+    </div>
+
+  </div>
 
 </div>
 
 <script>
-function togglePassword(icon){
-  const input = icon.previousElementSibling;
 
-  if(input.type === "password"){
-    input.type = "text";
-    icon.classList.replace("fa-eye","fa-eye-slash");
-  } else {
-    input.type = "password";
-    icon.classList.replace("fa-eye-slash","fa-eye");
-  }
+/* =========================
+   CURRENT TECHNICIAN
+========================= */
+
+const currentTechnician =
+  JSON.parse(
+    localStorage.getItem(
+      "techrider_current_technician"
+    )
+  );
+
+/* =========================
+   SECURITY
+========================= */
+
+if(!currentTechnician){
+
+  window.location.href =
+    "login-technician.html";
+
 }
+
+/* =========================
+   DOM
+========================= */
+
+const avatar =
+  document.getElementById(
+    "avatar"
+  );
+
+const profileName =
+  document.getElementById(
+    "profileName"
+  );
+
+/* =========================
+   INITIALS
+========================= */
+
+function getInitials(name){
+
+  if(!name) return "T";
+
+  return name
+    .split(" ")
+    .map(n => n[0])
+    .join("")
+    .substring(0,2)
+    .toUpperCase();
+
+}
+
+/* =========================
+   PROFILE DATA
+========================= */
+
+const technicianName =
+  currentTechnician.fullName ||
+  "Technician";
+
+profileName.textContent =
+  technicianName;
+
+/* AVATAR */
+
+if(currentTechnician.profileImage){
+
+  avatar.innerHTML = `
+    <img
+      src="${currentTechnician.profileImage}"
+      alt="Profile"
+    >
+  `;
+
+}else{
+
+  avatar.textContent =
+    getInitials(technicianName);
+
+}
+
+/* DETAILS */
+
+document.getElementById(
+  "fullName"
+).textContent =
+  technicianName;
+
+document.getElementById(
+  "email"
+).textContent =
+  currentTechnician.email ||
+  "Not provided";
+
+document.getElementById(
+  "phone"
+).textContent =
+  currentTechnician.phone ||
+  "Not provided";
+
+document.getElementById(
+  "specialization"
+).textContent =
+  currentTechnician.specialization ||
+  "General Technician";
+
+document.getElementById(
+  "location"
+).textContent =
+  currentTechnician.location ||
+  currentTechnician.address ||
+  "Not provided";
+
+document.getElementById(
+  "experience"
+).textContent =
+  currentTechnician.experience ||
+  currentTechnician.yearsOfExperience ||
+  "Not specified";
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
+
+document
+.getElementById(
+  "profileUpload"
+)
+.addEventListener(
+  "change",
+  function(event){
+
+    const file =
+      event.target.files[0];
+
+    if(!file) return;
+
+    const reader =
+      new FileReader();
+
+    reader.onload =
+      function(e){
+
+        const image =
+          e.target.result;
+
+        /* update current technician */
+
+        currentTechnician.profileImage =
+          image;
+
+        localStorage.setItem(
+          "techrider_current_technician",
+          JSON.stringify(
+            currentTechnician
+          )
+        );
+
+        /* update technicians list */
+
+        let technicians =
+          JSON.parse(
+            localStorage.getItem(
+              "techrider_technicians"
+            )
+          ) || [];
+
+        technicians =
+          technicians.map(tech => {
+
+            if(
+              tech.id ===
+              currentTechnician.id
+            ){
+
+              return {
+                ...tech,
+                profileImage:image
+              };
+
+            }
+
+            return tech;
+
+          });
+
+        localStorage.setItem(
+          "techrider_technicians",
+          JSON.stringify(
+            technicians
+          )
+        );
+
+        /* update avatar */
+
+        avatar.innerHTML = `
+          <img
+            src="${image}"
+            alt="Profile"
+          >
+        `;
+
+      };
+
+    reader.readAsDataURL(file);
+
+  }
+);
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logoutTechnician(){
+
+  localStorage.removeItem(
+    "techrider_current_technician"
+  );
+
+}
+
 </script>
 
 </body>

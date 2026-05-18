@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Technician Support & Disputes - TechRider
+</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#6a0dad;
+  --deep:#240046;
+  --bg:#f7f5fb;
+  --white:#fff;
+  --shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+body{
+  background:var(--bg);
+  min-height:100vh;
+  padding:20px;
+  animation:fadeIn .4s ease;
+  overflow-x:hidden;
+}
+
+@keyframes fadeIn{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+.pageWrapper{
+  max-width:1300px;
+  margin:auto;
+}
+
+.topBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+.backBtn{
+  background:
+  linear-gradient(
+    135deg,
+    var(--purple),
+    #9d4edd
+  );
+
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.headerText h1{
+  font-size:2rem;
+  color:var(--deep);
+}
+
+.headerText p{
+  margin-top:6px;
+  color:#666;
+  line-height:1.7;
+}
+
+.gridLayout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+.card{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.sectionTitle{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:24px;
+  color:var(--deep);
+}
+
+.sectionTitle i{
+  background:#f1e8ff;
+  padding:12px;
+  border-radius:12px;
+}
+
+.formGroup{
+  margin-bottom:20px;
+}
+
+.formGroup label{
+  display:block;
+  margin-bottom:10px;
+  font-weight:600;
+  color:#333;
+}
+
+.inputField,
+.selectField,
+.textareaField{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  font-size:.95rem;
+  outline:none;
+}
+
+.textareaField{
+  height:160px;
+  resize:none;
+  line-height:1.7;
+}
+
+.infoBox{
+  background:#faf7ff;
+  padding:18px;
+  border-radius:18px;
+  line-height:1.8;
+  color:#555;
+  margin-bottom:20px;
+}
+
+.submitBtn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:14px;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--purple),
+    #9d4edd
+  );
+
+  color:white;
+  font-size:1rem;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.historyList{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.historyItem{
+  border:1px solid #eee;
+  border-radius:18px;
+  padding:18px;
+}
+
+.historyTop{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:12px;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.disputeId{
+  font-weight:700;
+  color:var(--purple);
+}
+
+.statusBadge{
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.8rem;
+  font-weight:600;
+}
+
+.pending{
+  background:#fff4cc;
+  color:#8a6d00;
+}
+
+.settled{
+  background:#d1fae5;
+  color:#047857;
+}
+
+.historyMessage{
+  line-height:1.7;
+  color:#555;
+  margin-bottom:14px;
+}
+
+.historyMeta{
+  font-size:.85rem;
+  color:#888;
+  line-height:1.8;
+}
+
+.emptyState{
+  text-align:center;
+  padding:30px;
+  color:#888;
+}
+
+/* COMMUNICATION */
+
+.communicationGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.contactCard{
+  background:#faf7ff;
+  border-radius:18px;
+  padding:20px;
+  border:1px solid #eee;
+}
+
+.contactCard i{
+  width:50px;
+  height:50px;
+  border-radius:14px;
+  background:#f1e8ff;
+  color:var(--purple);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:15px;
+  font-size:1.2rem;
+}
+
+.contactCard h3{
+  color:var(--deep);
+  margin-bottom:10px;
+}
+
+.contactCard p{
+  color:#666;
+  line-height:1.7;
+  margin-bottom:18px;
+  font-size:.92rem;
+}
+
+.contactBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:.9rem;
+  font-weight:600;
+}
+
+@media(max-width:900px){
+
+  .gridLayout{
+    grid-template-columns:1fr;
+  }
+
+  .communicationGrid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media(max-width:992px){
+
+  .gridLayout{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  body{
+    padding:15px;
+  }
+
+  .topBar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .headerText h1{
+    font-size:1.5rem;
+  }
+
+  .headerText p{
+    font-size:.92rem;
+  }
+
+  .backBtn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .card{
+    padding:20px;
+    border-radius:22px;
+  }
+
+  .sectionTitle{
+    align-items:flex-start;
+  }
+
+  .sectionTitle h2{
+    font-size:1.1rem;
+  }
+
+  .inputField,
+  .selectField,
+  .textareaField{
+    font-size:.92rem;
+    padding:13px;
+  }
+
+  .textareaField{
+    height:140px;
+  }
+
+  .submitBtn{
+    padding:14px;
+  }
+
+  .historyTop{
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-start;
+  }
+
+  .historyMeta{
+    font-size:.82rem;
+  }
+
+  .communicationBox{
+    padding:18px;
+  }
+
+  .contactLinks{
+    flex-direction:column;
+  }
+
+  .contactLink{
+    width:100%;
+    justify-content:center;
+  }
+
+}
+
+@media(max-width:480px){
+
+  body{
+    padding:12px;
+  }
+
+  .headerText h1{
+    font-size:1.35rem;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+  .sectionTitle{
+    gap:10px;
+  }
+
+  .sectionTitle i{
+    padding:10px;
+    font-size:.9rem;
+  }
+
+  .infoBox,
+  .communicationBox{
+    font-size:.9rem;
+    line-height:1.7;
+  }
+
+  .historyItem{
+    padding:16px;
+  }
+
+  .statusBadge{
+    font-size:.72rem;
+    padding:7px 10px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="pageWrapper">
+
+  <!-- TOP -->
+  <div class="topBar">
+
+    <div class="headerText">
+
+      <h1>
+        Technician Support & Disputes
+      </h1>
+
+      <p>
+        Report technician-related issues, customer conflicts, payment concerns or operational complaints directly to TechRider administration.
+      </p>
+
+    </div>
+
+    <button
+      class="backBtn"
+      onclick="goBack()"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </button>
+
+  </div>
+
+  <div class="gridLayout">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- DISPUTE FORM -->
+      <div class="card">
+
+        <div class="sectionTitle">
+
+          <i class="fas fa-triangle-exclamation"></i>
+
+          <h2>
+            Submit Technician Dispute
+          </h2>
+
+        </div>
+
+        <div class="infoBox">
+          Technician disputes are reviewed directly by TechRider administration. Kindly provide detailed and accurate information to help investigations and resolutions.
+        </div>
+
+        <div class="formGroup">
+
+          <label>
+            Dispute Category
+          </label>
+
+          <select
+            class="selectField"
+            id="disputeCategory"
+          >
+
+            <option value="">
+              Select category
+            </option>
+
+            <option>
+              Customer Misconduct
+            </option>
+
+            <option>
+              Payment Dispute
+            </option>
+
+            <option>
+              Fake Repair Claim
+            </option>
+
+            <option>
+              Delayed Pickup
+            </option>
+
+            <option>
+              Device Damage Complaint
+            </option>
+
+            <option>
+              Account Restriction Issue
+            </option>
+
+            <option>
+              Unprofessional Behaviour
+            </option>
+
+            <option>
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="formGroup">
+
+          <label>
+            Related Job ID (Optional)
+          </label>
+
+          <input
+            type="text"
+            class="inputField"
+            id="jobId"
+            placeholder="Example: REQ-1001"
+          >
+
+        </div>
+
+        <div class="formGroup">
+
+          <label>
+            Dispute Details
+          </label>
+
+          <textarea
+            class="textareaField"
+            id="disputeMessage"
+            placeholder="Explain the issue in detail..."
+          ></textarea>
+
+        </div>
+
+        <button
+          class="submitBtn"
+          onclick="submitDispute()"
+        >
+          Submit Dispute
+        </button>
+
+      </div>
+
+      <!-- COMMUNICATION -->
+      <div
+        class="card"
+        style="margin-top:24px;"
+      >
+
+        <div class="sectionTitle">
+
+          <i class="fas fa-headset"></i>
+
+          <h2>
+            Communication & Support
+          </h2>
+
+        </div>
+
+        <div class="communicationGrid">
+
+          <!-- EMAIL -->
+          <div class="contactCard">
+
+            <i class="fas fa-envelope"></i>
+
+            <h3>
+              Contact via Email
+            </h3>
+
+            <p>
+              Send operational feedback, suggestion or partnership enquiries directly to TechRider.
+            </p>
+
+            <a
+              href="mailto:support@techrider.com"
+              class="contactBtn"
+            >
+              <i class="fas fa-paper-plane"></i>
+              support@techrider.com
+            </a>
+
+          </div>
+
+          <!-- WHATSAPP -->
+          <div class="contactCard">
+
+            <i class="fab fa-whatsapp"></i>
+
+            <h3>
+              WhatsApp Support
+            </h3>
+
+            <p>
+              Reach TechRider support directly through WhatsApp.
+            </p>
+
+            <a
+              href="https://wa.me/2348000000000"
+              target="_blank"
+              class="contactBtn"
+            >
+              <i class="fab fa-whatsapp"></i>
+              Chat on WhatsApp
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="card">
+
+      <div class="sectionTitle">
+
+        <i class="fas fa-clock-rotate-left"></i>
+
+        <h2>
+          My Technician Disputes
+        </h2>
+
+      </div>
+
+      <div
+        class="historyList"
+        id="historyList"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* =========================
+   CURRENT TECHNICIAN
+========================= */
+
+const currentTechnician =
+  JSON.parse(
+    localStorage.getItem(
+      'techrider_current_technician'
+    )
+  )
+
+  ||
+
+  JSON.parse(
+    localStorage.getItem(
+      'currentUser'
+    )
+  )
+
+  ||
+
+  {};
+
+/* =========================
+   STORAGE
+========================= */
+
+let disputes =
+  JSON.parse(
+    localStorage.getItem(
+      'allDisputes'
+    )
+  ) || [];
+
+/* =========================
+   DISPUTE ID
+========================= */
+
+function generateDisputeId(){
+
+  let counter =
+    parseInt(
+      localStorage.getItem(
+        'disputeCounter'
+      )
+    ) || 1;
+
+  let id =
+    'DSP-' +
+    String(counter).padStart(3,'0');
+
+  localStorage.setItem(
+    'disputeCounter',
+    counter + 1
+  );
+
+  return id;
+
+}
+
+/* =========================
+   SUBMIT DISPUTE
+========================= */
+
+function submitDispute(){
+
+  const category =
+    document.getElementById(
+      'disputeCategory'
+    ).value.trim();
+
+  const jobId =
+    document.getElementById(
+      'jobId'
+    ).value.trim();
+
+  const message =
+    document.getElementById(
+      'disputeMessage'
+    ).value.trim();
+
+  if(!category || !message){
+
+    alert(
+      'Please complete all required fields.'
+    );
+
+    return;
+
+  }
+
+  const dispute = {
+
+    disputeId:
+      generateDisputeId(),
+
+    userId:
+      currentTechnician.id
+      ||
+      currentTechnician.technicianId
+      ||
+      'UNKNOWN',
+
+    userName:
+      currentTechnician.fullName
+      ||
+      currentTechnician.name
+      ||
+      'Unknown Technician',
+
+    userType:
+      'technician',
+
+    adminSection:
+      'technician',
+
+    category,
+
+    jobId:
+      jobId || 'N/A',
+
+    message,
+
+    status:
+      'Unsettled',
+
+    createdAt:
+      new Date().toLocaleString(
+        'en-NG',
+        {
+          dateStyle:'medium',
+          timeStyle:'short'
+        }
+      ),
+
+    timestamp:
+      Date.now()
+
+  };
+
+  disputes =
+    JSON.parse(
+      localStorage.getItem(
+        'allDisputes'
+      )
+    ) || [];
+
+  disputes.unshift(dispute);
+
+  localStorage.setItem(
+    'allDisputes',
+    JSON.stringify(disputes)
+  );
+
+  /* RESET */
+  document.getElementById(
+    'disputeCategory'
+  ).value = '';
+
+  document.getElementById(
+    'jobId'
+  ).value = '';
+
+  document.getElementById(
+    'disputeMessage'
+  ).value = '';
+
+  loadDisputes();
+
+  alert(
+    'Dispute submitted successfully.'
+  );
+
+}
+
+/* =========================
+   LOAD DISPUTES
+========================= */
+
+function loadDisputes(){
+
+  disputes =
+    JSON.parse(
+      localStorage.getItem(
+        'allDisputes'
+      )
+    ) || [];
+
+  const historyList =
+    document.getElementById(
+      'historyList'
+    );
+
+  historyList.innerHTML = '';
+
+  const myDisputes =
+    disputes.filter(dispute =>
+
+      dispute.userType ===
+      'technician'
+
+      &&
+
+      (
+
+        dispute.userId ===
+        currentTechnician.id
+
+        ||
+
+        dispute.userId ===
+        currentTechnician.technicianId
+
+      )
+
+    );
+
+  if(myDisputes.length === 0){
+
+    historyList.innerHTML = `
+      <div class="emptyState">
+        No disputes submitted yet
+      </div>
+    `;
+
+    return;
+
+  }
+
+  myDisputes.sort(
+    (a,b) =>
+
+      b.timestamp - a.timestamp
+  );
+
+  myDisputes.forEach(dispute => {
+
+    historyList.innerHTML += `
+
+      <div class="historyItem">
+
+        <div class="historyTop">
+
+          <div class="disputeId">
+            ${dispute.disputeId}
+          </div>
+
+          <div class="
+            statusBadge
+            ${
+              dispute.status === 'Settled'
+              ? 'settled'
+              : 'pending'
+            }
+          ">
+            ${dispute.status}
+          </div>
+
+        </div>
+
+        <div class="historyMessage">
+          ${dispute.message}
+        </div>
+
+        <div class="historyMeta">
+
+          <strong>Category:</strong>
+          ${dispute.category}
+          <br>
+
+          <strong>Job ID:</strong>
+          ${dispute.jobId}
+          <br>
+
+          <strong>Submitted:</strong>
+          ${dispute.createdAt}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+/* =========================
+   BACK
+========================= */
+
+function goBack(){
+
+  window.history.back();
+
+}
+
+/* INIT */
+loadDisputes();
+
+</script>
+
+</body>
+</html>

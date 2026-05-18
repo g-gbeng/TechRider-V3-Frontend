@@ -1,173 +1,762 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechRider - History</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8" />
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
 
-    :root{
-      --purple:#5a189a;
-      --deep-purple:#240046;
-      --lilac:#e0aaff;
-      --gray:#f6f6f6;
-      --white:#fff;
-    }
+<title>
+TechRider - Request History
+</title>
 
-    body{
-      background:var(--gray);
-      padding:20px;
-      display:flex;
-      justify-content:center;
-      animation:fadeIn 0.6s ease-in;
-    }
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet"
+/>
 
-    .container{
-      width:100%;
-      max-width:1000px;
-    }
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
 
-    .header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-      gap:10px;
-    }
+<style>
 
-    .header h2{
-      color:var(--deep-purple);
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-    .back-btn{
-      text-decoration:none;
-      background:var(--purple);
-      color:white;
-      padding:10px 14px;
-      border-radius:10px;
-      font-size:0.85rem;
-    }
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--green:#16a34a;
+--red:#dc2626;
+--gray-badge:#9ca3af;
+}
 
-    .history-list{
-      display:flex;
-      flex-direction:column;
-      gap:15px;
-    }
+body{
+background:var(--gray);
+padding:20px;
+min-height:100vh;
+animation:fadeIn .5s ease-in;
+}
 
-    .history-card{
-      background:var(--white);
-      padding:20px;
-      border-radius:14px;
-      box-shadow:0 10px 25px rgba(0,0,0,0.05);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      flex-wrap:wrap;
-      gap:10px;
-    }
+.container{
+max-width:1100px;
+margin:auto;
+}
 
-    .left{
-      display:flex;
-      flex-direction:column;
-      gap:5px;
-    }
+/* HEADER */
 
-    .title{font-weight:600;color:var(--deep-purple);}
-    .meta{font-size:0.85rem;color:#666;}
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+margin-bottom:25px;
+}
 
-    .status{
-      padding:6px 10px;
-      border-radius:8px;
-      font-size:0.8rem;
-      font-weight:500;
-    }
+.header-left{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
 
-    .completed{background:#d4edda;color:#155724;}
-    .pending{background:#fff3cd;color:#856404;}
-    .cancelled{background:#f8d7da;color:#721c24;}
+.header h2{
+color:var(--deep-purple);
+}
 
-    .empty{
-      text-align:center;
-      margin-top:40px;
-      color:#666;
-    }
+.header p{
+font-size:.9rem;
+color:#666;
+}
 
-    .empty i{
-      font-size:2rem;
-      margin-bottom:10px;
-      color:var(--lilac);
-    }
+.back-btn{
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.88rem;
+font-weight:600;
+transition:.3s;
+}
 
-    @media(max-width:768px){
-      .history-card{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-    }
+.back-btn:hover{
+opacity:.92;
+}
 
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}
-    }
-  </style>
+/* GRID */
+
+.history-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+}
+
+/* CARD */
+
+.card{
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+transition:.3s;
+animation:fadeIn .4s ease;
+}
+
+.card:hover{
+transform:translateY(-3px);
+}
+
+/* TOP */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:12px;
+margin-bottom:15px;
+}
+
+.title{
+font-size:1rem;
+font-weight:600;
+color:var(--deep-purple);
+line-height:1.5;
+}
+
+.request-id{
+margin-top:8px;
+display:inline-block;
+background:#f3e8ff;
+color:var(--purple);
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+}
+
+/* STATUS */
+
+.status{
+padding:8px 14px;
+border-radius:30px;
+font-size:.8rem;
+font-weight:600;
+white-space:nowrap;
+text-transform:capitalize;
+color:white;
+}
+
+.status.completed{
+background:var(--green);
+}
+
+.status.cancelled{
+background:var(--red);
+}
+
+/* DETAILS */
+
+.details{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:15px;
+font-size:.88rem;
+color:#444;
+}
+
+.details div{
+line-height:1.5;
+}
+
+.details i{
+width:18px;
+margin-right:6px;
+color:var(--purple);
+}
+
+/* DESCRIPTION */
+
+.desc{
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+line-height:1.7;
+color:#333;
+}
+
+/* QUOTATION */
+
+.price-box{
+margin-top:15px;
+background:#f8f5ff;
+padding:14px;
+border-radius:12px;
+font-size:.9rem;
+color:var(--deep-purple);
+line-height:1.6;
+}
+
+.price-box strong{
+display:block;
+margin-bottom:6px;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+font-size:.82rem;
+color:#777;
+}
+
+/* EMPTY */
+
+.empty{
+background:white;
+padding:55px 20px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+display:none;
+animation:fadeIn .5s ease;
+}
+
+.empty i{
+font-size:3rem;
+margin-bottom:14px;
+color:var(--purple);
+}
+
+.empty h3{
+color:var(--deep-purple);
+margin-bottom:8px;
+}
+
+.empty p{
+color:#666;
+font-size:.9rem;
+line-height:1.6;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.history-grid{
+grid-template-columns:1fr;
+}
+
+.top{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.status{
+align-self:flex-start;
+}
+
+.back-btn{
+width:100%;
+text-align:center;
+}
+
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
-      <h2>Service History</h2>
-      <a href="dashboard-customer.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-    </div>
+<!-- HEADER -->
 
-    <div class="history-list" id="historyList">
+<div class="header">
 
-      <div class="history-card">
-        <div class="left">
-          <div class="title">Laptop Screen Repair</div>
-          <div class="meta">12 March 2026 • Ikeja</div>
-        </div>
-        <div class="status completed">Completed</div>
-      </div>
+<div class="header-left">
 
-      <div class="history-card">
-        <div class="left">
-          <div class="title">Phone Battery Replacement</div>
-          <div class="meta">2 March 2026 • Yaba</div>
-        </div>
-        <div class="status pending">Pending</div>
-      </div>
+<h2>
+Request History
+</h2>
 
-      <div class="history-card">
-        <div class="left">
-          <div class="title">Keyboard Fix</div>
-          <div class="meta">20 February 2026 • Lekki</div>
-        </div>
-        <div class="status cancelled">Cancelled</div>
-      </div>
+<p>
+View your completed and cancelled repair requests
+</p>
 
-    </div>
+</div>
 
-    <div class="empty" id="emptyState" style="display:none;">
-      <i class="fas fa-tools"></i>
-      <p>No service history yet</p>
-    </div>
+<a
+href="dashboard-customer.html"
+class="back-btn"
+>
 
-  </div>
+<i class="fas fa-arrow-left"></i>
+Back
 
-  <script>
-    const historyList = document.getElementById('historyList');
-    const emptyState = document.getElementById('emptyState');
+</a>
 
-    if(historyList.children.length === 0){
-      emptyState.style.display = 'block';
-    }
-  </script>
+</div>
+
+<!-- HISTORY GRID -->
+
+<div
+class="history-grid"
+id="historyGrid"
+>
+
+</div>
+
+<!-- EMPTY STATE -->
+
+<div
+class="empty"
+id="emptyState"
+>
+
+<i class="fas fa-box-open"></i>
+
+<h3>
+No Request History
+</h3>
+
+<p>
+Completed or cancelled
+repair requests will appear here.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================
+CURRENT CUSTOMER
+========================================= */
+
+const currentCustomer =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_customer'
+)
+);
+
+/* =========================================
+SECURITY CHECK
+========================================= */
+
+if(!currentCustomer){
+
+window.location.href =
+'login-customer.html';
+
+}
+
+/* =========================================
+ELEMENTS
+========================================= */
+
+const historyGrid =
+document.getElementById(
+'historyGrid'
+);
+
+const emptyState =
+document.getElementById(
+'emptyState'
+);
+
+/* =========================================
+FORMAT DATE
+========================================= */
+
+function formatDate(dateString){
+
+if(!dateString){
+return 'Recently';
+}
+
+const date =
+new Date(dateString);
+
+return date.toLocaleString(
+'en-NG',
+{
+day:'numeric',
+month:'short',
+year:'numeric',
+hour:'numeric',
+minute:'2-digit'
+}
+);
+
+}
+
+/* =========================================
+GET STATUS CLASS
+========================================= */
+
+function getStatusClass(status){
+
+switch(
+(status || '')
+.toLowerCase()
+){
+
+case 'cancelled':
+return 'cancelled';
+
+default:
+return 'completed';
+
+}
+
+}
+
+/* =========================================
+GET STATUS LABEL
+========================================= */
+
+function getStatusLabel(status){
+
+switch(
+(status || '')
+.toLowerCase()
+){
+
+case 'cancelled':
+return 'Cancelled';
+
+default:
+return 'Completed';
+
+}
+
+}
+
+/* =========================================
+GET HISTORY REQUESTS
+========================================= */
+
+function getHistoryRequests(){
+
+let requests =
+JSON.parse(
+localStorage.getItem(
+'techrider_requests'
+)
+) || [];
+
+/* FILTER CURRENT CUSTOMER */
+
+requests =
+requests.filter(request => {
+
+return (
+request.customerId ===
+currentCustomer.id
+);
+
+});
+
+/* ONLY COMPLETED OR CANCELLED */
+
+requests =
+requests.filter(request => {
+
+const status =
+(request.status || '')
+.toLowerCase();
+
+return (
+status === 'completed'
+||
+status === 'cancelled'
+);
+
+});
+
+/* SORT LATEST FIRST */
+
+requests.sort(
+(a,b)=>
+
+new Date(
+b.updatedAt ||
+b.completedAt ||
+b.createdAt
+)
+
+-
+
+new Date(
+a.updatedAt ||
+a.completedAt ||
+a.createdAt
+)
+
+);
+
+return requests;
+
+}
+
+/* =========================================
+RENDER HISTORY
+========================================= */
+
+function renderHistory(){
+
+const historyRequests =
+getHistoryRequests();
+
+historyGrid.innerHTML = '';
+
+/* EMPTY STATE */
+
+if(historyRequests.length === 0){
+
+emptyState.style.display =
+'block';
+
+return;
+
+}
+
+emptyState.style.display =
+'none';
+
+/* CREATE CARDS */
+
+historyRequests.forEach(request => {
+
+const currentStatus =
+request.status || 'completed';
+
+historyGrid.innerHTML += `
+
+<div class="card">
+
+<div class="top">
+
+<div>
+
+<div class="title">
+
+${request.brand || ''}
+${request.model || ''}
+
+${request.deviceType
+? `(${request.deviceType})`
+: ''
+}
+
+</div>
+
+<div class="request-id">
+
+${request.requestId || request.id}
+
+</div>
+
+</div>
+
+<div class="status
+${getStatusClass(currentStatus)}">
+
+${getStatusLabel(currentStatus)}
+
+</div>
+
+</div>
+
+<div class="details">
+
+<div>
+<i class="fas fa-mobile-alt"></i>
+
+<strong>Device Type:</strong>
+
+${request.deviceType || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-tag"></i>
+
+<strong>Brand:</strong>
+
+${request.brand || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-microchip"></i>
+
+<strong>Model:</strong>
+
+${request.model || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-map-marker-alt"></i>
+
+<strong>Location:</strong>
+
+${request.location || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-user-cog"></i>
+
+<strong>Technician:</strong>
+
+${request.technicianName || 'N/A'}
+
+</div>
+
+</div>
+
+<div class="desc">
+
+<strong>
+Issue Description:
+</strong>
+
+<br><br>
+
+${request.description || 'No description provided.'}
+
+</div>
+
+${
+request.repairPrice
+
+? `
+
+<div class="price-box">
+
+<strong>
+Final Repair Cost
+</strong>
+
+₦${Number(
+request.repairPrice
+).toLocaleString()}
+
+</div>
+
+`
+
+: ''
+
+}
+
+<div class="footer">
+
+<div>
+
+<i class="fas fa-calendar-check"></i>
+
+${currentStatus.toLowerCase() === 'cancelled'
+
+? 'Cancelled'
+
+: 'Completed'}
+
+:
+
+${formatDate(
+request.updatedAt
+||
+request.completedAt
+||
+request.createdAt
+)}
+
+</div>
+
+<div>
+
+<i class="fas fa-receipt"></i>
+
+Request ID:
+${request.requestId || request.id}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* =========================================
+LIVE STORAGE SYNC
+========================================= */
+
+window.addEventListener(
+'storage',
+renderHistory
+);
+
+/* =========================================
+AUTO REFRESH
+========================================= */
+
+
+
+/* =========================================
+INITIAL RENDER
+========================================= */
+
+renderHistory();
+
+</script>
 
 </body>
 </html>

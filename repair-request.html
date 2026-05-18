@@ -120,20 +120,23 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
 
     <div class="header">
       <h2>Request a Repair</h2>
-      <a href="dashboard-customer.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+      <a href="dashboard-customer.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
     </div>
 
     <form class="form" id="repairForm">
 
       <div class="group">
         <label>Device Type</label>
-        <select required>
+        <select id="deviceType" required>
           <option value="">Select device</option>
           <option>Laptop</option>
           <option>Phone</option>
@@ -143,81 +146,296 @@
       <div class="grid">
         <div class="group">
           <label>Brand</label>
-          <input type="text" placeholder="e.g. Apple, Samsung" required>
+          <input id="brand" type="text" placeholder="e.g. Apple, Samsung" required>
         </div>
 
         <div class="group">
           <label>Model</label>
-          <input type="text" placeholder="Device model" required>
+          <input id="model" type="text" placeholder="Device model" required>
         </div>
       </div>
-
-      <div class="group">
-  <label>Select Technician</label>
-
-  <div class="tech-list">
-
-    <label class="tech-card">
-      <input type="radio" name="technician" value="1" required>
-
-      <div class="tech-info">
-        <div class="top">
-          <span class="name">John Doe</span>
-          <span class="verified"><i class="fas fa-check-circle"></i></span>
-        </div>
-
-        <div class="meta">
-          ⭐ 4.8 • Mobile Specialist
-        </div>
-      </div>
-    </label>
-
-    <label class="tech-card">
-      <input type="radio" name="technician" value="2">
-
-      <div class="tech-info">
-        <div class="top">
-          <span class="name">Jane Smith</span>
-          <span class="verified"><i class="fas fa-check-circle"></i></span>
-        </div>
-
-        <div class="meta">
-          ⭐ 4.9 • Laptop Engineer
-        </div>
-      </div>
-    </label>
-
-  </div>
-</div>
 
       <div class="group">
         <label>Issue Description</label>
-        <textarea placeholder="Describe the problem in detail..." required></textarea>
+        <textarea id="description" placeholder="Describe the problem in detail..." required></textarea>
       </div>
 
       <div class="group">
         <label>Location</label>
-        <input type="text" placeholder="Your location" required>
+        <input id="location" type="text" placeholder="Your location" required>
       </div>
 
       <div class="group">
-        <label>Upload Image (optional)</label>
-        <input type="file" accept="image/*">
-      </div>
 
-      <button class="btn" type="submit">Submit Repair Request</button>
+  <label>
+    Upload Device Images 
+  </label>
+
+  <input
+    type="file"
+    id="deviceImages"
+    accept="image/*"
+    multiple
+  >
+
+  <small
+    id="imageInfo"
+    style="
+      color:#666;
+      font-size:.8rem;
+    ">
+
+    You can upload up to 4 images
+
+  </small>
+
+  <!-- IMAGE PREVIEW -->
+
+  <div
+    id="previewContainer"
+    style="
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:10px;
+    ">
+
+  </div>
+
+</div>
+
+
+      <button class="btn" type="submit">
+        Select Technician
+      </button>
 
     </form>
 
   </div>
 
   <script>
-    document.getElementById('repairForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Repair request submitted successfully!');
-      window.location.href = 'customer-dashboard.html';
-    });
-  </script>
+
+const form =
+document.getElementById(
+'repairForm'
+);
+
+const imageInput =
+document.getElementById(
+'deviceImages'
+);
+
+const previewContainer =
+document.getElementById(
+'previewContainer'
+);
+
+/* =========================================
+STORE BASE64 IMAGES
+========================================= */
+
+let uploadedImages = [];
+
+/* =========================================
+IMAGE PREVIEW + CONVERT TO BASE64
+========================================= */
+
+imageInput.addEventListener(
+'change',
+function(){
+
+const files =
+Array.from(this.files);
+
+previewContainer.innerHTML = '';
+
+uploadedImages = [];
+
+/* LIMIT TO 4 */
+
+if(files.length > 4){
+
+alert(
+'You can upload a maximum of 4 images.'
+);
+
+imageInput.value = '';
+
+return;
+
+}
+
+files.forEach(file => {
+
+if(
+!file.type.startsWith('image/')
+){
+return;
+}
+
+const reader =
+new FileReader();
+
+reader.onload = function(e){
+
+/* SAVE BASE64 */
+
+uploadedImages.push(
+e.target.result
+);
+
+/* PREVIEW */
+
+const img =
+document.createElement('img');
+
+img.src =
+e.target.result;
+
+img.style.width = '100%';
+img.style.height = '120px';
+img.style.objectFit = 'cover';
+img.style.borderRadius = '10px';
+img.style.border = '1px solid #ddd';
+
+previewContainer.appendChild(img);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+);
+
+/* =========================================
+SUBMIT FORM
+========================================= */
+
+form.addEventListener(
+'submit',
+function(e){
+
+e.preventDefault();
+
+const currentCustomer =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_customer'
+)
+);
+
+if(!currentCustomer){
+
+alert(
+"Please login again"
+);
+
+window.location.href =
+"login-customer.html";
+
+return;
+
+}
+
+/* =========================================
+CREATE REQUEST
+========================================= */
+
+const request = {
+
+id: Date.now(),
+
+customerId:
+currentCustomer.id,
+
+customerName:
+currentCustomer.fullName,
+
+customerEmail:
+currentCustomer.email,
+
+customerPhone:
+currentCustomer.phone,
+
+deviceType:
+document.getElementById(
+'deviceType'
+).value,
+
+brand:
+document.getElementById(
+'brand'
+).value,
+
+model:
+document.getElementById(
+'model'
+).value,
+
+description:
+document.getElementById(
+'description'
+).value,
+
+location:
+document.getElementById(
+'location'
+).value,
+
+/* NEW IMAGE FIELD */
+
+deviceImages:
+uploadedImages,
+
+status:"pending",
+
+createdAt:
+new Date().toISOString(),
+
+assignedTechnician:null
+
+};
+
+/* =========================================
+SAVE TO REQUESTS
+========================================= */
+
+const requests =
+JSON.parse(
+localStorage.getItem(
+'techrider_requests'
+)
+) || [];
+
+requests.push(request);
+
+localStorage.setItem(
+'techrider_requests',
+JSON.stringify(requests)
+);
+
+/* =========================================
+SAVE PENDING REQUEST
+========================================= */
+
+localStorage.setItem(
+'techrider_pending_request',
+JSON.stringify(request)
+);
+
+/* =========================================
+GO TO SELECT TECHNICIAN
+========================================= */
+
+window.location.href =
+"select-technician.html";
+
+}
+);
+
+</script>
 
 </body>
 </html>

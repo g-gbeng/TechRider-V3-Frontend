@@ -6,10 +6,12 @@
 <title>Rider Sign Up - TechRider</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -153,6 +155,11 @@ color:white;
 font-weight:600;
 cursor:pointer;
 margin-top:8px;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-2px);
 }
 
 .legal{
@@ -168,21 +175,27 @@ margin:0 6px;
 }
 
 @media(max-width:540px){
+
 .container{
 padding:22px;
 }
+
 }
 
 @keyframes fadeIn{
+
 from{
 opacity:0;
 transform:translateY(12px);
 }
+
 to{
 opacity:1;
 transform:translateY(0);
 }
+
 }
+
 </style>
 </head>
 
@@ -191,89 +204,200 @@ transform:translateY(0);
 <div class="container">
 
 <div class="header">
+
 <div class="icon">
 <i class="fas fa-motorcycle"></i>
 </div>
 
 <h2>Create Rider Account</h2>
-<p>Register to begin accepting TechRider jobs</p>
+
+<p>
+Register to begin accepting TechRider jobs
+</p>
+
 </div>
 
 <div class="login-wrap">
+
 Already have an account?
-<a href="login-rider.html">Log in</a>
+
+<a href="login-rider.html">
+Log in
+</a>
+
 </div>
 
-<form action="login-rider.html" id="signupForm">
+<form id="signupForm">
 
+<!-- FULL NAME -->
 <div class="form-group">
-<label>Full Name</label>
-<input type="text" required>
-</div>
 
-<div class="form-group">
-<label>Email Address</label>
-<input type="email" required>
-</div>
+<label>
+Full Name
+</label>
 
-<div class="form-group">
-<label>Phone Number</label>
-<input type="tel" required>
-</div>
-
-<div class="form-group">
-<label>Address</label>
-<input type="text" required>
-</div>
-
-<div class="form-group">
-<label>Plate Number</label>
 <input
 type="text"
+id="fullName"
+required
+>
+
+</div>
+
+<!-- EMAIL -->
+<div class="form-group">
+
+<label>
+Email Address
+</label>
+
+<input
+type="email"
+id="email"
+required
+>
+
+</div>
+
+<!-- PHONE -->
+<div class="form-group">
+
+<label>
+Phone Number
+</label>
+
+<input
+type="tel"
+id="phone"
+maxlength="11"
+inputmode="numeric"
+pattern="[0-9]{11}"
+placeholder="Enter 11-digit phone number"
+required
+>
+
+</div>
+
+<!-- ADDRESS -->
+<div class="form-group">
+
+<label>
+Address
+</label>
+
+<input
+type="text"
+id="address"
+required
+>
+
+</div>
+
+<!-- PLATE NUMBER -->
+<div class="form-group">
+
+<label>
+Plate Number
+</label>
+
+<input
+type="text"
+id="plateNumber"
 placeholder="e.g LND-458XY"
-required>
+required
+>
+
 </div>
 
+<!-- VEHICLE TYPE -->
 <div class="form-group">
-<label>Vehicle Type</label>
-<select required>
-<option value="">Select vehicle</option>
-<option>Motorcycle</option>
-<option>Scooter</option>
-<option>Car</option>
-<option>Van</option>
+
+<label>
+Vehicle Type
+</label>
+
+<select
+id="vehicleType"
+required
+>
+
+<option value="">
+Select vehicle
+</option>
+
+<option>
+Motorcycle
+</option>
+
+<option>
+Car
+</option>
+
+<option>
+Van
+</option>
+
 </select>
+
 </div>
 
+<!-- LICENSE -->
 <div class="form-group">
-<label>Driver's License Upload</label>
+
+<label>
+Driver's License Upload
+</label>
+
 <div class="filebox">
+
 <input
 type="file"
-name="drivers_license"
+id="driversLicense"
 accept="image/*"
-required>
-</div>
-<small>Will later upload to Cloudinary</small>
+required
+>
+
 </div>
 
+<small>
+Upload clear image of driver's license
+</small>
+
+</div>
+
+<!-- FACIAL IMAGE -->
 <div class="form-group">
-<label>Facial Image Upload</label>
+
+<label>
+Facial Image Upload
+</label>
+
 <div class="filebox">
+
 <input
 type="file"
-name="facial_image"
+id="facialImage"
 accept="image/*"
-required>
+required
+>
+
 </div>
-<small>Will later upload to Cloudinary</small>
+
+<small>
+Upload clear facial photograph
+</small>
+
 </div>
 
 <!-- PASSWORD -->
 <div class="form-group">
-<label>Password</label>
+
+<label>
+Password
+</label>
 
 <div class="password-wrap">
+
 <input
 type="password"
 id="pass1"
@@ -283,18 +407,24 @@ oninvalid="this.setCustomValidity('Password must contain at least 8 characters, 
 oninput="this.setCustomValidity('')"
 >
 
-<i class="fas fa-eye toggle"
-onclick="togglePassword('pass1',this)">
-</i>
+<i
+class="fas fa-eye toggle"
+onclick="togglePassword('pass1',this)"
+></i>
 
 </div>
+
 </div>
 
 <!-- CONFIRM PASSWORD -->
 <div class="form-group">
-<label>Confirm Password</label>
+
+<label>
+Confirm Password
+</label>
 
 <div class="password-wrap">
+
 <input
 type="password"
 id="pass2"
@@ -302,52 +432,323 @@ required
 oninput="validateMatch()"
 >
 
-<i class="fas fa-eye toggle"
-onclick="togglePassword('pass2',this)">
-</i>
+<i
+class="fas fa-eye toggle"
+onclick="togglePassword('pass2',this)"
+></i>
 
 </div>
+
 </div>
 
 <button type="submit">
+
 Create Account
+
 </button>
 
 </form>
 
 <div class="legal">
-<a href="terms-of-service-rider.html">Terms of Service</a> |
-<a href="privacy-policy-rider.html">Privacy Policy</a>
+
+<a href="terms-of-service-rider.html">
+Terms of Service
+</a>
+
+|
+
+<a href="privacy-policy-rider.html">
+Privacy Policy
+</a>
+
 </div>
 
 </div>
 
 <script>
+
+/* =========================
+TOGGLE PASSWORD
+========================= */
+
 function togglePassword(id,icon){
-const field=document.getElementById(id);
+
+const field =
+document.getElementById(id);
 
 if(field.type==="password"){
+
 field.type="text";
-icon.classList.replace("fa-eye","fa-eye-slash");
+
+icon.classList.replace(
+"fa-eye",
+"fa-eye-slash"
+);
+
 }else{
+
 field.type="password";
-icon.classList.replace("fa-eye-slash","fa-eye");
-}
+
+icon.classList.replace(
+"fa-eye-slash",
+"fa-eye"
+);
+
 }
 
-/* Confirm Password Match Check */
+}
+
+/* =========================
+CONFIRM PASSWORD
+========================= */
+
 function validateMatch(){
-const pass1=document.getElementById("pass1");
-const pass2=document.getElementById("pass2");
+
+const pass1 =
+document.getElementById("pass1");
+
+const pass2 =
+document.getElementById("pass2");
 
 if(pass2.value !== pass1.value){
+
 pass2.setCustomValidity(
 "Passwords do not match."
 );
+
 }else{
+
 pass2.setCustomValidity("");
+
 }
+
 }
+
+/* =========================
+PHONE NUMBER LIMIT
+========================= */
+
+document.getElementById(
+"phone"
+).addEventListener("input", function(){
+
+this.value =
+this.value
+.replace(/\D/g,'')
+.slice(0,11);
+
+});
+
+/* =========================
+IMAGE TO BASE64
+========================= */
+
+function convertToBase64(file){
+
+return new Promise((resolve,reject)=>{
+
+const reader = new FileReader();
+
+reader.readAsDataURL(file);
+
+reader.onload = () =>
+resolve(reader.result);
+
+reader.onerror = error =>
+reject(error);
+
+});
+
+}
+
+/* =========================
+GENERATE RIDER ID
+========================= */
+
+function generateRiderId(){
+
+return "RID-" + Date.now();
+
+}
+
+/* =========================
+SIGNUP FORM
+========================= */
+
+document.getElementById(
+"signupForm"
+).addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+/* PASSWORD MATCH */
+validateMatch();
+
+const pass1 =
+document.getElementById("pass1").value;
+
+const pass2 =
+document.getElementById("pass2").value;
+
+if(pass1 !== pass2){
+
+alert("Passwords do not match");
+return;
+
+}
+
+/* PHONE VALIDATION */
+const phone =
+document.getElementById("phone").value;
+
+if(phone.length !== 11){
+
+alert(
+"Phone number must be exactly 11 digits"
+);
+
+return;
+
+}
+
+/* FILES */
+const licenseFile =
+document.getElementById(
+"driversLicense"
+).files[0];
+
+const facialFile =
+document.getElementById(
+"facialImage"
+).files[0];
+
+if(!licenseFile || !facialFile){
+
+alert("Please upload required images");
+return;
+
+}
+
+/* CONVERT IMAGES */
+const driversLicenseImage =
+await convertToBase64(licenseFile);
+
+const facialImage =
+await convertToBase64(facialFile);
+
+/* RIDERS STORAGE */
+const riders =
+JSON.parse(
+localStorage.getItem(
+"techrider_riders"
+)
+) || [];
+
+/* EMAIL CHECK */
+const email =
+document.getElementById(
+"email"
+).value.trim();
+
+const existingRider =
+riders.find(rider =>
+
+rider.email.toLowerCase() ===
+email.toLowerCase()
+
+);
+
+if(existingRider){
+
+alert(
+"An account with this email already exists"
+);
+
+return;
+
+}
+
+/* RIDER DATA */
+const riderData = {
+
+id: generateRiderId(),
+
+riderId: generateRiderId(),
+
+fullName:
+document.getElementById(
+"fullName"
+).value.trim(),
+
+email,
+
+phone,
+
+address:
+document.getElementById(
+"address"
+).value.trim(),
+
+plateNumber:
+document.getElementById(
+"plateNumber"
+).value.trim(),
+
+vehicleType:
+document.getElementById(
+"vehicleType"
+).value,
+
+password: pass1,
+
+driversLicenseImage,
+
+facialImage,
+
+verified:false,
+
+status:"active",
+
+userType:"rider",
+
+createdAt:
+new Date().toLocaleString()
+
+};
+
+/* SAVE RIDER */
+riders.unshift(riderData);
+
+localStorage.setItem(
+"techrider_riders",
+JSON.stringify(riders)
+);
+
+/* SAVE CURRENT RIDER */
+localStorage.setItem(
+"techrider_current_rider",
+JSON.stringify(riderData)
+);
+
+/* OPTIONAL GENERIC CURRENT USER */
+localStorage.setItem(
+"currentUser",
+JSON.stringify(riderData)
+);
+
+/* SUCCESS */
+alert(
+"Rider account created successfully"
+);
+
+/* REDIRECT */
+window.location.href =
+"login-rider.html";
+
+});
+
 </script>
 
 </body>

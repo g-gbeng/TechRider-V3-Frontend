@@ -115,6 +115,7 @@
       border-radius: 10px;
       outline: none;
       transition: 0.3s;
+      font-size: 0.95rem;
     }
 
     input:focus {
@@ -137,11 +138,16 @@
       padding: 12px;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--purple), var(--lilac-dark));
+      background: linear-gradient(
+        135deg,
+        var(--purple),
+        var(--lilac-dark)
+      );
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
       transition: 0.3s;
+      font-weight: 500;
     }
 
     .btn:hover {
@@ -154,6 +160,7 @@
       text-align: center;
       margin-top: 14px;
       font-size: 0.85rem;
+      color: #555;
     }
 
     .bottom-link a {
@@ -182,18 +189,41 @@
       text-decoration: underline;
     }
 
+    .error-message {
+      display: none;
+      background: #ffe5e5;
+      color: #d00000;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-top: 5px;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 500px) {
+
       .container {
         padding: 20px;
       }
 
       .header h2 {
         font-size: 1.3rem;
+      }
+
+      .extra-links {
+        flex-direction: column;
+        gap: 8px;
       }
     }
   </style>
@@ -202,41 +232,69 @@
 
   <div class="container">
 
-    
     <!-- HEADER -->
     <div class="header">
+
       <div class="icon">
         <i class="fas fa-user"></i>
       </div>
+
       <h2>Customer Login</h2>
       <p>Welcome back to TechRider</p>
+
     </div>
 
     <!-- SIGNUP LINK -->
     <div class="top-link">
-      Don’t have an account? <a href="signup-customer.html">Sign up</a>
+      Don’t have an account?
+      <a href="signup-customer.html">Sign up</a>
     </div>
 
-    
     <!-- FORM -->
     <form id="loginForm">
 
       <div class="input-group">
+
         <label>Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        >
+
       </div>
 
       <div class="input-group">
+
         <label>Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+        >
+
         <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <div class="error-message" id="loginError">
+        Invalid email or password
       </div>
 
       <div class="extra-links">
-        <a href="forgot-password-customer.html">Forgot Password?</a>
+        <a href="forgot-password-customer.html">
+          Forgot Password?
+        </a>
       </div>
 
-      <button type="submit" class="btn">Login</button>
+      <button type="submit" class="btn">
+        Login
+      </button>
 
     </form>
 
@@ -248,20 +306,88 @@
   </div>
 
   <script>
+
     const password = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
-    const form = document.getElementById('loginForm');
 
+    const togglePassword =
+      document.getElementById('togglePassword');
+
+    const form =
+      document.getElementById('loginForm');
+
+    const loginError =
+      document.getElementById('loginError');
+
+    // TOGGLE PASSWORD
     togglePassword.addEventListener('click', () => {
-      const type = password.type === 'password' ? 'text' : 'password';
+
+      const type =
+        password.type === 'password'
+        ? 'text'
+        : 'password';
+
       password.type = type;
+
       togglePassword.classList.toggle('fa-eye-slash');
+
     });
 
+    // LOGIN FUNCTION
     form.addEventListener('submit', (e) => {
+
       e.preventDefault();
-      window.location.href = "dashboard-customer.html";
+
+      const email =
+        document.getElementById('email')
+        .value
+        .trim()
+        .toLowerCase();
+
+      const pwd =
+        password.value;
+
+      // GET STORED CUSTOMERS
+      const customers =
+        JSON.parse(
+          localStorage.getItem('techrider_customers')
+        ) || [];
+
+      // FIND MATCHING CUSTOMER
+      const matchedCustomer =
+        customers.find(customer =>
+
+          customer.email.toLowerCase() === email &&
+          customer.password === pwd
+
+        );
+
+      // IF LOGIN SUCCESSFUL
+      if (matchedCustomer) {
+
+        // STORE CURRENT SESSION
+        localStorage.setItem(
+          'techrider_current_customer',
+          JSON.stringify(matchedCustomer)
+        );
+
+        // HIDE ERROR
+        loginError.style.display = 'none';
+
+        // SUCCESS MESSAGE
+        alert('Login successful!');
+
+        // REDIRECT TO DASHBOARD
+        window.location.href =
+          "dashboard-customer.html";
+
+      } else {
+
+        // SHOW ERROR
+        loginError.style.display = 'block';
+      }
+
     });
+
   </script>
 
 </body>

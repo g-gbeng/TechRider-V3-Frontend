@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Account Suspended</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#6a0dad;
+--deep:#240046;
+--lilac:#e0aaff;
+--bg:#f7f5fb;
+}
+
+body{
+background:var(--bg);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+overflow:hidden;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.suspendedCard{
+width:100%;
+max-width:620px;
+background:white;
+border-radius:30px;
+padding:45px 35px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+position:relative;
+overflow:hidden;
+}
+
+.suspendedCard::before{
+content:'';
+position:absolute;
+top:-120px;
+right:-120px;
+width:240px;
+height:240px;
+background:rgba(224,170,255,.22);
+border-radius:50%;
+}
+
+.iconWrap{
+width:110px;
+height:110px;
+margin:auto;
+margin-bottom:25px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+135deg,
+#ffccd5,
+#ff8fab
+);
+color:#b00020;
+font-size:2.8rem;
+}
+
+h1{
+font-size:2rem;
+color:var(--deep);
+margin-bottom:16px;
+}
+
+.message{
+color:#666;
+line-height:1.9;
+font-size:1rem;
+margin-bottom:30px;
+}
+
+.reasonBox{
+background:#faf7ff;
+padding:18px;
+border-radius:18px;
+margin-bottom:28px;
+text-align:left;
+}
+
+.reasonTitle{
+font-weight:700;
+margin-bottom:10px;
+color:var(--deep);
+}
+
+.reasonText{
+color:#555;
+line-height:1.7;
+}
+
+.buttonWrap{
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.contactBtn,
+.refreshBtn{
+padding:14px 20px;
+border:none;
+border-radius:14px;
+font-weight:600;
+cursor:pointer;
+font-size:.95rem;
+text-decoration:none;
+transition:.3s;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.contactBtn{
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#9d4edd
+);
+color:white;
+}
+
+.refreshBtn{
+background:#ece4ff;
+color:var(--deep);
+}
+
+.contactBtn:hover,
+.refreshBtn:hover{
+transform:translateY(-2px);
+}
+
+.footerText{
+margin-top:30px;
+font-size:.9rem;
+color:#888;
+line-height:1.7;
+}
+
+@media(max-width:768px){
+
+body{
+padding:14px;
+}
+
+.suspendedCard{
+padding:35px 22px;
+border-radius:24px;
+}
+
+.iconWrap{
+width:90px;
+height:90px;
+font-size:2.2rem;
+}
+
+h1{
+font-size:1.6rem;
+line-height:1.4;
+}
+
+.message{
+font-size:.95rem;
+}
+
+.buttonWrap{
+flex-direction:column;
+}
+
+.contactBtn,
+.refreshBtn{
+width:100%;
+justify-content:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="suspendedCard">
+
+<div class="iconWrap">
+<i class="fas fa-user-lock"></i>
+</div>
+
+<h1>
+Account Temporarily Suspended
+</h1>
+
+<p class="message">
+
+Your TechRider account has been
+temporarily suspended due to a violation
+of platform policies or suspicious activity.
+
+Please contact support if you believe
+this suspension was made in error.
+
+</p>
+
+
+
+<div class="reasonBox">
+
+<div class="reasonTitle">
+Suspension Details
+</div>
+
+<div class="reasonText"
+id="reasonText">
+
+Your account is currently under review
+by the administrative team.
+
+</div>
+
+</div>
+
+
+
+
+<div class="buttonWrap">
+
+<a
+href="mailto:support@techrider.com"
+class="contactBtn">
+
+<i class="fas fa-envelope"></i>
+Contact Us
+
+</a>
+
+
+
+<button
+class="refreshBtn"
+onclick="checkSuspensionStatus()">
+
+<i class="fas fa-rotate-right"></i>
+Refresh Status
+
+</button>
+
+</div>
+
+
+
+<div class="footerText">
+
+If your account is reactivated by an admin,
+all functionalities will automatically
+be restored.
+
+</div>
+
+</div>
+
+
+
+
+<script>
+
+/*
+==========================================
+UNIVERSAL ACCOUNT SUSPENSION SYSTEM
+==========================================
+
+This page works for:
+- customers
+- technicians
+- riders
+
+using localStorage.
+
+*/
+
+
+/* get current logged in user */
+
+const currentUser =
+JSON.parse(
+localStorage.getItem('currentUser')
+);
+
+
+/*
+Expected currentUser format:
+
+{
+id:'CUS-001',
+type:'customer'
+}
+
+*/
+
+
+/* all suspended accounts */
+
+const suspendedAccounts =
+JSON.parse(
+localStorage.getItem('suspendedAccounts')
+) || [];
+
+
+
+/* check if current user is suspended */
+
+function isSuspended(){
+
+if(!currentUser) return false;
+
+return suspendedAccounts.find(account=>
+
+account.id === currentUser.id
+&&
+account.type === currentUser.type
+
+);
+
+}
+
+
+
+/* load suspension reason */
+
+function loadReason(){
+
+const suspendedUser =
+isSuspended();
+
+if(suspendedUser){
+
+document
+.getElementById('reasonText')
+.innerText =
+suspendedUser.reason
+||
+'Your account is currently under review.';
+
+}else{
+
+/*
+Account restored
+Redirect user back
+to dashboard automatically
+*/
+
+redirectUser();
+
+}
+
+}
+
+
+
+/* refresh status */
+
+function checkSuspensionStatus(){
+
+const stillSuspended =
+isSuspended();
+
+if(stillSuspended){
+
+alert(
+'Your account is still suspended.'
+);
+
+}else{
+
+alert(
+'Your account has been reactivated.'
+);
+
+redirectUser();
+
+}
+
+}
+
+
+
+/* redirect restored users */
+
+function redirectUser(){
+
+if(!currentUser) return;
+
+if(currentUser.type === 'customer'){
+
+window.location.href =
+'customer-dashboard.html';
+
+}
+
+else if(currentUser.type === 'technician'){
+
+window.location.href =
+'technician-dashboard.html';
+
+}
+
+else if(currentUser.type === 'rider'){
+
+window.location.href =
+'rider-dashboard.html';
+
+}
+
+}
+
+
+
+/* initial load */
+
+loadReason();
+
+</script>
+
+</body>
+</html>

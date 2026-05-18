@@ -5,17 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TechRider - Technician Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
 
 :root{
   --purple:#5a189a;
   --deep-purple:#240046;
   --lilac:#e0aaff;
   --gray:#f6f6f6;
+  --white:#fff;
 }
 
 body{
@@ -23,44 +30,80 @@ body{
   min-height:100vh;
   display:flex;
   animation:fadeIn .5s ease-in;
+  overflow-x:hidden;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:999;
+  display:none;
+}
+
+.overlay.show{
+  display:block;
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:260px;
-  background:linear-gradient(180deg,var(--purple),var(--deep-purple));
+  width:270px;
+  background:
+  linear-gradient(
+    180deg,
+    var(--purple),
+    var(--deep-purple)
+  );
+
   color:white;
   padding:20px;
   position:fixed;
+  left:0;
+  top:0;
   height:100vh;
+  overflow-y:auto;
   transition:.3s;
-}
-
-.sidebar.collapsed{
-  width:70px;
+  z-index:1000;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  cursor:pointer;
+  gap:12px;
+  margin-bottom:30px;
 }
 
 .logo{
-  width:40px;
-  height:40px;
-  border-radius:10px;
+  width:45px;
+  height:45px;
+  border-radius:14px;
   background:var(--lilac);
   display:flex;
   align-items:center;
   justify-content:center;
   color:var(--deep-purple);
-  font-weight:bold;
+  font-weight:700;
+  font-size:1.1rem;
+  flex-shrink:0;
+}
+
+.brandText{
+  display:flex;
+  flex-direction:column;
+}
+
+.brandName{
+  font-weight:600;
+  font-size:.95rem;
+}
+
+.brandRole{
+  font-size:.78rem;
+  opacity:.8;
 }
 
 .nav{
-  margin-top:20px;
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -69,36 +112,91 @@ body{
 .nav a{
   color:white;
   text-decoration:none;
-  padding:10px;
-  border-radius:10px;
+  padding:13px 14px;
+  border-radius:14px;
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:12px;
+  transition:.3s;
+  position:relative;
 }
 
-.sidebar.collapsed .text{
-  display:none;
+.nav a:hover{
+  background:rgba(255,255,255,.12);
+}
+
+/* NOTIFICATION BADGE */
+.notificationLink{
+  position:relative;
+}
+
+.notificationBadge{
+  margin-left:auto;
+  background:#ff2e63;
+  color:white;
+  min-width:22px;
+  height:22px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.72rem;
+  font-weight:600;
+  padding:0 6px;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 /* MAIN */
 .main{
-  margin-left:260px;
-  width:calc(100% - 260px);
-  padding:20px;
+  margin-left:270px;
+  width:calc(100% - 270px);
+  padding:22px;
+  transition:.3s;
 }
 
+/* TOPBAR */
 .topbar{
+  background:white;
+  border-radius:20px;
+  padding:20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:white;
-  padding:15px;
-  border-radius:12px;
+  gap:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.topbarLeft{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+}
+
+#mobileMenuBtn{
+  border:none;
+  background:none;
+  font-size:1.3rem;
+  cursor:pointer;
+  display:none;
+  color:var(--deep-purple);
+  margin-top:5px;
+}
+
+.welcomeText h2{
+  color:var(--deep-purple);
+  font-size:1.5rem;
+}
+
+.welcomeText p{
+  color:#666;
+  margin-top:4px;
+  font-size:.92rem;
+  line-height:1.5;
 }
 
 .avatar{
-  width:40px;
-  height:40px;
+  width:52px;
+  height:52px;
   border-radius:50%;
   background:var(--purple);
   color:white;
@@ -106,33 +204,110 @@ body{
   align-items:center;
   justify-content:center;
   text-decoration:none;
+  font-weight:700;
+  font-size:1.1rem;
+  flex-shrink:0;
 }
 
 /* CARDS */
 .cards{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  margin-top:20px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+  margin-top:24px;
 }
 
 .card{
   background:white;
-  padding:25px;
-  border-radius:14px;
+  padding:30px;
+  border-radius:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
+  transition:.3s;
+  min-height:180px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
-.action{
-  margin-top:20px;
-  background:linear-gradient(135deg,var(--purple),#c77dff);
-  color:white;
-  padding:30px;
+.card:hover{
+  transform:translateY(-4px);
+}
+
+.cardTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.cardIcon{
+  width:55px;
+  height:55px;
   border-radius:16px;
+  background:#f3e8ff;
+  color:var(--purple);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+}
+
+.card h3{
+  color:var(--deep-purple);
+  font-size:1.05rem;
+}
+
+.cardCount{
+  font-size:2rem;
+  font-weight:700;
+  color:var(--purple);
+}
+
+.cardSub{
+  color:#666;
+  margin-top:6px;
+  line-height:1.5;
+  font-size:.92rem;
+}
+
+/* ACTION CARD */
+.action{
+  margin-top:24px;
+  background:
+  linear-gradient(
+    135deg,
+    var(--purple),
+    #c77dff
+  );
+
+  color:white;
+  padding:35px;
+  border-radius:24px;
   cursor:pointer;
+  transition:.3s;
+}
+
+.action:hover{
+  transform:translateY(-3px);
+}
+
+.action h3{
+  font-size:1.4rem;
+  margin-bottom:10px;
+}
+
+.action p{
+  opacity:.95;
+  line-height:1.6;
 }
 
 /* MOBILE */
 @media(max-width:768px){
+
+  #mobileMenuBtn{
+    display:block;
+  }
+
   .sidebar{
     transform:translateX(-100%);
   }
@@ -144,77 +319,580 @@ body{
   .main{
     margin-left:0;
     width:100%;
+    padding:15px;
   }
 
   .cards{
     grid-template-columns:1fr;
   }
+
+  .topbar{
+    padding:18px;
+  }
+
+  .welcomeText h2{
+    font-size:1.2rem;
+  }
+
+  .card{
+    min-height:160px;
+    padding:24px;
+  }
+
 }
 
-/* FADE-IN */
+/* FADE IN */
 @keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="sidebar collapsed" id="sidebar">
+<!-- OVERLAY -->
+<div
+  class="overlay"
+  id="overlay"
+  onclick="closeSidebar()"
+></div>
 
-  <div class="brand" onclick="toggleSidebar()">
-    <div class="logo">T</div>
-    <span class="text">Technician</span>
+<!-- SIDEBAR -->
+<div
+  class="sidebar"
+  id="sidebar"
+>
+
+  <div class="brand">
+
+    <div
+      class="logo"
+      id="sidebarLogo"
+    >
+      T
+    </div>
+
+    <div class="brandText">
+
+      <div
+        class="brandName"
+        id="sidebarName"
+      >
+        Technician
+      </div>
+
+      <div class="brandRole">
+        Verified Technician
+      </div>
+
+    </div>
+
   </div>
 
   <div class="nav">
-    <a href="available-jobs-technician.html"><i class="fas fa-briefcase"></i><span class="text">Available Jobs</span></a>
-    <a href="active-jobs-technician.html"><i class="fas fa-spinner"></i><span class="text">Active Jobs</span></a>
-    <a href="history-technician.html"><i class="fas fa-history"></i><span class="text">Job History</span></a>
-    
-    <!-- NEW NOTIFICATIONS LINK -->
-    <a href="notifications-technician.html"><i class="fas fa-bell"></i><span class="text">Notifications</span></a>
 
-    <a href="profile-technician.html"><i class="fas fa-user"></i><span class="text">Profile</span></a>
-    <a href="login-technician.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+    <a href="available-jobs-technician.html">
+      <i class="fas fa-briefcase"></i>
+      <span>Available Jobs</span>
+    </a>
+
+    <a href="active-jobs-technician.html">
+      <i class="fas fa-spinner"></i>
+      <span>Active Jobs</span>
+    </a>
+
+    <a href="history-technician.html">
+      <i class="fas fa-history"></i>
+      <span>Job History</span>
+    </a>
+
+    <!-- FIXED NOTIFICATION LINK -->
+    <a
+      href="notifications-technician.html"
+      class="notificationLink"
+    >
+
+      <i class="fas fa-bell"></i>
+
+      <span>
+        Notifications
+      </span>
+
+      <span
+        class="notificationBadge"
+        id="notificationBadge"
+        style="display:none;"
+      >
+        0
+      </span>
+
+    </a>
+
+    <a href="profile-technician.html">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </a>
+
+    <a href="disputes-technician.html">
+      <i class="fas fa-scale-balanced"></i>
+      <span>Communications</span>
+    </a>
+
+    <a href="faq.html?from=dashboard-technician.html">
+      <i class="fas fa-circle-question"></i>
+      <span>FAQ</span>
+    </a>
+
+    <a href="login-technician.html">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+
   </div>
 
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
+  <!-- TOPBAR -->
   <div class="topbar">
-    <h3>Welcome, Technician</h3>
 
-    <!-- UPDATED AVATAR LINK -->
-    <a href="profile-technician.html" class="avatar">T</a>
+    <div class="topbarLeft">
+
+      <button
+        id="mobileMenuBtn"
+        onclick="toggleSidebar()"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="welcomeText">
+
+        <h2 id="welcomeHeading">
+          Welcome, Technician
+        </h2>
+
+        <p id="welcomeSubText">
+          Monitor requests, manage active repairs and stay updated with notifications.
+        </p>
+
+      </div>
+
+    </div>
+
+    <a
+      href="profile-technician.html"
+      class="avatar"
+      id="topAvatar"
+    >
+      T
+    </a>
+
   </div>
 
+  <!-- DASHBOARD CARDS -->
   <div class="cards">
+
+    <!-- Pending -->
     <div class="card">
-      <h3>Pending Requests</h3>
-      <p>0 jobs available</p>
+
+      <div class="cardTop">
+
+        <div>
+          <h3>Pending Requests</h3>
+        </div>
+
+        <div class="cardIcon">
+          <i class="fas fa-clock"></i>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div
+          class="cardCount"
+          id="pendingCount"
+        >
+          0
+        </div>
+
+        <div class="cardSub">
+          Requests awaiting acceptance
+        </div>
+
+      </div>
+
     </div>
 
+    <!-- Active -->
     <div class="card">
-      <h3>Active Jobs</h3>
-      <p>0 ongoing jobs</p>
+
+      <div class="cardTop">
+
+        <div>
+          <h3>Active Jobs</h3>
+        </div>
+
+        <div class="cardIcon">
+          <i class="fas fa-screwdriver-wrench"></i>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div
+          class="cardCount"
+          id="activeCount"
+        >
+          0
+        </div>
+
+        <div class="cardSub">
+          Ongoing repair jobs
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- Completed -->
+    <div class="card">
+
+      <div class="cardTop">
+
+        <div>
+          <h3>Completed Jobs</h3>
+        </div>
+
+        <div class="cardIcon">
+          <i class="fas fa-circle-check"></i>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div
+          class="cardCount"
+          id="completedCount"
+        >
+          0
+        </div>
+
+        <div class="cardSub">
+          Successfully completed repairs
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Notifications -->
+    <div
+      class="card"
+      onclick="window.location.href='notifications-technician.html'"
+      style="cursor:pointer;"
+    >
+
+      <div class="cardTop">
+
+        <div>
+          <h3>Notifications</h3>
+        </div>
+
+        <div class="cardIcon">
+          <i class="fas fa-bell"></i>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div
+          class="cardCount"
+          id="notificationCount"
+        >
+          0
+        </div>
+
+        <div
+          class="cardSub"
+          id="latestNotification"
+        >
+          No notifications yet
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- CLICKABLE ACTION -->
-  <div class="action" onclick="location.href='available-jobs-technician.html'">
-    <h3>View Available Jobs</h3>
-    <p>Accept new repair requests</p>
+  <!-- ACTION -->
+  <div
+    class="action"
+    onclick="location.href='available-jobs-technician.html'"
+  >
+
+    <h3>
+      View Available Jobs
+    </h3>
+
+    <p>
+      Accept new repair requests, review customer issues and manage incoming device repairs.
+    </p>
+
   </div>
 
 </div>
 
 <script>
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('collapsed');
+
+/* CURRENT TECHNICIAN */
+const currentTechnician =
+  JSON.parse(
+    localStorage.getItem(
+      "techrider_current_technician"
+    )
+  );
+
+/* SECURITY */
+if(!currentTechnician){
+
+  window.location.href =
+    "login-technician.html";
+
 }
+
+/* TECHNICIAN INFO */
+const fullName =
+  currentTechnician.fullName ||
+  "Technician";
+
+const firstName =
+  fullName.split(" ")[0];
+
+const initials =
+  firstName.charAt(0).toUpperCase();
+
+/* UPDATE UI */
+document.getElementById(
+  "sidebarName"
+).textContent = fullName;
+
+document.getElementById(
+  "sidebarLogo"
+).textContent = initials;
+
+document.getElementById(
+  "topAvatar"
+).textContent = initials;
+
+document.getElementById(
+  "welcomeHeading"
+).textContent =
+  `Welcome, ${firstName}`;
+
+document.getElementById(
+  "welcomeSubText"
+).textContent =
+  `Here's a live overview of your repair requests, active jobs and latest notifications.`;
+
+/* SIDEBAR */
+const sidebar =
+  document.getElementById("sidebar");
+
+const overlay =
+  document.getElementById("overlay");
+
+function toggleSidebar(){
+
+  if(window.innerWidth <= 768){
+
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("show");
+
+  }
+
+}
+
+function closeSidebar(){
+
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+
+}
+
+/* UPDATE DASHBOARD */
+function updateDashboard(){
+
+  /* REQUESTS */
+  const allRequests =
+    JSON.parse(
+      localStorage.getItem(
+        "techrider_requests"
+      )
+    ) || [];
+
+  const technicianRequests =
+    allRequests.filter(request =>
+
+      request.assignedTechnician ===
+      currentTechnician.id
+
+    );
+
+  const pending =
+    technicianRequests.filter(request =>
+
+      request.status === "pending"
+
+    ).length;
+
+  const active =
+    technicianRequests.filter(request =>
+
+      request.status === "in progress"
+
+    ).length;
+
+  const completed =
+    technicianRequests.filter(request =>
+
+      request.status === "completed"
+
+    ).length;
+
+  document.getElementById(
+    "pendingCount"
+  ).textContent = pending;
+
+  document.getElementById(
+    "activeCount"
+  ).textContent = active;
+
+  document.getElementById(
+    "completedCount"
+  ).textContent = completed;
+
+  /* NOTIFICATIONS */
+const allNotifications =
+  JSON.parse(
+    localStorage.getItem(
+      "techrider_notifications"
+    )
+  ) || [];
+
+/* FILTER TECHNICIAN NOTIFICATIONS */
+const technicianNotifications =
+  allNotifications.filter(notification =>
+
+    (
+      notification.userType === "technician"
+      ||
+      notification.targetType === "technician"
+    )
+
+    &&
+
+    (
+      notification.userId == currentTechnician.id
+      ||
+      notification.targetId == currentTechnician.id
+      ||
+      notification.recipientId == currentTechnician.id
+    )
+
+  );
+
+/* UNREAD ONLY */
+const unreadNotifications =
+  technicianNotifications.filter(notification =>
+
+    notification.read !== true
+
+  );
+
+/* NOTIFICATION CARD COUNT */
+document.getElementById(
+  "notificationCount"
+).textContent =
+  unreadNotifications.length;
+
+/* SIDEBAR BADGE */
+const badge =
+  document.getElementById(
+    "notificationBadge"
+  );
+
+if(unreadNotifications.length > 0){
+
+  badge.style.display = "flex";
+
+  badge.textContent =
+    unreadNotifications.length;
+
+}else{
+
+  badge.style.display = "none";
+
+}
+
+/* MOST RECENT UNREAD NOTIFICATION */
+const latestUnreadNotification =
+  unreadNotifications.sort(
+    (a,b) =>
+
+      new Date(b.createdAt || 0) -
+      new Date(a.createdAt || 0)
+
+  )[0];
+
+/* UPDATE DESCRIPTION */
+document.getElementById(
+  "latestNotification"
+).textContent =
+
+  latestUnreadNotification
+  ? (
+      latestUnreadNotification.message
+      ||
+      latestUnreadNotification.title
+      ||
+      "New notification received"
+    )
+  : "No new notifications";
+}
+
+/* INITIAL LOAD */
+updateDashboard();
+
+/* REALTIME STORAGE UPDATE */
+window.addEventListener(
+  "storage",
+  updateDashboard
+);
+
+/* FALLBACK LIVE UPDATE */
+setInterval(
+  updateDashboard,
+  1000
+);
+
 </script>
 
 </body>

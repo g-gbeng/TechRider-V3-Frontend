@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
-<title>Admin Disputes</title>
+
+<title>
+Admin Disputes
+</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
 rel="stylesheet">
@@ -26,6 +31,7 @@ font-family:'Poppins',sans-serif;
 --deep:#240046;
 --lilac:#e0aaff;
 --gray:#f7f5fb;
+--danger:#dc2626;
 }
 
 body{
@@ -37,15 +43,20 @@ animation:fadeIn .45s ease;
 }
 
 @keyframes fadeIn{
+
 from{
 opacity:0;
 transform:translateY(12px);
 }
+
 to{
 opacity:1;
 transform:translateY(0);
 }
+
 }
+
+
 
 /* overlay */
 
@@ -60,6 +71,8 @@ z-index:800;
 .overlay.show{
 display:block;
 }
+
+
 
 /* sidebar */
 
@@ -77,6 +90,7 @@ padding:20px;
 color:white;
 z-index:1000;
 transition:.3s;
+overflow-y:auto;
 }
 
 .sidebar.open{
@@ -88,6 +102,7 @@ display:flex;
 gap:12px;
 align-items:center;
 margin-bottom:30px;
+cursor:pointer;
 }
 
 .logo{
@@ -102,9 +117,27 @@ font-weight:700;
 color:var(--deep);
 }
 
-.nav{display:flex;flex-direction:column;gap:10px}
-.nav a{text-decoration:none;color:#fff;padding:12px;border-radius:12px;display:flex;align-items:center;gap:12px}
-.nav a:hover{background:rgba(255,255,255,.12)}
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+text-decoration:none;
+color:#fff;
+padding:12px;
+border-radius:12px;
+display:flex;
+align-items:center;
+gap:12px;
+transition:.3s;
+}
+
+.nav a:hover{
+background:rgba(255,255,255,.12);
+}
+
 
 
 /* main */
@@ -115,14 +148,25 @@ width:calc(100% - 270px);
 padding:20px;
 }
 
+
+
+/* topbar */
+
 .topbar{
 background:white;
 padding:18px;
-border-radius:16px;
+border-radius:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+gap:15px;
+flex-wrap:wrap;
+}
+
+.topbar h3{
+color:var(--deep);
 }
 
 .hamburger{
@@ -140,7 +184,12 @@ display:flex;
 align-items:center;
 justify-content:center;
 color:white;
+font-weight:700;
 }
+
+
+
+/* filters */
 
 .filters{
 display:flex;
@@ -156,7 +205,16 @@ border-radius:10px;
 background:#ece4ff;
 font-weight:600;
 cursor:pointer;
+transition:.3s;
 }
+
+.filterBtn:hover,
+.filterBtn.active{
+background:var(--purple);
+color:white;
+}
+
+
 
 /* sections */
 
@@ -166,71 +224,56 @@ padding:24px;
 border-radius:22px;
 margin-bottom:24px;
 box-shadow:0 6px 18px rgba(0,0,0,.04);
+animation:fadeIn .4s ease;
 }
 
 .sectionHead{
 display:flex;
 justify-content:space-between;
+align-items:center;
 cursor:pointer;
 margin-bottom:20px;
+gap:15px;
 }
+
+.sectionHead h3{
+color:var(--deep);
+}
+
+
 
 /* tables */
 
 .tableWrap{
 overflow-x:auto;
+border-radius:16px;
 }
 
 table{
 width:100%;
-table-layout:fixed;
 border-collapse:collapse;
-min-width:900px;
+min-width:980px;
+table-layout:fixed;
 }
 
-th,td{
+th,
+td{
 padding:16px;
 border-bottom:1px solid #eee;
 text-align:left;
+vertical-align:middle;
+font-size:.94rem;
 }
 
 th{
 background:#faf7ff;
-}
-th:nth-child(5),
-td:nth-child(5){
-width:28%;
+font-size:.95rem;
+color:var(--deep);
 }
 
-.actionCell{
-display:flex;
-flex-wrap:nowrap;
-align-items:center;
-gap:10px;
-white-space:nowrap;
-}
-
-.btn{
-padding:8px 12px;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-margin-right:0;
-flex-shrink:0;
-}
-
-@media(max-width:950px){
-
-th:nth-child(5),
-td:nth-child(5){
-width:32%;
-}
-
-.actionCell{
-min-width:220px;
-}
-
+th:nth-child(6),
+td:nth-child(6){
+width:30%;
 }
 
 .groupRow td{
@@ -240,35 +283,35 @@ color:var(--deep);
 padding:18px;
 }
 
-.priority{
-padding:6px 10px;
-border-radius:14px;
-font-size:.8rem;
-font-weight:600;
-display:inline-block;
-}
 
-.high{
-background:#ffe3ea;
-color:#b00020;
-}
 
-.medium{
-background:#fff2d8;
-color:#8a6200;
+/* actions */
+
+.actionCell{
+display:flex;
+align-items:center;
+gap:10px;
+white-space:nowrap;
+flex-wrap:nowrap;
 }
 
 .btn{
-padding:8px 12px;
+padding:9px 14px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 font-weight:600;
 cursor:pointer;
-margin-right:8px;
+transition:.3s;
+font-size:.9rem;
+}
+
+.btn:hover{
+transform:translateY(-2px);
 }
 
 .viewBtn{
 background:#ece4ff;
+color:var(--deep);
 }
 
 .settleBtn{
@@ -281,9 +324,20 @@ var(--purple),
 color:white;
 }
 
+.deleteBtn{
+background:var(--danger);
+color:white;
+}
+
+
+
+/* hidden */
+
 .hidden{
 display:none;
 }
+
+
 
 /* modals */
 
@@ -293,22 +347,48 @@ position:fixed;
 inset:0;
 background:rgba(0,0,0,.4);
 z-index:3000;
+padding:20px;
+overflow-y:auto;
 }
 
 .modalContent{
 background:white;
-width:90%;
+width:100%;
 max-width:550px;
 margin:90px auto;
 padding:30px;
-border-radius:18px;
+border-radius:22px;
+animation:fadeIn .3s ease;
+}
+
+.modalContent h3{
+color:var(--deep);
+}
+
+.modalContent p{
+margin-top:18px;
+line-height:1.8;
+color:#555;
 }
 
 .modalActions{
 margin-top:25px;
 display:flex;
 gap:12px;
+flex-wrap:wrap;
 }
+
+
+
+/* empty state */
+
+.emptyRow td{
+text-align:center;
+padding:30px;
+color:#777;
+}
+
+
 
 /* mobile */
 
@@ -321,6 +401,7 @@ transform:translateX(-100%);
 .main{
 margin-left:0;
 width:100%;
+padding:14px;
 }
 
 .hamburger{
@@ -328,43 +409,206 @@ display:block;
 }
 
 table{
-min-width:760px;
+min-width:920px;
+}
+
+.actionCell{
+flex-wrap:nowrap;
+}
+
+}
+
+
+
+@media(max-width:768px){
+
+body{
+display:block;
+}
+
+.topbar{
+padding:16px;
+}
+
+.topbar h3{
+font-size:1rem;
+}
+
+.section{
+padding:18px;
+border-radius:18px;
+}
+
+.filters{
+overflow-x:auto;
+flex-wrap:nowrap;
+padding-bottom:4px;
+}
+
+.filters::-webkit-scrollbar{
+display:none;
+}
+
+.filterBtn{
+flex-shrink:0;
+white-space:nowrap;
+}
+
+.modalContent{
+padding:22px;
+margin:40px auto;
+}
+
+.modalActions{
+flex-direction:column;
+}
+
+.modalActions .btn{
+width:100%;
+}
+
+.actionCell{
+gap:8px;
+flex-wrap:nowrap;
+}
+
+.btn{
+font-size:.82rem;
+padding:8px 12px;
 }
 
 }
 
 </style>
 </head>
+
 <body>
 
 
-<div class="overlay" id="overlay"></div>
-<div class="sidebar collapsed" id="sidebar">
-<div class="brand" onclick="toggleSidebar()"><div class="logo">A</div><span class="text">Admin Panel</span></div>
+
+<div class="overlay"
+id="overlay"
+onclick="closeSidebar()">
+</div>
+
+
+
+
+<div class="sidebar"
+id="sidebar">
+
+<div class="brand">
+
+<div class="logo">
+A
+</div>
+
+<span class="text">
+Admin Panel
+</span>
+
+</div>
+
+
+
 <div class="nav">
-<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
-<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
-<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
-<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
-<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
-<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
-<a href="admin-disputes.html"><i class="fas fa-gavel"></i><span class="text">Disputes</span></a>
-<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
-<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Technician Records</span></a>
-<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
-</div></div>
+
+<a href="admin-pending-approvals.html">
+<i class="fas fa-user-check"></i>
+<span class="text">
+Pending Approvals
+</span>
+</a>
+
+<a href="admin-customers.html">
+<i class="fas fa-users"></i>
+<span class="text">
+Customers
+</span>
+</a>
+
+<a href="admin-technicians.html">
+<i class="fas fa-screwdriver-wrench"></i>
+<span class="text">
+Technicians
+</span>
+</a>
+
+<a href="admin-riders.html">
+<i class="fas fa-motorcycle"></i>
+<span class="text">
+Riders
+</span>
+</a>
+
+<a href="admin-job-monitoring.html">
+<i class="fas fa-briefcase"></i>
+<span class="text">
+Jobs Monitoring
+</span>
+</a>
+
+<a href="admin-communications.html">
+<i class="fas fa-envelope-open-text"></i>
+<span class="text">
+Communications
+</span>
+</a>
+
+<a href="admin-disputes.html">
+<i class="fas fa-scale-balanced"></i>
+<span class="text">
+Disputes
+</span>
+</a>
+
+<a href="admin-reports.html">
+<i class="fas fa-file-lines"></i>
+<span class="text">
+Reports
+</span>
+</a>
+
+<a href="admin-records.html">
+<i class="fas fa-id-card"></i>
+<span class="text">
+Records
+</span>
+</a>
+
+<a href="admin-templates.html">
+<i class="fas fa-layer-group"></i>
+<span class="text">
+Templates
+</span>
+</a>
+
+<a href="admin-login.html">
+<i class="fas fa-sign-out-alt"></i>
+<span class="text">
+Logout
+</span>
+</a>
+
+</div>
+
+</div>
 
 
 
 
 <div class="main">
 
+
+
 <div class="topbar">
 
 <div
 class="hamburger"
 onclick="openSidebar()">
+
 <i class="fas fa-bars"></i>
+
 </div>
 
 <h3>
@@ -374,35 +618,50 @@ Dispute Resolution Center
 <div class="avatar">
 A
 </div>
+
 </div>
+
 
 
 
 <div class="filters">
 
-<button class="filterBtn"
-onclick="filterType('all')">
+<button
+class="filterBtn active"
+onclick="filterType('all', this)">
+
 All
+
 </button>
 
-<button class="filterBtn"
-onclick="filterType('customer')">
+
+
+<button
+class="filterBtn"
+onclick="filterType('customer', this)">
+
 Customers
+
 </button>
 
-<button class="filterBtn"
-onclick="filterType('tech')">
+
+
+<button
+class="filterBtn"
+onclick="filterType('technician', this)">
+
 Technicians
+
 </button>
 
-<button class="filterBtn"
-onclick="filterType('rider')">
+
+
+<button
+class="filterBtn"
+onclick="filterType('rider', this)">
+
 Riders
-</button>
 
-<button class="filterBtn"
-onclick="filterPriority()">
-High Priority
 </button>
 
 </div>
@@ -414,7 +673,8 @@ High Priority
 
 <div class="section">
 
-<div class="sectionHead"
+<div
+class="sectionHead"
 onclick="toggleSection('unsettledWrap')">
 
 <h3>
@@ -424,6 +684,8 @@ Unsettled Disputes
 <i class="fas fa-chevron-down"></i>
 
 </div>
+
+
 
 <div id="unsettledWrap">
 
@@ -436,171 +698,17 @@ Unsettled Disputes
 <tr>
 <th>ID</th>
 <th>User</th>
-<th>Issue</th>
-<th>Priority</th>
+<th>Category</th>
+<th>Job ID</th>
+<th>Status</th>
 <th>Actions</th>
 </tr>
 
 </thead>
 
+
+
 <tbody id="openTable">
-
-<tr class="groupRow">
-<td colspan="5">
-Customer Disputes
-</td>
-</tr>
-
-<tr
-data-type="customer"
-data-priority="high"
-data-message="Customer claims technician returned device with additional damage.">
-
-<td>DSP-001</td>
-<td>Ada</td>
-<td>Device damage claim</td>
-
-<td>
-<span class="priority high">
-High
-</span>
-</td>
-
-<td>
-
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-
-<button
-class="btn settleBtn"
-onclick="confirmSettle(this)">
-Mark Settled
-</button>
-
-</td>
-
-</tr>
-
-
-<tr
-data-type="customer"
-data-priority="medium"
-data-message="Customer requests refund due to unresolved repair.">
-
-<td>DSP-002</td>
-<td>Musa</td>
-<td>Refund dispute</td>
-
-<td>
-<span class="priority medium">
-Medium
-</span>
-</td>
-
-<td>
-
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-
-<button
-class="btn settleBtn"
-onclick="confirmSettle(this)">
-Mark Settled
-</button>
-
-</td>
-
-</tr>
-
-
-
-<tr class="groupRow">
-<td colspan="5">
-Technician Disputes
-</td>
-</tr>
-
-
-<tr
-data-type="tech"
-data-priority="high"
-data-message="Technician disputes underpayment on completed jobs.">
-
-<td>DSP-003</td>
-<td>Chinedu</td>
-<td>Payment dispute</td>
-
-<td>
-<span class="priority high">
-High
-</span>
-</td>
-
-<td>
-
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-
-<button
-class="btn settleBtn"
-onclick="confirmSettle(this)">
-Mark Settled
-</button>
-
-</td>
-
-</tr>
-
-
-
-<tr class="groupRow">
-<td colspan="5">
-Rider Disputes
-</td>
-</tr>
-
-
-<tr
-data-type="rider"
-data-priority="medium"
-data-message="Rider disputes liability due to incorrect customer address.">
-
-<td>DSP-004</td>
-<td>Femi</td>
-<td>Delivery liability</td>
-
-<td>
-<span class="priority medium">
-Medium
-</span>
-</td>
-
-<td>
-
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-
-<button
-class="btn settleBtn"
-onclick="confirmSettle(this)">
-Mark Settled
-</button>
-
-</td>
-
-</tr>
 
 </tbody>
 
@@ -619,7 +727,8 @@ Mark Settled
 
 <div class="section">
 
-<div class="sectionHead"
+<div
+class="sectionHead"
 onclick="toggleSection('settledWrap')">
 
 <h3>
@@ -629,6 +738,8 @@ Settled Disputes
 <i class="fas fa-chevron-down"></i>
 
 </div>
+
+
 
 <div id="settledWrap">
 
@@ -641,32 +752,17 @@ Settled Disputes
 <tr>
 <th>ID</th>
 <th>User</th>
-<th>Issue</th>
+<th>Category</th>
+<th>Job ID</th>
 <th>Status</th>
-<th>Action</th>
+<th>Actions</th>
 </tr>
 
 </thead>
 
+
+
 <tbody id="settledTable">
-
-<tr
-data-message="Delivery dispute resolved and closed.">
-
-<td>DSP-000</td>
-<td>Sade</td>
-<td>Delivery dispute</td>
-<td>Settled</td>
-
-<td>
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-</td>
-
-</tr>
 
 </tbody>
 
@@ -694,22 +790,72 @@ id="confirmModal">
 Confirm Settlement
 </h3>
 
-<p style="margin-top:15px;">
+<p>
 Move dispute into settled records?
 </p>
+
+
 
 <div class="modalActions">
 
 <button
 class="btn viewBtn"
 onclick="closeModal()">
+
 Cancel
+
 </button>
+
+
 
 <button
 class="btn settleBtn"
 onclick="moveDispute()">
+
 Confirm
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- delete confirm -->
+
+<div class="modal"
+id="deleteModal">
+
+<div class="modalContent">
+
+<h3>
+Delete Dispute
+</h3>
+
+<p>
+Are you sure you want to permanently delete this settled dispute?
+</p>
+
+<div class="modalActions">
+
+<button
+class="btn viewBtn"
+onclick="closeDeleteModal()">
+
+Cancel
+
+</button>
+
+<button
+class="btn deleteBtn"
+onclick="deleteDispute()">
+
+Delete
+
 </button>
 
 </div>
@@ -732,19 +878,16 @@ id="detailModal">
 Dispute Details
 </h3>
 
-<p
-id="detailText"
-style="
-margin-top:18px;
-line-height:1.8;">
-</p>
+<p id="detailText"></p>
 
 <div class="modalActions">
 
 <button
 class="btn settleBtn"
 onclick="closeDetail()">
+
 Close
+
 </button>
 
 </div>
@@ -752,256 +895,398 @@ Close
 </div>
 
 </div>
-
 
 
 
 <script>
 
-let pendingRow=null;
+let pendingRow = null;
+let deleteRow = null;
+let currentFilter = "all";
 
+/* =========================
+LOCAL STORAGE DISPUTES
+========================= */
 
-/* mobile sidebar */
+let disputes =
+JSON.parse(
+localStorage.getItem('allDisputes')
+) || [];
+
+/* =========================
+SIDEBAR
+========================= */
 
 function openSidebar(){
 
-document
-.getElementById(
-'sidebar'
-)
-.classList.add(
-'open'
-);
+document.getElementById('sidebar')
+.classList.add('open');
 
-document
-.getElementById(
-'overlay'
-)
-.classList.add(
-'show'
-);
+document.getElementById('overlay')
+.classList.add('show');
 
 }
 
+function closeSidebar(){
 
+document.getElementById('sidebar')
+.classList.remove('open');
 
-/* collapse */
+document.getElementById('overlay')
+.classList.remove('show');
+
+}
+
+/* =========================
+COLLAPSE
+========================= */
 
 function toggleSection(id){
 
-document
-.getElementById(id)
-.classList.toggle(
-'hidden'
+document.getElementById(id)
+.classList.toggle('hidden');
+
+}
+
+/* =========================
+TYPE LABEL
+========================= */
+
+function formatType(type){
+
+if(type === "customer"){
+return "Customer Disputes";
+}
+
+if(type === "technician"){
+return "Technician Disputes";
+}
+
+if(type === "rider"){
+return "Rider Disputes";
+}
+
+return "Disputes";
+
+}
+
+/* =========================
+LOAD DISPUTES
+========================= */
+
+function loadDisputes(){
+
+const openTable =
+document.getElementById('openTable');
+
+const settledTable =
+document.getElementById('settledTable');
+
+openTable.innerHTML = '';
+settledTable.innerHTML = '';
+
+disputes =
+JSON.parse(
+localStorage.getItem('allDisputes')
+) || [];
+
+disputes.sort(
+(a, b) => b.timestamp - a.timestamp
+);
+
+const unsettledDisputes =
+disputes.filter(
+d => d.status !== 'Settled'
+);
+
+const settledDisputes =
+disputes.filter(
+d => d.status === 'Settled'
+);
+
+renderGroupedDisputes(
+unsettledDisputes,
+openTable,
+false
+);
+
+renderGroupedDisputes(
+settledDisputes,
+settledTable,
+true
 );
 
 }
 
+/* =========================
+RENDER GROUPS
+========================= */
 
+function renderGroupedDisputes(
+data,
+targetTable,
+isSettled
+){
 
-/* view dispute */
+const types =
+currentFilter === "all"
+? ["customer", "technician", "rider"]
+: [currentFilter];
+
+let hasData = false;
+
+types.forEach(type => {
+
+const group =
+data.filter(
+d => d.userType === type
+);
+
+if(!group.length){
+return;
+}
+
+hasData = true;
+
+targetTable.innerHTML += `
+<tr class="groupRow">
+<td colspan="6">
+${formatType(type)}
+</td>
+</tr>
+`;
+
+group.forEach(dispute => {
+
+targetTable.innerHTML += `
+<tr
+data-type="${type}"
+data-message="${dispute.message}"
+>
+
+<td>
+${dispute.disputeId}
+</td>
+
+<td>
+${dispute.userName}
+</td>
+
+<td>
+${dispute.category}
+</td>
+
+<td>
+${dispute.jobId}
+</td>
+
+<td>
+${dispute.status}
+</td>
+
+<td class="actionCell">
+
+<button
+class="btn viewBtn"
+onclick="viewDispute(this)"
+>
+View
+</button>
+
+${
+!isSettled
+? `
+<button
+class="btn settleBtn"
+onclick="confirmSettle(this)"
+>
+Mark Settled
+</button>
+`
+: `
+<button
+class="btn deleteBtn"
+onclick="confirmDelete(this)"
+>
+Delete
+</button>
+`
+}
+
+</td>
+
+</tr>
+`;
+
+});
+
+});
+
+if(!hasData){
+
+targetTable.innerHTML = `
+<tr class="emptyRow">
+<td colspan="6">
+No disputes found
+</td>
+</tr>
+`;
+
+}
+
+}
+
+/* =========================
+VIEW DISPUTE
+========================= */
 
 function viewDispute(btn){
 
-let row=
+const row =
 btn.closest('tr');
 
-document
-.getElementById(
+document.getElementById(
 'detailText'
-)
-.innerHTML=
+).innerHTML =
 row.dataset.message;
 
-document
-.getElementById(
+document.getElementById(
 'detailModal'
-)
-.style.display='block';
+).style.display = 'block';
 
 }
 
 function closeDetail(){
 
-document
-.getElementById(
+document.getElementById(
 'detailModal'
-)
-.style.display='none';
+).style.display = 'none';
 
 }
 
-
-
-/* settle */
+/* =========================
+SETTLEMENT FLOW
+========================= */
 
 function confirmSettle(btn){
 
-pendingRow=
+pendingRow =
 btn.closest('tr');
 
-document
-.getElementById(
+document.getElementById(
 'confirmModal'
-)
-.style.display='block';
+).style.display = 'block';
 
 }
 
 function closeModal(){
 
-document
-.getElementById(
+document.getElementById(
 'confirmModal'
-)
-.style.display='none';
+).style.display = 'none';
 
 }
-
 
 function moveDispute(){
 
 if(!pendingRow) return;
 
-let cells=
-pendingRow.children;
+const disputeId =
+pendingRow.children[0].innerText;
 
-let id=cells[0].innerText;
-let user=cells[1].innerText;
-let issue=cells[2].innerText;
-let msg=pendingRow.dataset.message;
+disputes = disputes.map(d => {
 
-document
-.getElementById(
-'settledTable'
-)
-.insertAdjacentHTML(
-'afterbegin',
+if(d.disputeId === disputeId){
 
-`
-<tr data-message="${msg}">
-<td>${id}</td>
-<td>${user}</td>
-<td>${issue}</td>
-<td>Settled</td>
-<td>
-<button
-class="btn viewBtn"
-onclick="viewDispute(this)">
-View
-</button>
-</td>
-</tr>
-`
-
-);
-
-pendingRow.remove();
-
-closeModal();
+d.status = "Settled";
 
 }
 
-
-
-/* filters */
-
-function filterType(type){
-
-document
-.querySelectorAll(
-'#openTable tr'
-)
-.forEach(row=>{
-
-if(
-row.classList.contains(
-'groupRow'
-)
-){
-row.style.display='';
-return;
-}
-
-row.style.display=
-(type==='all'
-|| row.dataset.type===type)
-?''
-:'none';
+return d;
 
 });
 
+localStorage.setItem(
+'allDisputes',
+JSON.stringify(disputes)
+);
+
+closeModal();
+loadDisputes();
+
 }
 
+/* =========================
+DELETE FLOW
+========================= */
 
+function confirmDelete(btn){
 
-function filterPriority(){
+deleteRow =
+btn.closest('tr');
+
+document.getElementById(
+'deleteModal'
+).style.display = 'block';
+
+}
+
+function closeDeleteModal(){
+
+document.getElementById(
+'deleteModal'
+).style.display = 'none';
+
+}
+
+function deleteDispute(){
+
+if(!deleteRow) return;
+
+const disputeId =
+deleteRow.children[0].innerText;
+
+disputes = disputes.filter(
+d => d.disputeId !== disputeId
+);
+
+localStorage.setItem(
+'allDisputes',
+JSON.stringify(disputes)
+);
+
+closeDeleteModal();
+loadDisputes();
+
+}
+
+/* =========================
+FILTERS
+========================= */
+
+function filterType(type, button){
+
+currentFilter = type;
 
 document
-.querySelectorAll(
-'#openTable tr'
-)
-.forEach(row=>{
+.querySelectorAll('.filterBtn')
+.forEach(btn => {
 
-if(
-row.classList.contains(
-'groupRow'
-)
-){
-row.style.display='';
-return;
-}
-
-row.style.display=
-row.dataset.priority==='high'
-?''
-:'none';
+btn.classList.remove('active');
 
 });
 
-}
+button.classList.add('active');
 
-
-
-/* click outside */
-
-window.onclick=function(e){
-
-if(
-e.target.id==='confirmModal'
-){
-closeModal();
-}
-
-if(
-e.target.id==='detailModal'
-){
-closeDetail();
-}
-
-if(
-e.target.id==='overlay'
-){
-
-document
-.getElementById(
-'sidebar'
-)
-.classList.remove(
-'open'
-);
-
-document
-.getElementById(
-'overlay'
-)
-.classList.remove(
-'show'
-);
+loadDisputes();
 
 }
 
-};
+/* =========================
+INIT
+========================= */
+
+loadDisputes();
 
 </script>
 

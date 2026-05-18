@@ -2,157 +2,409 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Available Jobs - TechRider</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>
+Technician Available Jobs - TechRider
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
-  --white:#fff;
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--green:#0f9d58;
+--red:#d93025;
 }
 
 body{
-  background:var(--gray);
-  padding:20px;
-  animation:fadeIn .5s ease-in;
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
 }
 
 .container{
-  max-width:1000px;
-  margin:auto;
+max-width:1100px;
+margin:auto;
 }
 
 /* HEADER */
+
 .header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:12px;
+margin-bottom:25px;
 }
 
 .header h2{
-  color:var(--deep-purple);
+color:var(--deep-purple);
 }
 
 .back{
-  text-decoration:none;
-  background:var(--purple);
-  color:white;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:.85rem;
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.9rem;
+font-weight:600;
 }
 
 /* GRID */
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
 }
 
 /* CARD */
+
 .card{
-  background:var(--white);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
-  transition:.2s;
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+transition:.2s;
 }
 
 .card:hover{
-  transform:translateY(-3px);
+transform:translateY(-3px);
 }
 
-/* TOP */
 .top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
 }
 
 .issue{
-  font-weight:600;
-  color:var(--deep-purple);
+font-weight:600;
+font-size:1rem;
+color:var(--deep-purple);
+line-height:1.5;
 }
 
-.badge{
-  background:var(--lilac);
-  color:var(--deep-purple);
-  padding:5px 10px;
-  border-radius:20px;
-  font-size:.75rem;
+.request-id{
+background:#f3e8ff;
+color:var(--purple);
+padding:7px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+white-space:nowrap;
 }
 
 /* DETAILS */
+
 .details{
-  margin-top:10px;
-  font-size:.85rem;
-  color:#444;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:.9rem;
+color:#444;
 }
 
-/* DESCRIPTION BOX */
+.details div{
+line-height:1.5;
+}
+
+.details i{
+color:var(--purple);
+width:18px;
+margin-right:6px;
+}
+
+/* DESCRIPTION */
+
 .desc{
-  margin-top:10px;
-  padding:10px;
-  background:#fafafa;
-  border-left:3px solid var(--purple);
-  font-size:.85rem;
-  color:#333;
-  border-radius:8px;
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+color:#333;
+line-height:1.7;
+}
+
+/* DEVICE IMAGES */
+
+.image-dropdown{
+margin-top:15px;
+border:1px solid #eee;
+border-radius:12px;
+overflow:hidden;
+background:#fafafa;
+}
+
+.image-toggle{
+width:100%;
+padding:14px;
+border:none;
+background:none;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+font-weight:600;
+color:var(--deep-purple);
+font-size:.9rem;
+}
+
+.image-toggle i{
+transition:.3s;
+}
+
+.image-dropdown.active .image-toggle i{
+transform:rotate(180deg);
+}
+
+.image-content{
+display:none;
+padding:15px;
+border-top:1px solid #eee;
+}
+
+.image-dropdown.active .image-content{
+display:block;
+}
+
+.image-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.device-image{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+background:#f0f0f0;
+border:1px solid #eee;
+}
+
+.no-images{
+font-size:.85rem;
+color:#777;
+line-height:1.6;
+}
+
+/* TIMESTAMP */
+
+.timestamp{
+margin-top:15px;
+font-size:.82rem;
+color:#777;
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
 }
 
 /* ACTIONS */
+
 .actions{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
+display:flex;
+gap:12px;
+margin-top:20px;
 }
 
 .btn{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+transition:.2s;
 }
 
 .accept{
-  background:linear-gradient(135deg,var(--purple),var(--lilac));
-  color:white;
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+}
+
+.accept:hover{
+opacity:.95;
 }
 
 .reject{
-  background:#eee;
+background:#eee;
+color:#333;
+}
+
+.reject:hover{
+background:#ddd;
+}
+
+/* EMPTY */
+
+.empty{
+background:white;
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+color:#666;
+display:none;
+}
+
+/* MODAL */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:1000;
+padding:20px;
+}
+
+.overlay.show{
+display:flex;
+}
+
+.modal{
+background:white;
+width:100%;
+max-width:450px;
+padding:25px;
+border-radius:18px;
+animation:fadeIn .3s ease;
+}
+
+.modal h3{
+color:var(--deep-purple);
+margin-bottom:12px;
+}
+
+.modal p{
+font-size:.9rem;
+color:#555;
+margin-bottom:18px;
+line-height:1.6;
+}
+
+.input-group{
+margin-bottom:20px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:8px;
+font-size:.88rem;
+font-weight:600;
+color:#333;
+}
+
+.input-group input{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:12px;
+outline:none;
+font-size:1rem;
+}
+
+.input-group input:focus{
+border-color:var(--purple);
+}
+
+.modal-actions{
+display:flex;
+gap:12px;
+}
+
+.cancel-btn{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+background:#eee;
+}
+
+.send-btn{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
 }
 
 /* MOBILE */
+
 @media(max-width:768px){
-  .grid{grid-template-columns:1fr;}
+
+.grid{
+grid-template-columns:1fr;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+.actions{
+flex-direction:column;
 }
+
+.modal-actions{
+flex-direction:column;
+}
+
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 </style>
 </head>
 
@@ -160,112 +412,857 @@ body{
 
 <div class="container">
 
-  <div class="header">
-    <h2>Available Repair Jobs</h2>
-    <a href="dashboard-technician.html" class="back">← Dashboard</a>
-  </div>
+<div class="header">
 
-  <div class="grid">
+<h2>
+Available Repair Jobs
+</h2>
 
-    <!-- JOB 1 -->
-    <div class="card">
-      <div class="top">
-        <div class="issue">iPhone 13 Screen Issue</div>
-        <div class="badge">Urgent</div>
-      </div>
+<a
+href="dashboard-technician.html"
+class="back">
 
-      <div class="details">
-        <div><i class="fas fa-user"></i> Customer: Alhaji Maleek</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
-        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
-      </div>
+← Dashboard
 
-      <div class="desc">
-        Screen is completely unresponsive after a fall. 
-        Touch works intermittently but display is flickering.
-      </div>
-
-      <div class="actions">
-        <button class="btn accept">Accept</button>
-        <button class="btn reject">Reject</button>
-      </div>
-    </div>
-
-    <!-- JOB 2 -->
-    <div class="card">
-      <div class="top">
-        <div class="issue">Tecno Spark 10 Battery Issue</div>
-        <div class="badge">Normal</div>
-      </div>
-
-      <div class="details">
-        <div><i class="fas fa-user"></i> Customer: Anthony Peters</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: Tecno Spark 10</div>
-        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
-      </div>
-
-      <div class="desc">
-        Phone drains from 100% to 20% within 2 hours. 
-        Heating observed during charging.
-      </div>
-
-      <div class="actions">
-        <button class="btn accept">Accept</button>
-        <button class="btn reject">Reject</button>
-      </div>
-    </div>
-
-    <!-- JOB 2 -->
-    <div class="card">
-      <div class="top">
-        <div class="issue">Tecno Spark 10 Battery Issue</div>
-        <div class="badge">Normal</div>
-      </div>
-
-      <div class="details">
-        <div><i class="fas fa-user"></i> Customer: Frank Samuel</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: Tecno Spark 10</div>
-        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
-      </div>
-
-      <div class="desc">
-        Phone drains from 100% to 20% within 2 hours. 
-        Heating observed during charging.
-      </div>
-
-      <div class="actions">
-        <button class="btn accept">Accept</button>
-        <button class="btn reject">Reject</button>
-      </div>
-    </div>
-
-    <!-- JOB 1 -->
-    <div class="card">
-      <div class="top">
-        <div class="issue">iPhone 13 Screen Issue</div>
-        <div class="badge">Urgent</div>
-      </div>
-
-      <div class="details">
-        <div><i class="fas fa-user"></i> Customer: Stephen Afolabi</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
-        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
-      </div>
-
-      <div class="desc">
-        Screen is completely unresponsive after a fall. 
-        Touch works intermittently but display is flickering.
-      </div>
-
-      <div class="actions">
-        <button class="btn accept">Accept</button>
-        <button class="btn reject">Reject</button>
-      </div>
-    </div>
-
-  </div>
+</a>
 
 </div>
+
+<div
+class="grid"
+id="jobsGrid">
+</div>
+
+<div
+class="empty"
+id="emptyState">
+
+No repair jobs available at the moment.
+
+</div>
+
+</div>
+
+<!-- PRICE MODAL -->
+
+<div
+class="overlay"
+id="priceModal">
+
+<div class="modal">
+
+<h3>
+Send Repair Quotation
+</h3>
+
+<p id="modalText">
+Enter your repair quotation for this request.
+</p>
+
+<div class="input-group">
+
+<label>
+Repair Price (₦)
+</label>
+
+<input
+type="number"
+id="repairPrice"
+placeholder="Enter amount">
+
+</div>
+
+<div class="modal-actions">
+
+<button
+class="cancel-btn"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+<button
+class="send-btn"
+onclick="sendQuotation()">
+
+Send Quote
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================
+CURRENT TECHNICIAN
+========================================= */
+
+const currentTechnician =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_technician'
+)
+);
+
+/* =========================================
+REDIRECT IF NOT LOGGED IN
+========================================= */
+
+if(!currentTechnician){
+
+alert('Please login as technician');
+
+window.location.href =
+'login-technician.html';
+
+}
+
+/* =========================================
+ELEMENTS
+========================================= */
+
+const jobsGrid =
+document.getElementById(
+'jobsGrid'
+);
+
+const emptyState =
+document.getElementById(
+'emptyState'
+);
+
+const priceModal =
+document.getElementById(
+'priceModal'
+);
+
+let selectedJob = null;
+
+/* =========================================
+FETCH JOBS FOR CURRENT TECHNICIAN
+
+IMPORTANT STORAGE KEY:
+tech_jobs_${technicianId}
+========================================= */
+
+function getAvailableJobs(){
+
+const technicianId =
+currentTechnician.id
+|| currentTechnician.technicianId;
+
+return JSON.parse(
+localStorage.getItem(
+`tech_jobs_${technicianId}`
+)
+) || [];
+
+}
+
+/* =========================================
+FORMAT DATE
+========================================= */
+
+function formatDate(dateString){
+
+if(!dateString){
+return 'Recently';
+}
+
+const date =
+new Date(dateString);
+
+return date.toLocaleString(
+'en-NG',
+{
+day:'numeric',
+month:'short',
+year:'numeric',
+hour:'numeric',
+minute:'2-digit'
+}
+);
+
+}
+
+/* =========================================
+TOGGLE IMAGE DROPDOWN
+========================================= */
+
+function toggleImages(id){
+
+const dropdown =
+document.getElementById(id);
+
+dropdown.classList.toggle('active');
+
+}
+
+
+
+/* =========================================
+RENDER JOBS
+========================================= */
+
+function renderJobs(){
+
+const availableJobs =
+getAvailableJobs();
+
+jobsGrid.innerHTML='';
+
+if(availableJobs.length===0){
+
+emptyState.style.display='block';
+
+return;
+
+}
+
+emptyState.style.display='none';
+
+availableJobs
+.sort((a,b)=>
+new Date(b.createdAt)
+-
+new Date(a.createdAt)
+)
+.forEach((job,index)=>{
+
+const imageSectionId =
+`imageSection_${index}`;
+
+jobsGrid.innerHTML += `
+
+<div class="card">
+
+<div class="top">
+
+<div class="issue">
+
+${job.brand || ''}
+${job.model || ''}
+${job.deviceType
+? `(${job.deviceType})`
+: ''}
+
+</div>
+
+<div class="request-id">
+
+${job.requestId || 'REQ'}
+
+</div>
+
+</div>
+
+<div class="details">
+
+<div>
+<i class="fas fa-mobile-alt"></i>
+
+<strong>Device Type:</strong>
+
+${job.deviceType || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-tag"></i>
+
+<strong>Brand:</strong>
+
+${job.brand || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-microchip"></i>
+
+<strong>Model:</strong>
+
+${job.model || 'N/A'}
+
+</div>
+
+</div>
+
+<div class="desc">
+
+<strong>Issue Description:</strong>
+<br><br>
+
+${job.description || 'No description provided.'}
+
+</div>
+
+<!-- DEVICE IMAGES -->
+
+<div
+class="image-dropdown"
+id="${imageSectionId}">
+
+<button
+class="image-toggle"
+onclick="toggleImages('${imageSectionId}')">
+
+<span>
+<i class="fas fa-images"></i>
+Device Images
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</button>
+
+<div class="image-content">
+
+${
+job.deviceImages &&
+job.deviceImages.length > 0
+
+? `
+
+<div class="image-grid">
+
+${job.deviceImages.map(image => `
+
+<img
+src="${image}"
+class="device-image"
+alt="Device Image">
+
+`).join('')}
+
+</div>
+
+`
+
+: `
+
+<div class="no-images">
+
+No device images were uploaded
+for this repair request.
+
+</div>
+
+`
+}
+
+</div>
+
+</div>
+
+<div class="timestamp">
+
+<i class="fas fa-clock"></i>
+
+Requested:
+${formatDate(job.createdAt)}
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn accept"
+onclick="openQuoteModal(${index})">
+
+Accept Job
+
+</button>
+
+<button
+class="btn reject"
+onclick="rejectJob(${index})">
+
+Reject
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+/* =========================================
+OPEN QUOTE MODAL
+========================================= */
+
+function openQuoteModal(index){
+
+const jobs =
+getAvailableJobs();
+
+selectedJob =
+jobs[index];
+
+document.getElementById(
+'repairPrice'
+).value='';
+
+document.getElementById(
+'modalText'
+).innerHTML = `
+
+You are sending a repair quotation for
+<strong>
+${selectedJob.requestId}
+</strong>.
+
+`;
+
+priceModal.classList.add('show');
+
+}
+
+/* =========================================
+CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+priceModal.classList.remove('show');
+
+selectedJob = null;
+
+}
+
+/* =========================================
+SEND QUOTATION
+========================================= */
+
+function sendQuotation(){
+
+const price =
+document.getElementById(
+'repairPrice'
+).value.trim();
+
+if(price==='' || Number(price)<=0){
+
+alert(
+'Please enter a valid repair amount.'
+);
+
+return;
+
+}
+
+if(!selectedJob){
+return;
+}
+
+/* =========================================
+SAVE QUOTATION
+========================================= */
+
+let quotations =
+JSON.parse(
+localStorage.getItem(
+'techrider_quotations'
+)
+) || [];
+
+const quotationData = {
+
+requestId:
+selectedJob.requestId,
+
+customerId:
+selectedJob.customerId,
+
+customerName:
+selectedJob.customerName,
+
+technicianId:
+currentTechnician.id,
+
+technicianName:
+currentTechnician.fullName,
+
+deviceType:
+selectedJob.deviceType,
+
+brand:
+selectedJob.brand,
+
+model:
+selectedJob.model,
+
+description:
+selectedJob.description,
+
+repairPrice:
+Number(price),
+
+quotationStatus:
+'Pending Admin Approval',
+
+createdAt:
+new Date().toISOString()
+
+};
+
+quotations.unshift(
+quotationData
+);
+
+localStorage.setItem(
+'techrider_quotations',
+JSON.stringify(quotations)
+);
+
+/* =========================================
+MOVE TO ACTIVE JOBS
+========================================= */
+
+let activeJobs =
+JSON.parse(
+localStorage.getItem(
+'tech_active_jobs'
+)
+) || [];
+
+activeJobs.unshift({
+
+...selectedJob,
+
+repairPrice:Number(price),
+
+jobStatus:
+'Pending Device Delivery',
+
+statusTag:'Pending',
+
+quotationSent:true,
+
+quotationSentAt:
+new Date().toISOString(),
+
+acceptedAt:
+new Date().toISOString()
+
+});
+
+localStorage.setItem(
+'tech_active_jobs',
+JSON.stringify(activeJobs)
+);
+
+/* =========================================
+SEND ADMIN NOTIFICATION
+========================================= */
+
+let adminNotifications =
+JSON.parse(
+localStorage.getItem(
+'admin_notifications'
+)
+) || [];
+
+adminNotifications.unshift({
+
+id:Date.now(),
+
+type:'quotation',
+
+requestId:
+selectedJob.requestId,
+
+technicianId:
+currentTechnician.id,
+
+technicianName:
+currentTechnician.fullName,
+
+message:`
+${currentTechnician.fullName}
+submitted a repair quotation of
+₦${Number(price).toLocaleString()}
+for request
+${selectedJob.requestId}.
+`,
+
+createdAt:
+new Date().toISOString(),
+
+read:false
+
+});
+
+localStorage.setItem(
+'admin_notifications',
+JSON.stringify(adminNotifications)
+);
+
+/* =========================================
+REMOVE FROM TECHNICIAN AVAILABLE JOBS
+========================================= */
+
+const technicianId =
+currentTechnician.id
+|| currentTechnician.technicianId;
+
+let technicianJobs =
+JSON.parse(
+localStorage.getItem(
+`tech_jobs_${technicianId}`
+)
+) || [];
+
+technicianJobs =
+technicianJobs.filter(job=>{
+
+return (
+job.requestId !==
+selectedJob.requestId
+);
+
+});
+
+localStorage.setItem(
+`tech_jobs_${technicianId}`,
+JSON.stringify(technicianJobs)
+);
+
+/* =========================================
+UPDATE REQUEST STATUS
+========================================= */
+
+let allRequests =
+JSON.parse(
+localStorage.getItem(
+'techrider_requests'
+)
+) || [];
+
+allRequests =
+allRequests.map(request=>{
+
+if(
+request.requestId ===
+selectedJob.requestId
+){
+
+return {
+
+...request,
+
+status:
+'quotation_sent',
+
+repairPrice:
+Number(price),
+
+quotationStatus:
+'Pending Admin Approval'
+
+};
+
+}
+
+return request;
+
+});
+
+localStorage.setItem(
+'techrider_requests',
+JSON.stringify(allRequests)
+);
+
+alert(
+'Repair quotation sent successfully. Job moved to Active Jobs.'
+);
+
+closeModal();
+
+renderJobs();
+
+}
+
+/* =========================================
+REJECT JOB
+========================================= */
+
+function rejectJob(index){
+
+const jobs =
+getAvailableJobs();
+
+const job =
+jobs[index];
+
+const confirmReject =
+confirm(
+'Are you sure you want to reject this repair request?'
+);
+
+if(!confirmReject){
+return;
+}
+
+/* =========================================
+SEND ADMIN NOTIFICATION
+========================================= */
+
+let adminNotifications =
+JSON.parse(
+localStorage.getItem(
+'admin_notifications'
+)
+) || [];
+
+adminNotifications.unshift({
+
+id:Date.now(),
+
+type:'rejected_job',
+
+requestId:
+job.requestId,
+
+technicianId:
+currentTechnician.id,
+
+technicianName:
+currentTechnician.fullName,
+
+message:`
+${currentTechnician.fullName}
+rejected repair request
+${job.requestId}.
+`,
+
+createdAt:
+new Date().toISOString(),
+
+read:false
+
+});
+
+localStorage.setItem(
+'admin_notifications',
+JSON.stringify(adminNotifications)
+);
+
+/* =========================================
+REMOVE JOB
+========================================= */
+
+const technicianId =
+currentTechnician.id
+|| currentTechnician.technicianId;
+
+let technicianJobs =
+JSON.parse(
+localStorage.getItem(
+`tech_jobs_${technicianId}`
+)
+) || [];
+
+technicianJobs =
+technicianJobs.filter(item=>{
+
+return (
+item.requestId !==
+job.requestId
+);
+
+});
+
+localStorage.setItem(
+`tech_jobs_${technicianId}`,
+JSON.stringify(technicianJobs)
+);
+
+/* =========================================
+UPDATE REQUEST STATUS
+========================================= */
+
+let allRequests =
+JSON.parse(
+localStorage.getItem(
+'techrider_requests'
+)
+) || [];
+
+allRequests =
+allRequests.map(request=>{
+
+if(
+request.requestId ===
+job.requestId
+){
+
+return {
+
+...request,
+
+status:'rejected_by_technician'
+
+};
+
+}
+
+return request;
+
+});
+
+localStorage.setItem(
+'techrider_requests',
+JSON.stringify(allRequests)
+);
+
+alert(
+'Repair request rejected. Admin has been notified.'
+);
+
+renderJobs();
+
+}
+
+/* =========================================
+CLOSE MODAL ON OUTSIDE CLICK
+========================================= */
+
+priceModal.addEventListener(
+'click',
+(e)=>{
+
+if(e.target===priceModal){
+closeModal();
+}
+
+}
+);
+
+/* =========================================
+LIVE STORAGE UPDATE
+========================================= */
+
+window.addEventListener(
+'storage',
+renderJobs
+);
+
+/* =========================================
+INITIAL RENDER
+========================================= */
+
+renderJobs();
+
+</script>
 
 </body>
 </html>

@@ -6,9 +6,11 @@
   <title>TechRider - Customer Profile</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -44,7 +46,11 @@
 
     /* HEADER */
     .header{
-      background:linear-gradient(135deg,var(--purple),var(--deep-purple));
+      background:linear-gradient(
+        135deg,
+        var(--purple),
+        var(--deep-purple)
+      );
       color:white;
       padding:25px;
       display:flex;
@@ -57,32 +63,64 @@
     .profile-info{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:15px;
       flex:1;
       min-width:0;
     }
 
+    /* PROFILE IMAGE */
+    .avatar-wrapper{
+      position:relative;
+      width:75px;
+      height:75px;
+      flex-shrink:0;
+    }
+
     .avatar{
-      width:60px;
-      height:60px;
+      width:75px;
+      height:75px;
       border-radius:50%;
       background:var(--lilac);
       color:var(--deep-purple);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-weight:600;
-      font-size:1.2rem;
-      flex-shrink:0;
+      font-weight:700;
+      font-size:1.5rem;
+      overflow:hidden;
+      border:3px solid rgba(255,255,255,0.3);
+    }
+
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .upload-btn{
+      position:absolute;
+      bottom:0;
+      right:0;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      border:none;
+      background:white;
+      color:var(--purple);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15);
     }
 
     .name h2{
-      font-size:1.2rem;
+      font-size:1.3rem;
       word-break:break-word;
     }
 
     .name p{
-      font-size:0.8rem;
+      font-size:0.82rem;
       opacity:0.8;
     }
 
@@ -107,22 +145,23 @@
 
     .card{
       background:var(--gray);
-      padding:18px;
+      padding:20px;
       border-radius:14px;
+      animation:fadeIn 0.7s ease;
     }
 
     .card h3{
       color:var(--deep-purple);
-      margin-bottom:10px;
+      margin-bottom:14px;
       font-size:1rem;
     }
 
     .item{
       display:flex;
       justify-content:space-between;
-      padding:8px 0;
+      padding:10px 0;
       border-bottom:1px solid #ddd;
-      font-size:0.85rem;
+      font-size:0.88rem;
       gap:10px;
     }
 
@@ -138,29 +177,46 @@
       font-weight:500;
       text-align:right;
       word-break:break-word;
+      color:var(--deep-purple);
     }
 
     /* ACTIONS */
     .actions{
       grid-column:span 2;
       display:flex;
-      gap:10px;
+      gap:12px;
       margin-top:10px;
+      flex-wrap:wrap;
     }
 
     .btn{
       flex:1;
-      padding:12px;
+      min-width:180px;
+      padding:13px;
       border:none;
       border-radius:10px;
       font-weight:600;
       cursor:pointer;
       font-size:0.9rem;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
     }
 
     .btn.primary{
-      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      background:linear-gradient(
+        135deg,
+        var(--purple),
+        var(--lilac)
+      );
       color:white;
+    }
+
+    .btn.secondary{
+      background:#ede4ff;
+      color:var(--purple);
     }
 
     .btn.danger{
@@ -168,7 +224,7 @@
       color:white;
     }
 
-    /* MOBILE FIX */
+    /* MOBILE */
     @media(max-width:768px){
 
       body{
@@ -193,17 +249,25 @@
         flex-direction:column;
         grid-column:span 1;
       }
+
+      .btn{
+        width:100%;
+      }
+
     }
 
     @keyframes fadeIn{
+
       from{
         opacity:0;
         transform:translateY(10px);
       }
+
       to{
         opacity:1;
         transform:translateY(0);
       }
+
     }
 
   </style>
@@ -217,15 +281,54 @@
     <div class="header">
 
       <div class="profile-info">
-        <div class="avatar" id="avatar"></div>
-        <div class="name">
-          <h2 id="name"></h2>
-          <p>Customer Account</p>
+
+        <!-- PROFILE IMAGE -->
+        <div class="avatar-wrapper">
+
+          <div class="avatar" id="avatar">
+            U
+          </div>
+
+          <button
+            class="upload-btn"
+            id="uploadTrigger"
+          >
+            <i class="fas fa-camera"></i>
+          </button>
+
+          <input
+            type="file"
+            id="profileImageInput"
+            accept="image/*"
+            hidden
+          >
+
         </div>
+
+        <!-- NAME -->
+        <div class="name">
+
+          <h2 id="name">
+            User
+          </h2>
+
+          <p>
+            Customer Account
+          </p>
+
+        </div>
+
       </div>
 
-      <a href="dashboard-customer.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Back
+      <!-- BACK -->
+      <a
+        href="dashboard-customer.html"
+        class="back-btn"
+      >
+
+        <i class="fas fa-arrow-left"></i>
+        Back
+
       </a>
 
     </div>
@@ -233,27 +336,113 @@
     <!-- BODY -->
     <div class="body">
 
+      <!-- ACCOUNT DETAILS -->
       <div class="card">
+
         <h3>Account Details</h3>
-        <div class="item"><span class="label">Email</span><span class="value">customer@email.com</span></div>
-        <div class="item"><span class="label">Phone</span><span class="value">+234 XXX XXX XXXX</span></div>
-        <div class="item"><span class="label">Status</span><span class="value">Active</span></div>
+
+        <div class="item">
+          <span class="label">Email</span>
+
+          <span
+            class="value"
+            id="email"
+          >
+            customer@email.com
+          </span>
+        </div>
+
+        <div class="item">
+          <span class="label">Phone</span>
+
+          <span
+            class="value"
+            id="phone"
+          >
+            +234 XXX XXX XXXX
+          </span>
+        </div>
+
+        <div class="item">
+          <span class="label">Status</span>
+
+          <span class="value">
+            Active
+          </span>
+        </div>
+
       </div>
 
+      <!-- ACTIVITY -->
       <div class="card">
+
         <h3>Activity</h3>
-        <div class="item"><span class="label">Total Requests</span><span class="value">0</span></div>
-        <div class="item"><span class="label">Completed</span><span class="value">0</span></div>
-        <div class="item"><span class="label">Cancelled</span><span class="value">0</span></div>
+
+        <div class="item">
+          <span class="label">Total Requests</span>
+
+          <span
+            class="value"
+            id="totalRequests"
+          >
+            0
+          </span>
+        </div>
+
+        <div class="item">
+          <span class="label">Completed</span>
+
+          <span
+            class="value"
+            id="completedRequests"
+          >
+            0
+          </span>
+        </div>
+
+        <div class="item">
+          <span class="label">Cancelled</span>
+
+          <span
+            class="value"
+            id="cancelledRequests"
+          >
+            0
+          </span>
+        </div>
+
       </div>
 
+      <!-- ACTIONS -->
       <div class="actions">
-        <button class="btn primary" onclick="location.href='repair-request.html'">
+
+        <button
+          class="btn primary"
+          onclick="location.href='repair-request.html'"
+        >
+
           Request Repair
+
         </button>
-        <button class="btn danger" onclick="location.href='login-customer.html'">
+
+        <button
+          class="btn secondary"
+          onclick="location.href='reset-password-customer.html'"
+        >
+
+          Change Password
+
+        </button>
+
+        <button
+          class="btn danger"
+          id="logoutBtn"
+        >
+
           Logout
+
         </button>
+
       </div>
 
     </div>
@@ -261,14 +450,220 @@
   </div>
 
   <script>
-    const customerName = "User";
 
-    function getInitials(name){
-      return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    // CURRENT CUSTOMER
+    const currentCustomer =
+      JSON.parse(
+        localStorage.getItem(
+          'techrider_current_customer'
+        )
+      );
+
+    // SECURITY CHECK
+    if(!currentCustomer){
+
+      window.location.href =
+        'login-customer.html';
+
     }
 
-    document.getElementById('avatar').innerText = getInitials(customerName);
-    document.getElementById('name').innerText = customerName;
+    // DOM ELEMENTS
+    const avatar =
+      document.getElementById('avatar');
+
+    const nameElement =
+      document.getElementById('name');
+
+    const emailElement =
+      document.getElementById('email');
+
+    const phoneElement =
+      document.getElementById('phone');
+
+    const profileImageInput =
+      document.getElementById(
+        'profileImageInput'
+      );
+
+    const uploadTrigger =
+      document.getElementById(
+        'uploadTrigger'
+      );
+
+    // GET INITIALS
+    function getInitials(name){
+
+      return name
+        .split(' ')
+        .map(word => word[0])
+        .join('')
+        .toUpperCase();
+
+    }
+
+    // LOAD PROFILE INFO
+    nameElement.textContent =
+      currentCustomer.fullName;
+
+    emailElement.textContent =
+      currentCustomer.email;
+
+    phoneElement.textContent =
+      currentCustomer.phone;
+
+    // PROFILE IMAGE OR INITIALS
+    if(currentCustomer.profileImage){
+
+      avatar.innerHTML = `
+        <img src="${currentCustomer.profileImage}" alt="Profile">
+      `;
+
+    } else {
+
+      avatar.textContent =
+        getInitials(
+          currentCustomer.fullName
+        );
+
+    }
+
+    // PROFILE IMAGE UPLOAD
+    uploadTrigger.addEventListener(
+      'click',
+      () => {
+
+        profileImageInput.click();
+
+      }
+    );
+
+    profileImageInput.addEventListener(
+      'change',
+      (event) => {
+
+        const file =
+          event.target.files[0];
+
+        if(!file) return;
+
+        const reader =
+          new FileReader();
+
+        reader.onload = function(e){
+
+          const imageData =
+            e.target.result;
+
+          // UPDATE CURRENT CUSTOMER
+          currentCustomer.profileImage =
+            imageData;
+
+          // UPDATE CURRENT SESSION
+          localStorage.setItem(
+            'techrider_current_customer',
+            JSON.stringify(currentCustomer)
+          );
+
+          // UPDATE CUSTOMERS ARRAY
+          const customers =
+            JSON.parse(
+              localStorage.getItem(
+                'techrider_customers'
+              )
+            ) || [];
+
+          const updatedCustomers =
+            customers.map(customer => {
+
+              if(customer.id === currentCustomer.id){
+
+                return {
+                  ...customer,
+                  profileImage:imageData
+                };
+
+              }
+
+              return customer;
+
+            });
+
+          localStorage.setItem(
+            'techrider_customers',
+            JSON.stringify(updatedCustomers)
+          );
+
+          // UPDATE UI
+          avatar.innerHTML = `
+            <img src="${imageData}" alt="Profile">
+          `;
+
+        };
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+    // REQUEST STATS
+    const requests =
+      JSON.parse(
+        localStorage.getItem(
+          'techrider_requests'
+        )
+      ) || [];
+
+    // FILTER USER REQUESTS
+    const userRequests =
+      requests.filter(request =>
+
+        request.customerId ===
+        currentCustomer.id
+
+      );
+
+    // TOTAL
+    document.getElementById(
+      'totalRequests'
+    ).textContent =
+      userRequests.length;
+
+    // COMPLETED
+    document.getElementById(
+      'completedRequests'
+    ).textContent =
+
+      userRequests.filter(request =>
+
+        request.status === 'completed'
+
+      ).length;
+
+    // CANCELLED
+    document.getElementById(
+      'cancelledRequests'
+    ).textContent =
+
+      userRequests.filter(request =>
+
+        request.status === 'cancelled'
+
+      ).length;
+
+    // LOGOUT
+    document.getElementById(
+      'logoutBtn'
+    ).addEventListener('click', () => {
+
+      localStorage.removeItem(
+        'techrider_current_customer'
+      );
+
+      window.location.href =
+        'login-customer.html';
+
+    });
+
   </script>
 
 </body>

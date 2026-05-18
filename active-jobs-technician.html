@@ -2,143 +2,277 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Active Jobs - TechRider</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
+
+<title>
+Technician Active Jobs - TechRider
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
-  --white:#fff;
-  --orange:#f59e0b;
-  --green:#16a34a;
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--gray-badge:#9ca3af;
+--green:#16a34a;
+--blue:#2563eb;
+--red:#dc2626;
 }
 
 body{
-  background:var(--gray);
-  padding:20px;
-  animation:fadeIn .5s ease-in;
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
 }
 
 .container{
-  max-width:1000px;
-  margin:auto;
+max-width:1100px;
+margin:auto;
 }
 
 /* HEADER */
+
 .header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin-bottom:25px;
+gap:12px;
 }
 
 .header h2{
-  color:var(--deep-purple);
+color:var(--deep-purple);
 }
 
 .back{
-  text-decoration:none;
-  background:var(--purple);
-  color:white;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:.85rem;
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.9rem;
+font-weight:600;
 }
 
 /* GRID */
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
 }
 
 /* CARD */
+
 .card{
-  background:var(--white);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
 }
 
 /* TOP */
+
 .top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
 }
 
 .title{
-  font-weight:600;
-  color:var(--deep-purple);
+font-weight:600;
+font-size:1rem;
+color:var(--deep-purple);
+line-height:1.5;
 }
 
 .badge{
-  font-size:.75rem;
-  padding:5px 10px;
-  border-radius:20px;
-  color:white;
-  background:var(--orange);
+font-size:.78rem;
+padding:7px 12px;
+border-radius:20px;
+color:white;
+font-weight:600;
+white-space:nowrap;
+}
+
+.badge.pending{
+background:var(--gray-badge);
+color:white;
+}
+
+.badge.progress{
+background:var(--purple);
+}
+
+.badge.completed{
+background:var(--green);
+}
+
+.badge.cancelled{
+background:var(--red);
+}
+
+/* REQUEST ID */
+
+.request-id{
+margin-top:8px;
+display:inline-block;
+background:#f3e8ff;
+color:var(--purple);
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
 }
 
 /* DETAILS */
+
 .details{
-  margin-top:10px;
-  font-size:.85rem;
-  color:#444;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:.88rem;
+color:#444;
+}
+
+.details div{
+line-height:1.5;
+}
+
+.details i{
+color:var(--purple);
+width:18px;
+margin-right:6px;
 }
 
 /* DESCRIPTION */
+
 .desc{
-  margin-top:10px;
-  padding:10px;
-  background:#fafafa;
-  border-left:3px solid var(--purple);
-  border-radius:8px;
-  font-size:.85rem;
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+line-height:1.7;
+color:#333;
 }
 
-/* ACTION */
-.actions{
-  margin-top:15px;
+/* PRICE */
+
+.price-box{
+margin-top:15px;
+background:#f8f5ff;
+padding:14px;
+border-radius:12px;
+font-size:.9rem;
+color:var(--deep-purple);
+font-weight:600;
 }
 
-.btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  background:linear-gradient(135deg,var(--purple),var(--lilac));
-  color:white;
+/* TIMESTAMP */
+
+.timestamp{
+margin-top:15px;
+font-size:.82rem;
+color:#777;
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
+/* STATUS MESSAGE */
+
+.status-message{
+margin-top:15px;
+padding:12px;
+border-radius:10px;
+font-size:.85rem;
+line-height:1.6;
+}
+
+.status-message.pending{
+background:#f3f4f6;
+color:#4b5563;
+}
+
+.status-message.progress{
+background:#eff6ff;
+color:#1d4ed8;
+}
+
+.status-message.cancelled{
+background:#fef2f2;
+color:#b91c1c;
+}
+
+/* EMPTY STATE */
+
+.empty{
+background:white;
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+color:#666;
+display:none;
 }
 
 /* MOBILE */
+
 @media(max-width:768px){
-  .grid{grid-template-columns:1fr;}
+
+.grid{
+grid-template-columns:1fr;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
 }
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 </style>
 </head>
 
@@ -146,75 +280,458 @@ body{
 
 <div class="container">
 
-  <div class="header">
-    <h2>Active Jobs</h2>
-    <a href="dashboard-technician.html" class="back">← Dashboard</a>
-  </div>
+<div class="header">
 
-  <div class="grid">
+<h2>
+Active Jobs
+</h2>
 
-    <!-- JOB 1 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">iPhone 13 Screen Replacement</div>
-        <div class="badge">In Progress</div>
-      </div>
+<a
+href="dashboard-technician.html"
+class="back">
 
-      <div class="details">
-        <div><i class="fas fa-user"></i> John D.</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13</div>
-        <div><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</div>
-      </div>
+← Dashboard
 
-      <div class="desc">
-        Screen replacement currently ongoing.
-      </div>
+</a>
 
-      <button class="btn" onclick="completeJob(this)">
-        Mark as Completed
-      </button>
-    </div>
+</div>
 
-    <!-- JOB 2 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">Laptop Overheating Fix</div>
-        <div class="badge">In Progress</div>
-      </div>
+<div
+class="grid"
+id="jobsGrid">
+</div>
 
-      <div class="details">
-        <div><i class="fas fa-user"></i> Sarah K.</div>
-        <div><i class="fas fa-laptop"></i> Device: HP Pavilion</div>
-        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
-      </div>
+<div
+class="empty"
+id="emptyState">
 
-      <div class="desc">
-        Cleaning cooling system and replacing thermal paste.
-      </div>
+No active jobs available.
 
-      <button class="btn" onclick="completeJob(this)">
-        Mark as Completed
-      </button>
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 <script>
-function completeJob(btn){
-  const card = btn.closest('.card');
 
-  // simulate moving to history
-  card.style.opacity = "0";
-  card.style.transform = "scale(0.95)";
-  card.style.transition = "0.3s";
+/* =========================================
+CURRENT TECHNICIAN
+========================================= */
 
-  setTimeout(()=>{
-    card.remove();
-    alert("Job moved to history");
-  },300);
+const currentTechnician =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_technician'
+)
+);
+
+/* =========================================
+REDIRECT IF NOT LOGGED IN
+========================================= */
+
+if(!currentTechnician){
+
+alert(
+'Please login as technician'
+);
+
+window.location.href =
+'login-technician.html';
+
 }
+
+/* =========================================
+ELEMENTS
+========================================= */
+
+const jobsGrid =
+document.getElementById(
+'jobsGrid'
+);
+
+const emptyState =
+document.getElementById(
+'emptyState'
+);
+
+/* =========================================
+FORMAT DATE
+========================================= */
+
+function formatDate(dateString){
+
+if(!dateString){
+return 'Recently';
+}
+
+const date =
+new Date(dateString);
+
+return date.toLocaleString(
+'en-NG',
+{
+day:'numeric',
+month:'short',
+year:'numeric',
+hour:'numeric',
+minute:'2-digit'
+}
+);
+
+}
+
+/* =========================================
+GET ACTIVE JOBS
+========================================= */
+
+function getActiveJobs(){
+
+const technicianId =
+currentTechnician.id
+|| currentTechnician.technicianId;
+
+let activeJobs =
+JSON.parse(
+localStorage.getItem(
+'tech_active_jobs'
+)
+) || [];
+
+/* FILTER CURRENT TECHNICIAN */
+
+activeJobs =
+activeJobs.filter(job => {
+
+return (
+job.technicianId === technicianId
+||
+job.assignedTechnician === technicianId
+);
+
+});
+
+/* =========================================
+MOVE COMPLETED/CANCELLED JOBS TO HISTORY
+========================================= */
+
+const archivedJobs =
+activeJobs.filter(job => {
+
+return (
+job.jobStatus === 'Completed'
+||
+job.jobStatus === 'Cancelled'
+||
+job.status === 'completed'
+||
+job.status === 'cancelled'
+);
+
+});
+
+if(archivedJobs.length > 0){
+
+let historyJobs =
+JSON.parse(
+localStorage.getItem(
+'tech_job_history'
+)
+) || [];
+
+/* ADD TO HISTORY */
+
+archivedJobs.forEach(job => {
+
+const alreadyExists =
+historyJobs.some(historyJob => {
+
+return (
+historyJob.requestId ===
+job.requestId
+);
+
+});
+
+if(!alreadyExists){
+
+historyJobs.unshift({
+
+...job,
+
+historyStatus:
+job.jobStatus ||
+job.status,
+
+completedAt:
+new Date().toISOString()
+
+});
+
+}
+
+});
+
+localStorage.setItem(
+'tech_job_history',
+JSON.stringify(historyJobs)
+);
+
+/* REMOVE FROM ACTIVE JOBS */
+
+activeJobs =
+activeJobs.filter(job => {
+
+return (
+job.jobStatus !== 'Completed'
+&&
+job.jobStatus !== 'Cancelled'
+&&
+job.status !== 'completed'
+&&
+job.status !== 'cancelled'
+);
+
+});
+
+localStorage.setItem(
+'tech_active_jobs',
+JSON.stringify(activeJobs)
+);
+
+}
+
+return activeJobs;
+
+}
+
+/* =========================================
+GET STATUS CLASS
+========================================= */
+
+function getStatusClass(status){
+
+const normalizedStatus =
+(status || '').toLowerCase();
+
+if(
+normalizedStatus ===
+'in progress'
+){
+return 'progress';
+}
+
+if(
+normalizedStatus ===
+'completed'
+){
+return 'completed';
+}
+
+if(
+normalizedStatus ===
+'cancelled'
+){
+return 'cancelled';
+}
+
+return 'pending';
+
+}
+
+/* =========================================
+RENDER JOBS
+========================================= */
+
+function renderJobs(){
+
+const activeJobs =
+getActiveJobs();
+
+jobsGrid.innerHTML = '';
+
+if(activeJobs.length === 0){
+
+emptyState.style.display =
+'block';
+
+return;
+
+}
+
+emptyState.style.display =
+'none';
+
+activeJobs
+.sort((a,b)=>
+new Date(b.acceptedAt || b.createdAt)
+-
+new Date(a.acceptedAt || a.createdAt)
+)
+.forEach(job => {
+
+/* =========================================
+SYNC ADMIN STATUS
+========================================= */
+
+const currentStatus =
+job.jobStatus ||
+'Pending Device Delivery';
+
+jobsGrid.innerHTML += `
+
+<div class="card">
+
+<div class="top">
+
+<div>
+
+<div class="title">
+
+${job.brand || ''}
+${job.model || ''}
+${job.deviceType
+? `(${job.deviceType})`
+: ''}
+
+</div>
+
+<div class="request-id">
+
+${job.requestId || 'REQ'}
+
+</div>
+
+</div>
+
+<div class="badge
+${getStatusClass(currentStatus)}">
+
+${currentStatus}
+
+</div>
+
+</div>
+
+<div class="details">
+
+<div>
+<i class="fas fa-mobile-alt"></i>
+
+<strong>Device Type:</strong>
+
+${job.deviceType || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-tag"></i>
+
+<strong>Brand:</strong>
+
+${job.brand || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-microchip"></i>
+
+<strong>Model:</strong>
+
+${job.model || 'N/A'}
+
+</div>
+
+</div>
+
+<div class="desc">
+
+<strong>Issue Description:</strong>
+
+<br><br>
+
+${job.description || 'No description provided.'}
+
+</div>
+
+<div class="price-box">
+
+Repair Quotation:
+₦${Number(
+job.repairPrice || 0
+).toLocaleString()}
+
+</div>
+
+<div class="status-message
+${getStatusClass(currentStatus)}">
+
+${
+currentStatus ===
+'Pending Device Delivery'
+
+? `
+Waiting for admin confirmation
+and device delivery.
+`
+
+: currentStatus ===
+'In Progress'
+
+? `
+Repair process is currently ongoing.
+`
+
+: `
+This repair request was cancelled
+by the admin.
+`
+}
+
+</div>
+
+<div class="timestamp">
+
+<i class="fas fa-clock"></i>
+
+Accepted:
+${formatDate(
+job.acceptedAt
+|| job.createdAt
+)}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* =========================================
+LIVE STORAGE SYNC
+========================================= */
+
+window.addEventListener(
+'storage',
+renderJobs
+);
+
+/* =========================================
+AUTO REFRESH
+========================================= */
+
+setInterval(
+renderJobs,
+7000
+);
+
+/* =========================================
+INITIAL RENDER
+========================================= */
+
+renderJobs();
+
 </script>
 
 </body>

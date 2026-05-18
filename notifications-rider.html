@@ -27,6 +27,7 @@ font-family:'Poppins',sans-serif;
 --deep-purple:#240046;
 --lilac:#e0aaff;
 --gray:#f6f6f6;
+--white:#fff;
 }
 
 body{
@@ -36,15 +37,17 @@ animation:fadeIn .5s ease-in;
 }
 
 .wrapper{
-max-width:900px;
+max-width:950px;
 margin:auto;
 }
+
+/* TOPBAR */
 
 .topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
+margin-bottom:22px;
 flex-wrap:wrap;
 gap:15px;
 }
@@ -56,38 +59,112 @@ padding:12px 18px;
 border-radius:12px;
 color:var(--purple);
 font-weight:600;
+box-shadow:0 4px 12px rgba(0,0,0,.04);
 }
 
-h2{
-color:var(--deep-purple);
+.page-title{
+display:flex;
+align-items:center;
+gap:12px;
 }
+
+.page-title h2{
+color:var(--deep-purple);
+font-size:1.5rem;
+}
+
+/* CONTROLS */
+
+.controls{
+background:var(--white);
+padding:18px;
+border-radius:18px;
+margin-bottom:22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.filter-btn{
+border:none;
+padding:10px 16px;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+background:#eee;
+transition:.3s;
+}
+
+.filter-btn.active{
+background:linear-gradient(
+135deg,
+var(--purple),
+#9d4edd
+);
+color:white;
+}
+
+.mark-all{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:500;
+color:#444;
+}
+
+.mark-all input{
+width:18px;
+height:18px;
+cursor:pointer;
+accent-color:var(--purple);
+}
+
+/* NOTIFICATIONS */
 
 .notice{
 background:white;
-padding:25px;
+padding:24px;
 border-radius:18px;
-margin-bottom:20px;
+margin-bottom:18px;
 box-shadow:0 5px 18px rgba(0,0,0,.05);
-border-left:5px solid var(--purple);
+border-left:5px solid transparent;
+transition:.3s;
 }
 
 .notice.unread{
 background:#fcf8ff;
+border-left-color:var(--purple);
 }
 
 .notice-head{
 display:flex;
 justify-content:space-between;
-align-items:center;
+align-items:flex-start;
+gap:15px;
 flex-wrap:wrap;
-gap:10px;
-margin-bottom:12px;
+margin-bottom:14px;
+}
+
+.notice-left{
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
 }
 
 .tag{
 padding:8px 14px;
-border-radius:20px;
-font-size:.75rem;
+border-radius:999px;
+font-size:.78rem;
 font-weight:600;
 background:#f3e8ff;
 color:var(--purple);
@@ -96,21 +173,22 @@ color:var(--purple);
 .badge{
 background:var(--purple);
 color:white;
-padding:5px 10px;
-border-radius:20px;
-font-size:.7rem;
+padding:6px 12px;
+border-radius:999px;
+font-size:.72rem;
+font-weight:600;
 }
 
 .notice p{
 color:#444;
-margin-bottom:10px;
-line-height:1.5;
+line-height:1.7;
+margin-bottom:14px;
 }
 
 .time{
 font-size:.85rem;
 color:#777;
-margin-bottom:15px;
+margin-bottom:18px;
 }
 
 .actions{
@@ -121,10 +199,15 @@ flex-wrap:wrap;
 
 button{
 border:none;
-padding:10px 18px;
+padding:11px 18px;
 border-radius:10px;
 cursor:pointer;
 font-weight:600;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-1px);
 }
 
 .read-btn{
@@ -137,25 +220,70 @@ color:white;
 }
 
 .remove-btn{
-background:#eee;
+background:#ececec;
+color:#333;
 }
+
+/* EMPTY */
 
 .empty{
 display:none;
 text-align:center;
 background:white;
-padding:40px;
+padding:45px 20px;
 border-radius:18px;
+color:#666;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
 }
 
+.empty i{
+font-size:2rem;
+margin-bottom:12px;
+color:var(--purple);
+}
+
+/* MOBILE */
+
 @media(max-width:768px){
+
+body{
+padding:15px;
+}
+
+.controls{
+align-items:flex-start;
+}
+
+.filters{
+width:100%;
+overflow-x:auto;
+flex-wrap:nowrap;
+padding-bottom:4px;
+}
+
+.filters::-webkit-scrollbar{
+display:none;
+}
+
+.filter-btn{
+white-space:nowrap;
+flex-shrink:0;
+}
 
 .actions{
 flex-direction:column;
 }
 
-button{
+.actions button{
 width:100%;
+}
+
+.notice{
+padding:20px;
+}
+
+.page-title h2{
+font-size:1.2rem;
 }
 
 }
@@ -173,9 +301,12 @@ transform:translateY(0);
 
 </style>
 </head>
+
 <body>
 
 <div class="wrapper">
+
+<!-- TOP -->
 
 <div class="topbar">
 
@@ -184,101 +315,202 @@ class="back-btn">
 ← Back to Dashboard
 </a>
 
+<div class="page-title">
+<i class="fas fa-bell"
+style="color:var(--purple);font-size:1.4rem;"></i>
+
 <h2>Notifications</h2>
+</div>
 
 </div>
 
+<!-- CONTROLS -->
+
+<div class="controls">
+
+<div class="filters">
+
+<button
+class="filter-btn active"
+onclick="filterNotifications('all',this)">
+All
+</button>
+
+<button
+class="filter-btn"
+onclick="filterNotifications('unread',this)">
+Unread
+</button>
+
+<button
+class="filter-btn"
+onclick="filterNotifications('read',this)">
+Read
+</button>
+
+</div>
+
+<label class="mark-all">
+
+<input
+type="checkbox"
+id="markAllCheckbox"
+onclick="markAllAsRead()">
+
+<span>Mark all as read</span>
+
+</label>
+
+</div>
+
+<!-- NOTIFICATIONS -->
 
 <div id="notificationContainer"></div>
+
+<!-- EMPTY -->
 
 <div
 id="emptyState"
 class="empty">
-No notifications.
-</div>
+
+<i class="fas fa-bell-slash"></i>
+
+<h3>No Notifications</h3>
+
+<p>
+You currently have no notifications.
+</p>
 
 </div>
 
+</div>
 
 <script>
 
-/* DUMMY FRONTEND DATA */
+/* =========================
+CURRENT RIDER
+========================= */
 
-let notifications = [
+const currentRider =
+JSON.parse(localStorage.getItem('techrider_currentUser')) ||
+JSON.parse(localStorage.getItem('currentUser')) ||
+JSON.parse(localStorage.getItem('riderLoggedIn'));
 
-{
-type:"New Job Available",
-message:
-"A new pickup request has been assigned and is available in Available Jobs.",
-time:"5 mins ago",
-read:false
-},
-
-{
-type:"Delivery Updated",
-message:
-"Customer updated delivery address for an active job. The new address is 14D Jay Momoh street, Ajao Estate",
-time:"30 mins ago",
-read:false
-},
-
-{
-type:"Job Cancelled",
-message:
-"A previously assigned pickup request was cancelled by customer.",
-time:"1 hour ago",
-read:true
-},
-
-{
-type:"Admin Notice",
-message:
-"Ensure deliveries are confirmed before marking completed.",
-time:"Today",
-read:true
+if(!currentRider){
+window.location.href = 'login-rider.html';
 }
 
-];
+/* =========================
+GET RIDER NOTIFICATIONS
+========================= */
+
+function getNotifications(){
+
+const allNotifications =
+JSON.parse(localStorage.getItem('riderNotifications')) || [];
+
+const riderId =
+currentRider?.riderId ||
+currentRider?.id;
+
+return allNotifications.filter(notification =>
+
+notification.riderId === riderId ||
+
+notification.receiverId === riderId ||
+
+notification.email === currentRider?.email
+
+).sort((a,b)=>
+
+(b.timestamp || 0) -
+(a.timestamp || 0)
+
+);
+
+}
+
+let notifications = getNotifications();
+
+let currentFilter = 'all';
+
+/* =========================
+RENDER NOTIFICATIONS
+========================= */
 
 function renderNotifications(){
 
-let container=
+notifications = getNotifications();
+
+const container =
 document.getElementById(
-"notificationContainer"
+'notificationContainer'
 );
 
-container.innerHTML="";
+container.innerHTML = '';
 
-/* newest first */
-notifications.forEach(
-(notice,index)=>{
+let filtered = notifications;
 
-container.innerHTML+=`
+if(currentFilter === 'read'){
+filtered = notifications.filter(n => n.read);
+}
+
+if(currentFilter === 'unread'){
+filtered = notifications.filter(n => !n.read);
+}
+
+if(filtered.length === 0){
+
+container.innerHTML = '';
+
+document
+.getElementById('emptyState')
+.style.display = 'block';
+
+return;
+
+}
+
+document
+.getElementById('emptyState')
+.style.display = 'none';
+
+filtered.forEach((notice,index)=>{
+
+container.innerHTML += `
 
 <div class="notice
-${!notice.read ? 'unread':''}
+${!notice.read ? 'unread' : ''}
 ">
 
 <div class="notice-head">
 
+<div class="notice-left">
+
 <div class="tag">
-${notice.type}
+${notice.type || 'Notification'}
 </div>
 
 ${
 !notice.read
-? '<div class="badge">Unread</div>'
-: ''
+?
+`<div class="badge">
+Unread
+</div>`
+:
+''
 }
 
 </div>
 
+</div>
+
 <p>
-${notice.message}
+${notice.message || ''}
 </p>
 
 <div class="time">
-${notice.time}
+${notice.time || notice.createdAt || ''}
 </div>
 
 <div class="actions">
@@ -286,18 +518,25 @@ ${notice.time}
 ${
 !notice.read
 ?
-`<button
+`
+<button
 class="read-btn"
-onclick="markRead(${index})">
+onclick="markAsRead('${notice.id}')">
+
 Mark as Read
-</button>`
-:''
+
+</button>
+`
+:
+''
 }
 
 <button
 class="remove-btn"
-onclick="removeNotice(${index})">
+onclick="removeNotification('${notice.id}')">
+
 Remove
+
 </button>
 
 </div>
@@ -308,41 +547,172 @@ Remove
 
 });
 
-if(notifications.length===0){
-
-document
-.getElementById(
-"emptyState"
-)
-.style.display="block";
-
-}else{
-
-document
-.getElementById(
-"emptyState"
-)
-.style.display="none";
+updateMarkAllCheckbox();
 
 }
 
+/* =========================
+MARK SINGLE AS READ
+========================= */
+
+function markAsRead(id){
+
+let allNotifications =
+JSON.parse(localStorage.getItem('riderNotifications')) || [];
+
+allNotifications =
+allNotifications.map(notification => {
+
+if(notification.id === id){
+
+notification.read = true;
+
 }
 
-function markRead(index){
+return notification;
 
-notifications[index].read=true;
+});
+
+localStorage.setItem(
+'riderNotifications',
+JSON.stringify(allNotifications)
+);
 
 renderNotifications();
 
 }
 
-function removeNotice(index){
+/* =========================
+MARK ALL AS READ
+========================= */
 
-notifications.splice(index,1);
+function markAllAsRead(){
+
+const checkbox =
+document.getElementById(
+'markAllCheckbox'
+);
+
+if(!checkbox.checked){
+return;
+}
+
+let allNotifications =
+JSON.parse(localStorage.getItem('riderNotifications')) || [];
+
+const riderId =
+currentRider?.riderId ||
+currentRider?.id;
+
+allNotifications =
+allNotifications.map(notification => {
+
+const belongsToRider =
+
+notification.riderId === riderId ||
+
+notification.receiverId === riderId ||
+
+notification.email === currentRider?.email;
+
+if(belongsToRider){
+
+notification.read = true;
+
+}
+
+return notification;
+
+});
+
+localStorage.setItem(
+'riderNotifications',
+JSON.stringify(allNotifications)
+);
 
 renderNotifications();
 
 }
+
+/* =========================
+UPDATE CHECKBOX
+========================= */
+
+function updateMarkAllCheckbox(){
+
+const unread =
+notifications.filter(n => !n.read);
+
+document.getElementById(
+'markAllCheckbox'
+).checked = unread.length === 0;
+
+}
+
+/* =========================
+REMOVE NOTIFICATION
+========================= */
+
+function removeNotification(id){
+
+const confirmDelete =
+confirm(
+'Delete this notification?'
+);
+
+if(!confirmDelete){
+return;
+}
+
+let allNotifications =
+JSON.parse(localStorage.getItem('riderNotifications')) || [];
+
+allNotifications =
+allNotifications.filter(
+notification => notification.id !== id
+);
+
+localStorage.setItem(
+'riderNotifications',
+JSON.stringify(allNotifications)
+);
+
+renderNotifications();
+
+}
+
+/* =========================
+FILTER
+========================= */
+
+function filterNotifications(type,button){
+
+currentFilter = type;
+
+document
+.querySelectorAll('.filter-btn')
+.forEach(btn => {
+btn.classList.remove('active');
+});
+
+button.classList.add('active');
+
+renderNotifications();
+
+}
+
+/* =========================
+AUTO REFRESH
+========================= */
+
+window.addEventListener(
+'storage',
+renderNotifications
+);
+
+/* =========================
+INIT
+========================= */
 
 renderNotifications();
 

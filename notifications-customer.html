@@ -1,40 +1,697 @@
-<!-- ================= NOTIFICATIONS PAGE ================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notifications</title>
+
+<title>TechRider - Notifications</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-body{font-family:Poppins,sans-serif;background:#f6f6f6;padding:20px;animation:fadeIn .6s}
-.container{max-width:800px;margin:auto}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
-.back-btn{background:#5a189a;color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-size:.85rem}
-.card{background:#fff;padding:15px;border-radius:12px;margin-bottom:10px;box-shadow:0 8px 20px rgba(0,0,0,.05)}
-.title{font-weight:600}
-.meta{font-size:.85rem;color:#666}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#ffffff;
+}
+
+body{
+  background:var(--gray);
+  min-height:100vh;
+  padding:20px;
+  animation:fadeIn .6s ease;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.header-left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.header-left h2{
+  color:var(--deep-purple);
+}
+
+.header-left p{
+  color:#666;
+  font-size:.9rem;
+}
+
+.back-btn{
+  background:var(--purple);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:.85rem;
+  font-weight:500;
+  transition:.3s;
+}
+
+.back-btn:hover{
+  opacity:.9;
+}
+
+/* CONTROLS */
+.controls{
+  background:var(--white);
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+  margin-bottom:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.filter-group{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  background:#eee;
+  transition:.3s;
+  font-weight:500;
+}
+
+.filter-btn.active{
+  background:var(--purple);
+  color:white;
+}
+
+.mark-all{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:.9rem;
+  color:#444;
+}
+
+.mark-all input{
+  width:18px;
+  height:18px;
+  accent-color:var(--purple);
+  cursor:pointer;
+}
+
+/* NOTIFICATIONS */
+.notifications-container{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.notification-card{
+  background:var(--white);
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+  transition:.3s;
+  border-left:5px solid transparent;
+  animation:fadeIn .5s ease;
+}
+
+.notification-card.unread{
+  border-left-color:var(--purple);
+  background:#faf6ff;
+}
+
+.notification-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+
+.notification-title{
+  font-weight:600;
+  color:var(--deep-purple);
+  font-size:1rem;
+}
+
+.notification-message{
+  color:#555;
+  font-size:.92rem;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+.notification-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.notification-time{
+  font-size:.8rem;
+  color:#777;
+}
+
+.status{
+  font-size:.78rem;
+  padding:5px 10px;
+  border-radius:30px;
+  font-weight:500;
+}
+
+.status.read{
+  background:#e7f8ed;
+  color:#138a36;
+}
+
+.status.unread{
+  background:#f3e8ff;
+  color:var(--purple);
+}
+
+.mark-btn{
+  border:none;
+  background:var(--purple);
+  color:white;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.82rem;
+  transition:.3s;
+}
+
+.mark-btn:hover{
+  opacity:.9;
+}
+
+/* EMPTY STATE */
+.empty-state{
+  background:white;
+  padding:40px 20px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.empty-state i{
+  font-size:3rem;
+  color:var(--purple);
+  margin-bottom:15px;
+}
+
+.empty-state h3{
+  color:var(--deep-purple);
+  margin-bottom:8px;
+}
+
+.empty-state p{
+  color:#666;
+  font-size:.9rem;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  body{
+    padding:15px;
+  }
+
+  .controls{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .notification-footer{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .notification-top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="container">
 
-<div class="header">
-<h2>Notifications</h2>
-<a href="dashboard-customer.html" class="back-btn">← Back</a>
+  <!-- HEADER -->
+  <div class="header">
+
+    <div class="header-left">
+
+      <h2>
+        Notifications
+      </h2>
+
+      <p>
+        Stay updated with your TechRider activities
+      </p>
+
+    </div>
+
+    <a
+      href="dashboard-customer.html"
+      class="back-btn"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+
+    <!-- FILTERS -->
+    <div class="filter-group">
+
+      <button
+        class="filter-btn active"
+        data-filter="all"
+      >
+        All
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="read"
+      >
+        Read
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="unread"
+      >
+        Unread
+      </button>
+
+    </div>
+
+    <!-- MARK ALL -->
+    <div class="mark-all">
+
+      <input
+        type="checkbox"
+        id="markAllCheckbox"
+      >
+
+      <label for="markAllCheckbox">
+        Mark all as read
+      </label>
+
+    </div>
+
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div
+    class="notifications-container"
+    id="notificationsContainer"
+  >
+
+  </div>
+
 </div>
 
-<div class="card">
-<div class="title">Repair Request Accepted</div>
-<div class="meta">Your technician has accepted your request.</div>
-</div>
+<script>
 
-<div class="card">
-<div class="title">Technician Arriving</div>
-<div class="meta">Your technician is on the way.</div>
-</div>
+  // CURRENT CUSTOMER
+  const currentCustomer =
+    JSON.parse(
+      localStorage.getItem(
+        'techrider_current_customer'
+      )
+    );
 
-</div>
+  // SECURITY CHECK
+  if(!currentCustomer){
+
+    window.location.href =
+      'login-customer.html';
+
+  }
+
+  // DOM
+  const notificationsContainer =
+    document.getElementById(
+      'notificationsContainer'
+    );
+
+  const filterButtons =
+    document.querySelectorAll(
+      '.filter-btn'
+    );
+
+  const markAllCheckbox =
+    document.getElementById(
+      'markAllCheckbox'
+    );
+
+  // GET NOTIFICATIONS
+  let notifications =
+    JSON.parse(
+      localStorage.getItem(
+        'techrider_notifications'
+      )
+    ) || [];
+
+  // FILTER USER NOTIFICATIONS
+  notifications =
+    notifications.filter(notification =>
+
+      notification.customerId ===
+      currentCustomer.id
+
+    );
+
+  // CURRENT FILTER
+  let currentFilter = 'all';
+
+  // FORMAT DATE
+  function formatDate(dateString){
+
+    const date =
+      new Date(dateString);
+
+    return date.toLocaleString(
+      'en-NG',
+      {
+        dateStyle:'medium',
+        timeStyle:'short'
+      }
+    );
+
+  }
+
+  // RENDER NOTIFICATIONS
+  function renderNotifications(){
+
+    notificationsContainer.innerHTML = '';
+
+    let filteredNotifications =
+      notifications;
+
+    // FILTER LOGIC
+    if(currentFilter === 'read'){
+
+      filteredNotifications =
+        notifications.filter(
+          notification =>
+            notification.read === true
+        );
+
+    }
+
+    if(currentFilter === 'unread'){
+
+      filteredNotifications =
+        notifications.filter(
+          notification =>
+            notification.read !== true
+        );
+
+    }
+
+    // EMPTY STATE
+    if(filteredNotifications.length === 0){
+
+      notificationsContainer.innerHTML = `
+        <div class="empty-state">
+
+          <i class="fas fa-bell-slash"></i>
+
+          <h3>
+            No Notifications
+          </h3>
+
+          <p>
+            Notifications from the admin
+            will appear here.
+          </p>
+
+        </div>
+      `;
+
+      return;
+
+    }
+
+    // SORT NEWEST FIRST
+    filteredNotifications.sort(
+      (a,b) =>
+        new Date(b.createdAt) -
+        new Date(a.createdAt)
+    );
+
+    // RENDER CARDS
+    filteredNotifications.forEach(
+      notification => {
+
+        const card =
+          document.createElement('div');
+
+        card.className =
+          `notification-card ${
+            notification.read
+            ? ''
+            : 'unread'
+          }`;
+
+        card.innerHTML = `
+
+          <div class="notification-top">
+
+            <div>
+
+              <div class="notification-title">
+                ${notification.title}
+              </div>
+
+            </div>
+
+            <div class="status ${
+              notification.read
+              ? 'read'
+              : 'unread'
+            }">
+
+              ${
+                notification.read
+                ? 'Read'
+                : 'Unread'
+              }
+
+            </div>
+
+          </div>
+
+          <div class="notification-message">
+
+            ${notification.message}
+
+          </div>
+
+          <div class="notification-footer">
+
+            <div class="notification-time">
+
+              ${formatDate(
+                notification.createdAt
+              )}
+
+            </div>
+
+            ${
+              !notification.read
+              ? `
+                <button
+                  class="mark-btn"
+                  onclick="markAsRead(${notification.id})"
+                >
+                  Mark as Read
+                </button>
+              `
+              : ''
+            }
+
+          </div>
+
+        `;
+
+        notificationsContainer.appendChild(card);
+
+      }
+    );
+
+  }
+
+  // SAVE NOTIFICATIONS
+  function saveNotifications(){
+
+    const allNotifications =
+      JSON.parse(
+        localStorage.getItem(
+          'techrider_notifications'
+        )
+      ) || [];
+
+    // UPDATE USER NOTIFICATIONS
+    const updatedNotifications =
+      allNotifications.map(item => {
+
+        const updatedItem =
+          notifications.find(
+            notification =>
+              notification.id === item.id
+          );
+
+        return updatedItem || item;
+
+      });
+
+    localStorage.setItem(
+      'techrider_notifications',
+      JSON.stringify(updatedNotifications)
+    );
+
+  }
+
+  // MARK AS READ
+  function markAsRead(id){
+
+    notifications =
+      notifications.map(notification => {
+
+        if(notification.id === id){
+
+          return {
+            ...notification,
+            read:true
+          };
+
+        }
+
+        return notification;
+
+      });
+
+    saveNotifications();
+
+    renderNotifications();
+
+  }
+
+  // MARK ALL AS READ
+  markAllCheckbox.addEventListener(
+    'change',
+    () => {
+
+      if(markAllCheckbox.checked){
+
+        notifications =
+          notifications.map(notification => ({
+            ...notification,
+            read:true
+          }));
+
+        saveNotifications();
+
+        renderNotifications();
+
+      }
+
+    }
+  );
+
+  // FILTER BUTTONS
+  filterButtons.forEach(button => {
+
+    button.addEventListener(
+      'click',
+      () => {
+
+        // REMOVE ACTIVE
+        filterButtons.forEach(btn =>
+          btn.classList.remove('active')
+        );
+
+        // ADD ACTIVE
+        button.classList.add('active');
+
+        // SET FILTER
+        currentFilter =
+          button.dataset.filter;
+
+        // RENDER
+        renderNotifications();
+
+      }
+    );
+
+  });
+
+  // INITIAL RENDER
+  renderNotifications();
+
+</script>
+
 </body>
 </html>

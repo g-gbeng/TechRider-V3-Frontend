@@ -113,6 +113,7 @@
       border-radius: 10px;
       outline: none;
       transition: 0.3s;
+      font-size: 0.95rem;
     }
 
     input:focus {
@@ -139,6 +140,7 @@
       font-size: 1rem;
       cursor: pointer;
       transition: 0.3s;
+      font-weight: 500;
     }
 
     .btn:hover {
@@ -152,6 +154,7 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.8rem;
+      gap: 10px;
     }
 
     .bottom-links a {
@@ -170,13 +173,24 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
     }
 
     @media (max-width: 500px) {
       .container {
         padding: 20px;
+      }
+
+      .bottom-links {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -185,59 +199,103 @@
 
   <div class="container">
 
-    
-
     <div class="header">
       <div class="icon">
         <i class="fas fa-user"></i>
       </div>
+
       <h2>Customer Signup</h2>
       <p>Create your TechRider customer account</p>
     </div>
-<!-- LOGIN LINK -->
+
+    <!-- LOGIN LINK -->
     <div class="top-link">
-      Already have an account? <a href="login-customer.html">Log in</a>
+      Already have an account?
+      <a href="login-customer.html">Log in</a>
     </div>
+
     <form id="signupForm">
 
       <div class="input-group">
         <label>Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required>
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your full name"
+          required
+        >
       </div>
 
       <div class="input-group">
         <label>Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        >
       </div>
 
       <div class="input-group">
         <label>Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter your phone number">
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Enter your phone number"
+          maxlength="11"
+          inputmode="numeric"
+          pattern="[0-9]{11}"
+          required
+        >
       </div>
 
       <div class="input-group">
         <label>Password</label>
-        <input type="password" id="password" placeholder="Create password" required>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Create password"
+          required
+        >
+
         <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+
         <div class="error" id="passwordError">
-          Password must be 8+ chars, include uppercase, number & special character
+          Password must be 8+ chars, include uppercase,
+          number & special character
         </div>
       </div>
 
       <div class="input-group">
         <label>Confirm Password</label>
-        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Confirm password"
+          required
+        >
+
         <i class="fas fa-eye toggle-password" id="toggleConfirm"></i>
+
         <div class="error" id="matchError">
           Passwords do not match
         </div>
       </div>
 
-      <button type="submit" class="btn" id="createBtn">Create Account</button>
+      <button type="submit" class="btn" id="createBtn">
+        Create Account
+      </button>
 
       <div class="bottom-links">
-        <a href="terms-of-service-customer.html">Terms of Service</a>
-        <a href="privacy-policy-customer.html">Privacy Policy</a>
+        <a href="terms-of-service-customer.html">
+          Terms of Service
+        </a>
+
+        <a href="privacy-policy-customer.html">
+          Privacy Policy
+        </a>
       </div>
 
     </form>
@@ -246,34 +304,67 @@
 
   <script>
     const form = document.getElementById('signupForm');
+
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
+
     const passwordError = document.getElementById('passwordError');
     const matchError = document.getElementById('matchError');
 
     const togglePassword = document.getElementById('togglePassword');
     const toggleConfirm = document.getElementById('toggleConfirm');
 
+    const phoneInput = document.getElementById('phone');
+
+    // PASSWORD TOGGLE
     togglePassword.addEventListener('click', () => {
-      const type = password.type === 'password' ? 'text' : 'password';
+      const type = password.type === 'password'
+        ? 'text'
+        : 'password';
+
       password.type = type;
+
       togglePassword.classList.toggle('fa-eye-slash');
     });
 
     toggleConfirm.addEventListener('click', () => {
-      const type = confirmPassword.type === 'password' ? 'text' : 'password';
+      const type = confirmPassword.type === 'password'
+        ? 'text'
+        : 'password';
+
       confirmPassword.type = type;
+
       toggleConfirm.classList.toggle('fa-eye-slash');
     });
 
+    // PHONE NUMBER RESTRICTION
+    phoneInput.addEventListener('input', () => {
+
+      // Remove non-numeric characters
+      phoneInput.value = phoneInput.value
+        .replace(/\D/g, '')
+        .slice(0, 11);
+
+    });
+
+    // PASSWORD VALIDATION
     function validatePassword(pwd) {
+
       const hasUpper = /[A-Z]/.test(pwd);
       const hasNumber = /[0-9]/.test(pwd);
       const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
-      return pwd.length >= 8 && hasUpper && hasNumber && hasSpecial;
+
+      return (
+        pwd.length >= 8 &&
+        hasUpper &&
+        hasNumber &&
+        hasSpecial
+      );
     }
 
+    // FORM SUBMIT
     form.addEventListener('submit', function(e) {
+
       e.preventDefault();
 
       const pwd = password.value;
@@ -281,23 +372,93 @@
 
       let valid = true;
 
+      // PASSWORD CHECK
       if (!validatePassword(pwd)) {
+
         passwordError.style.display = 'block';
         valid = false;
+
       } else {
+
         passwordError.style.display = 'none';
       }
 
+      // PASSWORD MATCH CHECK
       if (pwd !== confirmPwd) {
+
         matchError.style.display = 'block';
         valid = false;
+
       } else {
+
         matchError.style.display = 'none';
       }
 
+      // PHONE NUMBER CHECK
+      if (phoneInput.value.length !== 11) {
+
+        alert('Phone number must be exactly 11 digits');
+        valid = false;
+      }
+
       if (valid) {
+
+        // CUSTOMER OBJECT
+        const customerData = {
+          id: Date.now(),
+
+          fullName: document.getElementById('name').value.trim(),
+
+          email: document.getElementById('email').value.trim(),
+
+          phone: phoneInput.value,
+
+          password: pwd,
+
+          role: 'customer',
+
+          createdAt: new Date().toISOString()
+        };
+
+        // GET EXISTING CUSTOMERS
+        const existingCustomers =
+          JSON.parse(
+            localStorage.getItem('techrider_customers')
+          ) || [];
+
+        // CHECK IF EMAIL EXISTS
+        const emailExists = existingCustomers.some(customer =>
+          customer.email.toLowerCase() ===
+          customerData.email.toLowerCase()
+        );
+
+        if (emailExists) {
+
+          alert('An account with this email already exists');
+
+          return;
+        }
+
+        // SAVE CUSTOMER
+        existingCustomers.push(customerData);
+
+        localStorage.setItem(
+          'techrider_customers',
+          JSON.stringify(existingCustomers)
+        );
+
+        // SAVE CURRENT CUSTOMER SESSION
+        localStorage.setItem(
+          'techrider_current_customer',
+          JSON.stringify(customerData)
+        );
+
+        alert('Account created successfully!');
+
+        // REDIRECT
         window.location.href = "login-customer.html";
       }
+
     });
   </script>
 

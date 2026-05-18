@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>TechRider FAQ</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--purple:#6a0dad;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--bg:#f7f5fb;
+--white:#ffffff;
+--shadow:0 8px 24px rgba(0,0,0,0.06);
+}
+
+body{
+background:var(--bg);
+color:#222;
+animation:fadeIn .4s ease;
+min-height:100vh;
+padding:20px;
+overflow-x:hidden;
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.pageWrapper{
+max-width:1400px;
+margin:auto;
+width:100%;
+overflow-x:hidden;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:24px;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.backBtn{
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#9d4edd
+);
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:12px;
+font-weight:600;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:10px;
+transition:.3s;
+}
+
+.backBtn:hover{
+transform:translateY(-2px);
+}
+
+.headerText h1{
+font-size:2rem;
+color:var(--deep-purple);
+}
+
+.headerText p{
+margin-top:6px;
+color:#666;
+}
+
+.searchWrap{
+background:white;
+padding:18px;
+border-radius:18px;
+box-shadow:var(--shadow);
+margin-bottom:24px;
+}
+
+.searchBox{
+width:100%;
+padding:15px 18px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:1rem;
+outline:none;
+}
+
+.filterTabs{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.filterBtn{
+padding:10px 16px;
+border:none;
+border-radius:10px;
+background:#ece4ff;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.filterBtn.active,
+.filterBtn:hover{
+background:var(--purple);
+color:white;
+}
+
+.faqGrid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+width:100%;
+}
+
+.faqSection{
+background:white;
+padding:24px;
+border-radius:24px;
+box-shadow:var(--shadow);
+min-height:100%;
+min-width:0;
+overflow:hidden;
+}
+
+.sectionTitle{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:20px;
+color:var(--deep-purple);
+}
+
+.sectionTitle i{
+font-size:1.2rem;
+background:#f1e8ff;
+padding:12px;
+border-radius:12px;
+}
+
+.faqItem{
+border:1px solid #eee;
+border-radius:16px;
+padding:16px;
+margin-bottom:16px;
+transition:.3s;
+}
+
+.faqItem:hover{
+border-color:#d8b4fe;
+}
+
+.question{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+cursor:pointer;
+font-weight:600;
+color:#222;
+}
+
+.question i{
+transition:.3s;
+}
+
+.answer{
+max-height:0;
+overflow:hidden;
+transition:max-height .35s ease;
+color:#666;
+line-height:1.8;
+font-size:.95rem;
+}
+
+.answer p{
+padding-top:14px;
+}
+
+.faqItem.active .answer{
+max-height:250px;
+}
+
+.faqItem.active .question i{
+transform:rotate(180deg);
+}
+
+.contactCard{
+margin-top:30px;
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#9d4edd
+);
+color:white;
+padding:24px;
+border-radius:24px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.contactActions{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.contactBtn{
+background:white;
+color:var(--purple);
+padding:12px 16px;
+text-decoration:none;
+border-radius:12px;
+font-weight:600;
+}
+
+
+/* MOBILE RESPONSIVENESS */
+
+@media(max-width:768px){
+
+body{
+padding:12px;
+overflow-x:hidden;
+}
+
+.pageWrapper{
+width:100%;
+overflow-x:hidden;
+}
+
+.topBar{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.headerText{
+width:100%;
+}
+
+.headerText h1{
+font-size:1.5rem;
+line-height:1.3;
+}
+
+.headerText p{
+font-size:.92rem;
+line-height:1.6;
+}
+
+.backBtn{
+width:100%;
+justify-content:center;
+}
+
+.searchWrap{
+padding:14px;
+}
+
+.searchBox{
+font-size:.95rem;
+padding:14px;
+}
+
+.filterTabs{
+width:100%;
+overflow-x:auto;
+flex-wrap:nowrap;
+padding-bottom:4px;
+}
+
+.filterTabs::-webkit-scrollbar{
+display:none;
+}
+
+.filterBtn{
+flex-shrink:0;
+white-space:nowrap;
+}
+
+.faqGrid{
+grid-template-columns:1fr;
+gap:18px;
+}
+
+.faqSection{
+padding:18px;
+border-radius:20px;
+}
+
+.sectionTitle{
+align-items:flex-start;
+}
+
+.sectionTitle h2{
+font-size:1.1rem;
+line-height:1.4;
+}
+
+.question{
+font-size:.95rem;
+line-height:1.5;
+align-items:flex-start;
+}
+
+.answer{
+font-size:.9rem;
+}
+
+.contactCard{
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+}
+
+.contactCard h2{
+font-size:1.3rem;
+}
+
+.contactActions{
+width:100%;
+flex-direction:column;
+}
+
+.contactBtn{
+width:100%;
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="pageWrapper">
+
+<div class="topBar">
+
+<button
+class="backBtn"
+onclick="goBack()">
+
+<i class="fas fa-arrow-left"></i>
+Back
+
+</button>
+
+<div class="headerText">
+
+<h1>
+TechRider Help Center
+</h1>
+
+<p>
+Frequently asked questions for Customers,
+Technicians, and Riders.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="searchWrap">
+
+<input
+type="text"
+class="searchBox"
+id="searchInput"
+placeholder="Search FAQ questions..."
+onkeyup="searchFAQ()">
+
+</div>
+
+
+
+<div class="filterTabs">
+
+<button
+class="filterBtn active"
+onclick="filterFAQ('all',this)">
+All
+</button>
+
+<button
+class="filterBtn"
+onclick="filterFAQ('customer',this)">
+Customers
+</button>
+
+<button
+class="filterBtn"
+onclick="filterFAQ('technician',this)">
+Technicians
+</button>
+
+<button
+class="filterBtn"
+onclick="filterFAQ('rider',this)">
+Riders
+</button>
+
+</div>
+
+
+
+
+<div class="faqGrid">
+
+
+<!-- CUSTOMER FAQ -->
+
+<div class="faqSection faqCategory customer">
+
+<div class="sectionTitle">
+
+<i class="fas fa-user"></i>
+
+<h2>
+Customer FAQs
+</h2>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+How do I request a repair?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Go to the repair request page,
+choose your device category,
+describe the issue,
+upload images if needed,
+and select a technician.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+Can I cancel my repair request?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Yes. Pending repair requests can
+be cancelled before a technician
+accepts them.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+How do I track my repair progress?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+You can monitor repair updates
+through your repair history
+and notifications pages in real time.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- TECHNICIAN FAQ -->
+
+<div class="faqSection faqCategory technician">
+
+<div class="sectionTitle">
+
+<i class="fas fa-screwdriver-wrench"></i>
+
+<h2>
+Technician FAQs
+</h2>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+How do I accept a repair request?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Open your available jobs page
+and click Accept on any incoming
+repair request.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+Can I reject a repair?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Yes. Rejected jobs are moved
+into the rejected requests
+section in admin monitoring.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+How are technician earnings calculated?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Earnings are based on successfully
+completed repair jobs and
+approved payouts.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- RIDER FAQ -->
+
+<div class="faqSection faqCategory rider">
+
+<div class="sectionTitle">
+
+<i class="fas fa-motorcycle"></i>
+
+<h2>
+Rider FAQs
+</h2>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+How do I receive delivery assignments?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Admins assign deliveries through
+the communications module and
+you receive notifications instantly.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+What happens if delivery fails?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Failed deliveries must include
+a reason which is logged into
+the admin reports system.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="faqItem">
+
+<div class="question">
+
+<span>
+Can I see my delivery history?
+</span>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="answer">
+
+<p>
+Yes. Your completed and failed
+deliveries are stored in your
+records page.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div class="contactCard">
+
+<div>
+
+<h2>
+Still Need Help?
+</h2>
+
+<p style="
+margin-top:8px;
+line-height:1.7;">
+
+Contact TechRider support
+for additional assistance.
+
+</p>
+
+</div>
+
+
+
+<div class="contactActions">
+
+<a
+href="tel:+2348012345678"
+class="contactBtn">
+
+<i class="fas fa-phone"></i>
+Call Support
+
+</a>
+
+
+
+<a
+href="mailto:support@techrider.com"
+class="contactBtn">
+
+<i class="fas fa-envelope"></i>
+Email Support
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<script>
+
+/* universal back button */
+
+function goBack(){
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const from =
+params.get('from');
+
+if(from){
+
+window.location.href = from;
+
+}else{
+
+window.history.back();
+
+}
+
+}
+
+
+
+/* accordion */
+
+document
+.querySelectorAll('.question')
+.forEach(question=>{
+
+question.addEventListener(
+'click',
+()=>{
+
+let item=
+question.parentElement;
+
+item.classList.toggle(
+'active'
+);
+
+});
+
+});
+
+
+
+/* filter */
+
+function filterFAQ(type,button){
+
+let categories=
+document.querySelectorAll(
+'.faqCategory'
+);
+
+categories.forEach(category=>{
+
+if(type==='all'){
+
+category.style.display='block';
+
+}else{
+
+category.style.display=
+category.classList.contains(type)
+?'block'
+:'none';
+
+}
+
+});
+
+document
+.querySelectorAll('.filterBtn')
+.forEach(btn=>{
+
+btn.classList.remove(
+'active'
+);
+
+});
+
+button.classList.add(
+'active'
+);
+
+}
+
+
+
+/* search */
+
+function searchFAQ(){
+
+let input=
+document
+.getElementById(
+'searchInput'
+)
+.value
+.toLowerCase();
+
+let faqItems=
+document.querySelectorAll(
+'.faqItem'
+);
+
+faqItems.forEach(item=>{
+
+let text=
+item.innerText.toLowerCase();
+
+item.style.display=
+text.includes(input)
+?'block'
+:'none';
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

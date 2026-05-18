@@ -2,18 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0"
+>
 
-<title>TechRider Rider Dashboard</title>
+<title>
+TechRider Rider Dashboard
+</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-rel="stylesheet">
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet"
+>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -26,20 +35,39 @@ font-family:'Poppins',sans-serif;
 --deep-purple:#240046;
 --lilac:#e0aaff;
 --gray:#f6f6f6;
+--white:#fff;
 }
 
 /* BODY */
+
 body{
 background:var(--gray);
 min-height:100vh;
 display:flex;
 animation:fadeIn .5s ease-in;
+overflow-x:hidden;
+}
+
+/* OVERLAY */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+z-index:998;
+display:none;
+}
+
+.overlay.show{
+display:block;
 }
 
 /* SIDEBAR */
+
 .sidebar{
-width:260px;
-background:linear-gradient(
+width:270px;
+background:
+linear-gradient(
 180deg,
 var(--purple),
 var(--deep-purple)
@@ -47,35 +75,51 @@ var(--deep-purple)
 color:white;
 padding:20px;
 position:fixed;
+left:0;
+top:0;
 height:100vh;
+overflow-y:auto;
 transition:.3s;
-}
-
-.sidebar.collapsed{
-width:70px;
+z-index:999;
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:10px;
-cursor:pointer;
+gap:12px;
+margin-bottom:30px;
 }
 
 .logo{
-width:40px;
-height:40px;
-border-radius:10px;
+width:45px;
+height:45px;
+border-radius:14px;
 background:var(--lilac);
 display:flex;
 align-items:center;
 justify-content:center;
 color:var(--deep-purple);
-font-weight:bold;
+font-weight:700;
+font-size:1.1rem;
+flex-shrink:0;
+}
+
+.brandText{
+display:flex;
+flex-direction:column;
+}
+
+.brandName{
+font-weight:600;
+font-size:.95rem;
+}
+
+.brandRole{
+font-size:.78rem;
+opacity:.8;
 }
 
 .nav{
-margin-top:20px;
 display:flex;
 flex-direction:column;
 gap:10px;
@@ -84,40 +128,94 @@ gap:10px;
 .nav a{
 color:white;
 text-decoration:none;
-padding:10px;
-border-radius:10px;
+padding:13px 14px;
+border-radius:14px;
 display:flex;
-gap:10px;
 align-items:center;
+gap:12px;
+transition:.3s;
+position:relative;
 }
 
 .nav a:hover{
-background:rgba(255,255,255,.08);
+background:rgba(255,255,255,.12);
 }
 
-.sidebar.collapsed .text{
-display:none;
+/* NOTIFICATION BADGE */
+
+.notificationLink{
+position:relative;
+}
+
+.notificationBadge{
+margin-left:auto;
+background:#ff2e63;
+color:white;
+min-width:22px;
+height:22px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:.72rem;
+font-weight:600;
+padding:0 6px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 /* MAIN */
+
 .main{
-margin-left:260px;
-width:calc(100% - 260px);
-padding:20px;
+margin-left:270px;
+width:calc(100% - 270px);
+padding:22px;
+transition:.3s;
 }
 
+/* TOPBAR */
+
 .topbar{
+background:white;
+border-radius:20px;
+padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:white;
-padding:15px;
-border-radius:12px;
+gap:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.topbarLeft{
+display:flex;
+align-items:flex-start;
+gap:16px;
+}
+
+#mobileMenuBtn{
+border:none;
+background:none;
+font-size:1.3rem;
+cursor:pointer;
+display:none;
+color:var(--deep-purple);
+margin-top:5px;
+}
+
+.welcomeText h2{
+color:var(--deep-purple);
+font-size:1.5rem;
+}
+
+.welcomeText p{
+color:#666;
+margin-top:4px;
+font-size:.92rem;
+line-height:1.5;
 }
 
 .avatar{
-width:40px;
-height:40px;
+width:52px;
+height:52px;
 border-radius:50%;
 background:var(--purple);
 color:white;
@@ -125,43 +223,112 @@ display:flex;
 align-items:center;
 justify-content:center;
 text-decoration:none;
+font-weight:700;
+font-size:1.1rem;
+flex-shrink:0;
 }
 
 /* CARDS */
+
 .cards{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-top:20px;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:22px;
+margin-top:24px;
 }
 
 .card{
 background:white;
-padding:25px;
-border-radius:14px;
+padding:28px;
+border-radius:22px;
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+transition:.3s;
+min-height:180px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
 }
 
+.card:hover{
+transform:translateY(-4px);
+}
+
+.cardTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.cardIcon{
+width:55px;
+height:55px;
+border-radius:16px;
+background:#f3e8ff;
+color:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.3rem;
+}
+
+.card h3{
+color:var(--deep-purple);
+font-size:1.05rem;
+}
+
+.cardCount{
+font-size:2rem;
+font-weight:700;
+color:var(--purple);
+}
+
+.cardSub{
+color:#666;
+margin-top:6px;
+line-height:1.5;
+font-size:.92rem;
+word-break:break-word;
+}
+
+/* ACTION CARD */
+
 .action{
-margin-top:20px;
-background:linear-gradient(
+margin-top:24px;
+background:
+linear-gradient(
 135deg,
 var(--purple),
 #c77dff
 );
 color:white;
-padding:30px;
-border-radius:16px;
+padding:35px;
+border-radius:24px;
 cursor:pointer;
+transition:.3s;
+}
+
+.action:hover{
+transform:translateY(-3px);
+}
+
+.action h3{
+font-size:1.4rem;
+margin-bottom:10px;
+}
+
+.action p{
+opacity:.95;
+line-height:1.6;
 }
 
 /* MOBILE */
-@media(max-width:900px){
-.cards{
-grid-template-columns:1fr;
-}
-}
 
 @media(max-width:768px){
+
+#mobileMenuBtn{
+display:block;
+}
 
 .sidebar{
 transform:translateX(-100%);
@@ -174,39 +341,85 @@ transform:translateX(0);
 .main{
 margin-left:0;
 width:100%;
+padding:15px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.topbar{
+padding:18px;
+}
+
+.welcomeText h2{
+font-size:1.2rem;
+}
+
+.card{
+min-height:160px;
+padding:24px;
 }
 
 }
 
 /* FADE */
+
 @keyframes fadeIn{
+
 from{
 opacity:0;
 transform:translateY(10px);
 }
+
 to{
 opacity:1;
 transform:translateY(0);
 }
+
 }
+
 </style>
 </head>
+
 <body>
 
+<!-- OVERLAY -->
+<div
+class="overlay"
+id="overlay"
+onclick="closeSidebar()"
+></div>
+
 <!-- SIDEBAR -->
-<div class="sidebar collapsed"
-id="sidebar">
+<div
+class="sidebar"
+id="sidebar"
+>
 
-<div class="brand"
-onclick="toggleSidebar()">
+<div class="brand">
 
-<div class="logo">
+<div
+class="logo"
+id="sidebarLogo"
+>
 R
 </div>
 
-<span class="text">
+<div class="brandText">
+
+<div
+class="brandName"
+id="sidebarName"
+>
 Rider
-</span>
+</div>
+
+<div class="brandRole">
+Verified Rider
+</div>
+
+</div>
 
 </div>
 
@@ -214,42 +427,74 @@ Rider
 
 <a href="available-jobs-rider.html">
 <i class="fas fa-box"></i>
-<span class="text">
-Available Requests
+
+<span>
+Available Deliveries
 </span>
 </a>
 
 <a href="active-jobs-rider.html">
 <i class="fas fa-truck"></i>
-<span class="text">
+
+<span>
 Active Deliveries
 </span>
 </a>
 
 <a href="history-rider.html">
 <i class="fas fa-history"></i>
-<span class="text">
+
+<span>
 Delivery History
 </span>
 </a>
 
-<a href="notifications-rider.html">
+<a
+href="notifications-rider.html"
+class="notificationLink"
+>
+
 <i class="fas fa-bell"></i>
-<span class="text">
+
+<span>
 Notifications
 </span>
+
+<span
+class="notificationBadge"
+id="notificationBadge"
+style="display:none;"
+>
+0
+</span>
+
 </a>
 
 <a href="profile-rider.html">
 <i class="fas fa-user"></i>
-<span class="text">
+
+<span>
 Profile
 </span>
 </a>
 
+<a href="disputes-rider.html">
+<i class="fas fa-scale-balanced"></i>
+
+<span>
+Communications
+</span>
+</a>
+
+<a href="faq.html?from=dashboard-customer.html">
+        <i class="fas fa-circle-question"></i>
+        <span class="text">FAQ</span>
+</a>
+
 <a href="login-rider.html">
 <i class="fas fa-sign-out-alt"></i>
-<span class="text">
+
+<span>
 Logout
 </span>
 </a>
@@ -261,63 +506,194 @@ Logout
 <!-- MAIN -->
 <div class="main">
 
+<!-- TOPBAR -->
 <div class="topbar">
 
-<h3>
-Welcome, Rider
-</h3>
+<div class="topbarLeft">
 
-<a href="profile-rider.html"
-class="avatar">
+<button
+id="mobileMenuBtn"
+onclick="toggleSidebar()"
+>
+<i class="fas fa-bars"></i>
+</button>
+
+<div class="welcomeText">
+
+<h2 id="welcomeHeading">
+Welcome, Rider
+</h2>
+
+<p id="welcomeSubText">
+Manage your deliveries and stay updated with notifications.
+</p>
+
+</div>
+
+</div>
+
+<a
+href="profile-rider.html"
+class="avatar"
+id="topAvatar"
+>
 R
 </a>
 
 </div>
 
+<!-- DASHBOARD CARDS -->
 <div class="cards">
 
+<!-- AVAILABLE -->
 <div class="card">
-<h3>
-Available Requests
-</h3>
-<p>
-0 jobs available
-</p>
+
+<div class="cardTop">
+
+<div>
+<h3>Available Requests</h3>
 </div>
 
-<div class="card">
-<h3>
-Active Deliveries
-</h3>
-<p>
-0 deliveries ongoing
-</p>
+<div class="cardIcon">
+<i class="fas fa-box"></i>
 </div>
 
-<div class="card">
-<h3>
-Total Earnings
-</h3>
-<p>
-₦0.00
-</p>
 </div>
 
+<div>
+
+<div
+class="cardCount"
+id="availableCount"
+>
+0
+</div>
+
+<div class="cardSub">
+Pending delivery requests
+</div>
+
+</div>
+
+</div>
+
+<!-- ACTIVE -->
+<div class="card">
+
+<div class="cardTop">
+
+<div>
+<h3>Active Deliveries</h3>
+</div>
+
+<div class="cardIcon">
+<i class="fas fa-truck"></i>
+</div>
+
+</div>
+
+<div>
+
+<div
+class="cardCount"
+id="activeCount"
+>
+0
+</div>
+
+<div class="cardSub">
+Ongoing delivery jobs
+</div>
+
+</div>
+
+</div>
+
+<!-- COMPLETED -->
+<div class="card">
+
+<div class="cardTop">
+
+<div>
+<h3>Completed Deliveries</h3>
+</div>
+
+<div class="cardIcon">
+<i class="fas fa-circle-check"></i>
+</div>
+
+</div>
+
+<div>
+
+<div
+class="cardCount"
+id="completedCount"
+>
+0
+</div>
+
+<div class="cardSub">
+Successfully completed deliveries
+</div>
+
+</div>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+<div
+class="card"
+onclick="window.location.href='notifications-rider.html'"
+style="cursor:pointer;"
+>
+
+<div class="cardTop">
+
+<div>
+<h3>Notifications</h3>
+</div>
+
+<div class="cardIcon">
+<i class="fas fa-bell"></i>
+</div>
+
+</div>
+
+<div>
+
+<div
+class="cardCount"
+id="notificationCount"
+>
+0
 </div>
 
 <div
+class="cardSub"
+id="latestNotification"
+>
+No new notifications
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ACTION -->
+<div
 class="action"
-onclick="
-location.href=
-'available-jobs-rider.html'
-">
+onclick="location.href='available-jobs-rider.html'"
+>
 
 <h3>
 View Available Requests
 </h3>
 
 <p>
-Accept new delivery jobs
+Accept new delivery requests and manage your rider operations.
 </p>
 
 </div>
@@ -325,12 +701,266 @@ Accept new delivery jobs
 </div>
 
 <script>
-function toggleSidebar(){
-document
-.getElementById('sidebar')
-.classList
-.toggle('collapsed');
+
+/* =========================
+CURRENT RIDER
+========================= */
+const currentRider =
+JSON.parse(
+localStorage.getItem(
+"techrider_current_rider"
+)
+);
+
+/* SECURITY */
+if(!currentRider){
+
+window.location.href =
+"login-rider.html";
+
 }
+
+/* RIDER INFO */
+const fullName =
+currentRider.fullName ||
+"Rider";
+
+const firstName =
+fullName.split(" ")[0];
+
+const initials =
+firstName.charAt(0).toUpperCase();
+
+/* UPDATE UI */
+document.getElementById(
+"sidebarName"
+).textContent = fullName;
+
+document.getElementById(
+"sidebarLogo"
+).textContent = initials;
+
+document.getElementById(
+"topAvatar"
+).textContent = initials;
+
+document.getElementById(
+"welcomeHeading"
+).textContent =
+`Welcome, ${firstName}`;
+
+document.getElementById(
+"welcomeSubText"
+).textContent =
+`Here's a live overview of your delivery requests, active jobs and latest notifications.`;
+
+/* SIDEBAR */
+const sidebar =
+document.getElementById(
+"sidebar"
+);
+
+const overlay =
+document.getElementById(
+"overlay"
+);
+
+function toggleSidebar(){
+
+if(window.innerWidth <= 768){
+
+sidebar.classList.toggle(
+"open"
+);
+
+overlay.classList.toggle(
+"show"
+);
+
+}
+
+}
+
+function closeSidebar(){
+
+sidebar.classList.remove(
+"open"
+);
+
+overlay.classList.remove(
+"show"
+);
+
+}
+
+/* =========================
+UPDATE DASHBOARD
+========================= */
+function updateDashboard(){
+
+/* REQUESTS */
+const allRequests =
+JSON.parse(
+localStorage.getItem(
+"techrider_requests"
+)
+) || [];
+
+/* RIDER REQUESTS */
+const riderRequests =
+allRequests.filter(request =>
+
+request.assignedRider ===
+currentRider.id
+
+);
+
+/* COUNTS */
+const available =
+allRequests.filter(request =>
+
+request.deliveryStatus === "pending"
+
+).length;
+
+const active =
+riderRequests.filter(request =>
+
+request.deliveryStatus === "in progress"
+
+).length;
+
+const completed =
+riderRequests.filter(request =>
+
+request.deliveryStatus === "completed"
+
+).length;
+
+/* UPDATE COUNTS */
+document.getElementById(
+"availableCount"
+).textContent = available;
+
+document.getElementById(
+"activeCount"
+).textContent = active;
+
+document.getElementById(
+"completedCount"
+).textContent = completed;
+
+/* =========================
+NOTIFICATIONS
+========================= */
+const allNotifications =
+JSON.parse(
+localStorage.getItem(
+"techrider_notifications"
+)
+) || [];
+
+/* RIDER NOTIFICATIONS */
+const riderNotifications =
+allNotifications.filter(notification =>
+
+(
+notification.userType === "rider"
+||
+notification.targetType === "rider"
+)
+
+&&
+
+(
+notification.userId == currentRider.id
+||
+notification.targetId == currentRider.id
+||
+notification.recipientId == currentRider.id
+)
+
+);
+
+/* UNREAD */
+const unreadNotifications =
+riderNotifications.filter(notification =>
+
+notification.read !== true
+
+);
+
+/* COUNT */
+document.getElementById(
+"notificationCount"
+).textContent =
+unreadNotifications.length;
+
+/* BADGE */
+const badge =
+document.getElementById(
+"notificationBadge"
+);
+
+if(unreadNotifications.length > 0){
+
+badge.style.display =
+"flex";
+
+badge.textContent =
+unreadNotifications.length;
+
+}else{
+
+badge.style.display =
+"none";
+
+}
+
+/* MOST RECENT UNREAD */
+const latestUnread =
+unreadNotifications.sort(
+(a,b) =>
+
+new Date(b.createdAt || 0) -
+new Date(a.createdAt || 0)
+
+)[0];
+
+/* DESCRIPTION */
+document.getElementById(
+"latestNotification"
+).textContent =
+
+latestUnread
+
+? (
+latestUnread.message
+||
+latestUnread.title
+||
+"New notification received"
+)
+
+: "No new notifications";
+
+}
+
+/* INITIAL LOAD */
+updateDashboard();
+
+/* REALTIME */
+window.addEventListener(
+"storage",
+updateDashboard
+);
+
+/* LIVE FALLBACK */
+setInterval(
+updateDashboard,
+1000
+);
+
 </script>
 
 </body>

@@ -2,18 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
 
-<title>Available Jobs - TechRider</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+<title>
+Available Jobs - TechRider
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 rel="stylesheet">
 
-<link rel="stylesheet"
+<link
+rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -26,16 +33,21 @@ font-family:'Poppins',sans-serif;
 --deep-purple:#240046;
 --lilac:#e0aaff;
 --gray:#f6f6f6;
+--white:#fff;
+--green:#10b981;
+--red:#ef4444;
+--orange:#f59e0b;
 }
 
 body{
 background:var(--gray);
 padding:20px;
-animation:fadeIn .5s ease-in;
+animation:fadeIn .4s ease;
+overflow-x:hidden;
 }
 
 .wrapper{
-max-width:900px;
+max-width:1200px;
 margin:auto;
 }
 
@@ -43,336 +55,870 @@ margin:auto;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
-flex-wrap:wrap;
 gap:15px;
+flex-wrap:wrap;
+margin-bottom:24px;
 }
 
 .back-btn{
 text-decoration:none;
 background:white;
 padding:12px 18px;
-border-radius:12px;
-color:var(--purple);
+border-radius:14px;
 font-weight:600;
+color:var(--purple);
+box-shadow:0 5px 15px rgba(0,0,0,.05);
 }
 
-h2{
+.page-title h2{
 color:var(--deep-purple);
+font-size:2rem;
+}
+
+.page-title p{
+margin-top:6px;
+color:#666;
+font-size:.95rem;
+}
+
+.jobs-container{
+display:flex;
+flex-direction:column;
+gap:22px;
 }
 
 .job-card{
-background:white;
-padding:25px;
-border-radius:18px;
-margin-bottom:20px;
-box-shadow:0 5px 18px rgba(0,0,0,.05);
+background:var(--white);
+border-radius:22px;
+padding:24px;
+box-shadow:0 6px 20px rgba(0,0,0,.05);
+border:1px solid #eee;
+animation:fadeIn .4s ease;
 }
 
-.job-card h3{
-margin-bottom:15px;
+.job-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:22px;
+}
+
+.job-id{
+font-size:1.05rem;
+font-weight:700;
 color:var(--deep-purple);
+margin-bottom:10px;
 }
 
-.job-info{
-margin-bottom:10px;
-font-size:.95rem;
+.job-time{
+font-size:.88rem;
+color:#777;
+}
+
+.badges{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.tag{
+padding:8px 14px;
+border-radius:999px;
+font-size:.78rem;
+font-weight:700;
+}
+
+.pickup{
+background:#ede9fe;
+color:var(--purple);
+}
+
+.delivery{
+background:#dcfce7;
+color:#047857;
+}
+
+.status-tag{
+background:#fff7ed;
+color:#c2410c;
+}
+
+.flow-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:24px;
+}
+
+.flow-box{
+background:#faf7ff;
+padding:20px;
+border-radius:18px;
+border:1px solid #eee;
+}
+
+.flow-head{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:16px;
+color:var(--deep-purple);
+font-weight:700;
+}
+
+.flow-head i{
+background:#ede9fe;
+width:38px;
+height:38px;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--purple);
+}
+
+.info-row{
+margin-bottom:14px;
+line-height:1.7;
+color:#444;
+font-size:.94rem;
+word-break:break-word;
+}
+
+.info-row strong{
+color:#222;
+}
+
+.route-box{
+background:white;
+border-radius:16px;
+padding:16px;
+margin-top:18px;
+border:1px dashed #d8b4fe;
+}
+
+.route-step{
+display:flex;
+gap:14px;
+margin-bottom:16px;
+align-items:flex-start;
+}
+
+.route-step:last-child{
+margin-bottom:0;
+}
+
+.route-icon{
+min-width:38px;
+width:38px;
+height:38px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#f3e8ff;
+color:var(--purple);
+font-size:.9rem;
+}
+
+.route-content{
+font-size:.93rem;
+line-height:1.7;
 color:#444;
 }
 
-.job-info i{
-color:var(--purple);
-margin-right:8px;
-}
-
-.job-type{
-display:inline-block;
-margin-bottom:15px;
-padding:8px 14px;
-border-radius:20px;
-font-size:.8rem;
-font-weight:600;
-background:#f3e8ff;
-color:var(--purple);
+.route-content strong{
+display:block;
+color:var(--deep-purple);
+margin-bottom:4px;
 }
 
 .actions{
 display:flex;
-gap:15px;
-margin-top:20px;
+justify-content:flex-end;
+gap:14px;
 flex-wrap:wrap;
 }
 
-button{
+.btn{
 border:none;
-padding:12px 20px;
-border-radius:10px;
-cursor:pointer;
+padding:13px 20px;
+border-radius:12px;
 font-weight:600;
+cursor:pointer;
+transition:.25s;
+font-size:.92rem;
+}
+
+.btn:hover{
+transform:translateY(-2px);
 }
 
 .accept{
 background:linear-gradient(
 135deg,
 var(--purple),
-var(--lilac)
+#c77dff
 );
 color:white;
 }
 
 .reject{
-background:#eee;
+background:#f1f1f1;
+color:#333;
 }
 
-.empty{
-text-align:center;
-padding:40px;
-background:white;
-border-radius:18px;
+.empty-state{
 display:none;
+background:white;
+padding:60px 20px;
+border-radius:22px;
+text-align:center;
+box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+.empty-state i{
+font-size:3rem;
+color:var(--purple);
+margin-bottom:18px;
+}
+
+.empty-state h3{
+color:var(--deep-purple);
+margin-bottom:10px;
+}
+
+.empty-state p{
+color:#777;
+line-height:1.7;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:5000;
+}
+
+.modal-content{
+background:white;
+width:100%;
+max-width:420px;
+padding:28px;
+border-radius:22px;
+animation:fadeIn .3s ease;
+}
+
+.modal-content h3{
+color:var(--deep-purple);
+margin-bottom:14px;
+}
+
+.modal-content p{
+line-height:1.7;
+color:#555;
+margin-bottom:24px;
+}
+
+.modal-actions{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.modal-actions .btn{
+flex:1;
+}
+
+.confirm-btn{
+background:linear-gradient(
+135deg,
+var(--purple),
+#c77dff
+);
+color:white;
+}
+
+.cancel-btn{
+background:#efefef;
+}
+
+@media(max-width:900px){
+
+.flow-grid{
+grid-template-columns:1fr;
+}
+
 }
 
 @media(max-width:768px){
+
+body{
+padding:14px;
+}
+
+.page-title h2{
+font-size:1.6rem;
+}
+
+.job-card{
+padding:18px;
+border-radius:18px;
+}
+
+.flow-box{
+padding:16px;
+}
 
 .actions{
 flex-direction:column;
 }
 
-button{
+.actions .btn{
+width:100%;
+}
+
+.modal-actions{
+flex-direction:column;
+}
+
+.modal-actions .btn{
 width:100%;
 }
 
 }
 
 @keyframes fadeIn{
+
 from{
 opacity:0;
 transform:translateY(10px);
 }
+
 to{
 opacity:1;
 transform:translateY(0);
 }
+
 }
+
 </style>
 </head>
+
 <body>
 
 <div class="wrapper">
 
 <div class="topbar">
 
-<a href="dashboard-rider.html"
+<a
+href="dashboard-rider.html"
 class="back-btn">
-← Back to Dashboard
+
+<i class="fas fa-arrow-left"></i>
+Back to Dashboard
+
 </a>
+
+<div class="page-title">
 
 <h2>
 Available Jobs
 </h2>
 
-</div>
-
-
-<!-- JOB 1 -->
-<div class="job-card">
-
-<h3>Assigned Job</h3>
-
-<div class="job-type">
-Pickup
-</div>
-
-<div class="job-info">
-<i class="fas fa-location-dot"></i>
-Address:
-12 Admiralty Way, Lekki
-</div>
-
-<div class="job-info">
-<i class="fas fa-user"></i>
-Customer:
-Tobi Zuuye
-</div>
-
-<div class="job-info">
-<i class="fas fa-phone"></i>
-Phone:
-08012345678
-</div>
-
-<div class="job-info">
-<i class="fas fa-money-bill-wave"></i>
-Fee:
-₦3,500
-</div>
-
-<div class="actions">
-
-<button
-class="accept"
-onclick="acceptJob(
-this,
-'Pickup',
-'Tobi Zuuye',
-'12 Admiralty Way, Lekki',
-'08012345678',
-3500
-)">
-Accept
-</button>
-
-<button
-class="reject"
-onclick="rejectJob(this)">
-Reject
-</button>
+<p>
+Assigned pickup and delivery requests from TechRider admin.
+</p>
 
 </div>
 
 </div>
-
-
-<!-- JOB 2 -->
-<div class="job-card">
-
-<h3>Assigned Job</h3>
-
-<div class="job-type">
-Delivery
-</div>
-
-<div class="job-info">
-<i class="fas fa-location-dot"></i>
-Address:
-20 Yaba Road, Lagos
-</div>
-
-<div class="job-info">
-<i class="fas fa-user"></i>
-Customer:
-Aisha Lawal
-</div>
-
-<div class="job-info">
-<i class="fas fa-phone"></i>
-Phone:
-08087654321
-</div>
-
-<div class="job-info">
-<i class="fas fa-money-bill-wave"></i>
-Fee:
-₦2,800
-</div>
-
-<div class="actions">
-
-<button
-class="accept"
-onclick="acceptJob(
-this,
-'Delivery',
-'Aisha Lawal',
-'20 Yaba Road, Lagos',
-'08087654321',
-2800
-)">
-Accept
-</button>
-
-<button
-class="reject"
-onclick="rejectJob(this)">
-Reject
-</button>
-
-</div>
-
-</div>
-
 
 <div
-class="empty"
+class="jobs-container"
+id="jobsContainer">
+</div>
+
+<div
+class="empty-state"
 id="emptyState">
-No jobs available.
+
+<i class="fas fa-box-open"></i>
+
+<h3>
+No Available Jobs
+</h3>
+
+<p>
+No delivery requests have been assigned to you yet.
+</p>
+
+</div>
+
+</div>
+
+<!-- ACCEPT MODAL -->
+<div
+class="modal"
+id="acceptModal">
+
+<div class="modal-content">
+
+<h3>
+Accept Delivery Request
+</h3>
+
+<p>
+Are you sure you want to accept this assigned delivery job?
+</p>
+
+<div class="modal-actions">
+
+<button
+class="btn cancel-btn"
+onclick="closeAcceptModal()">
+
+Cancel
+
+</button>
+
+<button
+class="btn confirm-btn"
+onclick="confirmAcceptJob()">
+
+Accept Job
+
+</button>
+
+</div>
+
 </div>
 
 </div>
 
+<!-- REJECT MODAL -->
+<div
+class="modal"
+id="rejectModal">
+
+<div class="modal-content">
+
+<h3>
+Reject Delivery Request
+</h3>
+
+<p>
+Are you sure you want to reject this assigned delivery job?
+</p>
+
+<div class="modal-actions">
+
+<button
+class="btn cancel-btn"
+onclick="closeRejectModal()">
+
+Cancel
+
+</button>
+
+<button
+class="btn confirm-btn"
+onclick="confirmRejectJob()">
+
+Reject Job
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
-function rejectJob(btn){
+/* =========================
+CURRENT RIDER
+========================= */
+const currentRider =
+JSON.parse(localStorage.getItem('techrider_currentUser')) ||
+JSON.parse(localStorage.getItem('currentUser')) ||
+JSON.parse(localStorage.getItem('riderCurrentUser'));
 
-btn
-.closest('.job-card')
-.remove();
+/* =========================
+RIDER JOBS
+========================= */
+let assignedJobs =
+JSON.parse(localStorage.getItem('assignedRiderJobs')) || [];
 
-checkEmpty();
+let activeJobs =
+JSON.parse(localStorage.getItem('activeRiderJobs')) || [];
+
+let selectedJobId = null;
+
+/* =========================
+LOAD JOBS
+========================= */
+function loadJobs(){
+
+const jobsContainer =
+document.getElementById('jobsContainer');
+
+const emptyState =
+document.getElementById('emptyState');
+
+jobsContainer.innerHTML = '';
+
+assignedJobs =
+JSON.parse(localStorage.getItem('assignedRiderJobs')) || [];
+
+const riderJobs =
+assignedJobs.filter(job => {
+
+return (
+job.riderId === currentRider?.riderId ||
+job.riderId === currentRider?.id
+) && job.status !== 'accepted';
+
+});
+
+if(riderJobs.length === 0){
+
+emptyState.style.display = 'block';
+return;
 
 }
 
-function acceptJob(
-btn,
-jobType,
-customer,
-address,
-phone,
-fee
-){
+emptyState.style.display = 'none';
 
-let activeJobs=
-JSON.parse(
-localStorage.getItem(
-"activeJobs"
-)
-)||[];
+riderJobs
+.sort((a,b)=>b.timestamp-a.timestamp)
+.forEach(job=>{
 
-activeJobs.push({
-jobType,
-customer,
-address,
-phone,
-fee,
-status:"In Progress"
+jobsContainer.innerHTML += `
+
+<div class="job-card">
+
+<div class="job-top">
+
+<div>
+
+<div class="job-id">
+${job.jobId || 'JOB-000'}
+</div>
+
+<div class="job-time">
+<i class="fas fa-clock"></i>
+${job.createdAt || ''}
+</div>
+
+</div>
+
+<div class="badges">
+
+<div class="tag ${job.jobType === 'Delivery' ? 'delivery' : 'pickup'}">
+${job.jobType || 'Pickup'}
+</div>
+
+<div class="tag status-tag">
+Assigned Delivery
+</div>
+
+</div>
+
+</div>
+
+<div class="flow-grid">
+
+<!-- CUSTOMER -->
+<div class="flow-box">
+
+<div class="flow-head">
+
+<i class="fas fa-user"></i>
+
+<span>
+Customer Information
+</span>
+
+</div>
+
+<div class="info-row">
+<strong>Name:</strong>
+${job.customerName || 'N/A'}
+</div>
+
+<div class="info-row">
+<strong>Phone:</strong>
+${job.customerPhone || 'N/A'}
+</div>
+
+<div class="info-row">
+<strong>Address:</strong>
+${job.customerAddress || 'N/A'}
+</div>
+
+</div>
+
+<!-- TECHNICIAN -->
+<div class="flow-box">
+
+<div class="flow-head">
+
+<i class="fas fa-screwdriver-wrench"></i>
+
+<span>
+Technician Information
+</span>
+
+</div>
+
+<div class="info-row">
+<strong>Name:</strong>
+${job.technicianName || 'N/A'}
+</div>
+
+<div class="info-row">
+<strong>Phone:</strong>
+${job.technicianPhone || 'N/A'}
+</div>
+
+<div class="info-row">
+<strong>Address:</strong>
+${job.technicianAddress || 'N/A'}
+</div>
+
+</div>
+
+</div>
+
+<div class="route-box">
+
+<div class="route-step">
+
+<div class="route-icon">
+<i class="fas fa-location-dot"></i>
+</div>
+
+<div class="route-content">
+
+<strong>
+Pickup From
+</strong>
+
+${
+job.jobType === 'Pickup'
+? (job.customerAddress || 'N/A')
+: (job.technicianAddress || 'N/A')
+}
+
+</div>
+
+</div>
+
+<div class="route-step">
+
+<div class="route-icon">
+<i class="fas fa-truck"></i>
+</div>
+
+<div class="route-content">
+
+<strong>
+Deliver To
+</strong>
+
+${
+job.jobType === 'Pickup'
+? (job.technicianAddress || 'N/A')
+: (job.customerAddress || 'N/A')
+}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn accept"
+onclick="openAcceptModal('${job.jobId}')">
+
+Accept Job
+
+</button>
+
+<button
+class="btn reject"
+onclick="openRejectModal('${job.jobId}')">
+
+Reject Job
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* =========================
+ACCEPT JOB
+========================= */
+function openAcceptModal(jobId){
+
+selectedJobId = jobId;
+
+document
+.getElementById('acceptModal')
+.style.display = 'flex';
+
+}
+
+function closeAcceptModal(){
+
+document
+.getElementById('acceptModal')
+.style.display = 'none';
+
+selectedJobId = null;
+
+}
+
+function confirmAcceptJob(){
+
+if(!selectedJobId) return;
+
+assignedJobs =
+JSON.parse(localStorage.getItem('assignedRiderJobs')) || [];
+
+activeJobs =
+JSON.parse(localStorage.getItem('activeRiderJobs')) || [];
+
+const selectedJob =
+assignedJobs.find(job =>
+job.jobId === selectedJobId
+);
+
+if(selectedJob){
+
+selectedJob.status = 'accepted';
+selectedJob.acceptedAt =
+new Date().toLocaleString('en-NG',{
+dateStyle:'medium',
+timeStyle:'short'
+});
+
+activeJobs.unshift({
+...selectedJob,
+deliveryStatus:'In Progress'
 });
 
 localStorage.setItem(
-"activeJobs",
+'activeRiderJobs',
 JSON.stringify(activeJobs)
 );
 
-btn
-.closest('.job-card')
-.remove();
-
-checkEmpty();
-
-alert(
-"Job accepted and moved to Active Jobs."
+localStorage.setItem(
+'assignedRiderJobs',
+JSON.stringify(assignedJobs)
 );
 
 }
 
-function checkEmpty(){
+closeAcceptModal();
 
-let jobs=
-document.querySelectorAll(
-'.job-card'
-);
+loadJobs();
 
-if(jobs.length===0){
+alert('Job accepted successfully.');
+
+}
+
+/* =========================
+REJECT JOB
+========================= */
+function openRejectModal(jobId){
+
+selectedJobId = jobId;
 
 document
-.getElementById(
-'emptyState'
-)
-.style.display='block';
+.getElementById('rejectModal')
+.style.display = 'flex';
 
 }
 
+function closeRejectModal(){
+
+document
+.getElementById('rejectModal')
+.style.display = 'none';
+
+selectedJobId = null;
+
 }
+
+function confirmRejectJob(){
+
+if(!selectedJobId) return;
+
+assignedJobs =
+JSON.parse(localStorage.getItem('assignedRiderJobs')) || [];
+
+assignedJobs =
+assignedJobs.filter(job =>
+job.jobId !== selectedJobId
+);
+
+localStorage.setItem(
+'assignedRiderJobs',
+JSON.stringify(assignedJobs)
+);
+
+closeRejectModal();
+
+loadJobs();
+
+alert('Job rejected.');
+
+}
+
+/* =========================
+CLOSE MODALS ON OUTSIDE CLICK
+========================= */
+window.onclick = function(e){
+
+const acceptModal =
+document.getElementById('acceptModal');
+
+const rejectModal =
+document.getElementById('rejectModal');
+
+if(e.target === acceptModal){
+closeAcceptModal();
+}
+
+if(e.target === rejectModal){
+closeRejectModal();
+}
+
+};
+
+/* =========================
+INIT
+========================= */
+loadJobs();
 
 </script>
 

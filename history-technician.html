@@ -2,140 +2,249 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Job History - TechRider</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
+
+<title>
+Technician Job History - TechRider
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
-  --white:#fff;
-  --green:#16a34a;
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--green:#16a34a;
+--red:#dc2626;
 }
 
 body{
-  background:var(--gray);
-  padding:20px;
-  animation:fadeIn .5s ease-in;
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
 }
 
 .container{
-  max-width:1000px;
-  margin:auto;
+max-width:1100px;
+margin:auto;
 }
 
 /* HEADER */
+
 .header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin-bottom:25px;
+gap:12px;
 }
 
 .header h2{
-  color:var(--deep-purple);
+color:var(--deep-purple);
 }
 
 .back{
-  text-decoration:none;
-  background:var(--purple);
-  color:white;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:.85rem;
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.9rem;
+font-weight:600;
 }
 
 /* GRID */
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
 }
 
 /* CARD */
+
 .card{
-  background:var(--white);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
 }
 
 /* TOP */
+
 .top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
 }
 
 .title{
-  font-weight:600;
-  color:var(--deep-purple);
+font-weight:600;
+font-size:1rem;
+line-height:1.5;
+color:var(--deep-purple);
 }
 
+/* STATUS */
+
 .status{
-  font-size:.75rem;
-  padding:5px 10px;
-  border-radius:20px;
-  background:var(--green);
-  color:white;
+font-size:.75rem;
+padding:7px 12px;
+border-radius:20px;
+color:white;
+font-weight:600;
+white-space:nowrap;
+}
+
+.status.completed{
+background:var(--green);
+}
+
+.status.cancelled{
+background:var(--red);
+}
+
+/* REQUEST ID */
+
+.request-id{
+margin-top:8px;
+display:inline-block;
+background:#f3e8ff;
+color:var(--purple);
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
 }
 
 /* DETAILS */
+
 .details{
-  margin-top:10px;
-  font-size:.85rem;
-  color:#444;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:.88rem;
+color:#444;
+}
+
+.details div{
+line-height:1.5;
+}
+
+.details i{
+color:var(--purple);
+width:18px;
+margin-right:6px;
 }
 
 /* DESCRIPTION */
+
 .desc{
-  margin-top:10px;
-  padding:10px;
-  background:#fafafa;
-  border-left:3px solid var(--purple);
-  border-radius:8px;
-  font-size:.85rem;
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+line-height:1.7;
+color:#333;
 }
 
-/* FOOT */
+/* PRICE */
+
+.price-box{
+margin-top:15px;
+background:#f8f5ff;
+padding:14px;
+border-radius:12px;
+font-size:.9rem;
+font-weight:600;
+color:var(--deep-purple);
+}
+
+/* FOOTER */
+
 .footer{
-  margin-top:12px;
-  font-size:.75rem;
-  color:#777;
+margin-top:15px;
+font-size:.82rem;
+color:#777;
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
 }
 
 /* EMPTY STATE */
+
 .empty{
-  text-align:center;
-  margin-top:50px;
-  color:#777;
+background:white;
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+color:#666;
+display:none;
+}
+
+.empty i{
+font-size:2.5rem;
+margin-bottom:12px;
+color:var(--purple);
 }
 
 /* MOBILE */
+
 @media(max-width:768px){
-  .grid{grid-template-columns:1fr;}
+
+.grid{
+grid-template-columns:1fr;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
 }
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 </style>
 </head>
 
@@ -143,120 +252,362 @@ body{
 
 <div class="container">
 
-  <div class="header">
-    <h2>Completed Jobs</h2>
-    <a href="dashboard-technician.html" class="back">← Dashboard</a>
-  </div>
+<div class="header">
 
-  <div class="grid" id="historyGrid">
+<h2>
+Job History
+</h2>
 
-    <!-- JOB 1 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">iPhone 11 Battery Replacement</div>
-        <div class="status">Completed</div>
-      </div>
+<a
+href="dashboard-technician.html"
+class="back">
 
-      <div class="details">
-        <div><i class="fas fa-user"></i> Ayoola Emmanuel</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 11</div>
-        <div><i class="fas fa-map-marker-alt"></i> Lagos</div>
-      </div>
+← Dashboard
 
-      <div class="desc">
-        Screen replaced successfully.
-      </div>
+</a>
 
-      <div class="footer">
-        Completed on: April 20, 2026
-      </div>
-    </div>
+</div>
 
-    <!-- JOB 2 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">Blank Screen Fix</div>
-        <div class="status">Completed</div>
-      </div>
+<div
+class="grid"
+id="historyGrid">
+</div>
 
-      <div class="details">
-        <div><i class="fas fa-user"></i> Uchenna Amadi</div>
-        <div><i class="fas fa-laptop"></i> Device: HP Pavilion</div>
-        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
-      </div>
+<div
+class="empty"
+id="emptyState">
 
-      <div class="desc">
-        Screen Replaced.
-      </div>
+<i class="fas fa-box-open"></i>
 
-      <div class="footer">
-        Completed on: April 17, 2026
-      </div>
-    </div>
+<p>
+No completed or cancelled jobs yet
+</p>
 
-     <!-- JOB 3 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">Laptop Overheating Fix</div>
-        <div class="status">Completed</div>
-      </div>
-
-      <div class="details">
-        <div><i class="fas fa-user"></i> Solomon Uboh</div>
-        <div><i class="fas fa-laptop"></i> Device: HP Pavilion</div>
-        <div><i class="fas fa-map-marker-alt"></i> Ikeja</div>
-      </div>
-
-      <div class="desc">
-        Cooling system cleaned and thermal paste replaced.
-      </div>
-
-      <div class="footer">
-        Completed on: April 10, 2026
-      </div>
-    </div>
-
-     <!-- JOB 4 -->
-    <div class="card">
-      <div class="top">
-        <div class="title">iPhone 13 Pro Screen Replacement</div>
-        <div class="status">Completed</div>
-      </div>
-
-      <div class="details">
-        <div><i class="fas fa-user"></i> Nwachkwu Joseph</div>
-        <div><i class="fas fa-mobile-alt"></i> Device: iPhone 13 Pro</div>
-        <div><i class="fas fa-map-marker-alt"></i> Lagos</div>
-      </div>
-
-      <div class="desc">
-        Screen replaced successfully. Device fully functional.
-      </div>
-
-      <div class="footer">
-        Completed on: April 8, 2026
-      </div>
-    </div>
-
-    
-  </div>
-
-  <!-- EMPTY STATE (hidden by default) -->
-  <div class="empty" id="emptyState" style="display:none;">
-    <i class="fas fa-box-open" style="font-size:2rem;margin-bottom:10px;"></i>
-    <p>No completed jobs yet</p>
-  </div>
+</div>
 
 </div>
 
 <script>
-  // Simple empty state check
-  const grid = document.getElementById('historyGrid');
-  const empty = document.getElementById('emptyState');
 
-  if(grid.children.length === 0){
-    empty.style.display = "block";
-  }
+/* =========================================
+CURRENT TECHNICIAN
+========================================= */
+
+const currentTechnician =
+JSON.parse(
+localStorage.getItem(
+'techrider_current_technician'
+)
+);
+
+/* =========================================
+REDIRECT IF NOT LOGGED IN
+========================================= */
+
+if(!currentTechnician){
+
+alert(
+'Please login as technician'
+);
+
+window.location.href =
+'login-technician.html';
+
+}
+
+/* =========================================
+ELEMENTS
+========================================= */
+
+const historyGrid =
+document.getElementById(
+'historyGrid'
+);
+
+const emptyState =
+document.getElementById(
+'emptyState'
+);
+
+/* =========================================
+FORMAT DATE
+========================================= */
+
+function formatDate(dateString){
+
+if(!dateString){
+return 'Recently';
+}
+
+const date =
+new Date(dateString);
+
+return date.toLocaleString(
+'en-NG',
+{
+day:'numeric',
+month:'short',
+year:'numeric',
+hour:'numeric',
+minute:'2-digit'
+}
+);
+
+}
+
+/* =========================================
+GET HISTORY JOBS
+========================================= */
+
+function getHistoryJobs(){
+
+const technicianId =
+currentTechnician.id
+|| currentTechnician.technicianId;
+
+let historyJobs =
+JSON.parse(
+localStorage.getItem(
+'tech_job_history'
+)
+) || [];
+
+/* FILTER CURRENT TECHNICIAN */
+
+historyJobs =
+historyJobs.filter(job => {
+
+return (
+job.technicianId === technicianId
+||
+job.assignedTechnician === technicianId
+);
+
+});
+
+return historyJobs;
+
+}
+
+/* =========================================
+GET STATUS CLASS
+========================================= */
+
+function getStatusClass(status){
+
+if(
+(status || '').toLowerCase() ===
+'cancelled'
+){
+return 'cancelled';
+}
+
+return 'completed';
+
+}
+
+/* =========================================
+GET STATUS LABEL
+========================================= */
+
+function getStatusLabel(status){
+
+if(
+(status || '').toLowerCase() ===
+'cancelled'
+){
+return 'Cancelled';
+}
+
+return 'Completed';
+
+}
+
+/* =========================================
+RENDER HISTORY
+========================================= */
+
+function renderHistory(){
+
+const historyJobs =
+getHistoryJobs();
+
+historyGrid.innerHTML = '';
+
+if(historyJobs.length === 0){
+
+emptyState.style.display =
+'block';
+
+return;
+
+}
+
+emptyState.style.display =
+'none';
+
+historyJobs
+.sort((a,b)=>
+new Date(
+b.completedAt ||
+b.cancelledAt ||
+b.updatedAt ||
+b.createdAt
+)
+-
+new Date(
+a.completedAt ||
+a.cancelledAt ||
+a.updatedAt ||
+a.createdAt
+)
+)
+.forEach(job => {
+
+const currentStatus =
+job.jobStatus ||
+job.status ||
+'Completed';
+
+historyGrid.innerHTML += `
+
+<div class="card">
+
+<div class="top">
+
+<div>
+
+<div class="title">
+
+${job.brand || ''}
+${job.model || ''}
+${job.deviceType
+? `(${job.deviceType})`
+: ''}
+
+</div>
+
+<div class="request-id">
+
+${job.requestId || 'REQ'}
+
+</div>
+
+</div>
+
+<div class="status
+${getStatusClass(currentStatus)}">
+
+${getStatusLabel(currentStatus)}
+
+</div>
+
+</div>
+
+<div class="details">
+
+<div>
+<i class="fas fa-mobile-alt"></i>
+
+<strong>Device Type:</strong>
+
+${job.deviceType || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-tag"></i>
+
+<strong>Brand:</strong>
+
+${job.brand || 'N/A'}
+
+</div>
+
+<div>
+<i class="fas fa-microchip"></i>
+
+<strong>Model:</strong>
+
+${job.model || 'N/A'}
+
+</div>
+
+</div>
+
+<div class="desc">
+
+<strong>Issue Description:</strong>
+
+<br><br>
+
+${job.description || 'No description provided.'}
+
+</div>
+
+<div class="price-box">
+
+Repair Quotation:
+₦${Number(
+job.repairPrice || 0
+).toLocaleString()}
+
+</div>
+
+<div class="footer">
+
+<i class="fas
+${getStatusClass(currentStatus) === 'cancelled'
+? 'fa-times-circle'
+: 'fa-check-circle'
+}"></i>
+
+${getStatusClass(currentStatus) === 'cancelled'
+? 'Cancelled'
+: 'Completed'
+}:
+
+${formatDate(
+job.completedAt ||
+job.cancelledAt ||
+job.updatedAt ||
+job.createdAt
+)}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* =========================================
+LIVE STORAGE SYNC
+========================================= */
+
+window.addEventListener(
+'storage',
+renderHistory
+);
+
+/* =========================================
+AUTO REFRESH
+========================================= */
+
+setInterval(
+renderHistory,
+7000
+);
+
+/* =========================================
+INITIAL RENDER
+========================================= */
+
+renderHistory();
+
 </script>
 
 </body>

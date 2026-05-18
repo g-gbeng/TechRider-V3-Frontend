@@ -203,25 +203,61 @@
 </div>
 
 <script>
-  // SAME CENTRALIZED TOGGLE SYSTEM
-  function togglePassword(icon){
-    const input = icon.previousElementSibling;
 
-    if(input.type === "password"){
-      input.type = "text";
-      icon.classList.replace("fa-eye","fa-eye-slash");
-    } else {
-      input.type = "password";
-      icon.classList.replace("fa-eye-slash","fa-eye");
-    }
+function togglePassword(icon){
+  const input = icon.previousElementSibling;
+
+  if(input.type === "password"){
+    input.type = "text";
+    icon.classList.replace("fa-eye","fa-eye-slash");
+  } else {
+    input.type = "password";
+    icon.classList.replace("fa-eye-slash","fa-eye");
+  }
+}
+
+/* LOGIN LOGIC */
+document.getElementById("loginForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const email =
+    document.querySelector('input[type="email"]').value.trim();
+
+  const password =
+    document.getElementById("password").value.trim();
+
+  const technicians =
+    JSON.parse(localStorage.getItem("techrider_technicians")) || [];
+
+  if(technicians.length === 0){
+    alert("No registered technicians found. Please sign up first.");
+    return;
   }
 
-  // REDIRECT TO DASHBOARD
-  document.getElementById('loginForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    window.location.href = "awaiting-approval-technician.html";
-  });
-</script>
+  const foundTech = technicians.find(
+    tech =>
+      tech.email === email &&
+      tech.password === password
+  );
 
+  if(!foundTech){
+    alert("Invalid email or password");
+    return;
+  }
+
+  /* STORE SESSION */
+  localStorage.setItem(
+    "techrider_current_technician",
+    JSON.stringify(foundTech)
+  );
+
+  alert("Login successful");
+
+  window.location.href = "awaiting-approval-technician.html";
+
+});
+
+</script>
 </body>
 </html>

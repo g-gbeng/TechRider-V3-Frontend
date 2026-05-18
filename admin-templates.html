@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+  Admin Templates - TechRider
+</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+  rel="stylesheet"
+>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+}
+
+body{
+  background:var(--gray);
+  min-height:100vh;
+  animation:fadeIn .5s ease;
+}
+
+.main{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+/* TOP BAR */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.topbar h1{
+  color:var(--deep-purple);
+  font-size:1.8rem;
+}
+
+.back-btn{
+  background:var(--purple);
+  color:white;
+  border:none;
+  padding:12px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:.3s;
+}
+
+.back-btn:hover{
+  opacity:.92;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+/* SECTION */
+.section{
+  background:white;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+  animation:fadeIn .5s ease;
+}
+
+.section h2{
+  color:var(--deep-purple);
+  margin-bottom:18px;
+  font-size:1.2rem;
+}
+
+/* INPUTS */
+input,
+textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  margin-bottom:12px;
+  outline:none;
+  transition:.3s;
+  font-size:.92rem;
+}
+
+input:focus,
+textarea:focus{
+  border-color:var(--purple);
+}
+
+textarea{
+  resize:none;
+  min-height:120px;
+}
+
+/* BUTTONS */
+button{
+  border:none;
+  padding:12px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  transition:.3s;
+}
+
+.primary-btn{
+  background:
+  linear-gradient(
+    135deg,
+    var(--purple),
+    var(--lilac)
+  );
+  color:white;
+}
+
+.primary-btn:hover{
+  opacity:.92;
+}
+
+/* TEMPLATE CARD */
+.card{
+  background:#faf7ff;
+  border:1px solid #eee;
+  border-radius:16px;
+  padding:16px;
+  margin-top:14px;
+}
+
+.card-title{
+  font-weight:600;
+  color:var(--deep-purple);
+  margin-bottom:5px;
+}
+
+.card-subject{
+  font-size:.85rem;
+  color:#666;
+  margin-bottom:10px;
+}
+
+.card-body{
+  color:#444;
+  line-height:1.7;
+  font-size:.9rem;
+  white-space:pre-wrap;
+}
+
+.card-actions{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.edit-btn{
+  background:#ece4ff;
+  color:var(--deep-purple);
+}
+
+.delete-btn{
+  background:#ffdfe4;
+  color:#a1001d;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#777;
+  font-size:.92rem;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  body{
+    padding:0;
+  }
+
+  .main{
+    padding:15px;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .topbar h1{
+    font-size:1.5rem;
+  }
+
+  .back-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .section{
+    padding:18px;
+  }
+
+  button{
+    width:100%;
+  }
+
+  .card-actions{
+    flex-direction:column;
+  }
+
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+
+    <h1>
+      Template Manager
+    </h1>
+
+    <button
+      class="back-btn"
+      onclick="goBack()"
+    >
+
+      <i class="fas fa-arrow-left"></i>
+      Back
+
+    </button>
+
+  </div>
+
+  <div class="grid">
+
+    <!-- EMAIL -->
+    <div class="section">
+
+      <h2>
+        Create Email Template
+      </h2>
+
+      <input
+        id="emailTitle"
+        placeholder="Template Title"
+      >
+
+      <input
+        id="emailSubject"
+        placeholder="Email Subject"
+      >
+
+      <textarea
+        id="emailBody"
+        placeholder="Email Body"
+      ></textarea>
+
+      <button
+        class="primary-btn"
+        onclick="saveEmailTemplate()"
+      >
+        Save Email Template
+      </button>
+
+    </div>
+
+    <!-- NOTIFICATION -->
+    <div class="section">
+
+      <h2>
+        Create Notification Template
+      </h2>
+
+      <input
+        id="notifTitle"
+        placeholder="Template Title"
+      >
+
+      <input
+        id="notifSubject"
+        placeholder="Notification Subject"
+      >
+
+      <textarea
+        id="notifBody"
+        placeholder="Notification Message"
+      ></textarea>
+
+      <button
+        class="primary-btn"
+        onclick="saveNotifTemplate()"
+      >
+        Save Notification Template
+      </button>
+
+    </div>
+
+    <!-- SAVED EMAILS -->
+    <div class="section">
+
+      <h2>
+        Saved Email Templates
+      </h2>
+
+      <div id="emailList"></div>
+
+    </div>
+
+    <!-- SAVED NOTIFICATIONS -->
+    <div class="section">
+
+      <h2>
+        Saved Notification Templates
+      </h2>
+
+      <div id="notifList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* STORAGE */
+const EMAIL_KEY =
+'techrider_email_templates';
+
+const NOTIF_KEY =
+'techrider_notification_templates';
+
+/* LOAD */
+function getEmails(){
+
+  return JSON.parse(
+    localStorage.getItem(EMAIL_KEY)
+  ) || [];
+
+}
+
+function getNotifs(){
+
+  return JSON.parse(
+    localStorage.getItem(NOTIF_KEY)
+  ) || [];
+
+}
+
+/* SAVE EMAIL */
+function saveEmailTemplate(){
+
+  const title =
+  document.getElementById(
+    'emailTitle'
+  ).value.trim();
+
+  const subject =
+  document.getElementById(
+    'emailSubject'
+  ).value.trim();
+
+  const body =
+  document.getElementById(
+    'emailBody'
+  ).value.trim();
+
+  if(!title || !subject || !body){
+
+    alert(
+      'Please fill all email fields.'
+    );
+
+    return;
+
+  }
+
+  let emails = getEmails();
+
+  emails.unshift({
+
+    id:'EM-' + Date.now(),
+    title,
+    subject,
+    body,
+    createdAt:Date.now()
+
+  });
+
+  localStorage.setItem(
+    EMAIL_KEY,
+    JSON.stringify(emails)
+  );
+
+  document.getElementById(
+    'emailTitle'
+  ).value='';
+
+  document.getElementById(
+    'emailSubject'
+  ).value='';
+
+  document.getElementById(
+    'emailBody'
+  ).value='';
+
+  render();
+
+}
+
+/* SAVE NOTIFICATION */
+function saveNotifTemplate(){
+
+  const title =
+  document.getElementById(
+    'notifTitle'
+  ).value.trim();
+
+  const subject =
+  document.getElementById(
+    'notifSubject'
+  ).value.trim();
+
+  const body =
+  document.getElementById(
+    'notifBody'
+  ).value.trim();
+
+  if(!title || !subject || !body){
+
+    alert(
+      'Please fill all notification fields.'
+    );
+
+    return;
+
+  }
+
+  let notifs = getNotifs();
+
+  notifs.unshift({
+
+    id:'NT-' + Date.now(),
+    title,
+    subject,
+    body,
+    createdAt:Date.now()
+
+  });
+
+  localStorage.setItem(
+    NOTIF_KEY,
+    JSON.stringify(notifs)
+  );
+
+  document.getElementById(
+    'notifTitle'
+  ).value='';
+
+  document.getElementById(
+    'notifSubject'
+  ).value='';
+
+  document.getElementById(
+    'notifBody'
+  ).value='';
+
+  render();
+
+}
+
+/* EDIT EMAIL */
+function editEmail(id){
+
+  let emails = getEmails();
+
+  const template =
+  emails.find(e => e.id === id);
+
+  if(!template) return;
+
+  const newTitle =
+  prompt(
+    'Edit Title',
+    template.title
+  );
+
+  if(newTitle === null) return;
+
+  const newSubject =
+  prompt(
+    'Edit Subject',
+    template.subject
+  );
+
+  if(newSubject === null) return;
+
+  const newBody =
+  prompt(
+    'Edit Body',
+    template.body
+  );
+
+  if(newBody === null) return;
+
+  template.title = newTitle;
+  template.subject = newSubject;
+  template.body = newBody;
+
+  localStorage.setItem(
+    EMAIL_KEY,
+    JSON.stringify(emails)
+  );
+
+  render();
+
+}
+
+/* EDIT NOTIFICATION */
+function editNotif(id){
+
+  let notifs = getNotifs();
+
+  const template =
+  notifs.find(n => n.id === id);
+
+  if(!template) return;
+
+  const newTitle =
+  prompt(
+    'Edit Title',
+    template.title
+  );
+
+  if(newTitle === null) return;
+
+  const newSubject =
+  prompt(
+    'Edit Subject',
+    template.subject
+  );
+
+  if(newSubject === null) return;
+
+  const newBody =
+  prompt(
+    'Edit Message',
+    template.body
+  );
+
+  if(newBody === null) return;
+
+  template.title = newTitle;
+  template.subject = newSubject;
+  template.body = newBody;
+
+  localStorage.setItem(
+    NOTIF_KEY,
+    JSON.stringify(notifs)
+  );
+
+  render();
+
+}
+
+/* DELETE */
+/* DELETE EMAIL */
+function deleteEmail(id){
+
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this email template?"
+  );
+
+  if(!confirmDelete){
+    return;
+  }
+
+  let emails =
+    getEmails().filter(
+      e => e.id !== id
+    );
+
+  localStorage.setItem(
+    EMAIL_KEY,
+    JSON.stringify(emails)
+  );
+
+  render();
+
+}
+
+/* DELETE NOTIFICATION */
+function deleteNotif(id){
+
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this notification template?"
+  );
+
+  if(!confirmDelete){
+    return;
+  }
+
+  let notifs =
+    getNotifs().filter(
+      n => n.id !== id
+    );
+
+  localStorage.setItem(
+    NOTIF_KEY,
+    JSON.stringify(notifs)
+  );
+
+  render();
+
+}
+/* RENDER EMAILS */
+function renderEmails(){
+
+  const list =
+  document.getElementById(
+    'emailList'
+  );
+
+  const emails = getEmails();
+
+  if(emails.length === 0){
+
+    list.innerHTML = `
+      <div class="empty">
+        No email templates created yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  list.innerHTML='';
+
+  emails.forEach(template => {
+
+    list.innerHTML += `
+
+      <div class="card">
+
+        <div class="card-title">
+          ${template.title}
+        </div>
+
+        <div class="card-subject">
+          ${template.subject}
+        </div>
+
+        <div class="card-body">
+          ${template.body}
+        </div>
+
+        <div class="card-actions">
+
+          <button
+            class="edit-btn"
+            onclick="editEmail('${template.id}')"
+          >
+            Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteEmail('${template.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+/* RENDER NOTIFICATIONS */
+function renderNotifs(){
+
+  const list =
+  document.getElementById(
+    'notifList'
+  );
+
+  const notifs = getNotifs();
+
+  if(notifs.length === 0){
+
+    list.innerHTML = `
+      <div class="empty">
+        No notification templates created yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  list.innerHTML='';
+
+  notifs.forEach(template => {
+
+    list.innerHTML += `
+
+      <div class="card">
+
+        <div class="card-title">
+          ${template.title}
+        </div>
+
+        <div class="card-subject">
+          ${template.subject}
+        </div>
+
+        <div class="card-body">
+          ${template.body}
+        </div>
+
+        <div class="card-actions">
+
+          <button
+            class="edit-btn"
+            onclick="editNotif('${template.id}')"
+          >
+            Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteNotif('${template.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+/* RENDER */
+function render(){
+
+  renderEmails();
+  renderNotifs();
+
+}
+
+/* UNIVERSAL BACK */
+function goBack(){
+
+  if(document.referrer){
+
+    window.history.back();
+
+  }else{
+
+    window.location.href =
+    'admin-dashboard.html';
+
+  }
+
+}
+
+/* INIT */
+render();
+
+</script>
+
+</body>
+</html>

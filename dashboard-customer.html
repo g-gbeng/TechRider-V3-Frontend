@@ -6,9 +6,11 @@
   <title>TechRider - Customer Dashboard</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -21,21 +23,32 @@
       --deep-purple:#240046;
       --lilac:#e0aaff;
       --gray:#f6f6f6;
+      --white:#ffffff;
     }
 
     body{
       background:var(--gray);
       min-height:100vh;
       display:flex;
+      animation:fadeIn 0.6s ease;
     }
 
-    /* OVERLAY (MOBILE) */
+    /* FADE IN */
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    /* OVERLAY */
     .overlay{
       position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
+      inset:0;
       background:rgba(0,0,0,0.4);
       display:none;
       z-index:999;
@@ -48,44 +61,55 @@
     /* SIDEBAR */
     .sidebar{
       width:260px;
-      background:linear-gradient(180deg,var(--purple),var(--deep-purple));
+      background:linear-gradient(
+        180deg,
+        var(--purple),
+        var(--deep-purple)
+      );
       color:white;
       padding:20px;
       position:fixed;
       height:100vh;
       left:0;
       top:0;
-      transition:0.3s;
       z-index:1000;
+      transition:0.3s;
+      overflow-y:auto;
     }
 
+    /* DESKTOP ALWAYS EXPANDED */
     .sidebar.collapsed{
-      width:70px;
-      padding:20px 10px;
+      width:260px;
+      padding:20px;
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap:10px;
-      cursor:pointer;
+      gap:12px;
+      margin-bottom:25px;
     }
 
     .logo{
-      width:40px;
-      height:40px;
-      border-radius:10px;
+      width:45px;
+      height:45px;
+      border-radius:12px;
       background:var(--lilac);
       display:flex;
       align-items:center;
       justify-content:center;
       color:var(--deep-purple);
-      font-weight:bold;
+      font-weight:700;
+      font-size:1.1rem;
       flex-shrink:0;
     }
 
+    .brand .text{
+      font-weight:600;
+      font-size:1rem;
+    }
+
     .nav{
-      margin-top:20px;
       display:flex;
       flex-direction:column;
       gap:10px;
@@ -94,15 +118,16 @@
     .nav a{
       color:white;
       text-decoration:none;
-      padding:10px;
-      border-radius:10px;
+      padding:12px;
+      border-radius:12px;
       display:flex;
-      gap:10px;
       align-items:center;
+      gap:12px;
+      transition:0.3s;
     }
 
-    .sidebar.collapsed .text{
-      display:none;
+    .nav a:hover{
+      background:rgba(255,255,255,0.12);
     }
 
     /* MAIN */
@@ -115,29 +140,48 @@
 
     /* TOPBAR */
     .topbar{
+      background:white;
+      border-radius:16px;
+      padding:18px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      background:white;
-      padding:15px;
-      border-radius:12px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.05);
+      animation:fadeIn 0.7s ease;
     }
 
     .hamburger{
       display:none;
       font-size:1.3rem;
       cursor:pointer;
+      color:var(--deep-purple);
     }
 
-    .user{
+    .welcome-section{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .welcome-section h2{
+      color:var(--deep-purple);
+      font-size:1.3rem;
+    }
+
+    .welcome-section p{
+      color:#666;
+      font-size:0.9rem;
+    }
+
+    .top-right{
       display:flex;
       align-items:center;
-      gap:10px;
+      gap:15px;
     }
 
     .avatar{
-      width:40px;
-      height:40px;
+      width:45px;
+      height:45px;
       border-radius:50%;
       background:var(--purple);
       color:white;
@@ -145,44 +189,95 @@
       align-items:center;
       justify-content:center;
       text-decoration:none;
+      font-weight:600;
+      font-size:1rem;
+      flex-shrink:0;
     }
 
     /* CARDS */
     .cards{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:20px;
       margin-top:20px;
     }
-    .badge{
-      background:red;
-      color:white;
-      font-size:0.7rem;
-      padding:2px 6px;
-      border-radius:50%;
-      margin-left:auto;
-}
+
     .card{
       background:white;
       padding:25px;
-      border-radius:14px;
+      border-radius:16px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.05);
+      animation:fadeIn 0.8s ease;
+      transition:0.3s;
     }
 
-    .action{
-      margin-top:20px;
-      background:linear-gradient(135deg,var(--purple),#c77dff);
-      color:white;
-      padding:30px;
-      border-radius:16px;
+    .card:hover{
+      transform:translateY(-4px);
+    }
+
+    .card h3{
+      color:var(--deep-purple);
+      margin-bottom:10px;
+      font-size:1rem;
+    }
+
+    .card p{
+      color:#666;
+      font-size:0.95rem;
+    }
+
+    .card-number{
+      margin-top:12px;
+      font-size:2rem;
+      font-weight:700;
+      color:var(--purple);
+    }
+
+    /* NOTIFICATION PREVIEW */
+    .notification-preview{
       cursor:pointer;
     }
 
-    /* MOBILE RESPONSIVE FIX */
+    .preview-item{
+      margin-top:12px;
+      padding:10px;
+      border-radius:10px;
+      background:#f8f3ff;
+      font-size:0.85rem;
+      color:#444;
+    }
+
+    /* ACTION */
+    .action{
+      margin-top:25px;
+      background:linear-gradient(
+        135deg,
+        var(--purple),
+        #c77dff
+      );
+      color:white;
+      padding:30px;
+      border-radius:18px;
+      cursor:pointer;
+      transition:0.3s;
+      animation:fadeIn 1s ease;
+    }
+
+    .action:hover{
+      transform:translateY(-4px);
+    }
+
+    .action h3{
+      margin-bottom:8px;
+      font-size:1.3rem;
+    }
+
+    /* MOBILE */
     @media(max-width:768px){
 
       .sidebar{
         transform:translateX(-100%);
-        width:260px !important;
+        width:260px;
       }
 
       .sidebar.open{
@@ -201,107 +296,426 @@
       .cards{
         grid-template-columns:1fr;
       }
+
+      .topbar{
+        gap:15px;
+      }
+
+      .welcome-section h2{
+        font-size:1.05rem;
+      }
+
+      .welcome-section p{
+        font-size:0.8rem;
+      }
+
     }
+
   </style>
 </head>
 
 <body>
 
+  <!-- OVERLAY -->
   <div class="overlay" id="overlay"></div>
 
   <!-- SIDEBAR -->
-  <div class="sidebar collapsed" id="sidebar">
+  <div class="sidebar" id="sidebar">
 
-    <div class="brand" id="brand">
-      <div class="logo" id="logo">U</div>
-      <span class="text">User</span>
+    <div class="brand">
+
+      <div class="logo" id="sidebarLogo">
+        U
+      </div>
+
+      <span class="text" id="sidebarName">
+        User
+      </span>
+
     </div>
-<div class="nav">
-  <a href="repair-request.html">
-    <i class="fas fa-tools"></i>
-    <span class="text">Repair Request</span>
-  </a>
 
-  <a href="history-customer.html">
-    <i class="fas fa-clock"></i>
-    <span class="text">History</span>
-  </a>
+    <div class="nav">
 
-  <a href="notifications-customer.html">
-    <i class="fas fa-bell"></i>
-    <span class="text">Notifications</span>
-    <span class="badge">2</span>
-  </a>
+      <a href="repair-request.html">
+        <i class="fas fa-tools"></i>
+        <span class="text">Request Repair</span>
+      </a>
 
-  <a href="profile-customer.html">
-    <i class="fas fa-user"></i>
-    <span class="text">Profile</span>
-  </a>
 
-  <a href="login-customer.html">
-    <i class="fas fa-sign-out-alt"></i>
-    <span class="text">Logout</span>
-  </a>
-</div>
+     <a href="active-repairs-customer.html">
+        <i class="fas fa-clock"></i>
+        <span class="text">Active Requests</span>
+      </a>
+
+
+      <a href="history-customer.html">
+        <i class="fas fa-clock"></i>
+        <span class="text">History</span>
+      </a>
+
+      <!-- NOTIFICATION BADGE REMOVED -->
+      <a href="notifications-customer.html">
+        <i class="fas fa-bell"></i>
+        <span class="text">Notifications</span>
+      </a>
+
+      <a href="profile-customer.html">
+        <i class="fas fa-user"></i>
+        <span class="text">Profile</span>
+      </a>
+
+      <a href="disputes-customer.html">
+        <i class="fas fa-scale-balanced"></i>
+        <span class="text">Communications</span>
+      </a>
+
+      <a href="faq.html?from=dashboard-customer.html">
+        <i class="fas fa-circle-question"></i>
+        <span class="text">FAQ</span>
+      </a>
+
+      <a href="login-customer.html" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="text">Logout</span>
+      </a>
+
+    </div>
 
   </div>
 
   <!-- MAIN -->
   <div class="main">
 
+    <!-- TOPBAR -->
     <div class="topbar">
 
-      <div class="hamburger" id="hamburger">
-        <i class="fas fa-bars"></i>
+      <div class="top-right">
+
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="welcome-section">
+
+          <h2 id="welcomeText">
+            Welcome, User
+          </h2>
+
+          <p>
+            Manage your repair requests and updates
+          </p>
+
+        </div>
+
       </div>
 
-      <div class="user">
-        <a href="profile-customer.html" class="avatar" id="avatar">U</a>
-        <span>Welcome, User</span>
-      </div>
+      <!-- PROFILE ICON -->
+      <a
+        href="profile-customer.html"
+        class="avatar"
+        id="avatar"
+      >
+        U
+      </a>
 
     </div>
 
+    <!-- DASHBOARD CARDS -->
     <div class="cards">
+
+      <!-- ACTIVE REQUESTS -->
       <div class="card">
+
         <h3>Active Requests</h3>
-        <p>0 ongoing services</p>
+
+        <p>
+          Ongoing repair services
+        </p>
+
+        <div
+          class="card-number"
+          id="activeRequestsCount"
+        >
+          0
+        </div>
+
       </div>
 
+      <!-- COMPLETED -->
       <div class="card">
+
         <h3>Completed</h3>
-        <p>0 services completed</p>
+
+        <p>
+          Successfully completed services
+        </p>
+
+        <div
+          class="card-number"
+          id="completedRequestsCount"
+        >
+          0
+        </div>
+
       </div>
+
+      <!-- NOTIFICATION PREVIEW -->
+      <div
+        class="card notification-preview"
+        onclick="location.href='notifications-customer.html'"
+      >
+
+        <h3>Notifications</h3>
+
+        <p>
+          Latest updates from TechRider
+        </p>
+
+        <div
+          class="preview-item"
+          id="notificationPreview"
+        >
+          No new notifications
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="action" onclick="location.href='repair-request.html'">
+    <!-- ACTION -->
+    <div
+      class="action"
+      onclick="location.href='repair-request.html'"
+    >
+
       <h3>Request Repair</h3>
-      <p>Get technical help instantly</p>
+
+      <p>
+        Get technical help instantly
+      </p>
+
     </div>
 
   </div>
 
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const hamburger = document.getElementById('hamburger');
 
+    const sidebar =
+      document.getElementById('sidebar');
+
+    const overlay =
+      document.getElementById('overlay');
+
+    const hamburger =
+      document.getElementById('hamburger');
+
+    // MOBILE SIDEBAR
     function openSidebar(){
+
       sidebar.classList.add('open');
       overlay.classList.add('show');
+
     }
 
     function closeSidebar(){
+
       sidebar.classList.remove('open');
       overlay.classList.remove('show');
+
     }
 
-    hamburger.addEventListener('click', openSidebar);
-    overlay.addEventListener('click', closeSidebar);
+    hamburger.addEventListener(
+      'click',
+      openSidebar
+    );
 
-    // desktop toggle
-    document.getElementById('brand').addEventListener('click', ()=>{
-      sidebar.classList.toggle('collapsed');
+    overlay.addEventListener(
+      'click',
+      closeSidebar
+    );
+
+    // CURRENT CUSTOMER
+    const currentCustomer =
+      JSON.parse(
+        localStorage.getItem(
+          'techrider_current_customer'
+        )
+      );
+
+    // SECURITY CHECK
+    if(!currentCustomer){
+
+      window.location.href =
+        'login-customer.html';
+
+    }
+
+    // GET FIRST NAME
+    const fullName =
+      currentCustomer.fullName || 'User';
+
+    const firstName =
+      fullName.split(' ')[0];
+
+    const firstLetter =
+      firstName.charAt(0).toUpperCase();
+
+    // UPDATE UI
+    document.getElementById(
+      'welcomeText'
+    ).textContent =
+      `Welcome, ${firstName}`;
+
+    document.getElementById(
+      'avatar'
+    ).textContent =
+      firstLetter;
+
+    document.getElementById(
+      'sidebarLogo'
+    ).textContent =
+      firstLetter;
+
+    document.getElementById(
+      'sidebarName'
+    ).textContent =
+      firstName;
+
+    /* =========================
+       NOTIFICATIONS
+    ========================= */
+
+    function updateNotifications(){
+
+      const allNotifications =
+        JSON.parse(
+          localStorage.getItem(
+            'techrider_notifications'
+          )
+        ) || [];
+
+      // FILTER USER NOTIFICATIONS
+      const userNotifications =
+        allNotifications.filter(notification =>
+
+          notification.customerId ===
+          currentCustomer.id
+
+        );
+
+      // PREVIEW
+      const latestNotification =
+        userNotifications[
+          userNotifications.length - 1
+        ];
+
+      if(latestNotification){
+
+        document.getElementById(
+          'notificationPreview'
+        ).textContent =
+          latestNotification.message ||
+          'You have a new notification';
+
+      }else{
+
+        document.getElementById(
+          'notificationPreview'
+        ).textContent =
+          'No new notifications';
+
+      }
+
+    }
+
+    /* =========================
+       REQUESTS
+    ========================= */
+
+    function updateRequests(){
+
+      const allRequests =
+        JSON.parse(
+          localStorage.getItem(
+            'techrider_requests'
+          )
+        ) || [];
+
+      // FILTER USER REQUESTS
+      const userRequests =
+        allRequests.filter(request =>
+
+          request.customerId ===
+          currentCustomer.id
+
+        );
+
+      // ACTIVE
+      const activeRequests =
+        userRequests.filter(request =>
+
+          request.status !== 'completed'
+
+        );
+
+      // COMPLETED
+      const completedRequests =
+        userRequests.filter(request =>
+
+          request.status === 'completed'
+
+        );
+
+      // UPDATE COUNTS
+      document.getElementById(
+        'activeRequestsCount'
+      ).textContent =
+        activeRequests.length;
+
+      document.getElementById(
+        'completedRequestsCount'
+      ).textContent =
+        completedRequests.length;
+
+    }
+
+    /* =========================
+       INITIAL LOAD
+    ========================= */
+
+    updateNotifications();
+    updateRequests();
+
+    /* =========================
+       LIVE REALTIME UPDATES
+    ========================= */
+
+    window.addEventListener(
+      'storage',
+      () => {
+
+        updateNotifications();
+        updateRequests();
+
+      }
+    );
+
+    setInterval(() => {
+
+      updateNotifications();
+      updateRequests();
+
+    }, 1000);
+
+    // LOGOUT
+    document.getElementById(
+      'logoutBtn'
+    ).addEventListener('click', () => {
+
+      localStorage.removeItem(
+        'techrider_current_customer'
+      );
+
     });
 
   </script>
