@@ -138,6 +138,18 @@ border-radius:12px;
 background:#fafafa;
 }
 
+.file-info{
+margin-top:8px;
+font-size:.78rem;
+color:#666;
+line-height:1.5;
+}
+
+.file-success{
+color:#16a34a;
+font-weight:500;
+}
+
 small{
 display:block;
 margin-top:6px;
@@ -160,6 +172,12 @@ transition:.3s;
 
 button:hover{
 transform:translateY(-2px);
+}
+
+button:disabled{
+opacity:.7;
+cursor:not-allowed;
+transform:none;
 }
 
 .legal{
@@ -357,6 +375,15 @@ accept="image/*"
 required
 >
 
+<div
+class="file-info"
+id="licenseInfo"
+>
+
+Maximum size: 2MB
+
+</div>
+
 </div>
 
 <small>
@@ -380,6 +407,15 @@ id="facialImage"
 accept="image/*"
 required
 >
+
+<div
+class="file-info"
+id="facialInfo"
+>
+
+Maximum size: 2MB
+
+</div>
 
 </div>
 
@@ -441,7 +477,10 @@ onclick="togglePassword('pass2',this)"
 
 </div>
 
-<button type="submit">
+<button
+type="submit"
+id="submitBtn"
+>
 
 Create Account
 
@@ -540,22 +579,177 @@ this.value
 });
 
 /* =========================
-IMAGE TO BASE64
+MAX IMAGE SIZE
 ========================= */
 
-function convertToBase64(file){
+const MAX_IMAGE_SIZE =
+2 * 1024 * 1024;
+
+/* =========================
+VALIDATE IMAGE
+========================= */
+
+function validateImage(file,infoId){
+
+const info =
+document.getElementById(infoId);
+
+if(!file){
+
+info.innerHTML =
+'Maximum size: 2MB';
+
+return false;
+
+}
+
+if(file.size > MAX_IMAGE_SIZE){
+
+info.innerHTML =
+'❌ File too large. Please upload image below 2MB';
+
+info.style.color = '#dc2626';
+
+return false;
+
+}
+
+info.innerHTML =
+`✅ ${file.name}`;
+
+info.classList.add(
+'file-success'
+);
+
+return true;
+
+}
+
+/* =========================
+IMAGE PREVIEW VALIDATION
+========================= */
+
+document.getElementById(
+'driversLicense'
+).addEventListener(
+'change',
+function(){
+
+validateImage(
+this.files[0],
+'licenseInfo'
+);
+
+}
+);
+
+document.getElementById(
+'facialImage'
+).addEventListener(
+'change',
+function(){
+
+validateImage(
+this.files[0],
+'facialInfo'
+);
+
+}
+);
+
+/* =========================
+COMPRESS IMAGE
+========================= */
+
+function compressImage(file){
 
 return new Promise((resolve,reject)=>{
 
-const reader = new FileReader();
+const reader =
+new FileReader();
 
 reader.readAsDataURL(file);
 
-reader.onload = () =>
-resolve(reader.result);
+reader.onload = event => {
 
-reader.onerror = error =>
-reject(error);
+const img =
+new Image();
+
+img.src =
+event.target.result;
+
+img.onload = () => {
+
+const canvas =
+document.createElement('canvas');
+
+const ctx =
+canvas.getContext('2d');
+
+let width =
+img.width;
+
+let height =
+img.height;
+
+const maxWidth = 800;
+const maxHeight = 800;
+
+/* RESIZE */
+
+if(width > height){
+
+if(width > maxWidth){
+
+height *=
+maxWidth / width;
+
+width = maxWidth;
+
+}
+
+}else{
+
+if(height > maxHeight){
+
+width *=
+maxHeight / height;
+
+height = maxHeight;
+
+}
+
+}
+
+canvas.width = width;
+canvas.height = height;
+
+ctx.drawImage(
+img,
+0,
+0,
+width,
+height
+);
+
+/* COMPRESS */
+
+const compressedBase64 =
+canvas.toDataURL(
+'image/jpeg',
+0.6
+);
+
+resolve(
+compressedBase64
+);
+
+};
+
+};
+
+reader.onerror =
+error => reject(error);
 
 });
 
@@ -583,7 +777,17 @@ async function(e){
 
 e.preventDefault();
 
+const submitBtn =
+document.getElementById(
+'submitBtn'
+);
+
+submitBtn.disabled = true;
+submitBtn.innerHTML =
+'Creating Account...';
+
 /* PASSWORD MATCH */
+
 validateMatch();
 
 const pass1 =
@@ -595,11 +799,17 @@ document.getElementById("pass2").value;
 if(pass1 !== pass2){
 
 alert("Passwords do not match");
+
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
 return;
 
 }
 
 /* PHONE VALIDATION */
+
 const phone =
 document.getElementById("phone").value;
 
@@ -609,11 +819,16 @@ alert(
 "Phone number must be exactly 11 digits"
 );
 
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
 return;
 
 }
 
 /* FILES */
+
 const licenseFile =
 document.getElementById(
 "driversLicense"
@@ -626,19 +841,54 @@ document.getElementById(
 
 if(!licenseFile || !facialFile){
 
-alert("Please upload required images");
+alert(
+"Please upload required images"
+);
+
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
 return;
 
 }
 
-/* CONVERT IMAGES */
+/* SIZE CHECK */
+
+if(
+licenseFile.size > MAX_IMAGE_SIZE
+||
+facialFile.size > MAX_IMAGE_SIZE
+){
+
+alert(
+'Images must be below 2MB'
+);
+
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
+return;
+
+}
+
+try{
+
+/* COMPRESS IMAGES */
+
 const driversLicenseImage =
-await convertToBase64(licenseFile);
+await compressImage(
+licenseFile
+);
 
 const facialImage =
-await convertToBase64(facialFile);
+await compressImage(
+facialFile
+);
 
 /* RIDERS STORAGE */
+
 const riders =
 JSON.parse(
 localStorage.getItem(
@@ -647,6 +897,7 @@ localStorage.getItem(
 ) || [];
 
 /* EMAIL CHECK */
+
 const email =
 document.getElementById(
 "email"
@@ -666,16 +917,26 @@ alert(
 "An account with this email already exists"
 );
 
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
 return;
 
 }
 
+/* GENERATE ID */
+
+const riderId =
+generateRiderId();
+
 /* RIDER DATA */
+
 const riderData = {
 
-id: generateRiderId(),
+id: riderId,
 
-riderId: generateRiderId(),
+riderId: riderId,
 
 fullName:
 document.getElementById(
@@ -714,11 +975,12 @@ status:"active",
 userType:"rider",
 
 createdAt:
-new Date().toLocaleString()
+new Date().toISOString()
 
 };
 
 /* SAVE RIDER */
+
 riders.unshift(riderData);
 
 localStorage.setItem(
@@ -727,25 +989,43 @@ JSON.stringify(riders)
 );
 
 /* SAVE CURRENT RIDER */
+
 localStorage.setItem(
 "techrider_current_rider",
 JSON.stringify(riderData)
 );
 
 /* OPTIONAL GENERIC CURRENT USER */
+
 localStorage.setItem(
 "currentUser",
 JSON.stringify(riderData)
 );
 
 /* SUCCESS */
+
 alert(
 "Rider account created successfully"
 );
 
 /* REDIRECT */
+
 window.location.href =
 "login-rider.html";
+
+}catch(error){
+
+console.error(error);
+
+alert(
+'Signup failed. Please try smaller images.'
+);
+
+submitBtn.disabled = false;
+submitBtn.innerHTML =
+'Create Account';
+
+}
 
 });
 
