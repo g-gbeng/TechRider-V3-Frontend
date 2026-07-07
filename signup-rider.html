@@ -11,1024 +11,1600 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---white:#fff;
+    --purple:#5a189a;
+    --deep-purple:#240046;
+    --lilac:#e0aaff;
+    --white:#ffffff;
+    --light:#f7f5fc;
+    --border:#dddddd;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+    --text:#444;
+    --shadow:0 15px 40px rgba(0,0,0,.12);
 }
 
 body{
-background:linear-gradient(135deg,var(--purple),var(--lilac));
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-animation:fadeIn .5s ease-in;
+    background:linear-gradient(135deg,var(--purple),var(--lilac));
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    animation:fadeIn .6s ease;
 }
 
+/* ===========================
+        CONTAINER
+=========================== */
+
 .container{
-background:var(--white);
-max-width:520px;
-width:100%;
-padding:32px;
-border-radius:20px;
-box-shadow:0 12px 35px rgba(0,0,0,.12);
+    width:100%;
+    max-width:470px;
+    background:var(--white);
+    border-radius:18px;
+    padding:28px;
+    box-shadow:var(--shadow);
 }
 
 .header{
-text-align:center;
-margin-bottom:22px;
+    text-align:center;
+    margin-bottom:18px;
 }
 
-.icon{
-width:68px;
-height:68px;
-margin:auto;
-border-radius:18px;
-background:linear-gradient(135deg,var(--purple),var(--deep-purple));
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:1.6rem;
-color:white;
+.logo{
+    width:70px;
+    height:70px;
+    margin:auto;
+    border-radius:18px;
+    background:linear-gradient(135deg,var(--purple),var(--lilac));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
 }
 
 .header h2{
-margin-top:15px;
-color:var(--deep-purple);
+    margin-top:14px;
+    color:var(--deep-purple);
 }
 
 .header p{
-font-size:.88rem;
-color:#666;
-margin-top:6px;
+    margin-top:5px;
+    color:#666;
+    font-size:.9rem;
 }
 
-.login-wrap{
-text-align:center;
-margin-bottom:18px;
-font-size:.85rem;
-color:#000;
+/* ===========================
+        LINKS
+=========================== */
+
+.top-link{
+    text-align:center;
+    font-size:.9rem;
+    margin-bottom:20px;
 }
 
-.login-wrap a{
-color:var(--purple);
-text-decoration:none;
-font-weight:500;
+.top-link a,
+.links a{
+    color:var(--purple);
+    text-decoration:none;
+    font-weight:600;
 }
 
-.form-group{
-margin-bottom:15px;
+.top-link a:hover,
+.links a:hover{
+    text-decoration:underline;
+}
+
+/* ===========================
+          FORM
+=========================== */
+
+.form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
 }
 
 label{
-display:block;
-margin-bottom:6px;
-font-size:.86rem;
-font-weight:500;
-color:#333;
+    font-size:.87rem;
+    font-weight:500;
+    color:var(--text);
 }
 
+/* ===========================
+     INPUTS
+=========================== */
+
 input,
-select{
-width:100%;
-padding:13px 14px;
-border:1px solid #ddd;
-border-radius:12px;
-outline:none;
-font-size:.95rem;
+select,
+textarea{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    font-size:.92rem;
+    transition:.25s;
+    background:#fff;
+}
+
+textarea{
+    resize:vertical;
+    min-height:90px;
 }
 
 input:focus,
-select:focus{
-border-color:var(--purple);
+select:focus,
+textarea:focus{
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(90,24,154,.12);
 }
 
-.password-wrap{
-position:relative;
+/* ===========================
+     PASSWORD
+=========================== */
+
+.password-group{
+    position:relative;
 }
 
-.password-wrap input{
-padding-right:48px;
+.password-group input{
+    padding-right:45px;
 }
 
 .toggle{
-position:absolute;
-top:50%;
-right:15px;
-transform:translateY(-50%);
-cursor:pointer;
-color:#666;
+    position:absolute;
+    top:45px;
+    right:16px;
+    cursor:pointer;
+    color:#777;
+    transition:.25s;
 }
 
-.filebox{
-padding:12px;
-border:1px dashed #bbb;
-border-radius:12px;
-background:#fafafa;
+.toggle:hover{
+    color:var(--purple);
 }
 
-.file-info{
-margin-top:8px;
-font-size:.78rem;
-color:#666;
-line-height:1.5;
+/* ===========================
+      FILE UPLOAD
+=========================== */
+
+.upload-box{
+    border:2px dashed var(--lilac);
+    border-radius:14px;
+    background:#faf8ff;
+    padding:16px;
+    text-align:center;
+    transition:.25s;
 }
 
-.file-success{
-color:#16a34a;
-font-weight:500;
+.upload-box:hover{
+    border-color:var(--purple);
+    background:#f5efff;
 }
 
-small{
-display:block;
-margin-top:6px;
-color:#777;
-font-size:.72rem;
+.upload-box input[type=file]{
+    border:none;
+    padding:0;
+    background:none;
 }
 
-button{
-width:100%;
-border:none;
-padding:14px;
-border-radius:12px;
-background:linear-gradient(135deg,var(--purple),var(--lilac));
-color:white;
-font-weight:600;
-cursor:pointer;
-margin-top:8px;
-transition:.3s;
+.upload-box i{
+    font-size:26px;
+    color:var(--purple);
+    margin-bottom:8px;
 }
 
-button:hover{
-transform:translateY(-2px);
+.upload-box small{
+    display:block;
+    color:#666;
+    margin-top:8px;
 }
 
-button:disabled{
-opacity:.7;
-cursor:not-allowed;
-transform:none;
+/* ===========================
+    IMAGE PREVIEW
+=========================== */
+
+.preview-container{
+    display:none;
+    margin-top:12px;
 }
 
-.legal{
-margin-top:18px;
-text-align:center;
-font-size:.8rem;
+.preview-container img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
 }
 
-.legal a{
-text-decoration:none;
-color:var(--purple);
-margin:0 6px;
+.file-name{
+    margin-top:8px;
+    font-size:.82rem;
+    color:#666;
+    word-break:break-word;
 }
 
-@media(max-width:540px){
+/* ===========================
+        BUTTON
+=========================== */
 
-.container{
-padding:22px;
+.btn{
+    border:none;
+    cursor:pointer;
+    padding:15px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--purple),var(--lilac));
+    color:#fff;
+    font-size:.95rem;
+    font-weight:600;
+    transition:.25s;
 }
 
+.btn:hover{
+    transform:translateY(-2px);
+    opacity:.95;
 }
+
+.btn:disabled{
+    cursor:not-allowed;
+    opacity:.7;
+}
+
+/* ===========================
+     LOADING BUTTON
+=========================== */
+
+.btn.loading{
+    pointer-events:none;
+}
+
+.btn.loading::after{
+    content:"";
+    width:16px;
+    height:16px;
+    margin-left:10px;
+    border:2px solid rgba(255,255,255,.4);
+    border-top:2px solid #fff;
+    border-radius:50%;
+    display:inline-block;
+    animation:spin .7s linear infinite;
+}
+
+/* ===========================
+     PASSWORD STRENGTH
+=========================== */
+
+.strength{
+    font-size:.8rem;
+    font-weight:500;
+}
+
+.strength.weak{
+    color:var(--danger);
+}
+
+.strength.medium{
+    color:var(--warning);
+}
+
+.strength.strong{
+    color:var(--success);
+}
+
+/* ===========================
+       ERROR MESSAGE
+=========================== */
+
+.error-message{
+    display:none;
+    color:var(--danger);
+    font-size:.78rem;
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid{
+    border-color:var(--danger);
+}
+
+/* ===========================
+      SUCCESS TOAST
+=========================== */
+
+.toast{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#fff;
+    padding:15px 20px;
+    border-left:5px solid var(--success);
+    border-radius:12px;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transform:translateX(500px);
+    transition:.35s;
+    z-index:1000;
+}
+
+.toast.show{
+    transform:translateX(0);
+}
+
+.toast i{
+    color:var(--success);
+    font-size:20px;
+}
+
+/* ===========================
+         FOOTER LINKS
+=========================== */
+
+.links{
+    text-align:center;
+    margin-top:8px;
+    font-size:.86rem;
+}
+
+/* ===========================
+       ANIMATIONS
+=========================== */
 
 @keyframes fadeIn{
 
-from{
-opacity:0;
-transform:translateY(12px);
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
 }
 
-to{
-opacity:1;
-transform:translateY(0);
-}
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
 
 }
 
+/* ===========================
+      MOBILE
+=========================== */
+
+@media(max-width:600px){
+
+    body{
+        padding:14px;
+    }
+
+    .container{
+        padding:22px;
+        border-radius:16px;
+    }
+
+    .logo{
+        width:60px;
+        height:60px;
+        font-size:24px;
+    }
+
+    .header h2{
+        font-size:1.45rem;
+    }
+
+}
+
+@media(max-width:380px){
+
+    .container{
+        padding:18px;
+    }
+
+    input,
+    select,
+    textarea{
+        font-size:.87rem;
+    }
+
+    .btn{
+        padding:14px;
+    }
+
+}
+/* ===========================
+      VEHICLE SECTION
+=========================== */
+
+.vehicle-section{
+    padding:18px;
+    border:1px solid #e9d8fd;
+    border-radius:14px;
+    background:#faf8ff;
+}
+
+.vehicle-section h3{
+    color:var(--deep-purple);
+    font-size:1rem;
+    margin-bottom:15px;
+}
+
+.vehicle-section .group:last-child{
+    margin-bottom:0;
+}
 </style>
 </head>
 
 <body>
 
+<body>
+
+<!-- SUCCESS TOAST -->
+
+<div class="toast" id="successToast">
+
+    <i class="fas fa-check-circle"></i>
+
+    <span id="toastMessage">
+        Registration submitted successfully.
+    </span>
+
+</div>
+
 <div class="container">
 
-<div class="header">
+    <div class="header">
 
-<div class="icon">
-<i class="fas fa-motorcycle"></i>
+        <div class="logo">
+            <i class="fas fa-motorcycle"></i>
+        </div>
+
+        <h2>Become a TechRider</h2>
+
+        <p>
+            Register as a verified delivery rider
+        </p>
+
+    </div>
+
+    <div class="top-link">
+
+        Already have an account?
+
+        <a href="login-rider.html">
+
+            Log in
+
+        </a>
+
+    </div>
+
+    <form
+        id="signupForm"
+        class="form"
+        novalidate
+    >
+
+        <!-- ===========================
+             PERSONAL INFORMATION
+        ============================ -->
+
+        <div class="group">
+
+            <label for="fullName">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <small class="error-message"></small>
+
+        </div>
+
+        <div class="group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+                required
+            >
+
+            <small class="error-message"></small>
+
+        </div>
+
+        <div class="group">
+
+            <label for="phone">
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                maxlength="11"
+                placeholder="08012345678"
+                required
+            >
+
+            <small class="error-message"></small>
+
+        </div>
+
+        <div class="group">
+
+            <label for="address">
+                Residential Address
+            </label>
+
+            <input
+                type="text"
+                id="address"
+                placeholder="Enter your address"
+                required
+            >
+
+            <small class="error-message"></small>
+
+        </div>
+
+        <!-- ===========================
+             VEHICLE INFORMATION
+        ============================ -->
+
+        <div class="vehicle-section">
+
+            <h3>
+
+                <i class="fas fa-motorcycle"></i>
+
+                Vehicle Information
+
+            </h3>
+
+            <div class="group">
+
+                <label for="vehicleType">
+
+                    Vehicle Type
+
+                </label>
+
+                <select
+                    id="vehicleType"
+                    required
+                >
+
+                    <option value="">
+                        Select Vehicle Type
+                    </option>
+
+                    <option>
+                        Motorcycle
+                    </option>
+
+                    <option>
+                        Car
+                    </option>
+
+                    <option>
+                        Van
+                    </option>
+
+                    <option>
+                        Tricycle
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="group">
+
+                <label for="vehicleBrand">
+
+                    Vehicle Brand
+
+                </label>
+
+                <input
+                    type="text"
+                    id="vehicleBrand"
+                    placeholder="Honda, Toyota, Bajaj..."
+                    required
+                >
+
+            </div>
+
+            <div class="group">
+
+                <label for="plateNumber">
+
+                    Plate Number
+
+                </label>
+
+                <input
+                    type="text"
+                    id="plateNumber"
+                    placeholder="ABC-123XY"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <!-- ===========================
+             FACIAL IMAGE
+        ============================ -->
+
+        <div class="group">
+
+            <label>
+
+                Facial Photograph
+
+            </label>
+
+            <div class="upload-box">
+
+                <i class="fas fa-image"></i>
+
+                <input
+                    type="file"
+                    id="facialImage"
+                    accept="image/*"
+                    required
+                >
+
+                <small>
+
+                    Upload a clear facial photograph.
+
+                </small>
+
+            </div>
+
+            <div
+                class="preview-container"
+                id="facialPreview"
+            >
+
+                <img
+                    id="facialPreviewImage"
+                    src=""
+                    alt=""
+                >
+
+                <div
+                    class="file-name"
+                    id="facialFileName"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <!-- ===========================
+             DRIVER'S LICENSE
+        ============================ -->
+
+        <div class="group">
+
+            <label>
+
+                Driver's License
+
+            </label>
+
+            <div class="upload-box">
+
+                <i class="fas fa-id-card"></i>
+
+                <input
+                    type="file"
+                    id="driversLicense"
+                    accept="image/*,.pdf"
+                    required
+                >
+
+                <small>
+
+                    Upload your driver's license.
+
+                </small>
+
+            </div>
+
+            <div
+                class="preview-container"
+                id="licensePreview"
+            >
+
+                <img
+                    id="licensePreviewImage"
+                    src=""
+                    alt=""
+                >
+
+                <div
+                    class="file-name"
+                    id="licenseFileName"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <!-- ===========================
+             GOVERNMENT ID
+        ============================ -->
+
+        <div class="group">
+
+            <label>
+
+                Government ID
+
+            </label>
+
+            <div class="upload-box">
+
+                <i class="fas fa-address-card"></i>
+
+                <input
+                    type="file"
+                    id="governmentId"
+                    accept="image/*,.pdf"
+                    required
+                >
+
+                <small>
+
+                    National ID, Voter's Card or International Passport.
+
+                </small>
+
+            </div>
+
+            <div
+                class="preview-container"
+                id="governmentPreview"
+            >
+
+                <img
+                    id="governmentPreviewImage"
+                    src=""
+                    alt=""
+                >
+
+                <div
+                    class="file-name"
+                    id="governmentFileName"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <!-- ===========================
+             PASSWORD
+        ============================ -->
+
+        <div class="group password-group">
+
+            <label for="password">
+
+                Password
+
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a strong password"
+                required
+                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&]).{8,}$"
+            >
+
+            <i
+                class="fas fa-eye toggle"
+                onclick="togglePassword(this)"
+            ></i>
+
+            <div
+                class="strength"
+                id="passwordStrength"
+            ></div>
+
+        </div>
+
+        <div class="group password-group">
+
+            <label for="confirmPassword">
+
+                Confirm Password
+
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                required
+            >
+
+            <i
+                class="fas fa-eye toggle"
+                onclick="togglePassword(this)"
+            ></i>
+
+        </div>
+
+        <!-- ===========================
+             SUBMIT
+        ============================ -->
+
+        <button
+            type="submit"
+            class="btn"
+            id="submitBtn"
+        >
+
+            Create Rider Account
+
+        </button>
+
+        <div class="links">
+
+            <a href="terms-of-service-rider.html">
+
+                Terms of Service
+
+            </a>
+
+            |
+
+            <a href="privacy-policy-rider.html">
+
+                Privacy Policy
+
+            </a>
+
+        </div>
+
+    </form>
+
 </div>
 
-<h2>Create Rider Account</h2>
+<script src="rider-signup.js"></script>
 
-<p>
-Register to begin accepting TechRider jobs
-</p>
-
-</div>
-
-<div class="login-wrap">
-
-Already have an account?
-
-<a href="login-rider.html">
-Log in
-</a>
-
-</div>
-
-<form id="signupForm">
-
-<!-- FULL NAME -->
-<div class="form-group">
-
-<label>
-Full Name
-</label>
-
-<input
-type="text"
-id="fullName"
-required
->
-
-</div>
-
-<!-- EMAIL -->
-<div class="form-group">
-
-<label>
-Email Address
-</label>
-
-<input
-type="email"
-id="email"
-required
->
-
-</div>
-
-<!-- PHONE -->
-<div class="form-group">
-
-<label>
-Phone Number
-</label>
-
-<input
-type="tel"
-id="phone"
-maxlength="11"
-inputmode="numeric"
-pattern="[0-9]{11}"
-placeholder="Enter 11-digit phone number"
-required
->
-
-</div>
-
-<!-- ADDRESS -->
-<div class="form-group">
-
-<label>
-Address
-</label>
-
-<input
-type="text"
-id="address"
-required
->
-
-</div>
-
-<!-- PLATE NUMBER -->
-<div class="form-group">
-
-<label>
-Plate Number
-</label>
-
-<input
-type="text"
-id="plateNumber"
-placeholder="e.g LND-458XY"
-required
->
-
-</div>
-
-<!-- VEHICLE TYPE -->
-<div class="form-group">
-
-<label>
-Vehicle Type
-</label>
-
-<select
-id="vehicleType"
-required
->
-
-<option value="">
-Select vehicle
-</option>
-
-<option>
-Motorcycle
-</option>
-
-<option>
-Car
-</option>
-
-<option>
-Van
-</option>
-
-</select>
-
-</div>
-
-<!-- LICENSE -->
-<div class="form-group">
-
-<label>
-Driver's License Upload
-</label>
-
-<div class="filebox">
-
-<input
-type="file"
-id="driversLicense"
-accept="image/*"
-required
->
-
-<div
-class="file-info"
-id="licenseInfo"
->
-
-Maximum size: 2MB
-
-</div>
-
-</div>
-
-<small>
-Upload clear image of driver's license
-</small>
-
-</div>
-
-<!-- FACIAL IMAGE -->
-<div class="form-group">
-
-<label>
-Facial Image Upload
-</label>
-
-<div class="filebox">
-
-<input
-type="file"
-id="facialImage"
-accept="image/*"
-required
->
-
-<div
-class="file-info"
-id="facialInfo"
->
-
-Maximum size: 2MB
-
-</div>
-
-</div>
-
-<small>
-Upload clear facial photograph
-</small>
-
-</div>
-
-<!-- PASSWORD -->
-<div class="form-group">
-
-<label>
-Password
-</label>
-
-<div class="password-wrap">
-
-<input
-type="password"
-id="pass1"
-pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
-required
-oninvalid="this.setCustomValidity('Password must contain at least 8 characters, including one uppercase letter, one number, and one special character.')"
-oninput="this.setCustomValidity('')"
->
-
-<i
-class="fas fa-eye toggle"
-onclick="togglePassword('pass1',this)"
-></i>
-
-</div>
-
-</div>
-
-<!-- CONFIRM PASSWORD -->
-<div class="form-group">
-
-<label>
-Confirm Password
-</label>
-
-<div class="password-wrap">
-
-<input
-type="password"
-id="pass2"
-required
-oninput="validateMatch()"
->
-
-<i
-class="fas fa-eye toggle"
-onclick="togglePassword('pass2',this)"
-></i>
-
-</div>
-
-</div>
-
-<button
-type="submit"
-id="submitBtn"
->
-
-Create Account
-
-</button>
-
-</form>
-
-<div class="legal">
-
-<a href="terms-of-service-rider.html">
-Terms of Service
-</a>
-
-|
-
-<a href="privacy-policy-rider.html">
-Privacy Policy
-</a>
-
-</div>
-
-</div>
-
+</body>
 <script>
+/* ===========================================================
+   TECHRIDER RIDER SIGNUP
+   PART 1
+   =========================================================== */
 
-/* =========================
-TOGGLE PASSWORD
-========================= */
+/* -----------------------------
+   STORAGE KEYS
+------------------------------*/
 
-function togglePassword(id,icon){
+const PENDING_KEY = "techrider_pending_registrations";
+const RIDER_KEY = "techrider_riders";
 
-const field =
-document.getElementById(id);
+/* -----------------------------
+   DOM ELEMENTS
+------------------------------*/
 
-if(field.type==="password"){
+const form = document.getElementById("signupForm");
+const submitBtn = document.getElementById("submitBtn");
 
-field.type="text";
+const toast = document.getElementById("successToast");
+const toastMessage = document.getElementById("toastMessage");
 
-icon.classList.replace(
-"fa-eye",
-"fa-eye-slash"
-);
+const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirmPassword");
+const strengthText = document.getElementById("passwordStrength");
 
-}else{
+const phoneInput = document.getElementById("phone");
 
-field.type="password";
+/* -----------------------------
+   PASSWORD TOGGLE
+------------------------------*/
 
-icon.classList.replace(
-"fa-eye-slash",
-"fa-eye"
-);
+function togglePassword(icon){
 
-}
+    const input = icon.previousElementSibling;
 
-}
+    if(input.type === "password"){
 
-/* =========================
-CONFIRM PASSWORD
-========================= */
+        input.type = "text";
 
-function validateMatch(){
+        icon.classList.replace("fa-eye","fa-eye-slash");
 
-const pass1 =
-document.getElementById("pass1");
+    }else{
 
-const pass2 =
-document.getElementById("pass2");
+        input.type = "password";
 
-if(pass2.value !== pass1.value){
+        icon.classList.replace("fa-eye-slash","fa-eye");
 
-pass2.setCustomValidity(
-"Passwords do not match."
-);
-
-}else{
-
-pass2.setCustomValidity("");
+    }
 
 }
 
-}
+/* -----------------------------
+   PHONE VALIDATION
+------------------------------*/
 
-/* =========================
-PHONE NUMBER LIMIT
-========================= */
+phoneInput.addEventListener("input",(e)=>{
 
-document.getElementById(
-"phone"
-).addEventListener("input", function(){
-
-this.value =
-this.value
-.replace(/\D/g,'')
-.slice(0,11);
+    e.target.value = e.target.value
+        .replace(/\D/g,"")
+        .slice(0,11);
 
 });
 
-/* =========================
-MAX IMAGE SIZE
-========================= */
+/* -----------------------------
+   PASSWORD STRENGTH
+------------------------------*/
 
-const MAX_IMAGE_SIZE =
-2 * 1024 * 1024;
+passwordInput.addEventListener("input",()=>{
 
-/* =========================
-VALIDATE IMAGE
-========================= */
+    const password = passwordInput.value;
 
-function validateImage(file,infoId){
+    let score = 0;
 
-const info =
-document.getElementById(infoId);
+    if(password.length >= 8) score++;
 
-if(!file){
+    if(/[A-Z]/.test(password)) score++;
 
-info.innerHTML =
-'Maximum size: 2MB';
+    if(/[0-9]/.test(password)) score++;
 
-return false;
+    if(/[@#$!%*?&]/.test(password)) score++;
 
-}
+    strengthText.className = "strength";
 
-if(file.size > MAX_IMAGE_SIZE){
+    if(password.length === 0){
 
-info.innerHTML =
-'❌ File too large. Please upload image below 2MB';
+        strengthText.textContent = "";
 
-info.style.color = '#dc2626';
+        return;
 
-return false;
+    }
 
-}
+    if(score <= 2){
 
-info.innerHTML =
-`✅ ${file.name}`;
+        strengthText.textContent = "Weak Password";
 
-info.classList.add(
-'file-success'
-);
+        strengthText.classList.add("weak");
 
-return true;
+    }
 
-}
+    else if(score === 3){
 
-/* =========================
-IMAGE PREVIEW VALIDATION
-========================= */
+        strengthText.textContent = "Medium Password";
 
-document.getElementById(
-'driversLicense'
-).addEventListener(
-'change',
-function(){
+        strengthText.classList.add("medium");
 
-validateImage(
-this.files[0],
-'licenseInfo'
-);
+    }
 
-}
-);
+    else{
 
-document.getElementById(
-'facialImage'
-).addEventListener(
-'change',
-function(){
+        strengthText.textContent = "Strong Password";
 
-validateImage(
-this.files[0],
-'facialInfo'
-);
+        strengthText.classList.add("strong");
 
-}
-);
-
-/* =========================
-COMPRESS IMAGE
-========================= */
-
-function compressImage(file){
-
-return new Promise((resolve,reject)=>{
-
-const reader =
-new FileReader();
-
-reader.readAsDataURL(file);
-
-reader.onload = event => {
-
-const img =
-new Image();
-
-img.src =
-event.target.result;
-
-img.onload = () => {
-
-const canvas =
-document.createElement('canvas');
-
-const ctx =
-canvas.getContext('2d');
-
-let width =
-img.width;
-
-let height =
-img.height;
-
-const maxWidth = 800;
-const maxHeight = 800;
-
-/* RESIZE */
-
-if(width > height){
-
-if(width > maxWidth){
-
-height *=
-maxWidth / width;
-
-width = maxWidth;
-
-}
-
-}else{
-
-if(height > maxHeight){
-
-width *=
-maxHeight / height;
-
-height = maxHeight;
-
-}
-
-}
-
-canvas.width = width;
-canvas.height = height;
-
-ctx.drawImage(
-img,
-0,
-0,
-width,
-height
-);
-
-/* COMPRESS */
-
-const compressedBase64 =
-canvas.toDataURL(
-'image/jpeg',
-0.6
-);
-
-resolve(
-compressedBase64
-);
-
-};
-
-};
-
-reader.onerror =
-error => reject(error);
+    }
 
 });
 
-}
+/* -----------------------------
+   TOAST
+------------------------------*/
 
-/* =========================
-GENERATE RIDER ID
-========================= */
+function showToast(message){
 
-function generateRiderId(){
+    toastMessage.textContent = message;
 
-return "RID-" + Date.now();
+    toast.classList.add("show");
 
-}
+    setTimeout(()=>{
 
-/* =========================
-SIGNUP FORM
-========================= */
+        toast.classList.remove("show");
 
-document.getElementById(
-"signupForm"
-).addEventListener(
-"submit",
-async function(e){
-
-e.preventDefault();
-
-const submitBtn =
-document.getElementById(
-'submitBtn'
-);
-
-submitBtn.disabled = true;
-submitBtn.innerHTML =
-'Creating Account...';
-
-/* PASSWORD MATCH */
-
-validateMatch();
-
-const pass1 =
-document.getElementById("pass1").value;
-
-const pass2 =
-document.getElementById("pass2").value;
-
-if(pass1 !== pass2){
-
-alert("Passwords do not match");
-
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
-
-return;
+    },3000);
 
 }
 
-/* PHONE VALIDATION */
+/* -----------------------------
+   BUTTON LOADING
+------------------------------*/
 
-const phone =
-document.getElementById("phone").value;
+function startLoading(){
 
-if(phone.length !== 11){
+    submitBtn.disabled = true;
 
-alert(
-"Phone number must be exactly 11 digits"
-);
+    submitBtn.classList.add("loading");
 
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
-
-return;
+    submitBtn.textContent = "Submitting";
 
 }
 
-/* FILES */
+function stopLoading(){
 
-const licenseFile =
-document.getElementById(
-"driversLicense"
-).files[0];
+    submitBtn.disabled = false;
 
-const facialFile =
-document.getElementById(
-"facialImage"
-).files[0];
+    submitBtn.classList.remove("loading");
 
-if(!licenseFile || !facialFile){
-
-alert(
-"Please upload required images"
-);
-
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
-
-return;
+    submitBtn.textContent = "Create Rider Account";
 
 }
 
-/* SIZE CHECK */
+/* -----------------------------
+   IMAGE COMPRESSION
+------------------------------*/
 
-if(
-licenseFile.size > MAX_IMAGE_SIZE
-||
-facialFile.size > MAX_IMAGE_SIZE
+function compressImage(file,maxWidth=800,quality=0.7){
+
+    return new Promise((resolve,reject)=>{
+
+        if(!file){
+
+            resolve("");
+
+            return;
+
+        }
+
+        if(!file.type.startsWith("image/")){
+
+            resolve(file);
+
+            return;
+
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(event){
+
+            const img = new Image();
+
+            img.onload = function(){
+
+                let width = img.width;
+                let height = img.height;
+
+                if(width > maxWidth){
+
+                    height *= maxWidth/width;
+                    width = maxWidth;
+
+                }
+
+                const canvas = document.createElement("canvas");
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext("2d");
+
+                ctx.drawImage(img,0,0,width,height);
+
+                canvas.toBlob(
+
+                    function(blob){
+
+                        resolve(blob);
+
+                    },
+
+                    "image/jpeg",
+
+                    quality
+
+                );
+
+            };
+
+            img.src = event.target.result;
+
+        };
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+/* -----------------------------
+   BASE64 CONVERSION
+------------------------------*/
+
+function fileToBase64(file){
+
+    return new Promise((resolve,reject)=>{
+
+        if(!file){
+
+            resolve("");
+
+            return;
+
+        }
+
+        const reader = new FileReader();
+
+        reader.onload=()=>resolve(reader.result);
+
+        reader.onerror=reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+/* -----------------------------
+   IMAGE PREVIEW
+------------------------------*/
+
+function setupPreview(
+
+    inputId,
+    previewId,
+    imageId,
+    filenameId
+
 ){
 
-alert(
-'Images must be below 2MB'
-);
+    const input=document.getElementById(inputId);
 
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
+    const preview=document.getElementById(previewId);
 
-return;
+    const image=document.getElementById(imageId);
 
-}
+    const filename=document.getElementById(filenameId);
 
-try{
+    input.addEventListener("change",function(){
 
-/* COMPRESS IMAGES */
+        const file=this.files[0];
 
-const driversLicenseImage =
-await compressImage(
-licenseFile
-);
+        if(!file){
 
-const facialImage =
-await compressImage(
-facialFile
-);
+            preview.style.display="none";
 
-/* RIDERS STORAGE */
+            return;
 
-const riders =
-JSON.parse(
-localStorage.getItem(
-"techrider_riders"
-)
-) || [];
+        }
 
-/* EMAIL CHECK */
+        filename.textContent=file.name;
 
-const email =
-document.getElementById(
-"email"
-).value.trim();
+        if(file.type.startsWith("image")){
 
-const existingRider =
-riders.find(rider =>
+            const reader=new FileReader();
 
-rider.email.toLowerCase() ===
-email.toLowerCase()
+            reader.onload=function(e){
 
-);
+                image.src=e.target.result;
 
-if(existingRider){
+                preview.style.display="block";
 
-alert(
-"An account with this email already exists"
-);
+            };
 
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
+            reader.readAsDataURL(file);
 
-return;
+        }
+
+        else{
+
+            image.removeAttribute("src");
+
+            preview.style.display="block";
+
+        }
+
+    });
 
 }
 
-/* GENERATE ID */
+setupPreview(
 
-const riderId =
-generateRiderId();
+    "facialImage",
+    "facialPreview",
+    "facialPreviewImage",
+    "facialFileName"
 
-/* RIDER DATA */
-
-const riderData = {
-
-id: riderId,
-
-riderId: riderId,
-
-fullName:
-document.getElementById(
-"fullName"
-).value.trim(),
-
-email,
-
-phone,
-
-address:
-document.getElementById(
-"address"
-).value.trim(),
-
-plateNumber:
-document.getElementById(
-"plateNumber"
-).value.trim(),
-
-vehicleType:
-document.getElementById(
-"vehicleType"
-).value,
-
-password: pass1,
-
-driversLicenseImage,
-
-facialImage,
-
-verified:false,
-
-status:"active",
-
-userType:"rider",
-
-createdAt:
-new Date().toISOString()
-
-};
-
-/* SAVE RIDER */
-
-riders.unshift(riderData);
-
-localStorage.setItem(
-"techrider_riders",
-JSON.stringify(riders)
 );
 
-/* SAVE CURRENT RIDER */
+setupPreview(
 
-localStorage.setItem(
-"techrider_current_rider",
-JSON.stringify(riderData)
+    "driversLicense",
+    "licensePreview",
+    "licensePreviewImage",
+    "licenseFileName"
+
 );
 
-/* OPTIONAL GENERIC CURRENT USER */
+setupPreview(
 
-localStorage.setItem(
-"currentUser",
-JSON.stringify(riderData)
+    "governmentId",
+    "governmentPreview",
+    "governmentPreviewImage",
+    "governmentFileName"
+
 );
 
-/* SUCCESS */
+/* -----------------------------
+   VALIDATION
+------------------------------*/
 
-alert(
-"Rider account created successfully"
-);
+function validateForm(){
 
-/* REDIRECT */
+    if(passwordInput.value!==confirmPasswordInput.value){
 
-window.location.href =
-"login-rider.html";
+        alert("Passwords do not match.");
 
-}catch(error){
+        return false;
 
-console.error(error);
+    }
 
-alert(
-'Signup failed. Please try smaller images.'
-);
+    if(phoneInput.value.length!==11){
 
-submitBtn.disabled = false;
-submitBtn.innerHTML =
-'Create Account';
+        alert("Phone number must contain exactly 11 digits.");
+
+        return false;
+
+    }
+
+    return true;
 
 }
+
+/* -----------------------------
+   STORAGE HELPERS
+------------------------------*/
+
+function getPendingRegistrations(){
+
+    return JSON.parse(
+
+        localStorage.getItem(PENDING_KEY)
+
+    ) || [];
+
+}
+
+function getApprovedRiders(){
+
+    return JSON.parse(
+
+        localStorage.getItem(RIDER_KEY)
+
+    ) || [];
+
+}
+
+function emailExists(email){
+
+    const pending=getPendingRegistrations();
+
+    const approved=getApprovedRiders();
+
+    return [...pending,...approved]
+
+        .some(user=>
+
+            user.email.toLowerCase()===
+
+            email.toLowerCase()
+
+        );
+
+}
+
+function phoneExists(phone){
+
+    const pending=getPendingRegistrations();
+
+    const approved=getApprovedRiders();
+
+    return [...pending,...approved]
+
+        .some(user=>
+
+            user.phone===phone
+
+        );
+
+}
+/* ===========================================================
+   TECHRIDER RIDER SIGNUP
+   PART 2
+   =========================================================== */
+
+/* -----------------------------
+   FORM SUBMISSION
+------------------------------*/
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    if(!validateForm()){
+        return;
+    }
+
+    startLoading();
+
+    try{
+
+        const fullName =
+            document.getElementById("fullName").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+        const vehicleType =
+            document.getElementById("vehicleType").value;
+
+        const vehicleBrand =
+            document.getElementById("vehicleBrand").value.trim();
+
+        const plateNumber =
+            document.getElementById("plateNumber")
+            .value
+            .trim()
+            .toUpperCase();
+
+        const password =
+            passwordInput.value;
+
+        /* -----------------------------
+           DUPLICATE CHECKS
+        ------------------------------*/
+
+        if(emailExists(email)){
+
+            stopLoading();
+
+            alert("An account or registration already exists with this email.");
+
+            return;
+
+        }
+
+        if(phoneExists(phone)){
+
+            stopLoading();
+
+            alert("This phone number has already been registered.");
+
+            return;
+
+        }
+
+        /* -----------------------------
+           FILES
+        ------------------------------*/
+
+        const facialFile =
+            document.getElementById("facialImage").files[0];
+
+        const licenseFile =
+            document.getElementById("driversLicense").files[0];
+
+        const governmentFile =
+            document.getElementById("governmentId").files[0];
+
+        /* -----------------------------
+           IMAGE COMPRESSION
+        ------------------------------*/
+
+        const compressedFacial =
+            await compressImage(facialFile);
+
+        const compressedLicense =
+            await compressImage(licenseFile);
+
+        const compressedGovernment =
+            await compressImage(governmentFile);
+
+        /* -----------------------------
+           BASE64 CONVERSION
+        ------------------------------*/
+
+        const facialImage =
+            await fileToBase64(compressedFacial);
+
+        const driversLicense =
+            await fileToBase64(compressedLicense);
+
+        const governmentId =
+            await fileToBase64(compressedGovernment);
+
+        /* -----------------------------
+           RIDER OBJECT
+        ------------------------------*/
+
+        const riderApplication = {
+
+            id: Date.now().toString(),
+
+            userType: "Rider",
+
+            status: "Pending",
+
+            fullName,
+
+            email,
+
+            phone,
+
+            address,
+
+            vehicleType,
+
+            vehicleBrand,
+
+            plateNumber,
+
+            facialImage,
+
+            driversLicense,
+
+            governmentId,
+
+            password,
+
+            submittedAt: new Date().toISOString()
+
+        };
+
+        /* -----------------------------
+           SAVE TO PENDING QUEUE
+        ------------------------------*/
+
+        const pending =
+            getPendingRegistrations();
+
+        pending.push(riderApplication);
+
+        localStorage.setItem(
+
+            PENDING_KEY,
+
+            JSON.stringify(pending)
+
+        );
+
+        /* -----------------------------
+           SUCCESS
+        ------------------------------*/
+
+        showToast(
+
+            "Registration submitted successfully. Awaiting admin approval."
+
+        );
+
+        form.reset();
+
+        strengthText.textContent = "";
+
+        document
+            .querySelectorAll(".preview-container")
+            .forEach(preview=>{
+
+                preview.style.display="none";
+
+            });
+
+        setTimeout(()=>{
+
+            window.location.href =
+                "login-rider.html";
+
+        },2500);
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        if(error.name==="QuotaExceededError"){
+
+            alert(
+
+                "The uploaded images are still too large to be stored. Please upload smaller images."
+
+            );
+
+        }
+
+        else{
+
+            alert(
+
+                "An unexpected error occurred while submitting your registration."
+
+            );
+
+        }
+
+    }
+
+    finally{
+
+        stopLoading();
+
+    }
 
 });
 
+/* -----------------------------
+   PREVENT DOUBLE SUBMISSION
+------------------------------*/
+
+window.addEventListener("pageshow",function(){
+
+    stopLoading();
+
+});
+
+/* -----------------------------
+   READY
+------------------------------*/
+
+console.log(
+
+    "TechRider Rider Signup Ready."
+
+);
 </script>
 
 </body>

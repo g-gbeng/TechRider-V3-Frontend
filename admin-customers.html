@@ -450,14 +450,14 @@ onclick="closeHistory()">
 <span class="text">Communications</span>
 </a>
 
-<a href="admin-disputes.html">
-<i class="fas fa-gavel"></i>
-<span class="text">Disputes</span>
-</a>
-
 <a href="admin-reports.html">
 <i class="fas fa-file-lines"></i>
 <span class="text">Reports</span>
+</a>
+
+<a href="admin-disputes.html">
+<i class="fas fa-gavel"></i>
+<span class="text">Disputes</span>
 </a>
 
 <a href="admin-records.html">
@@ -630,161 +630,386 @@ closeHistory();
 
 /* GET CUSTOMERS */
 
-let customers =
-JSON.parse(
-localStorage.getItem('techrider_customers')
-) || [];
+/* ==========================================================
+   CUSTOMER STORAGE
+========================================================== */
 
-/* RENDER TABLE */
+function getCustomers() {
 
-function renderCustomers(){
+    return JSON.parse(
 
-const tbody=
-document.getElementById(
-'customerTable'
-);
+        localStorage.getItem("techrider_customers")
 
-tbody.innerHTML='';
-
-const search=
-document.getElementById(
-'searchBox'
-)
-.value
-.toLowerCase();
-
-const statusFilter=
-document.getElementById(
-'statusFilter'
-)
-.value;
-
-const sortType=
-document.getElementById(
-'sortFilter'
-)
-.value;
-
-/* FILTER */
-
-let filtered=
-customers.filter(customer=>{
-
-const fullName=
-(customer.fullName || '')
-.toLowerCase();
-
-const status=
-customer.suspended
-? 'suspended'
-: 'active';
-
-const matchesName=
-fullName.includes(search);
-
-const matchesStatus=
-statusFilter==='all'
-|| status===statusFilter;
-
-return matchesName && matchesStatus;
-
-});
-
-/* SORT */
-
-filtered.sort((a,b)=>{
-
-if(sortType==='newest'){
-return new Date(b.createdAt || 0)
--
-new Date(a.createdAt || 0);
-}
-
-if(sortType==='oldest'){
-return new Date(a.createdAt || 0)
--
-new Date(b.createdAt || 0);
-}
-
-if(sortType==='requests'){
-return (b.requestCount || 0)
--
-(a.requestCount || 0);
-}
-
-if(sortType==='alpha'){
-return (a.fullName || '')
-.localeCompare(
-b.fullName || ''
-);
-}
-
-return 0;
-
-});
-
-/* EMPTY STATE */
-
-if(filtered.length===0){
-
-document
-.getElementById('emptyState')
-.style.display='block';
-
-}else{
-
-document
-.getElementById('emptyState')
-.style.display='none';
+    ) || [];
 
 }
 
-/* RENDER ROWS */
+function saveCustomers(customers) {
 
-filtered.forEach((customer)=>{
+    localStorage.setItem(
 
-const status=
-customer.suspended
-? 'Suspended'
-: 'Active';
+        "techrider_customers",
 
-const statusClass=
-customer.suspended
-? 'suspendedStat'
-: 'activeStat';
+        JSON.stringify(customers)
 
-tbody.innerHTML+=`
+    );
+
+}
+
+function getRequests() {
+
+    return JSON.parse(
+
+        localStorage.getItem("techrider_requests")
+
+    ) || [];
+
+}
+
+/* ==========================================================
+   GLOBAL CUSTOMER CACHE
+========================================================== */
+
+let customers = getCustomers();
+
+/* ==========================================================
+   REQUEST COUNT
+========================================================== */
+
+function getCustomerRequestCount(customerId, email) {
+
+    const requests = getRequests();
+
+    return requests.filter(request => {
+
+        if (
+            customerId &&
+            request.customerId &&
+            String(request.customerId) === String(customerId)
+        ) {
+            return true;
+        }
+
+        return (
+
+            (request.customerEmail || "")
+            .toLowerCase()
+
+            ===
+
+            (email || "")
+            .toLowerCase()
+
+        );
+
+    }).length;
+
+}
+
+/* ==========================================================
+   METRICS
+========================================================== */
+
+function updateMetrics(filteredCustomers = customers) {
+
+    const total = customers.length;
+
+    const suspended = customers.filter(
+
+        customer => customer.suspended === true
+
+    ).length;
+
+    const active = total - suspended;
+
+    const oneWeekAgo =
+
+        Date.now() - (7 * 24 * 60 * 60 * 1000);
+
+    const newUsers = customers.filter(customer => {
+
+        if (!customer.createdAt) {
+
+            return false;
+
+        }
+
+        return (
+
+            new Date(customer.createdAt).getTime()
+
+            >=
+
+            oneWeekAgo
+
+        );
+
+    }).length;
+
+    document.getElementById(
+
+        "totalUsers"
+
+    ).textContent = total;
+
+    document.getElementById(
+
+        "activeUsers"
+
+    ).textContent = active;
+
+    document.getElementById(
+
+        "suspendedUsers"
+
+    ).textContent = suspended;
+
+    document.getElementById(
+
+        "newUsers"
+
+    ).textContent = newUsers;
+
+}
+
+/* ==========================================================
+   RENDER CUSTOMERS
+========================================================== */
+
+function renderCustomers() {
+
+    customers = getCustomers();
+
+    const tbody =
+
+        document.getElementById(
+
+            "customerTable"
+
+        );
+
+    tbody.innerHTML = "";
+
+    const search =
+
+        document.getElementById(
+
+            "searchBox"
+
+        )
+
+        .value
+
+        .trim()
+
+        .toLowerCase();
+
+    const statusFilter =
+
+        document.getElementById(
+
+            "statusFilter"
+
+        ).value;
+
+    const sortFilter =
+
+        document.getElementById(
+
+            "sortFilter"
+
+        ).value;
+
+    let filtered = customers.filter(customer => {
+
+        const name =
+
+            (customer.fullName || "")
+
+            .toLowerCase();
+
+        const status =
+
+            customer.suspended
+
+            ? "suspended"
+
+            : "active";
+
+        const matchName =
+
+            name.includes(search);
+
+        const matchStatus =
+
+            statusFilter === "all"
+
+            ||
+
+            statusFilter === status;
+
+        return (
+
+            matchName &&
+
+            matchStatus
+
+        );
+
+    });
+
+    /* ==========================
+       SORTING
+    ========================== */
+
+    filtered.sort((a, b) => {
+
+        switch (sortFilter) {
+
+            case "oldest":
+
+                return (
+
+                    new Date(a.createdAt || 0)
+
+                    -
+
+                    new Date(b.createdAt || 0)
+
+                );
+
+            case "requests":
+
+                return (
+
+                    getCustomerRequestCount(
+
+                        b.id,
+
+                        b.email
+
+                    )
+
+                    -
+
+                    getCustomerRequestCount(
+
+                        a.id,
+
+                        a.email
+
+                    )
+
+                );
+
+            case "alpha":
+
+                return (
+
+                    (a.fullName || "")
+
+                    .localeCompare(
+
+                        b.fullName || ""
+
+                    )
+
+                );
+
+            case "newest":
+
+            default:
+
+                return (
+
+                    new Date(b.createdAt || 0)
+
+                    -
+
+                    new Date(a.createdAt || 0)
+
+                );
+
+        }
+
+    });
+
+    /* ==========================
+       EMPTY STATE
+    ========================== */
+
+    document.getElementById(
+
+        "emptyState"
+
+    ).style.display =
+
+        filtered.length
+
+        ? "none"
+
+        : "block";
+
+    /* ==========================
+       TABLE
+    ========================== */
+
+    filtered.forEach(customer => {
+
+        const requestCount =
+
+            getCustomerRequestCount(
+
+                customer.id,
+
+                customer.email
+
+            );
+
+        tbody.innerHTML += `
 
 <tr>
 
 <td>
-${customer.fullName || 'N/A'}
+
+${customer.fullName || "-"}
+
 </td>
 
 <td>
-${customer.email || 'N/A'}
+
+${customer.email || "-"}
+
 </td>
 
 <td>
-${customer.phone || 'N/A'}
+
+${customer.phone || "-"}
+
 </td>
 
 <td>
-${customer.requestCount ?? 0}
+
+${requestCount}
+
 </td>
 
 <td>
-<span class="status ${statusClass}">
-${status}
+
+<span class="status ${customer.suspended ? "suspendedStat" : "activeStat"}">
+
+${customer.suspended ? "Suspended" : "Active"}
+
 </span>
+
 </td>
 
 <td>
-${
-customer.createdAt
+
+${customer.createdAt
 ? new Date(customer.createdAt).toLocaleDateString()
-: 'N/A'
-}
+: "-"}
+
 </td>
 
 <td>
@@ -794,16 +1019,16 @@ customer.createdAt
 <button
 class="btn btnGhost"
 onclick="viewHistory('${customer.email}')">
+
 History
+
 </button>
 
 <button
 class="btn btnPrimary"
 onclick="toggleSuspend('${customer.email}')">
 
-${customer.suspended
-? 'Reactivate'
-: 'Suspend'}
+${customer.suspended ? "Reactivate" : "Suspend"}
 
 </button>
 
@@ -815,281 +1040,488 @@ ${customer.suspended
 
 `;
 
-});
+    });
 
-updateMetrics();
-
-}
-
-/* METRICS */
-
-function updateMetrics(){
-
-const total=
-customers.length;
-
-const suspended=
-customers.filter(
-c=>c.suspended
-).length;
-
-const active=
-total - suspended;
-
-const oneWeekAgo=
-Date.now() - (7*24*60*60*1000);
-
-const newUsers=
-customers.filter(customer=>{
-
-if(!customer.createdAt){
-return false;
-}
-
-return new Date(customer.createdAt).getTime() >= oneWeekAgo;
-
-}).length;
-
-document.getElementById(
-'totalUsers'
-).innerText=total;
-
-document.getElementById(
-'activeUsers'
-).innerText=active;
-
-document.getElementById(
-'suspendedUsers'
-).innerText=suspended;
-
-document.getElementById(
-'newUsers'
-).innerText=newUsers;
+    updateMetrics();
 
 }
 
+/* ==========================================================
+   FILTER EVENTS
+========================================================== */
+
+document
+
+.getElementById(
+
+    "searchBox"
+
+)
+
+.addEventListener(
+
+    "input",
+
+    renderCustomers
+
+);
+
+document
+
+.getElementById(
+
+    "statusFilter"
+
+)
+
+.addEventListener(
+
+    "change",
+
+    renderCustomers
+
+);
+
+document
+
+.getElementById(
+
+    "sortFilter"
+
+)
+
+.addEventListener(
+
+    "change",
+
+    renderCustomers
+
+);
 /* VIEW HISTORY */
+
+/* ==========================================================
+   CUSTOMER HISTORY
+========================================================== */
 
 function viewHistory(email){
 
-const modal=
-document.getElementById(
-'historyModal'
-);
+    const modal =
+        document.getElementById(
+            "historyModal"
+        );
 
-const content=
-document.getElementById(
-'historyContent'
-);
+    const content =
+        document.getElementById(
+            "historyContent"
+        );
 
-const title=
-document.getElementById(
-'historyTitle'
-);
+    const title =
+        document.getElementById(
+            "historyTitle"
+        );
 
-const customer=
-customers.find(
-c=>c.email===email
-);
+    const customer =
+        customers.find(customer =>
 
-title.innerText=
-`${customer.fullName} Repair History`;
+            customer.email === email
 
-let repairHistory=
-JSON.parse(
-localStorage.getItem(
-'customerRepairHistory'
-)
-)||[];
+        );
 
-/* FILTER HISTORY */
+    if(!customer){
 
-repairHistory=
-repairHistory.filter(job=>{
+        return;
 
-return job.customerEmail===email;
+    }
 
-});
+    title.textContent =
+        `${customer.fullName} Repair History`;
 
-content.innerHTML='';
+    const requests =
+        getRequests();
 
-/* EMPTY */
+    /* ======================================
+       GET THIS CUSTOMER'S REQUESTS
+    ====================================== */
 
-if(repairHistory.length===0){
+    const customerRequests =
+        requests.filter(request=>{
 
-content.innerHTML=`
+            if(
+
+                request.customerId &&
+                customer.id &&
+                String(request.customerId) ===
+                String(customer.id)
+
+            ){
+
+                return true;
+
+            }
+
+            return (
+
+                (request.customerEmail || "")
+                .toLowerCase()
+
+                ===
+
+                email.toLowerCase()
+
+            );
+
+        });
+
+    content.innerHTML = "";
+
+    /* ======================================
+       EMPTY HISTORY
+    ====================================== */
+
+    if(customerRequests.length===0){
+
+        content.innerHTML = `
 
 <div class="no-history">
-No repair history found.
+
+No repair requests found.
+
 </div>
 
 `;
 
-modal.classList.add('show');
-overlay.classList.add('show');
-return;
+        modal.classList.add("show");
 
-}
+        overlay.classList.add("show");
 
-/* RENDER HISTORY */
+        return;
 
-repairHistory
-.sort((a,b)=>
-(b.timestamp || 0)
--
-(a.timestamp || 0)
-)
-.forEach(job=>{
+    }
 
-content.innerHTML+=`
+    /* ======================================
+       SORT NEWEST FIRST
+    ====================================== */
+
+    customerRequests.sort((a,b)=>{
+
+        return (
+
+            new Date(b.createdAt || 0)
+
+            -
+
+            new Date(a.createdAt || 0)
+
+        );
+
+    });
+
+    /* ======================================
+       BUILD HISTORY
+    ====================================== */
+
+    customerRequests.forEach(request=>{
+
+        let statusColor =
+            "#f59e0b";
+
+        if(
+
+            request.status === "completed"
+
+        ){
+
+            statusColor =
+                "#16a34a";
+
+        }
+
+        if(
+
+            request.status === "cancelled"
+
+        ){
+
+            statusColor =
+                "#dc2626";
+
+        }
+
+        if(
+
+            request.status === "pending"
+
+        ){
+
+            statusColor =
+                "#5a189a";
+
+        }
+
+        content.innerHTML += `
 
 <div class="history-card">
 
 <div class="history-title">
-${job.serviceType || 'Repair Request'}
+
+${request.deviceType || "-"}
+
+${request.brand || ""}
+
+${request.model || ""}
+
+</div>
+
+<div class="history-item">
+
+<strong>Status:</strong>
+
+<span style="color:${statusColor};font-weight:600;">
+
+${request.status || "Pending"}
+
+</span>
+
+</div>
+
+<div class="history-item">
+
+<strong>Issue:</strong>
+
+${request.description || "-"}
+
+</div>
+
+<div class="history-item">
+
+<strong>Location:</strong>
+
+${request.location || "-"}
+
 </div>
 
 <div class="history-item">
 <strong>Technician:</strong>
-${job.technicianName || 'Not Assigned'}
+${request.technicianName || "Not Assigned"}
 </div>
 
 <div class="history-item">
-<strong>Status:</strong>
-${job.status || 'Completed'}
-</div>
 
-<div class="history-item">
-<strong>Device:</strong>
-${job.device || 'N/A'}
-</div>
+<strong>Created:</strong>
 
-<div class="history-item">
-<strong>Date:</strong>
-${job.date || 'N/A'}
-</div>
+${
 
-<div class="history-item">
-<strong>Issue:</strong>
-${job.issue || 'N/A'}
+request.createdAt
+
+?
+
+new Date(request.createdAt)
+
+.toLocaleString()
+
+:
+
+"-"
+
+}
+
 </div>
 
 </div>
 
 `;
 
-});
+    });
 
-modal.classList.add('show');
-overlay.classList.add('show');
+    modal.classList.add("show");
+
+    overlay.classList.add("show");
 
 }
 
 /* CLOSE MODAL */
 
+/* ==========================================================
+   CLOSE HISTORY MODAL
+========================================================== */
+
 function closeHistory(){
 
-document
-.getElementById('historyModal')
-.classList.remove('show');
+    document
+    .getElementById("historyModal")
+    .classList.remove("show");
 
-overlay.classList.remove('show');
+    overlay.classList.remove("show");
 
 }
 
-/* SUSPEND / REACTIVATE */
+/* ==========================================================
+   SUSPEND / REACTIVATE CUSTOMER
+========================================================== */
 
 function toggleSuspend(email){
 
-const customer=
-customers.find(
-c=>c.email===email
-);
+    customers = getCustomers();
 
-if(!customer){
-return;
+    const customerIndex = customers.findIndex(
+
+        customer =>
+
+            customer.email === email
+
+    );
+
+    if(customerIndex === -1){
+
+        return;
+
+    }
+
+    const customer = customers[customerIndex];
+
+    /* ==========================
+       TOGGLE STATUS
+    ========================== */
+
+    customer.suspended = !customer.suspended;
+
+    /* ==========================
+       SAVE UPDATED CUSTOMER
+    ========================== */
+
+    customers[customerIndex] = customer;
+
+    saveCustomers(customers);
+
+    /* ==========================
+       UPDATE CURRENT SESSION
+    ========================== */
+
+    const currentCustomer = JSON.parse(
+
+        localStorage.getItem(
+
+            "techrider_current_customer"
+
+        )
+
+    );
+
+    if(
+
+        currentCustomer &&
+
+        currentCustomer.email === customer.email
+
+    ){
+
+        currentCustomer.suspended = customer.suspended;
+
+        localStorage.setItem(
+
+            "techrider_current_customer",
+
+            JSON.stringify(currentCustomer)
+
+        );
+
+    }
+
+    /* ==========================
+       SUCCESS MESSAGE
+    ========================== */
+
+    if(customer.suspended){
+
+        alert(
+
+            `${customer.fullName} has been suspended.`
+
+        );
+
+    }
+
+    else{
+
+        alert(
+
+            `${customer.fullName} has been reactivated.`
+
+        );
+
+    }
+
+    renderCustomers();
+
 }
 
-customer.suspended=
-!customer.suspended;
+/* ==========================================================
+   FILTER EVENTS
+========================================================== */
 
-/* SAVE */
+document
 
-localStorage.setItem(
-'techrider_customers',
-JSON.stringify(customers)
-);
+.getElementById(
 
-/* TRACK SUSPENDED USERS */
+    "searchBox"
 
-let suspendedUsers=
-JSON.parse(
-localStorage.getItem(
-'suspendedCustomers'
 )
-)||[];
 
-if(customer.suspended){
-
-if(
-!suspendedUsers.includes(email)
-){
-suspendedUsers.push(email);
-}
-
-alert(
-`${customer.fullName} has been suspended.`
-);
-
-}else{
-
-suspendedUsers=
-suspendedUsers.filter(
-item=>item!==email
-);
-
-alert(
-`${customer.fullName} has been reactivated.`
-);
-
-}
-
-localStorage.setItem(
-'suspendedCustomers',
-JSON.stringify(suspendedUsers)
-);
-
-renderCustomers();
-
-}
-
-/* FILTERS */
-
-document
-.getElementById('searchBox')
 .addEventListener(
-'input',
-renderCustomers
+
+    "input",
+
+    renderCustomers
+
 );
 
 document
-.getElementById('statusFilter')
+
+.getElementById(
+
+    "statusFilter"
+
+)
+
 .addEventListener(
-'change',
-renderCustomers
+
+    "change",
+
+    renderCustomers
+
 );
 
 document
-.getElementById('sortFilter')
+
+.getElementById(
+
+    "sortFilter"
+
+)
+
 .addEventListener(
-'change',
-renderCustomers
+
+    "change",
+
+    renderCustomers
+
 );
 
-/* INITIAL RENDER */
+/* ==========================================================
+   INITIALIZE PAGE
+========================================================== */
 
-renderCustomers();
+document.addEventListener(
 
+    "DOMContentLoaded",
+
+    function(){
+
+        renderCustomers();
+
+    }
+
+);
 </script>
 
 </body>

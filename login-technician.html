@@ -156,6 +156,58 @@
       from{opacity:0;transform:translateY(10px);}
       to{opacity:1;transform:translateY(0);}
     }
+
+    /* ===============================
+      LOGIN MESSAGE
+=============================== */
+
+.login-message{
+
+    display:none;
+
+    margin-top:12px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    font-size:.9rem;
+
+    font-weight:500;
+
+}
+
+.login-message.success{
+
+    display:block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+}
+
+.login-message.error{
+
+    display:block;
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+}
+
+.login-message.pending{
+
+    display:block;
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+}
   </style>
 </head>
 
@@ -175,7 +227,11 @@
 
     <div class="group">
       <label>Email Address</label>
-      <input type="email" required>
+      <input
+    type="email"
+    id="email"
+    required
+>
     </div>
 
     <div class="group password-group">
@@ -185,6 +241,8 @@
     </div>
 
     <button class="btn" type="submit">Login</button>
+
+    <div id="loginMessage" class="login-message"></div>
 
     <div class="links">
       <a href="forgot-password-technician.html">Forgot Password?</a>
@@ -204,59 +262,305 @@
 
 <script>
 
-function togglePassword(icon){
-  const input = icon.previousElementSibling;
+/* ==========================================================
+   TECHRIDER TECHNICIAN LOGIN
+   PART 1
+========================================================== */
 
-  if(input.type === "password"){
-    input.type = "text";
-    icon.classList.replace("fa-eye","fa-eye-slash");
-  } else {
-    input.type = "password";
-    icon.classList.replace("fa-eye-slash","fa-eye");
-  }
+/* ==============================
+    STORAGE KEYS
+============================== */
+
+const APPROVED_KEY = "techrider_technicians";
+const PENDING_KEY = "techrider_pending_registrations";
+const CURRENT_KEY = "techrider_current_technician";
+
+/* ==============================
+    DOM
+============================== */
+
+const loginForm = document.getElementById("loginForm");
+
+const emailInput = document.getElementById("email");
+
+const passwordInput = document.getElementById("password");
+
+const loginMessage = document.getElementById("loginMessage");
+
+/* ==============================
+    PASSWORD TOGGLE
+============================== */
+
+function togglePassword(icon){
+
+    const input = icon.previousElementSibling;
+
+    if(input.type==="password"){
+
+        input.type="text";
+
+        icon.classList.replace(
+
+            "fa-eye",
+
+            "fa-eye-slash"
+
+        );
+
+    }
+
+    else{
+
+        input.type="password";
+
+        icon.classList.replace(
+
+            "fa-eye-slash",
+
+            "fa-eye"
+
+        );
+
+    }
+
 }
 
-/* LOGIN LOGIC */
-document.getElementById("loginForm").addEventListener("submit", function(e){
+/* ==============================
+    STORAGE HELPERS
+============================== */
 
-  e.preventDefault();
+function getApprovedTechnicians(){
 
-  const email =
-    document.querySelector('input[type="email"]').value.trim();
+    return JSON.parse(
 
-  const password =
-    document.getElementById("password").value.trim();
+        localStorage.getItem(APPROVED_KEY)
 
-  const technicians =
-    JSON.parse(localStorage.getItem("techrider_technicians")) || [];
+    ) || [];
 
-  if(technicians.length === 0){
-    alert("No registered technicians found. Please sign up first.");
-    return;
-  }
+}
 
-  const foundTech = technicians.find(
-    tech =>
-      tech.email === email &&
-      tech.password === password
-  );
+function getPendingApplicants(){
 
-  if(!foundTech){
-    alert("Invalid email or password");
-    return;
-  }
+    return JSON.parse(
 
-  /* STORE SESSION */
-  localStorage.setItem(
-    "techrider_current_technician",
-    JSON.stringify(foundTech)
-  );
+        localStorage.getItem(PENDING_KEY)
 
-  alert("Login successful");
+    ) || [];
 
-  window.location.href = "awaiting-approval-technician.html";
+}
 
-});
+/* ==============================
+    MESSAGE BOX
+============================== */
+
+function showMessage(type,message){
+
+    loginMessage.className =
+
+        "login-message " + type;
+
+    loginMessage.textContent = message;
+
+}
+
+function clearMessage(){
+
+    loginMessage.className =
+
+        "login-message";
+
+    loginMessage.textContent = "";
+
+}
+
+/* ==============================
+    SESSION
+============================== */
+
+function saveCurrentTechnician(user){
+
+    localStorage.setItem(
+
+        CURRENT_KEY,
+
+        JSON.stringify(user)
+
+    );
+
+}
+
+/* ==============================
+    LOGIN
+============================== */
+
+loginForm.addEventListener(
+
+    "submit",
+
+    function(e){
+
+        e.preventDefault();
+
+        clearMessage();
+
+        const email =
+
+            emailInput.value
+
+            .trim()
+
+            .toLowerCase();
+
+        const password =
+
+            passwordInput.value.trim();
+
+        const approved =
+
+            getApprovedTechnicians();
+
+        const pending =
+
+            getPendingApplicants();
+
+        const approvedUser =
+
+            approved.find(user=>
+
+                user.email.toLowerCase()===email
+
+            );
+
+        if(approvedUser){
+
+            if(approvedUser.password!==password){
+
+                showMessage(
+
+                    "error",
+
+                    "Incorrect password."
+
+                );
+
+                return;
+
+            }
+
+            saveCurrentTechnician(
+
+                approvedUser
+
+            );
+
+            showMessage(
+
+                "success",
+
+                "Login successful. Redirecting..."
+
+            );
+
+            setTimeout(()=>{
+
+                window.location.href =
+
+                "dashboard-technician.html";
+
+            },1200);
+
+            return;
+
+        }
+
+                /* =================================
+            CHECK PENDING APPROVALS
+        ================================= */
+
+        const pendingUser = pending.find(user=>
+
+            (user.email || "").toLowerCase()===email &&
+
+            user.userType==="Technician"
+
+        );
+
+        if(pendingUser){
+
+            showMessage(
+
+                "pending",
+
+                "Your account is awaiting administrator approval. Please try again later."
+
+            );
+
+            return;
+
+        }
+
+        /* =================================
+            EMAIL DOES NOT EXIST
+        ================================= */
+
+        showMessage(
+
+            "error",
+
+            "No technician account was found with this email."
+
+        );
+
+    }
+
+);
+
+/* =================================
+    CLEAR MESSAGE WHILE TYPING
+================================= */
+
+emailInput.addEventListener(
+
+    "input",
+
+    clearMessage
+
+);
+
+passwordInput.addEventListener(
+
+    "input",
+
+    clearMessage
+
+);
+
+/* =================================
+    ENTER KEY SUPPORT
+================================= */
+
+document.addEventListener(
+
+    "keydown",
+
+    function(e){
+
+        if(
+
+            e.key==="Enter" &&
+
+            document.activeElement===passwordInput
+
+        ){
+
+            loginForm.requestSubmit();
+
+        }
+
+    }
+
+);
+
 
 </script>
 </body>

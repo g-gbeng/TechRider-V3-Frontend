@@ -220,6 +220,31 @@ transform:translateY(0);
 }
 
 }
+
+/* ===============================
+      PENDING MESSAGE
+=============================== */
+
+.login-message{
+
+display:none;
+
+margin-top:14px;
+
+padding:12px;
+
+border-radius:12px;
+
+background:#fef3c7;
+
+color:#92400e;
+
+font-size:.88rem;
+
+line-height:1.5;
+
+}
+
 </style>
 
 </head>
@@ -306,6 +331,12 @@ class="successMessage"
 id="successMessage"
 ></div>
 
+<div
+class="login-message"
+id="pendingMessage"
+></div>
+
+
 </form>
 
 <div class="bottom-link">
@@ -315,175 +346,338 @@ Secure access for TechRider dispatch
 </div>
 
 <script>
+/* ==========================================================
+   TECHRIDER RIDER LOGIN
+   PART 1
+========================================================== */
 
 /* =========================
-TOGGLE PASSWORD
+    STORAGE KEYS
 ========================= */
+
+const APPROVED_KEY = "techrider_riders";
+const PENDING_KEY = "techrider_pending_registrations";
+const CURRENT_KEY = "techrider_current_rider";
+
+/* =========================
+    DOM
+========================= */
+
+const loginForm = document.getElementById("loginForm");
+
+const emailInput = document.getElementById("email");
+
+const passwordInput = document.getElementById("password");
+
+const errorBox = document.getElementById("errorMessage");
+
+const successBox = document.getElementById("successMessage");
+
+const pendingBox = document.getElementById("pendingMessage");
+
+/* =========================
+    PASSWORD TOGGLE
+========================= */
+
 function togglePassword(id,icon){
 
-const field =
-document.getElementById(id);
+    const field = document.getElementById(id);
 
-if(field.type==="password"){
+    if(field.type==="password"){
 
-field.type="text";
+        field.type="text";
 
-icon.classList.replace(
-"fa-eye",
-"fa-eye-slash"
-);
+        icon.classList.replace(
+            "fa-eye",
+            "fa-eye-slash"
+        );
 
-}else{
+    }
 
-field.type="password";
+    else{
 
-icon.classList.replace(
-"fa-eye-slash",
-"fa-eye"
-);
+        field.type="password";
 
-}
+        icon.classList.replace(
+            "fa-eye-slash",
+            "fa-eye"
+        );
+
+    }
 
 }
 
 /* =========================
-LOGIN FORM
+    STORAGE
 ========================= */
-const loginForm =
-document.getElementById(
-"loginForm"
-);
+
+function getApprovedRiders(){
+
+    return JSON.parse(
+
+        localStorage.getItem(APPROVED_KEY)
+
+    ) || [];
+
+}
+
+function getPendingApplicants(){
+
+    return JSON.parse(
+
+        localStorage.getItem(PENDING_KEY)
+
+    ) || [];
+
+}
+
+/* =========================
+    MESSAGE HELPERS
+========================= */
+
+function clearMessages(){
+
+    errorBox.style.display = "none";
+
+    successBox.style.display = "none";
+
+    pendingBox.style.display = "none";
+
+    errorBox.textContent = "";
+
+    successBox.textContent = "";
+
+    pendingBox.textContent = "";
+
+}
+
+function showError(message){
+
+    clearMessages();
+
+    errorBox.style.display = "block";
+
+    errorBox.textContent = message;
+
+}
+
+function showSuccess(message){
+
+    clearMessages();
+
+    successBox.style.display = "block";
+
+    successBox.textContent = message;
+
+}
+
+function showPending(message){
+
+    clearMessages();
+
+    pendingBox.style.display = "block";
+
+    pendingBox.textContent = message;
+
+}
+
+/* =========================
+    SESSION
+========================= */
+
+function saveCurrentRider(user){
+
+    localStorage.setItem(
+
+        CURRENT_KEY,
+
+        JSON.stringify(user)
+
+    );
+
+    localStorage.setItem(
+
+        "techrider_currentUser",
+
+        JSON.stringify({
+
+            id:user.id,
+
+            fullName:user.fullName,
+
+            email:user.email,
+
+            type:"rider"
+
+        })
+
+    );
+
+}
+
+/* =========================
+    LOGIN
+========================= */
 
 loginForm.addEventListener(
-"submit",
-function(e){
 
-e.preventDefault();
+    "submit",
 
-/* INPUTS */
-const email =
-document.getElementById(
-"email"
-).value.trim().toLowerCase();
+    function(e){
 
-const password =
-document.getElementById(
-"password"
-).value;
+        e.preventDefault();
 
-/* ALERT BOXES */
-const errorBox =
-document.getElementById(
-"errorMessage"
+        clearMessages();
+
+        const email =
+
+            emailInput.value
+            .trim()
+            .toLowerCase();
+
+        const password =
+
+            passwordInput.value.trim();
+
+        const approvedRiders =
+
+            getApprovedRiders();
+
+        const pendingApplicants =
+
+            getPendingApplicants();
+
+        const approvedUser =
+
+            approvedRiders.find(user=>
+
+                user.email.toLowerCase()===email
+
+            );
+
+        if(approvedUser){
+
+            if(approvedUser.password!==password){
+
+                showError(
+
+                    "Incorrect password."
+
+                );
+
+                return;
+
+            }
+
+            saveCurrentRider(
+
+                approvedUser
+
+            );
+
+            showSuccess(
+
+                "Login successful. Redirecting..."
+
+            );
+
+            setTimeout(()=>{
+
+                window.location.href =
+
+                "dashboard-rider.html";
+
+            },1200);
+
+            return;
+
+        }
+
+                /* =================================
+            CHECK PENDING APPROVALS
+        ================================= */
+
+        const pendingUser = pendingApplicants.find(user =>
+
+            (user.email || "").toLowerCase() === email &&
+
+            user.userType === "Rider"
+
+        );
+
+        if(pendingUser){
+
+            showPending(
+
+                "Your account is awaiting administrator approval. Please try again later."
+
+            );
+
+            return;
+
+        }
+
+        /* =================================
+            EMAIL NOT FOUND
+        ================================= */
+
+        showError(
+
+            "No rider account was found with this email."
+
+        );
+
+    }
+
 );
 
-const successBox =
-document.getElementById(
-"successMessage"
-);
+/* =================================
+    CLEAR MESSAGES WHILE TYPING
+================================= */
 
-/* RESET */
-errorBox.style.display =
-"none";
+emailInput.addEventListener(
 
-successBox.style.display =
-"none";
+    "input",
 
-/* GET RIDERS */
-const riders =
-JSON.parse(
-localStorage.getItem(
-"techrider_riders"
-)
-) || [];
-
-/* FIND MATCH */
-const matchedRider =
-riders.find(rider =>
-
-rider.email.toLowerCase() ===
-email
-
-&&
-
-rider.password === password
+    clearMessages
 
 );
 
-/* INVALID */
-if(!matchedRider){
+passwordInput.addEventListener(
 
-errorBox.style.display =
-"block";
+    "input",
 
-errorBox.textContent =
-"Invalid rider email or password.";
+    clearMessages
 
-return;
-
-}
-
-/* CHECK APPROVAL STATUS */
-if(
-matchedRider.status &&
-matchedRider.status === "pending"
-){
-
-/* SAVE CURRENT RIDER */
-localStorage.setItem(
-"techrider_current_rider",
-JSON.stringify(matchedRider)
 );
 
-successBox.style.display =
-"block";
+/* =================================
+    ENTER KEY SUPPORT
+================================= */
 
-successBox.textContent =
-"Login successful. Redirecting to approval page...";
+document.addEventListener(
 
-setTimeout(() => {
+    "keydown",
 
-window.location.href =
-"awaiting-approval-rider.html";
+    function(e){
 
-},1000);
+        if(
 
-return;
+            e.key === "Enter" &&
 
-}
+            document.activeElement === passwordInput
 
-/* APPROVED LOGIN */
-localStorage.setItem(
-"techrider_current_rider",
-JSON.stringify(matchedRider)
+        ){
+
+            loginForm.requestSubmit();
+
+        }
+
+    }
+
 );
 
-/* OPTIONAL GLOBAL USER */
-localStorage.setItem(
-"techrider_currentUser",
-JSON.stringify({
-id: matchedRider.id,
-fullName: matchedRider.fullName,
-email: matchedRider.email,
-type: "rider"
-})
-);
 
-successBox.style.display =
-"block";
-
-successBox.textContent =
-"Login successful. Redirecting...";
-
-/* REDIRECT */
-setTimeout(() => {
-
-window.location.href =
-"awaiting-approval-rider.html";
-
-},1000);
-
-});
 
 </script>
 

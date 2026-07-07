@@ -274,16 +274,16 @@ Contact Us
 
 </a>
 
+<a
+href="https://wa.me/2348000000000"
+class="contactBtn">
+
+<i class="fab fa-whatsapp"></i>
+Contact Us
+
+</a>
 
 
-<button
-class="refreshBtn"
-onclick="checkSuspensionStatus()">
-
-<i class="fas fa-rotate-right"></i>
-Refresh Status
-
-</button>
 
 </div>
 
@@ -397,30 +397,7 @@ redirectUser();
 
 
 
-/* refresh status */
 
-function checkSuspensionStatus(){
-
-const stillSuspended =
-isSuspended();
-
-if(stillSuspended){
-
-alert(
-'Your account is still suspended.'
-);
-
-}else{
-
-alert(
-'Your account has been reactivated.'
-);
-
-redirectUser();
-
-}
-
-}
 
 
 

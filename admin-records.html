@@ -299,10 +299,140 @@ id="recordsContainer">
 
 <!-- Technician -->
 
+
+<script>
+/* ===========================================================
+   TECHRIDER ADMIN RECORDS
+   PART 1
+=========================================================== */
+
+/* -----------------------------
+   STORAGE
+------------------------------ */
+
+const technicians =
+JSON.parse(
+localStorage.getItem(
+"techrider_technicians"
+)
+) || [];
+
+const riders =
+JSON.parse(
+localStorage.getItem(
+"techrider_riders"
+)
+) || [];
+
+const recordsContainer =
+document.getElementById(
+"recordsContainer"
+);
+
+const searchBox =
+document.getElementById(
+"searchBox"
+);
+
+/* -----------------------------
+   URL PARAMETERS
+------------------------------ */
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const selectedName =
+params.get("tech") ||
+params.get("rider");
+
+/* -----------------------------
+   HELPERS
+------------------------------ */
+
+function formatDate(date){
+
+if(!date) return "N/A";
+
+return new Date(date)
+.toLocaleDateString(
+undefined,
+{
+year:"numeric",
+month:"short",
+day:"numeric"
+}
+);
+
+}
+
+function imageBox(title,image){
+
+if(!image){
+
+return `
+
+<div class="imgBox">
+
+<strong>${title}</strong>
+
+<br><br>
+
+No document uploaded
+
+</div>
+
+`;
+
+}
+
+return `
+
+<div class="imgBox">
+
+<strong>${title}</strong>
+
+<br><br>
+
+<img
+src="${image}"
+style="
+width:100%;
+max-height:220px;
+object-fit:contain;
+border-radius:10px;
+">
+
+</div>
+
+`;
+
+}
+
+/* -----------------------------
+   RENDER TECHNICIAN
+------------------------------ */
+
+function createTechnicianCard(tech){
+
+const status =
+tech.suspended
+? "Suspended"
+: "Approved";
+
+const statusClass =
+tech.suspended
+? "suspended"
+: "approved";
+
+return `
+
 <div
 class="record"
 data-role="technician"
-data-name="Chinedu">
+data-name="${tech.fullName}"
+>
 
 <div class="selectedLabel">
 Selected Record
@@ -313,335 +443,629 @@ Technician
 </div>
 
 <div class="header">
-<h3>Chinedu</h3>
-<span class="status approved">
-Approved
+
+<h3>
+
+${tech.fullName}
+
+</h3>
+
+<span class="status ${statusClass}">
+
+${status}
+
 </span>
+
 </div>
 
 <div class="detailsGrid">
 
 <div class="field">
-<div class="label">Email</div>
-<div class="value">
-chinedu@email.com
-</div>
-</div>
 
-<div class="field">
 <div class="label">
-Specialization
+Email
 </div>
+
 <div class="value">
-Phone Repairs
+
+${tech.email || "N/A"}
+
 </div>
+
 </div>
 
 <div class="field">
+
+<div class="label">
+Phone
+</div>
+
+<div class="value">
+
+${tech.phone || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Address
+</div>
+
+<div class="value">
+
+${tech.address || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
 <div class="label">
 Experience
 </div>
+
 <div class="value">
-5 Years
+
+${tech.experience || "N/A"}
+
 </div>
+
 </div>
 
 <div class="field">
+
 <div class="label">
-Phone
+Submitted
 </div>
+
 <div class="value">
-08030000001
-</div>
-</div>
 
-</div>
+${formatDate(
+tech.submittedAt
+)}
 
-<div class="images">
-
-<div class="imgBox">
-Business License Image
-</div>
-
-<div class="imgBox">
-Facial Verification Image
 </div>
 
 </div>
 
 </div>
 
+<button
+class="backBtn toggleDocs"
+style="
+margin-bottom:20px;
+"
+>
 
+View Documents ▼
 
-<!-- Rider -->
+</button>
 
 <div
-class="record"
-data-role="rider"
-data-name="Tunde">
+class="images"
+style="display:none;"
+>
 
-<div class="selectedLabel">
-Selected Record
-</div>
+${imageBox(
+"Facial Verification",
+tech.facialImage
+)}
 
-<div class="roleTag">
-Rider
-</div>
+${imageBox(
+"Government ID",
+tech.governmentId
+)}
 
-<div class="header">
-<h3>Tunde</h3>
-<span class="status approved">
-Approved
-</span>
-</div>
-
-<div class="detailsGrid">
-
-<div class="field">
-<div class="label">
-Email
-</div>
-<div class="value">
-tunde@email.com
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Vehicle Type
-</div>
-<div class="value">
-Motorcycle
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Plate Number
-</div>
-<div class="value">
-LAG-234TR
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Phone
-</div>
-<div class="value">
-08030000011
-</div>
-</div>
-
-</div>
-
-<div class="images">
-
-<div class="imgBox">
-Driver License Image
-</div>
-
-<div class="imgBox">
-Facial Verification Image
-</div>
+${imageBox(
+"Business License",
+tech.businessLicense
+)}
 
 </div>
 
 </div>
 
+`;
 
+}
 
-<!-- Rider 2 -->
+/* -----------------------------
+   INITIAL RENDER
+------------------------------ */
 
-<div
-class="record"
-data-role="rider"
-data-name="Amina">
+function renderRecords(){
 
-<div class="selectedLabel">
-Selected Record
-</div>
+recordsContainer.innerHTML = "";
 
-<div class="roleTag">
-Rider
-</div>
+/* ---------- TECHNICIANS ---------- */
 
-<div class="header">
-<h3>Amina</h3>
+technicians.forEach(tech=>{
 
-<span class="status approved">
-Approved
-</span>
+recordsContainer.innerHTML +=
 
-</div>
+createTechnicianCard(tech);
 
-<div class="detailsGrid">
-
-<div class="field">
-<div class="label">
-Email
-</div>
-<div class="value">
-amina@email.com
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Vehicle Type
-</div>
-<div class="value">
-Bike
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Plate Number
-</div>
-<div class="value">
-ABJ-882KL
-</div>
-</div>
-
-<div class="field">
-<div class="label">
-Phone
-</div>
-<div class="value">
-08030000012
-</div>
-</div>
-
-</div>
-
-<div class="images">
-
-<div class="imgBox">
-Driver License Image
-</div>
-
-<div class="imgBox">
-Facial Verification Image
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<script>
-
-/* URL selection */
-
-const params=
-new URLSearchParams(
-location.search
-);
-
-const tech=
-params.get('tech');
-
-const rider=
-params.get('rider');
-
-const selectedName=
-tech || rider;
-
-if(selectedName){
-
-const selected=
-document.querySelector(
-`[data-name="${selectedName}"]`
-);
-
-if(selected){
-
-selected.classList.add(
-'highlighted'
-);
-
-setTimeout(()=>{
-selected.scrollIntoView({
-behavior:'smooth',
-block:'center'
 });
-},300);
+
+/* Riders will be added
+   in Part 2 */
 
 }
 
+/* ===========================================================
+   TECHRIDER ADMIN RECORDS
+   PART 2
+=========================================================== */
+
+/* -----------------------------
+   RENDER RIDER
+------------------------------ */
+
+function createRiderCard(rider){
+
+const status =
+rider.suspended
+? "Suspended"
+: "Approved";
+
+const statusClass =
+rider.suspended
+? "suspended"
+: "approved";
+
+return `
+
+<div
+class="record"
+data-role="rider"
+data-name="${rider.fullName}"
+>
+
+<div class="selectedLabel">
+Selected Record
+</div>
+
+<div class="roleTag">
+Rider
+</div>
+
+<div class="header">
+
+<h3>
+
+${rider.fullName}
+
+</h3>
+
+<span class="status ${statusClass}">
+
+${status}
+
+</span>
+
+</div>
+
+<div class="detailsGrid">
+
+<div class="field">
+
+<div class="label">
+Email
+</div>
+
+<div class="value">
+
+${rider.email || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Phone
+</div>
+
+<div class="value">
+
+${rider.phone || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Address
+</div>
+
+<div class="value">
+
+${rider.address || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Vehicle Type
+</div>
+
+<div class="value">
+
+${rider.vehicleType || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Plate Number
+</div>
+
+<div class="value">
+
+${rider.plateNumber || "N/A"}
+
+</div>
+
+</div>
+
+<div class="field">
+
+<div class="label">
+Submitted
+</div>
+
+<div class="value">
+
+${formatDate(
+rider.submittedAt
+)}
+
+</div>
+
+</div>
+
+</div>
+
+<button
+class="backBtn toggleDocs"
+style="
+margin-bottom:20px;
+">
+
+View Documents ▼
+
+</button>
+
+<div
+class="images"
+style="display:none;"
+>
+
+${imageBox(
+"Facial Verification",
+rider.facialImage
+)}
+
+${imageBox(
+"Driver's License",
+rider.driversLicense
+)}
+
+${imageBox(
+"Government ID",
+rider.governmentId
+)}
+
+</div>
+
+</div>
+
+`;
+
 }
 
+/* -----------------------------
+   COMPLETE RENDER
+------------------------------ */
 
-/* Search */
+const originalRender =
+renderRecords;
 
-searchBox.addEventListener(
-'input',
-function(){
+renderRecords = function(){
 
-const q=
-this.value.toLowerCase();
+recordsContainer.innerHTML = "";
+
+/* Technicians */
+
+technicians.forEach(tech=>{
+
+recordsContainer.innerHTML +=
+createTechnicianCard(tech);
+
+});
+
+/* Riders */
+
+riders.forEach(rider=>{
+
+recordsContainer.innerHTML +=
+createRiderCard(rider);
+
+});
+
+/* Enable document toggles */
+
+setupDocumentButtons();
+
+};
+
+/* -----------------------------
+   DOCUMENT TOGGLE
+------------------------------ */
+
+function setupDocumentButtons(){
 
 document
-.querySelectorAll(
-'.record'
-)
+.querySelectorAll(".toggleDocs")
+.forEach(button=>{
+
+button.onclick = function(){
+
+const images =
+
+this.nextElementSibling;
+
+const opened =
+
+images.style.display === "grid";
+
+images.style.display =
+
+opened
+? "none"
+: "grid";
+
+this.innerHTML =
+
+opened
+? "View Documents ▼"
+: "Hide Documents ▲";
+
+};
+
+});
+
+}
+
+/* ===========================================================
+   TECHRIDER ADMIN RECORDS
+   PART 3
+=========================================================== */
+
+/* -----------------------------
+   SEARCH
+------------------------------ */
+
+searchBox.addEventListener(
+"input",
+function(){
+
+const query =
+this.value
+.toLowerCase()
+.trim();
+
+document
+.querySelectorAll(".record")
 .forEach(card=>{
 
-const name=
-card.dataset.name
+const name =
+(card.dataset.name || "")
 .toLowerCase();
 
-card.style.display=
-name.includes(q)
-?'block'
-:'none';
+const role =
+(card.dataset.role || "")
+.toLowerCase();
+
+const text =
+card.innerText
+.toLowerCase();
+
+const match =
+
+name.includes(query) ||
+
+role.includes(query) ||
+
+text.includes(query);
+
+card.style.display =
+match
+? "block"
+: "none";
 
 });
 
 });
 
-
-/* role filter */
+/* -----------------------------
+   ROLE FILTER
+------------------------------ */
 
 function filterRole(role,tab){
 
 document
-.querySelectorAll(
-'.tab'
-)
-.forEach(t=>
-t.classList.remove(
-'active'
+.querySelectorAll(".tab")
+.forEach(button=>
+button.classList.remove(
+"active"
 )
 );
 
 tab.classList.add(
-'active'
+"active"
 );
 
 document
-.querySelectorAll(
-'.record'
-)
+.querySelectorAll(".record")
 .forEach(card=>{
 
 if(
-role==='all' ||
+role==="all" ||
 card.dataset.role===role
 ){
-card.style.display='block';
-}
-else{
-card.style.display='none';
+
+card.style.display="block";
+
+}else{
+
+card.style.display="none";
+
 }
 
 });
 
 }
+
+/* -----------------------------
+   HIGHLIGHT RECORD
+------------------------------ */
+
+function highlightSelectedRecord(){
+
+if(!selectedName){
+
+return;
+
+}
+
+const cards =
+document.querySelectorAll(
+".record"
+);
+
+cards.forEach(card=>{
+
+if(
+card.dataset.name ===
+selectedName
+){
+
+card.classList.add(
+"highlighted"
+);
+
+/* Automatically expand documents */
+
+const images =
+card.querySelector(".images");
+
+const button =
+card.querySelector(".toggleDocs");
+
+if(images){
+
+images.style.display =
+"grid";
+
+}
+
+if(button){
+
+button.innerHTML =
+"Hide Documents ▲";
+
+}
+
+/* Smooth scroll */
+
+setTimeout(()=>{
+
+card.scrollIntoView({
+
+behavior:"smooth",
+
+block:"center"
+
+});
+
+},300);
+
+}
+
+});
+
+}
+
+/* -----------------------------
+   EMPTY STATE
+------------------------------ */
+
+function showEmptyMessage(){
+
+if(
+
+technicians.length===0 &&
+
+riders.length===0
+
+){
+
+recordsContainer.innerHTML =
+
+`
+
+<div
+style="
+background:white;
+padding:60px;
+border-radius:20px;
+text-align:center;
+color:#777;
+font-size:1rem;
+">
+
+No approved technicians or riders found.
+
+</div>
+
+`;
+
+}
+
+}
+
+/* -----------------------------
+   INITIALIZE
+------------------------------ */
+
+showEmptyMessage();
+
+renderRecords();
+
+highlightSelectedRecord();
+
+/* -----------------------------
+   READY
+------------------------------ */
+
+console.log(
+"TechRider Records Ready"
+);
+
 
 </script>
 
