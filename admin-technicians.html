@@ -303,7 +303,7 @@ grid-template-columns:1fr;
 <div class="overlay" id="overlay"></div>
 
 <!-- Sidebar -->
-<div class="sidebar collapsed" id="sidebar">
+<div class="sidebar" id="sidebar">
 
 <div class="brand" onclick="toggleSidebar()">
 <div class="logo">A</div>
@@ -346,22 +346,22 @@ grid-template-columns:1fr;
 
 <div class="card">
 <h4>Total Technicians</h4>
-<div class="metric">34</div>
+<div class="metric" id="totalCount">0</div>
 </div>
 
 <div class="card">
-<h4>Available</h4>
-<div class="metric">22</div>
+<h4>Active Accounts</h4>
+<div class="metric" id="activeCount">0</div>
 </div>
 
 <div class="card">
-<h4>Completed Jobs</h4>
-<div class="metric">74</div>
+<h4>New This Week</h4>
+<div class="metric" id="newCount">0</div>
 </div>
 
 <div class="card">
 <h4>Suspended</h4>
-<div class="metric" id="suspendedCount">3</div>
+<div class="metric" id="suspendedCount">0</div>
 </div>
 
 </div>
@@ -399,7 +399,6 @@ placeholder="Search technician">
 <tr>
 <th>Name</th>
 <th>Email</th>
-<th>Specialization</th>
 <th>Completed</th>
 <th>Status</th>
 <th>Joined</th>
@@ -407,128 +406,7 @@ placeholder="Search technician">
 </tr>
 </thead>
 
-<tbody id="techTable">
-
-<tr
-data-name="Chinedu"
-data-status="active"
-data-joined="2026-03-20"
-data-jobs="31">
-
-<td>Chinedu</td>
-<td>chinedu@email.com</td>
-<td>Phones</td>
-<td>31</td>
-
-<td>
-<span class="badge activeStat">
-Active
-</span>
-</td>
-
-<td>Mar 20</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Chinedu')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Suspend
-</button>
-
-</div>
-</td>
-
-</tr>
-
-
-<tr
-data-name="Bola"
-data-status="active"
-data-joined="2026-02-11"
-data-jobs="18">
-
-<td>Bola</td>
-<td>bola@email.com</td>
-<td>Laptops</td>
-<td>18</td>
-
-<td>
-<span class="badge activeStat">
-Active
-</span>
-</td>
-
-<td>Feb 11</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Bola')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Suspend
-</button>
-
-</div>
-</td>
-
-</tr>
-
-
-<tr
-data-name="Sade"
-data-status="suspended"
-data-joined="2026-01-08"
-data-jobs="25">
-
-<td>Sade</td>
-<td>sade@email.com</td>
-<td>Laptops</td>
-<td>25</td>
-
-<td>
-<span class="badge suspendedStat">
-Suspended
-</span>
-</td>
-
-<td>Jan 08</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Sade')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Reactivate
-</button>
-
-</div>
-</td>
-
-</tr>
-
-</tbody>
+<tbody id="techTable"></tbody>
 
 </table>
 </div>
@@ -538,202 +416,772 @@ Reactivate
 
 <script>
 
-/* Sidebar */
-const sidebar=document.getElementById('sidebar');
-const overlay=document.getElementById('overlay');
+/* ===========================================================
+   TECHNICIAN MANAGEMENT
+   PART 1
+=========================================================== */
+
+/* -----------------------------
+   STORAGE KEYS
+------------------------------ */
+
+const TECHNICIANS_KEY = "techrider_technicians";
+const CURRENT_TECH_KEY = "techrider_current_technician";
+
+/* -----------------------------
+   DOM REFERENCES
+------------------------------ */
+
+const sidebar =
+document.getElementById("sidebar");
+
+const overlay =
+document.getElementById("overlay");
+
+const hamburger =
+document.getElementById("hamburger");
+
+const techTable =
+document.getElementById("techTable");
+
+const searchBox =
+document.getElementById("searchBox");
+
+const statusFilter =
+document.getElementById("statusFilter");
+
+const sortFilter =
+document.getElementById("sortFilter");
+
+const totalCount =
+document.getElementById("totalCount");
+
+const activeCount =
+document.getElementById("activeCount");
+
+const suspendedCount =
+document.getElementById("suspendedCount");
+
+const newCount =
+document.getElementById("newCount");
+
+/* -----------------------------
+   SIDEBAR
+------------------------------ */
+
+/*
+Desktop:
+expanded by default
+click logo to collapse
+
+Mobile:
+hamburger opens
+overlay closes
+*/
 
 function toggleSidebar(){
-sidebar.classList.toggle('collapsed');
+
+    if(window.innerWidth <= 768){
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+
+        return;
+
+    }
+
+    sidebar.classList.toggle("collapsed");
+
 }
 
-document
-.getElementById('hamburger')
-.addEventListener('click',function(){
-sidebar.classList.add('open');
-overlay.classList.add('show');
+hamburger.addEventListener("click",toggleSidebar);
+
+overlay.addEventListener("click",()=>{
+
+    sidebar.classList.remove("open");
+
+    overlay.classList.remove("show");
+
 });
 
-overlay.addEventListener('click',function(){
-sidebar.classList.remove('open');
-overlay.classList.remove('show');
+window.addEventListener("resize",()=>{
+
+    if(window.innerWidth>768){
+
+        sidebar.classList.remove("open");
+
+        overlay.classList.remove("show");
+
+    }
+
 });
 
+/* -----------------------------
+   LOAD TECHNICIANS
+------------------------------ */
 
-/* Future profile routing */
+function getTechnicians(){
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            TECHNICIANS_KEY
+        )
+
+    ) || [];
+
+}
+
+/* -----------------------------
+   SAVE TECHNICIANS
+------------------------------ */
+
+function saveTechnicians(data){
+
+    localStorage.setItem(
+
+        TECHNICIANS_KEY,
+
+        JSON.stringify(data)
+
+    );
+
+}
+
+/* -----------------------------
+   DATE FORMAT
+------------------------------ */
+
+function formatDate(date){
+
+    if(!date)
+        return "-";
+
+    return new Date(date)
+
+        .toLocaleDateString(
+
+            "en-GB",
+
+            {
+
+                day:"2-digit",
+
+                month:"short",
+
+                year:"numeric"
+
+            }
+
+        );
+
+}
+
+/* -----------------------------
+   NEW THIS WEEK
+------------------------------ */
+
+function isThisWeek(date){
+
+    if(!date)
+        return false;
+
+    const today =
+    new Date();
+
+    const joined =
+    new Date(date);
+
+    const sevenDaysAgo =
+    new Date();
+
+    sevenDaysAgo.setDate(
+
+        today.getDate()-7
+
+    );
+
+    return joined >= sevenDaysAgo;
+
+}
+
+/* -----------------------------
+   METRICS
+------------------------------ */
+
+function updateMetrics(){
+
+    const technicians =
+    getTechnicians();
+
+    totalCount.textContent =
+    technicians.length;
+
+    activeCount.textContent =
+
+    technicians.filter(
+
+        tech=>!tech.suspended
+
+    ).length;
+
+    suspendedCount.textContent =
+
+    technicians.filter(
+
+        tech=>tech.suspended
+
+    ).length;
+
+    newCount.textContent =
+
+    technicians.filter(
+
+        tech=>
+
+        isThisWeek(
+
+            tech.approvedAt ||
+
+            tech.createdAt ||
+
+            tech.submittedAt
+
+        )
+
+    ).length;
+
+}
+
+/* -----------------------------
+   COMPLETED JOBS
+------------------------------ */
+
+function getCompletedJobs(technicianId){
+
+    const requests =
+
+    JSON.parse(
+
+        localStorage.getItem(
+
+            "techrider_requests"
+
+        )
+
+    ) || [];
+
+    return requests.filter(request=>{
+
+        return (
+
+            request.assignedTechnician === technicianId &&
+
+            request.status === "completed"
+
+        );
+
+    }).length;
+
+}
+
+/* ===========================================================
+   TECHNICIAN MANAGEMENT
+   PART 2
+=========================================================== */
+
+/* -----------------------------
+   PROFILE
+------------------------------ */
+
 function openProfile(name){
-location.href=
-'admin-records.html?tech='+
-encodeURIComponent(name);
-}
 
+    window.location.href =
 
-/* Suspend toggle */
-function toggleSuspend(btn){
+        "admin-records.html?tech=" +
 
-const row=btn.closest('tr');
-const badge=row.querySelector('.badge');
-
-let suspendedCount=
-parseInt(
-document.getElementById(
-'suspendedCount'
-).innerText
-);
-
-if(row.dataset.status==='active'){
-
-row.dataset.status='suspended';
-
-badge.className='badge suspendedStat';
-badge.textContent='Suspended';
-
-btn.textContent='Reactivate';
-
-suspendedCount++;
-
-}else{
-
-row.dataset.status='active';
-
-badge.className='badge activeStat';
-badge.textContent='Active';
-
-btn.textContent='Suspend';
-
-suspendedCount--;
+        encodeURIComponent(name);
 
 }
 
-document.getElementById(
-'suspendedCount'
-).innerText=suspendedCount;
+/* -----------------------------
+   SUSPEND / REACTIVATE
+------------------------------ */
 
-applyFiltersAndSort();
+function toggleSuspend(technicianId){
+
+    const technicians =
+    getTechnicians();
+
+    const technician =
+    technicians.find(t=>
+
+        String(t.id)===String(technicianId)
+
+    );
+
+    if(!technician){
+        return;
+    }
+
+    /* -----------------------------
+       CONFIRM ACTION
+    ------------------------------ */
+
+    const action = technician.suspended
+        ? "reactivate"
+        : "suspend";
+
+    const confirmed = confirm(
+
+        `Are you sure you want to ${action} ${technician.fullName}?`
+
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+    /* -----------------------------
+       TOGGLE STATUS
+    ------------------------------ */
+
+    technician.suspended =
+    !technician.suspended;
+
+    saveTechnicians(technicians);
+
+    /* -----------------------------
+       UPDATE CURRENT SESSION
+    ------------------------------ */
+
+    const currentTech =
+    JSON.parse(
+        localStorage.getItem(
+            CURRENT_TECH_KEY
+        )
+    );
+
+    if(
+        currentTech &&
+        String(currentTech.id) ===
+        String(technician.id)
+    ){
+
+        currentTech.suspended =
+        technician.suspended;
+
+        localStorage.setItem(
+            CURRENT_TECH_KEY,
+            JSON.stringify(currentTech)
+        );
+
+    }
+
+    renderTable();
+
+    updateMetrics();
+
+    alert(
+
+        technician.suspended
+        ? `${technician.fullName} has been suspended successfully.`
+        : `${technician.fullName} has been reactivated successfully.`
+
+    );
+
+}
+/* -----------------------------
+   TABLE
+------------------------------ */
+
+function renderTable(){
+
+    techTable.innerHTML = "";
+
+    const technicians =
+    getTechnicians();
+
+    technicians.forEach(tech=>{
+
+        const row =
+        document.createElement("tr");
+
+        row.dataset.name =
+        tech.fullName || "";
+
+        row.dataset.status =
+
+        tech.suspended ?
+
+        "suspended"
+
+        :
+
+        "active";
+
+        row.dataset.joined =
+
+        tech.approvedAt ||
+
+        tech.createdAt ||
+
+        tech.submittedAt ||
+
+        "";
+
+        row.dataset.jobs =
+
+        getCompletedJobs(
+
+            tech.id
+
+        );
+
+        row.innerHTML = `
+
+<td>
+
+${tech.fullName || "-"}
+
+</td>
+
+<td>
+
+${tech.email || "-"}
+
+</td>
+
+<td>
+
+${getCompletedJobs(tech.id)}
+
+</td>
+
+<td>
+
+<span class="badge ${
+
+tech.suspended ?
+
+"suspendedStat"
+
+:
+
+"activeStat"
+
+}">
+
+${
+
+tech.suspended ?
+
+"Suspended"
+
+:
+
+"Active"
 
 }
 
+</span>
 
-/* Combined filters + sorting */
+</td>
+
+<td>
+
+${formatDate(
+
+tech.approvedAt ||
+
+tech.createdAt ||
+
+tech.submittedAt
+
+)}
+
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="btn btnGhost">
+
+Profile
+
+</button>
+
+<button
+class="btn btnPrimary">
+
+${
+
+tech.suspended ?
+
+"Reactivate"
+
+:
+
+"Suspend"
+
+}
+
+</button>
+
+</div>
+
+</td>
+
+`;
+
+        /* ------------------
+           PROFILE
+        ------------------- */
+
+        row
+
+        .querySelector(".btnGhost")
+
+        .addEventListener(
+
+            "click",
+
+            ()=>{
+
+                openProfile(
+
+                    tech.fullName
+
+                );
+
+            }
+
+        );
+
+        /* ------------------
+           SUSPEND
+        ------------------- */
+
+        row
+
+        .querySelector(".btnPrimary")
+
+        .addEventListener(
+
+            "click",
+
+            ()=>{
+
+                toggleSuspend(
+
+                    tech.id
+
+                );
+
+            }
+
+        );
+
+        techTable.appendChild(row);
+
+    });
+
+    updateMetrics();
+
+}
+
+/* ===========================================================
+   TECHNICIAN MANAGEMENT
+   PART 3
+=========================================================== */
+
+/* -----------------------------
+   SEARCH + FILTER + SORT
+------------------------------ */
+
 function applyFiltersAndSort(){
 
-const q=
-document
-.getElementById('searchBox')
-.value
-.toLowerCase();
+    const query =
+    searchBox.value
+    .trim()
+    .toLowerCase();
 
-const status=
-document
-.getElementById('statusFilter')
-.value;
+    const status =
+    statusFilter.value;
 
-const sort=
-document
-.getElementById('sortFilter')
-.value;
+    const sort =
+    sortFilter.value;
 
-const tbody=
-document.getElementById('techTable');
+    let rows =
 
-let rows=[
-...tbody.querySelectorAll('tr')
-];
+    Array.from(
 
+        techTable.querySelectorAll("tr")
 
-/* filter */
-rows.forEach(row=>{
+    );
 
-const nameMatch=
-row.dataset.name
-.toLowerCase()
-.includes(q);
+    /* -------------------------
+       FILTER
+    -------------------------- */
 
-const statusMatch=
-status==='all' ||
-row.dataset.status===status;
+    rows.forEach(row=>{
 
-row.style.display=
-(nameMatch && statusMatch)
-?'table-row'
-:'none';
+        const matchesSearch =
 
-});
+            row.dataset.name
+            .toLowerCase()
+            .includes(query);
 
+        const matchesStatus =
 
-/* sort visible rows only */
-let visibleRows=
-rows.filter(
-r=>r.style.display!=='none'
-);
+            status==="all" ||
 
-visibleRows.sort((a,b)=>{
+            row.dataset.status===status;
 
-if(sort==='newest'){
-return new Date(
-b.dataset.joined
-)-new Date(
-a.dataset.joined
-);
+        row.style.display =
+
+            matchesSearch && matchesStatus
+
+            ?
+
+            "table-row"
+
+            :
+
+            "none";
+
+    });
+
+    /* -------------------------
+       SORT
+    -------------------------- */
+
+    const visibleRows =
+
+    rows.filter(
+
+        row=>row.style.display!=="none"
+
+    );
+
+    visibleRows.sort((a,b)=>{
+
+        switch(sort){
+
+            case "newest":
+
+                return new Date(b.dataset.joined)
+
+                -
+
+                new Date(a.dataset.joined);
+
+            case "oldest":
+
+                return new Date(a.dataset.joined)
+
+                -
+
+                new Date(b.dataset.joined);
+
+            case "jobs":
+
+                return Number(b.dataset.jobs)
+
+                -
+
+                Number(a.dataset.jobs);
+
+            case "alpha":
+
+                return a.dataset.name.localeCompare(
+
+                    b.dataset.name
+
+                );
+
+            default:
+
+                return 0;
+
+        }
+
+    });
+
+    visibleRows.forEach(row=>{
+
+        techTable.appendChild(row);
+
+    });
+
 }
 
-if(sort==='oldest'){
-return new Date(
-a.dataset.joined
-)-new Date(
-b.dataset.joined
-);
-}
+/* -----------------------------
+   EVENTS
+------------------------------ */
 
-if(sort==='jobs'){
-return parseInt(
-b.dataset.jobs
-)-parseInt(
-a.dataset.jobs
-);
-}
+searchBox.addEventListener(
 
-if(sort==='alpha'){
-return a.dataset.name.localeCompare(
-b.dataset.name
-);
-}
+    "input",
 
-return 0;
+    applyFiltersAndSort
 
-});
-
-visibleRows.forEach(row=>{
-tbody.appendChild(row);
-});
-
-}
-
-
-/* Events */
-document
-.getElementById('searchBox')
-.addEventListener(
-'input',
-applyFiltersAndSort
 );
 
-document
-.getElementById('statusFilter')
-.addEventListener(
-'change',
-applyFiltersAndSort
+statusFilter.addEventListener(
+
+    "change",
+
+    applyFiltersAndSort
+
 );
 
-document
-.getElementById('sortFilter')
-.addEventListener(
-'change',
-applyFiltersAndSort
+sortFilter.addEventListener(
+
+    "change",
+
+    applyFiltersAndSort
+
 );
 
+/* -----------------------------
+   STORAGE LISTENER
 
-/* default load */
+   Keeps page live when
+   another admin page changes
+   technician data.
+------------------------------ */
+
+window.addEventListener(
+
+    "storage",
+
+    ()=>{
+
+        renderTable();
+
+        applyFiltersAndSort();
+
+    }
+
+);
+
+/* -----------------------------
+   INITIAL LOAD
+------------------------------ */
+
+renderTable();
+
 applyFiltersAndSort();
+
+console.log(
+
+    "Technician Management Ready"
+
+);
+
 
 </script>
 

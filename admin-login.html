@@ -267,22 +267,21 @@ operations.
 <div class="stats">
 
 <div class="stat">
-<h2>248</h2>
-<p>Active Requests</p>
+<h2 id="customerCount">0</h2>
+<p>Total Customers</p>
 </div>
 
 <div class="stat">
-<h2>126</h2>
-<p>Verified Technicians</p>
+<h2 id="technicianCount">0</h2>
+<p>Total Technicians</p>
 </div>
 
 <div class="stat">
-<h2>44</h2>
-<p>Riders Online</p>
+<h2 id="riderCount">0</h2>
+<p>Total Riders</p>
 </div>
 
 </div>
-
 </div>
 
 
@@ -359,6 +358,43 @@ id="successBox">
 
 
 <script>
+
+    /* =========================================
+ADMIN LOGIN METRICS
+========================================= */
+
+function loadStatistics(){
+
+    const customers =
+    JSON.parse(
+        localStorage.getItem(
+            "techrider_customers"
+        )
+    ) || [];
+
+    const technicians =
+    JSON.parse(
+        localStorage.getItem(
+            "techrider_technicians"
+        )
+    ) || [];
+
+    const riders =
+    JSON.parse(
+        localStorage.getItem(
+            "techrider_riders"
+        )
+    ) || [];
+
+    document.getElementById("customerCount").textContent =
+customers.length;
+
+document.getElementById("technicianCount").textContent =
+technicians.length;
+
+document.getElementById("riderCount").textContent =
+riders.length;
+}
 
 let attempts=0;
 
@@ -472,6 +508,12 @@ err.style.display='block';
 }
 
 }
+
+/* =========================================
+INITIALIZE
+========================================= */
+
+loadStatistics();
 
 </script>
 

@@ -302,7 +302,7 @@ grid-template-columns:1fr;
 
 <div class="overlay" id="overlay"></div>
 
-<div class="sidebar collapsed" id="sidebar">
+<div class="sidebar" id="sidebar">
 
 <div class="brand" onclick="toggleSidebar()">
 <div class="logo">A</div>
@@ -346,26 +346,25 @@ id="hamburger">
 
 <div class="card">
 <h4>Total Riders</h4>
-<div class="metric">18</div>
+<div class="metric" id="totalRidersCount">0</div>
 </div>
 
 <div class="card">
-<h4>Available</h4>
-<div class="metric">12</div>
+    <h4>New This Week</h4>
+    <div class="metric" id="newThisWeekCount">0</div>
 </div>
 
 <div class="card">
 <h4>Completed Deliveries</h4>
-<div class="metric">96</div>
+<div class="metric" id="totalRidersCount">0</div>
 </div>
 
 <div class="card">
 <h4>Suspended</h4>
 <div class="metric"
 id="suspendedCount">
-2
-</div>
-</div>
+0
+</div></div>
 
 </div>
 
@@ -437,136 +436,10 @@ Alphabetical
 </tr>
 </thead>
 
-
 <tbody id="riderTable">
 
-
-<tr
-data-name="Tunde"
-data-status="active"
-data-joined="2026-03-28"
-data-deliveries="32">
-
-<td>Tunde</td>
-<td>tunde@email.com</td>
-<td>Motorcycle</td>
-<td>LAG-234TR</td>
-<td>32</td>
-
-<td>
-<span class="badge activeStat">
-Active
-</span>
-</td>
-
-<td>Mar 28</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Tunde')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Suspend
-</button>
-
-</div>
-</td>
-
-</tr>
-
-
-
-<tr
-data-name="Amina"
-data-status="active"
-data-joined="2026-02-16"
-data-deliveries="21">
-
-<td>Amina</td>
-<td>amina@email.com</td>
-<td>Bike</td>
-<td>ABJ-882KL</td>
-<td>21</td>
-
-<td>
-<span class="badge activeStat">
-Active
-</span>
-</td>
-
-<td>Feb 16</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Amina')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Suspend
-</button>
-
-</div>
-</td>
-
-</tr>
-
-
-
-<tr
-data-name="Femi"
-data-status="suspended"
-data-joined="2026-01-04"
-data-deliveries="17">
-
-<td>Femi</td>
-<td>femi@email.com</td>
-<td>Scooter</td>
-<td>IBD-113ZX</td>
-<td>17</td>
-
-<td>
-<span class="badge suspendedStat">
-Suspended
-</span>
-</td>
-
-<td>Jan 04</td>
-
-<td>
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="openProfile('Femi')">
-Profile
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(this)">
-Reactivate
-</button>
-
-</div>
-</td>
-
-</tr>
-
-
 </tbody>
+
 </table>
 
 </div>
@@ -575,226 +448,692 @@ Reactivate
 
 
 <script>
+    /* ===========================================================
+   RIDER MANAGEMENT
+   PART 1
+   Sidebar + Storage + Metrics + Rendering
+=========================================================== */
 
-const sidebar=
-document.getElementById(
-'sidebar'
-);
+/* =========================================
+SIDEBAR
+========================================= */
 
-const overlay=
-document.getElementById(
-'overlay'
-);
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
 
 function toggleSidebar(){
-sidebar.classList.toggle(
-'collapsed'
-);
+
+    if(window.innerWidth <= 768){
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+
+    }else{
+
+        sidebar.classList.toggle("collapsed");
+
+    }
+
 }
 
 document
-.getElementById(
-'hamburger'
-)
-.addEventListener(
-'click',
-function(){
-sidebar.classList.add('open');
-overlay.classList.add('show');
+.getElementById("hamburger")
+.addEventListener("click",toggleSidebar);
+
+overlay.addEventListener("click",()=>{
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+
+});
+
+window.addEventListener("resize",()=>{
+
+    if(window.innerWidth > 768){
+
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+
+    }
+
+});
+
+
+/* =========================================
+STORAGE
+========================================= */
+
+const RIDERS_KEY = "techrider_riders";
+
+const riderTable =
+document.getElementById("riderTable");
+
+
+/* =========================================
+HELPERS
+========================================= */
+
+function getRiders(){
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            RIDERS_KEY
+        )
+
+    ) || [];
+
 }
-);
 
-overlay.onclick=function(){
-sidebar.classList.remove('open');
-overlay.classList.remove('show');
-};
+function saveRiders(riders){
+
+    localStorage.setItem(
+
+        RIDERS_KEY,
+
+        JSON.stringify(riders)
+
+    );
+
+}
 
 
-/* future records page */
+/* =========================================
+DATE FORMAT
+========================================= */
+
+function formatJoinedDate(date){
+
+    if(!date) return "N/A";
+
+    return new Date(date)
+    .toLocaleDateString(
+
+        "en-GB",
+
+        {
+
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+
+        }
+
+    );
+
+}
+
+
+/* =========================================
+METRICS
+========================================= */
+
+function updateMetrics(){
+
+    const riders = getRiders();
+
+    document.getElementById(
+        "totalRidersCount"
+    ).textContent = riders.length;
+
+    document.getElementById(
+        "suspendedCount"
+    ).textContent = riders.filter(
+
+        rider => rider.suspended
+
+    ).length;
+
+    /* -------------------------
+       New This Week
+    ------------------------- */
+
+    const today = new Date();
+
+    const oneWeekAgo =
+    new Date();
+
+    oneWeekAgo.setDate(
+        today.getDate()-7
+    );
+
+    const newThisWeek = riders.filter(rider=>{
+
+        if(!rider.approvedAt &&
+           !rider.createdAt &&
+           !rider.submittedAt){
+
+            return false;
+
+        }
+
+        const joined = new Date(
+
+            rider.approvedAt ||
+            rider.createdAt ||
+            rider.submittedAt
+
+        );
+
+        return joined >= oneWeekAgo;
+
+    });
+
+    document.getElementById(
+        "newThisWeekCount"
+    ).textContent = newThisWeek.length;
+
+    /* -------------------------
+       Completed Deliveries
+    ------------------------- */
+
+    let totalCompleted = 0;
+
+    riders.forEach(rider=>{
+
+        totalCompleted +=
+        Number(
+            rider.completedDeliveries || 0
+        );
+
+    });
+
+    document.getElementById(
+        "completedDeliveriesCount"
+    ).textContent = totalCompleted;
+
+}
+
+
+/* =========================================
+PROFILE
+========================================= */
+
 function openProfile(name){
 
-location.href=
-'admin-records.html?rider='+
-encodeURIComponent(name);
+    location.href =
+
+    "admin-records.html?rider=" +
+
+    encodeURIComponent(name);
 
 }
 
 
-/* suspend */
-function toggleSuspend(btn){
+/* =========================================
+RENDER TABLE
+========================================= */
 
-const row=btn.closest('tr');
-const badge=row.querySelector('.badge');
+function renderTable(){
 
-let suspended=
-parseInt(
-document.getElementById(
-'suspendedCount'
-).innerText
-);
+    const riders = getRiders();
 
-if(
-row.dataset.status==='active'
-){
+    riderTable.innerHTML = "";
 
-row.dataset.status='suspended';
+    riders.forEach(rider=>{
 
-badge.className=
-'badge suspendedStat';
+        const completed =
 
-badge.textContent=
-'Suspended';
+        rider.completedDeliveries || 0;
 
-btn.textContent=
-'Reactivate';
+        riderTable.innerHTML += `
 
-suspended++;
+<tr
 
-}else{
+data-id="${rider.id}"
+data-name="${rider.fullName}"
+data-status="${
+rider.suspended
+? "suspended"
+: "active"
+}"
+data-joined="${
+rider.approvedAt ||
+rider.createdAt ||
+rider.submittedAt
+}"
+data-deliveries="${completed}">
 
-row.dataset.status='active';
+<td>${rider.fullName}</td>
 
-badge.className=
-'badge activeStat';
+<td>${rider.email || "-"}</td>
 
-badge.textContent=
-'Active';
+<td>${rider.vehicleType || "-"}</td>
 
-btn.textContent=
-'Suspend';
+<td>${rider.plateNumber || "-"}</td>
 
-suspended--;
+<td>${completed}</td>
+
+<td>
+
+<span class="badge
+${rider.suspended
+? "suspendedStat"
+: "activeStat"}">
+
+${rider.suspended
+? "Suspended"
+: "Active"}
+
+</span>
+
+</td>
+
+<td>
+
+${formatJoinedDate(
+
+rider.approvedAt ||
+rider.createdAt ||
+rider.submittedAt
+
+)}
+
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="btn btnGhost"
+onclick="openProfile('${rider.fullName}')">
+
+Profile
+
+</button>
+
+<button
+class="btn btnPrimary"
+onclick="toggleSuspend('${rider.id}')">
+
+${rider.suspended
+? "Reactivate"
+: "Suspend"}
+
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+    updateMetrics();
 
 }
 
-document.getElementById(
-'suspendedCount'
-).innerText=suspended;
+/* ===========================================================
+   RIDER MANAGEMENT
+   PART 2
+   Suspend + Search + Filters + Sorting
+=========================================================== */
 
-applyFiltersAndSort();
+/* =========================================
+SUSPEND / REACTIVATE
+========================================= */
+
+function toggleSuspend(id){
+
+    const riders = getRiders();
+
+    const rider = riders.find(r=>r.id===id);
+
+    if(!rider){
+        return;
+    }
+
+    /* -------------------------
+       CONFIRMATION
+    ------------------------- */
+
+    if(!rider.suspended){
+
+        const confirmed = confirm(
+
+            `Suspend ${rider.fullName}?\n\nThis rider will no longer be able to access their Rider Dashboard until reactivated.`
+
+        );
+
+        if(!confirmed){
+            return;
+        }
+
+    }else{
+
+        const confirmed = confirm(
+
+            `Reactivate ${rider.fullName}?\n\nThis rider will regain access to their Rider Dashboard.`
+
+        );
+
+        if(!confirmed){
+            return;
+        }
+
+    }
+
+    /* -------------------------
+       UPDATE STATUS
+    ------------------------- */
+
+    rider.suspended = !rider.suspended;
+
+    saveRiders(riders);
+
+    /* -------------------------
+       UPDATE CURRENT SESSION
+    ------------------------- */
+
+    const currentRider = JSON.parse(
+
+        localStorage.getItem(
+            "techrider_current_rider"
+        )
+
+    );
+
+    if(
+        currentRider &&
+        currentRider.id===rider.id
+    ){
+
+        currentRider.suspended =
+        rider.suspended;
+
+        localStorage.setItem(
+
+            "techrider_current_rider",
+
+            JSON.stringify(currentRider)
+
+        );
+
+    }
+
+    renderTable();
+
+    applyFiltersAndSort();
 
 }
 
 
+/* =========================================
+SEARCH + FILTER + SORT
+========================================= */
 
-/* sort + filter */
 function applyFiltersAndSort(){
 
-const q=
+    const query =
+    document
+    .getElementById("searchBox")
+    .value
+    .toLowerCase();
+
+    const status =
+    document
+    .getElementById("statusFilter")
+    .value;
+
+    const sort =
+    document
+    .getElementById("sortFilter")
+    .value;
+
+    const rows = [
+
+        ...riderTable.querySelectorAll("tr")
+
+    ];
+
+    /* -------------------------
+       FILTER
+    ------------------------- */
+
+    rows.forEach(row=>{
+
+        const matchesSearch =
+
+        row.dataset.name
+        .toLowerCase()
+        .includes(query);
+
+        const matchesStatus =
+
+        status==="all" ||
+
+        row.dataset.status===status;
+
+        row.style.display =
+
+        matchesSearch &&
+        matchesStatus
+
+        ? "table-row"
+
+        : "none";
+
+    });
+
+    /* -------------------------
+       SORT
+    ------------------------- */
+
+    const visibleRows =
+
+    rows.filter(
+
+        row=>row.style.display!=="none"
+
+    );
+
+    visibleRows.sort((a,b)=>{
+
+        switch(sort){
+
+            case "newest":
+
+                return new Date(
+                    b.dataset.joined
+                ) -
+
+                new Date(
+                    a.dataset.joined
+                );
+
+            case "oldest":
+
+                return new Date(
+                    a.dataset.joined
+                ) -
+
+                new Date(
+                    b.dataset.joined
+                );
+
+            case "deliveries":
+
+                return Number(
+                    b.dataset.deliveries
+                ) -
+
+                Number(
+                    a.dataset.deliveries
+                );
+
+            case "alpha":
+
+                return a.dataset.name
+                .localeCompare(
+                    b.dataset.name
+                );
+
+            default:
+
+                return 0;
+
+        }
+
+    });
+
+    visibleRows.forEach(row=>{
+
+        riderTable.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================
+EVENTS
+========================================= */
+
 document
-.getElementById(
-'searchBox'
-)
-.value
-.toLowerCase();
+.getElementById("searchBox")
+.addEventListener(
+    "input",
+    applyFiltersAndSort
+);
 
-const status=
 document
-.getElementById(
-'statusFilter'
-)
-.value;
+.getElementById("statusFilter")
+.addEventListener(
+    "change",
+    applyFiltersAndSort
+);
 
-const sort=
 document
-.getElementById(
-'sortFilter'
-)
-.value;
-
-const tbody=
-document.getElementById(
-'riderTable'
+.getElementById("sortFilter")
+.addEventListener(
+    "change",
+    applyFiltersAndSort
 );
 
-let rows=[
-...tbody.querySelectorAll(
-'tr'
-)
-];
+/* ===========================================================
+   RIDER MANAGEMENT
+   PART 3
+   Initialization + Live Updates
+=========================================================== */
 
+/* =========================================
+EMPTY STATE
+========================================= */
 
-/* filter */
+function checkEmptyTable(){
 
-rows.forEach(row=>{
+    const visibleRows = [
 
-const nameMatch=
-row.dataset.name
-.toLowerCase()
-.includes(q);
+        ...riderTable.querySelectorAll("tr")
 
-const statusMatch=
-status==='all' ||
-row.dataset.status===status;
+    ].filter(row=>row.style.display!=="none");
 
-row.style.display=
-(nameMatch&&statusMatch)
-?'table-row'
-:'none';
+    const existingEmpty =
+    document.getElementById("emptyRow");
 
-});
+    if(existingEmpty){
+        existingEmpty.remove();
+    }
 
+    if(visibleRows.length===0){
 
-/* sort */
+        riderTable.innerHTML = `
 
-let visibleRows=
-rows.filter(
-r=>r.style.display!=='none'
-);
+<tr id="emptyRow">
 
-visibleRows.sort((a,b)=>{
+<td colspan="8"
+style="
+text-align:center;
+padding:40px;
+color:#777;
+font-weight:500;
+">
 
-if(sort==='newest'){
-return new Date(
-b.dataset.joined
-)-new Date(
-a.dataset.joined
-);
-}
+No riders found.
 
-if(sort==='oldest'){
-return new Date(
-a.dataset.joined
-)-new Date(
-b.dataset.joined
-);
-}
+</td>
 
-if(sort==='deliveries'){
-return parseInt(
-b.dataset.deliveries
-)-parseInt(
-a.dataset.deliveries
-);
-}
+</tr>
 
-if(sort==='alpha'){
-return a.dataset.name.localeCompare(
-b.dataset.name
-);
-}
+`;
 
-return 0;
-
-});
-
-visibleRows.forEach(
-row=>tbody.appendChild(row)
-);
+    }
 
 }
 
 
-searchBox.oninput=
-applyFiltersAndSort;
+/* =========================================
+REFRESH PAGE DATA
+========================================= */
 
-statusFilter.onchange=
-applyFiltersAndSort;
+function refreshPage(){
 
-sortFilter.onchange=
-applyFiltersAndSort;
+    renderTable();
 
-applyFiltersAndSort();
+    applyFiltersAndSort();
+
+    checkEmptyTable();
+
+}
+
+
+/* =========================================
+LIVE STORAGE UPDATES
+========================================= */
+
+window.addEventListener(
+
+    "storage",
+
+    function(e){
+
+        if(
+
+            e.key==="techrider_riders" ||
+
+            e.key==="techrider_current_rider"
+
+        ){
+
+            refreshPage();
+
+        }
+
+    }
+
+);
+
+
+/* =========================================
+WINDOW FOCUS
+========================================= */
+
+window.addEventListener(
+
+    "focus",
+
+    refreshPage
+
+);
+
+
+/* =========================================
+INITIAL LOAD
+========================================= */
+
+refreshPage();
+
+
+console.log(
+
+    "TechRider Rider Management Ready"
+
+);
+
 
 </script>
 

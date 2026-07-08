@@ -515,10 +515,55 @@ REDIRECT IF NOT LOGGED IN
 
 if(!currentTechnician){
 
-alert('Please login as technician');
+    alert('Please login as technician');
 
-window.location.href =
-'login-technician.html';
+    window.location.href =
+    'login-technician.html';
+
+}
+
+/* =========================================
+ACCOUNT SUSPENSION CHECK
+========================================= */
+
+const technicians =
+JSON.parse(
+localStorage.getItem(
+'techrider_technicians'
+)
+) || [];
+
+const currentRecord =
+technicians.find(tech => {
+
+    /* Match by ID first */
+
+    if(
+        tech.id &&
+        currentTechnician.id &&
+        String(tech.id) ===
+        String(currentTechnician.id)
+    ){
+        return true;
+    }
+
+    /* Fall back to email */
+
+    return (
+        (tech.email || "").toLowerCase() ===
+        (currentTechnician.email || "").toLowerCase()
+    );
+
+});
+
+console.log("Current Technician:", currentTechnician);
+console.log("Matched Technician:", currentRecord);
+console.log("Suspended:", currentRecord?.suspended);
+
+if(currentRecord?.suspended){
+
+    window.location.href =
+    "account-suspended.html";
 
 }
 

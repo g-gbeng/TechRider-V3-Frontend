@@ -546,14 +546,84 @@ Reject Job
 /* =========================
 CURRENT RIDER
 ========================= */
+
 const currentRider =
-JSON.parse(localStorage.getItem('techrider_currentUser')) ||
-JSON.parse(localStorage.getItem('currentUser')) ||
-JSON.parse(localStorage.getItem('riderCurrentUser'));
+JSON.parse(
+localStorage.getItem(
+"techrider_current_rider"
+));
+
+/* =========================
+CHECK IF RIDER IS LOGGED IN
+========================= */
+
+if(!currentRider){
+
+    alert("Please login as rider");
+
+    window.location.href =
+    "login-rider.html";
+
+}
+
+/* =========================
+CHECK IF RIDER IS SUSPENDED
+========================= */
+
+const riders =
+JSON.parse(
+localStorage.getItem(
+"techrider_riders"
+)
+) || [];
+
+const currentRecord =
+riders.find(rider => {
+
+    /* Match by ID */
+
+    if(
+        rider.id &&
+        currentRider.id &&
+        String(rider.id) === String(currentRider.id)
+    ){
+        return true;
+    }
+
+    /* Match by Rider ID */
+
+    if(
+        rider.riderId &&
+        currentRider.riderId &&
+        String(rider.riderId) === String(currentRider.riderId)
+    ){
+        return true;
+    }
+
+    /* Fall back to email */
+
+    return (
+        (rider.email || "").toLowerCase() ===
+        (currentRider.email || "").toLowerCase()
+    );
+
+});
+
+console.log("Current Rider:", currentRider);
+console.log("Matched Rider:", currentRecord);
+console.log("Suspended:", currentRecord?.suspended);
+
+if(currentRecord?.suspended){
+
+    window.location.href =
+    "account-suspended.html";
+
+}
 
 /* =========================
 RIDER JOBS
 ========================= */
+
 let assignedJobs =
 JSON.parse(localStorage.getItem('assignedRiderJobs')) || [];
 
