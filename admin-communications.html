@@ -426,21 +426,36 @@ Collective Email
 
 <label>User Group</label>
 
-<select>
-<option>Customers</option>
-<option>Technicians</option>
-<option>Riders</option>
-<option>All Users</option>
+<select id="emailGroup">
+    <option value="customers">Customers</option>
+    <option value="techs">Technicians</option>
+    <option value="riders">Riders</option>
+    <option value="all">All Users</option>
 </select>
 
+
 <label>Subject</label>
-<input>
+
+<input
+    id="groupEmailSubject"
+    type="text"
+    placeholder="Enter email subject">
+
 
 <label>Message</label>
-<textarea></textarea>
 
-<button class="btn">
-Send Group Email
+<textarea
+    id="groupEmailMessage"
+    placeholder="Enter email message"></textarea>
+
+
+<button
+    class="btn"
+    type="button"
+    onclick="prepareEmail('group')">
+
+    Send Group Email
+
 </button>
 
 </div>
@@ -459,10 +474,22 @@ Individual Email
 
 <label>User Category</label>
 
-<select onchange="switchUsers('email',this.value)">
-<option value="customers">Customers</option>
-<option value="techs">Technicians</option>
-<option value="riders">Riders</option>
+<select
+    id="emailCategory"
+    onchange="switchUsers('email',this.value)">
+
+    <option value="customers">
+        Customers
+    </option>
+
+    <option value="techs">
+        Technicians
+    </option>
+
+    <option value="riders">
+        Riders
+    </option>
+
 </select>
 
 <input
@@ -478,13 +505,27 @@ id="emailUsers"></div>
 </div>
 
 <label>Subject</label>
-<input>
+
+<input
+    id="individualEmailSubject"
+    type="text"
+    placeholder="Enter email subject">
+
 
 <label>Message</label>
-<textarea></textarea>
 
-<button class="btn">
-Send Individual Email
+<textarea
+    id="individualEmailMessage"
+    placeholder="Enter email message"></textarea>
+
+
+<button
+    class="btn"
+    type="button"
+    onclick="prepareEmail('individual')">
+
+    Send Individual Email
+
 </button>
 
 </div>
@@ -513,25 +554,53 @@ Collective Notifications
 
 <label>Target Group</label>
 
-<select>
-<option>Customers</option>
-<option>Technicians</option>
-<option>Riders</option>
+<select id="notificationGroup">
+
+    <option value="customers">
+        Customers
+    </option>
+
+    <option value="techs">
+        Technicians
+    </option>
+
+    <option value="riders">
+        Riders
+    </option>
+
+    <option value="all">
+        All Users
+    </option>
+
 </select>
 
 <label>Priority</label>
 
-<select>
-<option>Normal</option>
-<option>Urgent</option>
+<select id="notificationPriority">
+
+    <option value="Normal">
+        Normal
+    </option>
+
+    <option value="Urgent">
+        Urgent
+    </option>
+
 </select>
 
 <label>Message</label>
 
-<textarea></textarea>
+<textarea
+    id="groupNotificationMessage"
+    placeholder="Enter notification message"></textarea>
 
-<button class="btn">
-Send Group Notification
+<button
+    class="btn"
+    type="button"
+    onclick="sendGroupNotification()">
+
+    Send Group Notification
+
 </button>
 
 </div>
@@ -551,10 +620,22 @@ Individual Notifications
 
 <label>User Category</label>
 
-<select onchange="switchUsers('notify',this.value)">
-<option value="customers">Customers</option>
-<option value="techs">Technicians</option>
-<option value="riders">Riders</option>
+<select
+    id="notifyCategory"
+    onchange="switchUsers('notify',this.value)">
+
+    <option value="customers">
+        Customers
+    </option>
+
+    <option value="techs">
+        Technicians
+    </option>
+
+    <option value="riders">
+        Riders
+    </option>
+
 </select>
 
 <input
@@ -569,10 +650,17 @@ id="notifyUsers"></div>
 
 <label>Message</label>
 
-<textarea></textarea>
+<textarea
+    id="individualNotificationMessage"
+    placeholder="Enter notification message"></textarea>
 
-<button class="btn">
-Send Individual Notification
+<button
+    class="btn"
+    type="button"
+    onclick="sendIndividualNotification()">
+
+    Send Individual Notification
+
 </button>
 
 </div>
@@ -592,54 +680,85 @@ Send Individual Notification
 
 <label>Accepted TR Job ID</label>
 
-<select id="jobSelect">
+<div class="formGroup">
 
-<option>
-TR-006 — Emeka (Accepted)
-</option>
+    <label for="jobSelect">
+        Available Job
+    </label>
 
-<option>
-TR-005 — Bisi (Accepted)
-</option>
+    <select id="jobSelect">
 
-<option>
-TR-004 — Musa (Accepted)
-</option>
+        <option value="">
+            Select an available job
+        </option>
 
-</select>
+    </select>
+
+    <button
+    type="button"
+    class="btn deleteBtn"
+    onclick="removeAvailableJob()"
+>
+    <i class="fas fa-trash"></i>
+    Remove Selected Job
+</button>
+
+</div>
 
 
-<label>Assign Rider</label>
+<div class="formGroup">
 
-<select id="riderSelect">
-</select>
+    <label for="riderSelect">
+        Assign Rider
+    </label>
 
-<div class="busyNote">
-Busy riders are unavailable for new assignments.
+    <select id="riderSelect">
+
+        <option value="">
+            Select an available rider
+        </option>
+
+    </select>
+
 </div>
 
 
 <label>Assignment Type</label>
 
-<select>
-<option>Pickup</option>
-<option>Delivery</option>
+<select id="assignmentType">
+
+    <option value="Pickup">
+        Pickup
+    </option>
+
+    <option value="Delivery">
+        Delivery
+    </option>
+
 </select>
 
 <label>Delivery / Pickup Address</label>
 
 <input
-placeholder="Enter address">
+    id="assignmentAddress"
+    type="text"
+    placeholder="Enter delivery / pickup address">
 
 
 <label>Instructions</label>
 
-<textarea></textarea>
+<textarea
+    id="assignmentInstructions"
+    placeholder="Enter instructions for the rider"></textarea>
 
 
-<button class="btn"
-onclick="createAssignment()">
-Assign Rider
+<button
+    type="button"
+    class="btn"
+    onclick="createAssignment()">
+
+    Assign Rider
+
 </button>
 
 </div>
@@ -692,28 +811,6 @@ Assignments
 </thead>
 
 <tbody id="logTable">
-
-<tr data-type="assignment">
-<td>Assignment</td>
-<td>Femi</td>
-<td><span class="badge">Assigned</span></td>
-<td>Just now</td>
-</tr>
-
-<tr data-type="notification">
-<td>Notification</td>
-<td>Riders</td>
-<td><span class="badge">Sent</span></td>
-<td>10 mins ago</td>
-</tr>
-
-<tr data-type="email">
-<td>Email</td>
-<td>Customers</td>
-<td><span class="badge">Sent</span></td>
-<td>1 hr ago</td>
-</tr>
-
 </tbody>
 
 </table>
@@ -731,302 +828,3019 @@ Assignments
 
 <script>
 
-const overlay=
-document.getElementById('overlay');
+/* =====================================================
+   TECHRIDER COMMUNICATIONS CENTER
+   LOCAL STORAGE COMMUNICATIONS ENGINE
+===================================================== */
 
-const sidebar=
-document.getElementById('sidebar');
+
+/* =====================================================
+   STORAGE HELPERS
+===================================================== */
+
+function getStorage(key){
+
+    try{
+
+        const value =
+            JSON.parse(
+                localStorage.getItem(key)
+            );
+
+        return Array.isArray(value)
+            ? value
+            : [];
+
+    }catch(error){
+
+        console.error(
+            `Unable to read ${key}`,
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveStorage(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function generateId(prefix='TR'){
+
+    if(
+        window.crypto &&
+        typeof crypto.randomUUID === 'function'
+    ){
+
+        return `${prefix}-${crypto.randomUUID()}`;
+
+    }
+
+    return `${prefix}-${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2,8)}`;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+const sidebar =
+    document.getElementById('sidebar');
+
+const overlay =
+    document.getElementById('overlay');
+
 
 function toggleSidebar(){
-sidebar.classList.toggle(
-'collapsed'
-);
+
+    if(window.innerWidth <= 950){
+
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+
+        return;
+
+    }
+
+    sidebar.classList.toggle('collapsed');
+
 }
+
 
 function openSidebar(){
-sidebar.classList.add('open');
-overlay.classList.add('show');
+
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+
 }
 
-overlay.onclick=function(){
-sidebar.classList.remove('open');
-overlay.classList.remove('show');
-};
+
+function closeSidebar(){
+
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+
+}
 
 
+overlay.addEventListener(
+    'click',
+    closeSidebar
+);
+
+
+/* =====================================================
+   RESPONSIVE SIDEBAR STATE
+===================================================== */
+
+function applySidebarState(){
+
+    if(window.innerWidth <= 950){
+
+        sidebar.classList.remove('collapsed');
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+
+    }else{
+
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+
+        /*
+           Desktop is ALWAYS expanded.
+        */
+
+        sidebar.classList.remove('collapsed');
+
+    }
+
+}
+
+
+window.addEventListener(
+    'resize',
+    applySidebarState
+);
+
+
+/* =====================================================
+   COLLAPSIBLE BLOCKS
+===================================================== */
 
 function toggleBlock(el){
-el.parentElement.classList.toggle(
-'closed'
-);
-}
 
-
-
-/* USERS */
-
-const userData={
-
-customers:[
-'Ada Johnson',
-'Musa Bello'
-],
-
-techs:[
-'Chinedu Okafor',
-'Sade Lawal'
-],
-
-riders:[
-'Femi Musa',
-'Amina Yusuf'
-]
-
-};
-
-
-function switchUsers(type,group){
-
-let box=
-type==='email'
-?document.getElementById(
-'emailUsers'
-)
-:document.getElementById(
-'notifyUsers'
-);
-
-box.innerHTML='';
-
-userData[group].forEach(name=>{
-
-box.innerHTML+=
-'<div class="userItem">'+
-name+
-'</div>';
-
-});
-
-bindUserSelect();
-
-}
-
-switchUsers('email','customers');
-switchUsers('notify','customers');
-
-
-function bindUserSelect(){
-
-document
-.querySelectorAll('.userItem')
-.forEach(item=>{
-
-item.onclick=function(){
-
-item.parentElement
-.querySelectorAll(
-'.userItem'
-)
-.forEach(i=>
-i.classList.remove(
-'selected'
-)
-);
-
-item.classList.add(
-'selected'
-);
-
-};
-
-});
+    el.parentElement.classList.toggle(
+        'closed'
+    );
 
 }
 
 
-function filterUsers(
-searchId,
-listId
+/* =====================================================
+   USER DATA
+===================================================== */
+
+function getCustomers(){
+
+    return getStorage(
+        'techrider_customers'
+    );
+
+}
+
+
+function getTechnicians(){
+
+    return getStorage(
+        'techrider_technicians'
+    );
+
+}
+
+
+function getRiders(){
+
+    return getStorage(
+        'techrider_riders'
+    );
+
+}
+
+
+/* =====================================================
+   NORMALIZE USERS
+===================================================== */
+
+function normalizeUser(
+    user,
+    type
 ){
 
-let q=
-document
-.getElementById(searchId)
-.value
-.toLowerCase();
+    return {
 
-document
-.getElementById(listId)
-.querySelectorAll(
-'.userItem'
-)
-.forEach(item=>{
+        id:
+            user.id ||
+            user._id ||
+            user.userId ||
+            user.email ||
+            generateId(type),
 
-item.style.display=
-item.innerText
-.toLowerCase()
-.includes(q)
-?'block'
-:'none';
+        name:
+            user.fullName ||
+            user.name ||
+            user.businessName ||
+            'Unnamed User',
 
-});
+        email:
+            user.email ||
+            '',
+
+        phone:
+            user.phone ||
+            '',
+
+        type:
+
+            type,
+
+        raw:
+            user
+
+    };
 
 }
 
 
+/* =====================================================
+   GET USERS BY TYPE
+===================================================== */
 
-/* BUSY RIDERS */
+function getUsersByType(type){
 
-let riders=[
+    if(type === 'customers'){
 
-{
-name:'Femi',
-busy:false
-},
+        return getCustomers()
+            .map(
+                user =>
+                    normalizeUser(
+                        user,
+                        'customer'
+                    )
+            );
 
-{
-name:'Amina',
-busy:false
-},
+    }
 
-{
-name:'Samuel',
-busy:false
+
+    if(type === 'techs'){
+
+        return getTechnicians()
+
+            .filter(
+                user =>
+                    String(
+                        user.status || ''
+                    ).toLowerCase()
+                    === 'approved'
+            )
+
+            .map(
+                user =>
+                    normalizeUser(
+                        user,
+                        'technician'
+                    )
+            );
+
+    }
+
+
+    if(type === 'riders'){
+
+        return getRiders()
+
+            .filter(
+                user =>
+                    String(
+                        user.status || ''
+                    ).toLowerCase()
+                    === 'approved'
+            )
+
+            .map(
+                user =>
+                    normalizeUser(
+                        user,
+                        'rider'
+                    )
+            );
+
+    }
+
+
+    return [];
+
 }
 
-];
 
+/* =====================================================
+   ALL USERS
+===================================================== */
+
+function getAllUsers(){
+
+    return [
+
+        ...getUsersByType(
+            'customers'
+        ),
+
+        ...getUsersByType(
+            'techs'
+        ),
+
+        ...getUsersByType(
+            'riders'
+        )
+
+    ];
+
+}
+
+
+/* =====================================================
+   USER LIST RENDERING
+===================================================== */
+
+function switchUsers(
+    type,
+    group
+){
+
+    const box =
+        type === 'email'
+
+        ? document.getElementById(
+            'emailUsers'
+        )
+
+        : document.getElementById(
+            'notifyUsers'
+        );
+
+
+    if(!box){
+
+        return;
+
+    }
+
+
+    box.innerHTML = '';
+
+
+    const users =
+        getUsersByType(
+            group
+        );
+
+
+    if(users.length === 0){
+
+        box.innerHTML = `
+
+            <div class="userItem"
+                 style="
+                    color:#888;
+                    cursor:default;
+                 ">
+
+                No users found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    users.forEach(
+        user => {
+
+            const item =
+                document.createElement(
+                    'div'
+                );
+
+            item.className =
+                'userItem';
+
+
+            item.dataset.userId =
+                user.id;
+
+
+            item.dataset.userType =
+                user.type;
+
+
+            item.dataset.email =
+                user.email;
+
+
+            item.textContent =
+                user.name;
+
+
+            item.addEventListener(
+                'click',
+                function(){
+
+                    box
+                    .querySelectorAll(
+                        '.userItem'
+                    )
+                    .forEach(
+                        element =>
+                            element.classList.remove(
+                                'selected'
+                            )
+                    );
+
+
+                    item.classList.add(
+                        'selected'
+                    );
+
+                }
+            );
+
+
+            box.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   USER SEARCH
+===================================================== */
+
+function filterUsers(
+    searchId,
+    listId
+){
+
+    const search =
+        document.getElementById(
+            searchId
+        );
+
+    const list =
+        document.getElementById(
+            listId
+        );
+
+
+    if(!search || !list){
+
+        return;
+
+    }
+
+
+    const query =
+        search.value
+            .trim()
+            .toLowerCase();
+
+
+    list
+    .querySelectorAll(
+        '.userItem'
+    )
+    .forEach(
+        item => {
+
+            const text =
+                item.textContent
+                    .toLowerCase();
+
+
+            item.style.display =
+                text.includes(query)
+                ? 'block'
+                : 'none';
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   EMAIL RECIPIENT GROUP
+===================================================== */
+
+function getEmailGroupUsers(){
+
+    const group =
+        document.querySelector(
+            '#emailGroup'
+        )?.value;
+
+
+    if(group === 'all'){
+
+        return getAllUsers();
+
+    }
+
+
+    return getUsersByType(
+        group
+    );
+
+}
+
+
+/* =====================================================
+   COMMUNICATION LOG STORAGE
+===================================================== */
+
+const COMMUNICATION_LOG_KEY =
+    'techrider_communications_log';
+
+
+function getCommunicationLog(){
+
+    return getStorage(
+        COMMUNICATION_LOG_KEY
+    );
+
+}
+
+
+function addCommunicationLog(
+    data
+){
+
+    const logs =
+        getCommunicationLog();
+
+
+    logs.unshift({
+
+        id:
+            generateId(
+                'COMM'
+            ),
+
+        createdAt:
+            new Date().toISOString(),
+
+        ...data
+
+    });
+
+
+    saveStorage(
+        COMMUNICATION_LOG_KEY,
+        logs
+    );
+
+
+    renderCommunicationLog();
+
+}
+
+
+/* =====================================================
+   CUSTOMER NOTIFICATIONS
+===================================================== */
+
+const CUSTOMER_NOTIFICATION_KEY =
+    'techrider_customer_notifications';
+
+
+function addCustomerNotification(
+    customer,
+    data
+){
+
+    const notifications =
+        getStorage(
+            CUSTOMER_NOTIFICATION_KEY
+        );
+
+
+    notifications.unshift({
+
+        id:
+            generateId(
+                'NOTIF'
+            ),
+
+        type:
+            data.type ||
+            'admin_notification',
+
+        customerId:
+            customer.id,
+
+        customerEmail:
+            customer.email,
+
+        customerName:
+            customer.name,
+
+        title:
+            data.title ||
+            'TechRider Notification',
+
+        message:
+            data.message ||
+            '',
+
+        priority:
+            data.priority ||
+            'Normal',
+
+        status:
+            'unread',
+
+        createdAt:
+            new Date().toISOString(),
+
+        ...data
+
+    });
+
+
+    saveStorage(
+        CUSTOMER_NOTIFICATION_KEY,
+        notifications
+    );
+
+}
+
+
+/* =====================================================
+   GENERIC USER NOTIFICATION STORE
+===================================================== */
+
+function getUserNotificationKey(
+    type
+){
+
+    if(type === 'customer'){
+
+        return 'techrider_customer_notifications';
+
+    }
+
+
+    if(type === 'technician'){
+
+        return 'techrider_technician_notifications';
+
+    }
+
+
+    if(type === 'rider'){
+
+        return 'techrider_rider_notifications';
+
+    }
+
+
+    return 'techrider_notifications';
+
+}
+
+
+function addUserNotification(
+    user,
+    data
+){
+
+    const key =
+        getUserNotificationKey(
+            user.type
+        );
+
+
+    const notifications =
+        getStorage(key);
+
+
+    notifications.unshift({
+
+        id:
+            generateId(
+                'NOTIF'
+            ),
+
+        recipientId:
+            user.id,
+
+        recipientEmail:
+            user.email,
+
+        recipientName:
+            user.name,
+
+        recipientType:
+            user.type,
+
+        type:
+            data.type ||
+            'admin_notification',
+
+        title:
+            data.title ||
+            'TechRider Notification',
+
+        message:
+            data.message ||
+            '',
+
+        priority:
+            data.priority ||
+            'Normal',
+
+        status:
+            'unread',
+
+        createdAt:
+            new Date().toISOString(),
+
+        ...data
+
+    });
+
+
+    saveStorage(
+        key,
+        notifications
+    );
+
+}
+
+
+/* =====================================================
+   SEND COLLECTIVE NOTIFICATION
+===================================================== */
+
+function sendGroupNotification(){
+
+    const group =
+        document.querySelector(
+            '#notificationGroup'
+        )?.value;
+
+
+    const priority =
+        document.querySelector(
+            '#notificationPriority'
+        )?.value ||
+        'Normal';
+
+
+    const messageInput =
+        document.querySelector(
+            '#groupNotificationMessage'
+        );
+
+
+    const message =
+        messageInput
+        ? messageInput.value.trim()
+        : '';
+
+
+    if(!group){
+
+        alert(
+            'Please select a user group.'
+        );
+
+        return;
+
+    }
+
+
+    if(!message){
+
+        alert(
+            'Please enter a notification message.'
+        );
+
+        return;
+
+    }
+
+
+    const users =
+        group === 'all'
+
+        ? getAllUsers()
+
+        : getUsersByType(
+            group
+        );
+
+
+    if(users.length === 0){
+
+        alert(
+            'No users were found in this group.'
+        );
+
+        return;
+
+    }
+
+
+    users.forEach(
+        user => {
+
+            addUserNotification(
+                user,
+                {
+
+                    type:
+                        'admin_group_notification',
+
+                    title:
+                        'TechRider Announcement',
+
+                    message:
+                        message,
+
+                    priority:
+                        priority,
+
+                    group:
+                        group
+
+                }
+            );
+
+        }
+    );
+
+
+    addCommunicationLog({
+
+        type:
+            'notification',
+
+        channel:
+            'in_app',
+
+        direction:
+            'outgoing',
+
+        recipientType:
+            group,
+
+        recipientName:
+            group === 'all'
+            ? 'All Users'
+            : group,
+
+        status:
+            'sent',
+
+        subject:
+            'Group Notification',
+
+        message:
+            message,
+
+        recipientCount:
+            users.length
+
+    });
+
+
+    messageInput.value = '';
+
+
+    alert(
+        `Notification sent to ${users.length} user${users.length === 1 ? '' : 's'}.`
+    );
+
+}
+
+
+/* =====================================================
+   SEND INDIVIDUAL NOTIFICATION
+===================================================== */
+
+function sendIndividualNotification(){
+
+    const category =
+        document.querySelector(
+            '#notifyCategory'
+        )?.value;
+
+
+    const selected =
+        document.querySelector(
+            '#notifyUsers .userItem.selected'
+        );
+
+
+    const messageInput =
+        document.querySelector(
+            '#individualNotificationMessage'
+        );
+
+
+    const message =
+        messageInput
+        ? messageInput.value.trim()
+        : '';
+
+
+    if(!category){
+
+        alert(
+            'Please select a user category.'
+        );
+
+        return;
+
+    }
+
+
+    if(!selected){
+
+        alert(
+            'Please select a recipient.'
+        );
+
+        return;
+
+    }
+
+
+    if(!message){
+
+        alert(
+            'Please enter a notification message.'
+        );
+
+        return;
+
+    }
+
+
+    const users =
+        getUsersByType(
+            category
+        );
+
+
+    const user =
+        users.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    selected.dataset.userId
+                )
+        );
+
+
+    if(!user){
+
+        alert(
+            'The selected user could not be found.'
+        );
+
+        return;
+
+    }
+
+
+    addUserNotification(
+        user,
+        {
+
+            type:
+                'admin_direct_notification',
+
+            title:
+                'Message from TechRider Admin',
+
+            message:
+                message
+
+        }
+    );
+
+
+    addCommunicationLog({
+
+        type:
+            'notification',
+
+        channel:
+            'in_app',
+
+        direction:
+            'outgoing',
+
+        recipientType:
+            user.type,
+
+        recipientId:
+            user.id,
+
+        recipientName:
+            user.name,
+
+        status:
+            'sent',
+
+        subject:
+            'Direct Notification',
+
+        message:
+            message
+
+    });
+
+
+    messageInput.value = '';
+
+
+    selected.classList.remove(
+        'selected'
+    );
+
+
+    alert(
+        'Notification sent successfully.'
+    );
+
+}
+
+
+/* =====================================================
+   EMAIL PREPARATION
+===================================================== */
+
+function prepareEmail(
+    mode
+){
+
+    let recipients = [];
+
+
+    if(mode === 'group'){
+
+        recipients =
+            getEmailGroupUsers();
+
+    }
+
+
+    if(mode === 'individual'){
+
+        const category =
+            document.querySelector(
+                '#emailCategory'
+            )?.value;
+
+
+        const selected =
+            document.querySelector(
+                '#emailUsers .userItem.selected'
+            );
+
+
+        if(!selected){
+
+            alert(
+                'Please select an email recipient.'
+            );
+
+            return;
+
+        }
+
+
+        recipients =
+            getUsersByType(
+                category
+            )
+            .filter(
+                user =>
+                    String(
+                        user.id
+                    ) ===
+                    String(
+                        selected.dataset.userId
+                    )
+            );
+
+    }
+
+
+    if(recipients.length === 0){
+
+        alert(
+            'No valid recipients were found.'
+        );
+
+        return;
+
+    }
+
+
+    const subjectInput =
+        mode === 'group'
+
+        ? document.querySelector(
+            '#groupEmailSubject'
+        )
+
+        : document.querySelector(
+            '#individualEmailSubject'
+        );
+
+
+    const messageInput =
+        mode === 'group'
+
+        ? document.querySelector(
+            '#groupEmailMessage'
+        )
+
+        : document.querySelector(
+            '#individualEmailMessage'
+        );
+
+
+    const subject =
+        subjectInput
+        ? subjectInput.value.trim()
+        : '';
+
+
+    const message =
+        messageInput
+        ? messageInput.value.trim()
+        : '';
+
+
+    if(!subject){
+
+        alert(
+            'Please enter an email subject.'
+        );
+
+        return;
+
+    }
+
+
+    if(!message){
+
+        alert(
+            'Please enter an email message.'
+        );
+
+        return;
+
+    }
+
+
+    /*
+       EMAIL SERVICE NOT CONNECTED YET.
+
+       We therefore queue the communication
+       instead of falsely marking it delivered.
+    */
+
+    addCommunicationLog({
+
+        type:
+            'email',
+
+        channel:
+            'email',
+
+        direction:
+            'outgoing',
+
+        recipientType:
+            mode === 'group'
+            ? 'group'
+            : recipients[0].type,
+
+        recipientName:
+            mode === 'group'
+            ? (
+                document.querySelector(
+                    '#emailGroup'
+                )?.selectedOptions[0]?.text
+                || 'User Group'
+            )
+            : recipients[0].name,
+
+        recipientCount:
+            recipients.length,
+
+        recipientIds:
+            recipients.map(
+                user =>
+                    user.id
+            ),
+
+        recipientEmails:
+            recipients
+            .map(
+                user =>
+                    user.email
+            )
+            .filter(Boolean),
+
+        subject:
+            subject,
+
+        message:
+            message,
+
+        status:
+            'queued',
+
+        emailService:
+            'not_connected'
+
+    });
+
+
+    subjectInput.value = '';
+    messageInput.value = '';
+
+
+    if(mode === 'individual'){
+
+        document
+        .querySelectorAll(
+            '#emailUsers .userItem'
+        )
+        .forEach(
+            item =>
+                item.classList.remove(
+                    'selected'
+                )
+        );
+
+    }
+
+
+    alert(
+        `Email prepared for ${recipients.length} recipient${recipients.length === 1 ? '' : 's'}. It is queued until an email service is connected.`
+    );
+
+}
+
+
+/* =====================================================
+   AVAILABLE JOBS
+===================================================== */
+
+const AVAILABLE_JOBS_KEY =
+    'techrider_available_jobs';
+
+
+function getAvailableJobs(){
+
+    return getStorage(
+        AVAILABLE_JOBS_KEY
+    );
+
+}
+
+
+function saveAvailableJobs(
+    jobs
+){
+
+    saveStorage(
+        AVAILABLE_JOBS_KEY,
+        jobs
+    );
+
+}
+
+
+/* =====================================================
+   REQUEST STATUS HELPERS
+===================================================== */
+
+function normalizeStatus(
+    value
+){
+
+    return String(
+        value || ''
+    )
+    .trim()
+    .toLowerCase()
+    .replace(
+        /\s+/g,
+        '_'
+    );
+
+}
+
+
+/* =====================================================
+   TECHNICIAN-ACCEPTED REQUESTS
+===================================================== */
+
+function getTechnicianAcceptedRequests(){
+
+    const requests =
+        getStorage(
+            'techrider_requests'
+        );
+
+
+    return requests.filter(
+        request => {
+
+            const status =
+                normalizeStatus(
+                    request.status
+                );
+
+
+            const technicianAccepted =
+                request.technicianAccepted === true ||
+                request.acceptedByTechnician === true ||
+                request.quoteAcceptedByTechnician === true ||
+                status === 'accepted' ||
+                status === 'accepted_by_technician' ||
+                status === 'technician_accepted';
+
+
+            return technicianAccepted;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BUILD AVAILABLE JOB QUEUE
+===================================================== */
+
+function syncAvailableJobs(){
+
+    const acceptedRequests =
+        getTechnicianAcceptedRequests();
+
+
+    const existingJobs =
+        getAvailableJobs();
+
+
+    const existingIds =
+        new Set(
+            existingJobs.map(
+                job =>
+                    String(
+                        job.requestId
+                    )
+            )
+        );
+
+
+    acceptedRequests.forEach(
+        request => {
+
+            const requestId =
+                request.requestId ||
+                request.id;
+
+
+            if(!requestId){
+
+                return;
+
+            }
+
+
+            if(existingIds.has(
+                String(
+                    requestId
+                )
+            )){
+
+                return;
+
+            }
+
+
+            existingJobs.push({
+
+                id:
+                    generateId(
+                        'JOB'
+                    ),
+
+                requestId:
+                    requestId,
+
+                customerId:
+                    request.customerId ||
+                    null,
+
+                customerName:
+                    request.customerName ||
+                    'Customer',
+
+                customerEmail:
+                    request.customerEmail ||
+                    request.email ||
+                    '',
+
+                technicianId:
+                    request.technicianId ||
+                    request.assignedTechnicianId ||
+                    null,
+
+                technicianName:
+                    request.technicianName ||
+                    request.assignedTechnicianName ||
+                    request.assignedTechnician ||
+                    'Technician',
+
+                deviceType:
+                    request.deviceType ||
+                    '',
+
+                brand:
+                    request.brand ||
+                    '',
+
+                model:
+                    request.model ||
+                    '',
+
+                issue:
+                    request.description ||
+                    '',
+
+                location:
+                    request.location ||
+                    request.address ||
+                    '',
+
+                status:
+                    'available',
+
+                createdAt:
+                    new Date().toISOString(),
+
+                source:
+                    'technician_accepted_request'
+
+            });
+
+        }
+    );
+
+
+    saveAvailableJobs(
+        existingJobs
+    );
+
+}
+
+
+/* =====================================================
+   RENDER AVAILABLE JOB DROPDOWN
+===================================================== */
+
+function renderAvailableJobs(){
+
+    const select =
+        document.getElementById(
+            'jobSelect'
+        );
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+    syncAvailableJobs();
+
+
+    const jobs =
+        getAvailableJobs();
+
+
+    select.innerHTML = '';
+
+
+    if(jobs.length === 0){
+
+        const option =
+            document.createElement(
+                'option'
+            );
+
+        option.value = '';
+
+        option.textContent =
+            'No available jobs';
+
+        select.appendChild(
+            option
+        );
+
+        return;
+
+    }
+
+
+    jobs.forEach(
+        job => {
+
+            const option =
+                document.createElement(
+                    'option'
+                );
+
+
+            option.value =
+                job.id;
+
+
+            option.textContent =
+                `${job.requestId} — ${job.customerName}`;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   REMOVE AVAILABLE JOB
+===================================================== */
+
+function removeAvailableJob(){
+
+    const select =
+        document.getElementById(
+            'jobSelect'
+        );
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+    const jobId =
+        select.value;
+
+
+    if(!jobId){
+
+        alert(
+            'There is no available job to remove.'
+        );
+
+        return;
+
+    }
+
+
+    const jobs =
+        getAvailableJobs();
+
+
+    const job =
+        jobs.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    jobId
+                )
+        );
+
+
+    if(!job){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Remove ${job.requestId} from the available rider jobs?`
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const remaining =
+        jobs.filter(
+            item =>
+                String(
+                    item.id
+                ) !==
+                String(
+                    jobId
+                )
+        );
+
+
+    saveAvailableJobs(
+        remaining
+    );
+
+
+    renderAvailableJobs();
+
+
+    alert(
+        `${job.requestId} was removed from the available jobs list.`
+    );
+
+}
+
+
+/* =====================================================
+   RIDERS
+===================================================== */
+
+function getApprovedRiders(){
+
+    return getRiders()
+
+        .filter(
+            rider =>
+                String(
+                    rider.status || ''
+                ).toLowerCase()
+                === 'approved'
+        )
+
+        .map(
+            rider =>
+                normalizeUser(
+                    rider,
+                    'rider'
+                )
+        );
+
+}
+
+
+/* =====================================================
+   RIDER BUSY CHECK
+===================================================== */
+
+function isRiderBusy(
+    rider
+){
+
+    const assignedJobs =
+        getStorage(
+            'assignedRiderJobs'
+        );
+
+
+    const activeJobs =
+        getStorage(
+            'activeRiderJobs'
+        );
+
+
+    const riderId =
+        String(
+            rider.id
+        );
+
+
+    return [
+
+        ...assignedJobs,
+
+        ...activeJobs
+
+    ].some(
+        job => {
+
+            const jobRiderId =
+                String(
+                    job.riderId ||
+                    job.assignedRiderId ||
+                    ''
+                );
+
+
+            return (
+                jobRiderId === riderId &&
+                ![
+                    'completed',
+                    'complete',
+                    'cancelled',
+                    'failed',
+                    'rejected'
+                ].includes(
+                    normalizeStatus(
+                        job.status ||
+                        job.deliveryStatus
+                    )
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER RIDERS
+===================================================== */
 
 function renderRiders(){
 
-let select=
-document.getElementById(
-'riderSelect'
-);
+    const select =
+        document.getElementById(
+            'riderSelect'
+        );
 
-select.innerHTML='';
 
-riders.forEach(r=>{
+    if(!select){
 
-let opt=
-document.createElement(
-'option'
-);
+        return;
 
-opt.value=r.name;
+    }
 
-opt.text=
-r.busy
-? r.name+' (Busy)'
-: r.name;
 
-opt.disabled=
-r.busy;
+    const riders =
+        getApprovedRiders();
 
-select.appendChild(
-opt
-);
 
-});
+    select.innerHTML = '';
+
+
+    if(riders.length === 0){
+
+        const option =
+            document.createElement(
+                'option'
+            );
+
+        option.value = '';
+
+        option.textContent =
+            'No approved riders available';
+
+        select.appendChild(
+            option
+        );
+
+        return;
+
+    }
+
+
+    riders.forEach(
+        rider => {
+
+            const busy =
+                isRiderBusy(
+                    rider
+                );
+
+
+            const option =
+                document.createElement(
+                    'option'
+                );
+
+
+            option.value =
+                rider.id;
+
+
+            option.textContent =
+                busy
+                ? `${rider.name} (Busy)`
+                : rider.name;
+
+
+            option.disabled =
+                busy;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
 
 }
 
-renderRiders();
+
+/* =====================================================
+   RIDER AVAILABLE JOB STORE
+===================================================== */
+
+function getRiderAvailableJobsKey(
+    riderId
+){
+
+    return `techrider_rider_available_jobs_${riderId}`;
+
+}
 
 
+function addAvailableJobToRider(
+    rider,
+    job,
+    assignmentData
+){
+
+    const key =
+        getRiderAvailableJobsKey(
+            rider.id
+        );
+
+
+    const jobs =
+        getStorage(
+            key
+        );
+
+
+    const alreadyExists =
+        jobs.some(
+            item =>
+                String(
+                    item.requestId
+                ) ===
+                String(
+                    job.requestId
+                )
+        );
+
+
+    if(alreadyExists){
+
+        return;
+
+    }
+
+
+    jobs.unshift({
+
+        ...job,
+
+        status:
+            'available',
+
+        riderId:
+            rider.id,
+
+        riderName:
+            rider.name,
+
+        assignmentType:
+            assignmentData.type,
+
+        assignmentAddress:
+            assignmentData.address,
+
+        instructions:
+            assignmentData.instructions,
+
+        assignedAt:
+            new Date().toISOString()
+
+    });
+
+
+    saveStorage(
+        key,
+        jobs
+    );
+
+}
+
+
+/* =====================================================
+   ASSIGNED RIDER JOB
+===================================================== */
+
+function addAssignedRiderJob(
+    rider,
+    job,
+    assignmentData
+){
+
+    const key =
+        'assignedRiderJobs';
+
+
+    const jobs =
+        getStorage(
+            key
+        );
+
+
+    jobs.unshift({
+
+        ...job,
+
+        id:
+            generateId(
+                'ASSIGN'
+            ),
+
+        requestId:
+            job.requestId,
+
+        riderId:
+            rider.id,
+
+        riderName:
+            rider.name,
+
+        assignmentType:
+            assignmentData.type,
+
+        address:
+            assignmentData.address,
+
+        instructions:
+            assignmentData.instructions,
+
+        status:
+            'assigned',
+
+        assignedAt:
+            new Date().toISOString()
+
+    });
+
+
+    saveStorage(
+        key,
+        jobs
+    );
+
+}
+
+
+/* =====================================================
+   RIDER NOTIFICATION
+===================================================== */
+
+function sendRiderJobNotification(
+    rider,
+    job,
+    assignmentData
+){
+
+    addUserNotification(
+        rider,
+        {
+
+            type:
+                'available_job',
+
+            title:
+                'New Job Available',
+
+            message:
+                `A new ${assignmentData.type.toLowerCase()} job ${job.requestId} is available for you.`,
+
+            requestId:
+                job.requestId,
+
+            jobId:
+                job.id,
+
+            customerId:
+                job.customerId,
+
+            customerName:
+                job.customerName,
+
+            deviceType:
+                job.deviceType,
+
+            brand:
+                job.brand,
+
+            model:
+                job.model,
+
+            address:
+                assignmentData.address,
+
+            instructions:
+                assignmentData.instructions,
+
+            assignmentType:
+                assignmentData.type,
+
+            status:
+                'unread'
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CREATE RIDER ASSIGNMENT
+===================================================== */
 
 function createAssignment(){
-if(!document.getElementById('jobSelect').value || !document.getElementById('riderSelect').value || !document.querySelector('input[placeholder="Enter address"]').value.trim()){ return alert('All fields are required before assigning a rider.'); }
-let rider=
-document.getElementById(
-'riderSelect'
-).value;
 
-if(!rider){
-alert(
-'No available rider.'
-);
-return;
+    const jobSelect =
+        document.getElementById(
+            'jobSelect'
+        );
+
+
+    const riderSelect =
+        document.getElementById(
+            'riderSelect'
+        );
+
+
+    const addressInput =
+    document.getElementById(
+        'assignmentAddress'
+    );
+
+
+    const instructionsInput =
+        document.querySelector(
+            '#assignmentInstructions'
+        );
+
+
+    const assignmentTypeSelect =
+        document.querySelector(
+            '#assignmentType'
+        );
+
+
+    if(
+        !jobSelect ||
+        !riderSelect ||
+        !addressInput
+    ){
+
+        return;
+
+    }
+
+
+    const jobId =
+        jobSelect.value;
+
+
+    const riderId =
+        riderSelect.value;
+
+
+    const address =
+        addressInput.value.trim();
+
+
+    const instructions =
+        instructionsInput
+        ? instructionsInput.value.trim()
+        : '';
+
+
+    const assignmentType =
+        assignmentTypeSelect
+        ? assignmentTypeSelect.value
+        : 'Pickup';
+
+
+    if(
+        !jobId ||
+        !riderId ||
+        !address
+    ){
+
+        alert(
+            'All fields are required before assigning a rider.'
+        );
+
+        return;
+
+    }
+
+
+    const jobs =
+        getAvailableJobs();
+
+
+    const job =
+        jobs.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    jobId
+                )
+        );
+
+
+    if(!job){
+
+        alert(
+            'The selected job is no longer available.'
+        );
+
+        renderAvailableJobs();
+
+        return;
+
+    }
+
+
+    const rider =
+        getApprovedRiders()
+        .find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    riderId
+                )
+        );
+
+
+    if(!rider){
+
+        alert(
+            'The selected rider could not be found.'
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isRiderBusy(
+            rider
+        )
+    ){
+
+        alert(
+            'This rider is currently busy.'
+        );
+
+        renderRiders();
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Assign ${job.requestId} to ${rider.name}?`
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const assignmentData = {
+
+        type:
+            assignmentType,
+
+        address:
+            address,
+
+        instructions:
+            instructions
+
+    };
+
+
+    /*
+       1. Add to rider available jobs.
+    */
+
+    addAvailableJobToRider(
+        rider,
+        job,
+        assignmentData
+    );
+
+
+    /*
+       2. Add to assigned rider jobs.
+    */
+
+    addAssignedRiderJob(
+        rider,
+        job,
+        assignmentData
+    );
+
+
+    /*
+       3. Send rider notification.
+    */
+
+    sendRiderJobNotification(
+        rider,
+        job,
+        assignmentData
+    );
+
+
+    /*
+       4. Remove from admin available queue.
+    */
+
+    saveAvailableJobs(
+        jobs.filter(
+            item =>
+                String(
+                    item.id
+                ) !==
+                String(
+                    job.id
+                )
+        )
+    );
+
+
+    /*
+       5. Communications log.
+    */
+
+    addCommunicationLog({
+
+        type:
+            'assignment',
+
+        channel:
+            'in_app',
+
+        direction:
+            'outgoing',
+
+        recipientType:
+            'rider',
+
+        recipientId:
+            rider.id,
+
+        recipientName:
+            rider.name,
+
+        requestId:
+            job.requestId,
+
+        status:
+            'sent',
+
+        subject:
+            'Rider Assignment',
+
+        message:
+            `Job ${job.requestId} assigned to ${rider.name}.`
+
+    });
+
+
+    renderAvailableJobs();
+
+    renderRiders();
+
+
+    addressInput.value = '';
+
+
+    if(instructionsInput){
+
+        instructionsInput.value = '';
+
+    }
+
+
+    alert(
+        `${job.requestId} has been assigned to ${rider.name}.`
+    );
+
 }
 
-riders.forEach(r=>{
 
-if(r.name===rider){
-r.busy=true;
+/* =====================================================
+   COMMUNICATION LOG RENDERING
+===================================================== */
+
+function formatCommunicationDate(
+    value
+){
+
+    if(!value){
+
+        return 'Recently';
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return 'Recently';
+
+    }
+
+
+    return date.toLocaleString(
+        'en-NG',
+        {
+
+            day:
+                'numeric',
+
+            month:
+                'short',
+
+            year:
+                'numeric',
+
+            hour:
+                'numeric',
+
+            minute:
+                '2-digit'
+
+        }
+    );
+
 }
 
-});
 
-renderRiders();
+function renderCommunicationLog(){
 
-let row=
-document.createElement(
-'tr'
-);
+    const table =
+        document.getElementById(
+            'logTable'
+        );
 
-row.dataset.type=
-'assignment';
 
-row.innerHTML=`
+    if(!table){
 
-<td>Assignment</td>
+        return;
 
-<td>${rider}</td>
+    }
 
-<td>
-<span class="badge">
-Assigned
-</span>
-</td>
 
-<td>
-Just now
-</td>
+    const logs =
+        getCommunicationLog();
 
-`;
 
-document
-.getElementById(
-'logTable'
-)
-.prepend(row);
+    table.innerHTML = '';
 
-alert(
-'Rider assigned successfully.'
-);
+
+    if(logs.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="4"
+                    style="
+                        text-align:center;
+                        padding:30px;
+                        color:#888;
+                    ">
+
+                    No communications yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    logs.forEach(
+        log => {
+
+            const row =
+                document.createElement(
+                    'tr'
+                );
+
+
+            row.dataset.type =
+                log.type ||
+                'notification';
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    ${escapeHtml(
+                        formatLogType(
+                            log
+                        )
+                    )}
+
+                </td>
+
+                <td>
+
+                    ${escapeHtml(
+                        log.recipientName ||
+                        log.recipientType ||
+                        'Unknown'
+                    )}
+
+                </td>
+
+                <td>
+
+                    <span class="badge">
+
+                        ${escapeHtml(
+                            formatLogStatus(
+                                log.status
+                            )
+                        )}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    ${escapeHtml(
+                        formatCommunicationDate(
+                            log.createdAt
+                        )
+                    )}
+
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    filterLogs();
 
 }
 
 
+/* =====================================================
+   LOG LABELS
+===================================================== */
 
-/* FILTER */
+function formatLogType(
+    log
+){
+
+    if(
+        log.type === 'assignment'
+    ){
+
+        return 'Assignment';
+
+    }
+
+
+    if(
+        log.type === 'email'
+    ){
+
+        return 'Email';
+
+    }
+
+
+    return 'Notification';
+
+}
+
+
+function formatLogStatus(
+    status
+){
+
+    const normalized =
+        String(
+            status ||
+            ''
+        )
+        .toLowerCase();
+
+
+    if(
+        normalized === 'queued'
+    ){
+
+        return 'Queued';
+
+    }
+
+
+    if(
+        normalized === 'sent'
+    ){
+
+        return 'Sent';
+
+    }
+
+
+    if(
+        normalized === 'received'
+    ){
+
+        return 'Received';
+
+    }
+
+
+    return status ||
+        'Recorded';
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value || ''
+    )
+    .replace(
+        /&/g,
+        '&amp;'
+    )
+    .replace(
+        /</g,
+        '&lt;'
+    )
+    .replace(
+        />/g,
+        '&gt;'
+    )
+    .replace(
+        /"/g,
+        '&quot;'
+    )
+    .replace(
+        /'/g,
+        '&#039;'
+    );
+
+}
+
+
+/* =====================================================
+   LOG FILTER
+===================================================== */
 
 function filterLogs(){
 
-let filter=
-document
-.getElementById(
-'logFilter'
-)
-.value;
+    const filter =
+        document.getElementById(
+            'logFilter'
+        )?.value ||
+        'all';
 
-document
-.querySelectorAll(
-'#logTable tr'
-)
-.forEach(row=>{
 
-row.style.display=
-(
-filter==='all' ||
-row.dataset.type===filter
-)
-?'table-row'
-:'none';
+    document
+    .querySelectorAll(
+        '#logTable tr'
+    )
+    .forEach(
+        row => {
 
-});
+            row.style.display =
+                (
+                    filter === 'all' ||
+                    row.dataset.type === filter
+                )
+                ? 'table-row'
+                : 'none';
+
+        }
+    );
 
 }
+
+
+/* =====================================================
+   QUOTATION RESPONSE EVENTS
+===================================================== */
+
+const QUOTE_EVENT_KEY =
+    'techrider_quote_response_events';
+
+
+function getQuoteEvents(){
+
+    return getStorage(
+        QUOTE_EVENT_KEY
+    );
+
+}
+
+
+/* =====================================================
+   PROCESS CUSTOMER QUOTE RESPONSE EVENTS
+===================================================== */
+
+function processQuoteResponseEvents(){
+
+    const events =
+        getQuoteEvents();
+
+
+    if(events.length === 0){
+
+        return;
+
+    }
+
+
+    const processedKey =
+        'techrider_processed_quote_events';
+
+
+    const processed =
+        getStorage(
+            processedKey
+        );
+
+
+    const processedIds =
+        new Set(
+            processed.map(
+                item =>
+                    String(
+                        item
+                    )
+            )
+        );
+
+
+    let changed =
+        false;
+
+
+    events.forEach(
+        event => {
+
+            if(!event.id){
+
+                return;
+
+            }
+
+
+            if(
+                processedIds.has(
+                    String(
+                        event.id
+                    )
+                )
+            ){
+
+                return;
+
+            }
+
+
+            const accepted =
+                String(
+                    event.response ||
+                    event.status ||
+                    ''
+                )
+                .toLowerCase()
+                ===
+                'accepted';
+
+
+            const rejected =
+                String(
+                    event.response ||
+                    event.status ||
+                    ''
+                )
+                .toLowerCase()
+                ===
+                'rejected';
+
+
+            if(
+                !accepted &&
+                !rejected
+            ){
+
+                return;
+
+            }
+
+
+            addCommunicationLog({
+
+                type:
+                    'notification',
+
+                channel:
+                    'in_app',
+
+                direction:
+                    'incoming',
+
+                recipientType:
+                    'admin',
+
+                recipientId:
+                    'admin',
+
+                recipientName:
+                    event.customerName ||
+                    'Customer',
+
+                requestId:
+                    event.requestId,
+
+                status:
+                    'received',
+
+                subject:
+                    accepted
+                    ? 'Customer Accepted Repair Quote'
+                    : 'Customer Rejected Repair Quote',
+
+                message:
+                    accepted
+
+                    ? `${event.customerName || 'Customer'} accepted the repair quotation for ${event.requestId || 'the repair request'}.`
+
+                    : `${event.customerName || 'Customer'} rejected the repair quotation for ${event.requestId || 'the repair request'}.`
+
+            });
+
+
+            processed.push(
+                event.id
+            );
+
+
+            changed =
+                true;
+
+        }
+    );
+
+
+    if(changed){
+
+        saveStorage(
+            processedKey,
+            processed
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   REFRESH EVERYTHING
+===================================================== */
+
+function refreshCommunications(){
+
+    switchUsers(
+        'email',
+        document.querySelector(
+            '#emailCategory'
+        )?.value ||
+        'customers'
+    );
+
+
+    switchUsers(
+        'notify',
+        document.querySelector(
+            '#notifyCategory'
+        )?.value ||
+        'customers'
+    );
+
+
+    renderAvailableJobs();
+
+    renderRiders();
+
+    processQuoteResponseEvents();
+
+    renderCommunicationLog();
+
+}
+
+
+/* =====================================================
+   STORAGE EVENT
+===================================================== */
+
+window.addEventListener(
+    'storage',
+    function(){
+
+        refreshCommunications();
+
+    }
+);
+
+
+/* =====================================================
+   VISIBILITY CHANGE
+===================================================== */
+
+document.addEventListener(
+    'visibilitychange',
+    function(){
+
+        if(
+            !document.hidden
+        ){
+
+            refreshCommunications();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   EVENT BINDINGS
+===================================================== */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function(){
+
+        applySidebarState();
+
+        refreshCommunications();
+
+
+        /*
+           Email category
+        */
+
+        const emailCategory =
+            document.querySelector(
+                '#emailCategory'
+            );
+
+
+        if(emailCategory){
+
+            emailCategory.addEventListener(
+                'change',
+                function(){
+
+                    switchUsers(
+                        'email',
+                        this.value
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+           Notification category
+        */
+
+        const notifyCategory =
+            document.querySelector(
+                '#notifyCategory'
+            );
+
+
+        if(notifyCategory){
+
+            notifyCategory.addEventListener(
+                'change',
+                function(){
+
+                    switchUsers(
+                        'notify',
+                        this.value
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+           Refresh periodically because
+           Local Storage changes made by
+           another page don't fire the
+           storage event in this document.
+        */
+
+        setInterval(
+            refreshCommunications,
+            3000
+        );
+
+    }
+);
 
 </script>
 

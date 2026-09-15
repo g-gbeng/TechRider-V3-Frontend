@@ -273,6 +273,34 @@ border:1px solid #ddd;
 border-radius:10px;
 }
 
+input[type="number"]{
+
+width:100%;
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-family:'Poppins',sans-serif;
+
+font-size:.95rem;
+
+outline:none;
+
+}
+
+input[type="number"]:focus{
+
+border-color:var(--purple);
+
+box-shadow:
+0 0 0 3px
+rgba(90,24,154,.08);
+
+}
+
 button{
 border:none;
 padding:12px;
@@ -343,12 +371,63 @@ font-size:1.4rem;
 }
 
 
+/* =====================================================
+   PRINT / PDF
+===================================================== */
+
+@media print{
+
+    .dropdown,
+    .dropBtn,
+    .dropMenu,
+    .hamburger,
+    .sidebar,
+    .overlay{
+        display:none !important;
+    }
+
+    .main{
+        margin-left:0 !important;
+        width:100% !important;
+        padding:0 !important;
+    }
+
+    .topbar{
+        box-shadow:none !important;
+    }
+
+    .card,
+    .stat{
+        box-shadow:none !important;
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    button{
+        display:none !important;
+    }
+
+    input{
+        border:none !important;
+        box-shadow:none !important;
+        background:transparent !important;
+    }
+
+}
+
+
+
 /* Responsive */
 
 @media(max-width:950px){
 
 .sidebar{
 transform:translateX(-100%);
+width:270px;
+}
+
+.sidebar.open{
+transform:translateX(0);
 }
 
 .main{
@@ -386,6 +465,8 @@ min-width:100%;
 
 }
 
+
+
 </style>
 </head>
 <body>
@@ -394,7 +475,7 @@ min-width:100%;
 id="overlay"></div>
 
 
-<div class="sidebar collapsed"
+<div class="sidebar"
 id="sidebar">
 
 <div class="brand"
@@ -470,45 +551,30 @@ Print Report
 
 <div class="stats">
 
-<div class="stat">
-<h4>Total Customers</h4>
-<h2>1,842</h2>
-</div>
+    <div class="stat">
+        <h2 id="reportTotalCustomers">0</h2>
+        <p>Total Customers</p>
+    </div>
 
-<div class="stat">
-<h4>Total Technicians</h4>
-<h2>126</h2>
-</div>
+    <div class="stat">
+        <h2 id="reportTotalTechnicians">0</h2>
+        <p>Total Technicians</p>
+    </div>
 
-<div class="stat">
-<h4>Total Riders</h4>
-<h2>44</h2>
-</div>
+    <div class="stat">
+        <h2 id="reportTotalRiders">0</h2>
+        <p>Total Riders</p>
+    </div>
 
-<div class="stat">
-<h4>Total Requests</h4>
-<h2>248</h2>
-</div>
+    <div class="stat">
+        <h2 id="reportTotalRequests">0</h2>
+        <p>Total Requests</p>
+    </div>
 
-<div class="stat">
-<h4>Revenue</h4>
-<h2>₦4.6M</h2>
-</div>
-
-<div class="stat">
-<h4>Tech Earnings</h4>
-<h2>₦2.1M</h2>
-</div>
-
-<div class="stat">
-<h4>Rider Payouts</h4>
-<h2>₦780K</h2>
-</div>
-
-<div class="stat">
-<h4>Pending Approvals</h4>
-<h2>4</h2>
-</div>
+    <div class="stat">
+        <h2 id="reportTotalRevenue">₦0</h2>
+        <p>Total Revenue</p>
+    </div>
 
 </div>
 
@@ -517,77 +583,13 @@ Print Report
 <div class="grid">
 
 
-<!-- Performance -->
-
-<div class="card">
-
-<h3>Performance Reports</h3>
-
-<label>Report Type</label>
-
-<select
-id="reportType"
-onchange="loadPerformance()">
-
-<option value="tech">
-Technician Performance
-</option>
-
-<option value="rider">
-Rider Performance
-</option>
-
-<option value="customer">
-Customer Activity
-</option>
-
-</select>
-
-<label>Period</label>
-
-<select
-id="period"
-onchange="loadPerformance()">
-
-<option value="today">
-Today
-</option>
-
-<option value="7">
-Last 7 Days
-</option>
-
-<option value="30">
-Last 30 Days
-</option>
-
-</select>
-
-<div class="tableWrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Name</th>
-<th>Metric</th>
-<th>Rate</th>
-</tr>
-</thead>
-
-<tbody id="perfTable">
-</tbody>
-
-</table>
-
-</div>
-
-</div>
 
 
 
 
 <!-- Financial -->
+
+<!-- Financial Reports -->
 
 <div class="card">
 
@@ -595,38 +597,100 @@ Last 30 Days
 Financial Reports
 </h3>
 
+<div class="tableWrap">
+
 <table>
 
 <tr>
-<td>Repair Fees</td>
-<td>₦4,600,000</td>
+<td>
+Repair Fees
+</td>
+
+<td>
+<strong id="repairFees">
+₦0
+</strong>
+</td>
 </tr>
 
-<tr>
-<td>Platform Commission</td>
-<td>₦1,120,000</td>
-</tr>
 
 <tr>
-<td>Technician Earnings</td>
-<td>₦2,100,000</td>
+<td>
+Platform Commission
+</td>
+
+<td>
+<strong id="platformCommission">
+₦0
+</strong>
+</td>
 </tr>
 
-<tr>
-<td>Rider Reconciliation</td>
-<td>₦780,000</td>
-</tr>
 
 <tr>
-<td>Refund Exposure</td>
-<td>₦96,000</td>
+<td>
+Technician Earnings
+</td>
+
+<td>
+<strong id="technicianEarnings">
+₦0
+</strong>
+</td>
+</tr>
+
+
+<tr>
+<td>
+Rider Reconciliation
+</td>
+
+<td>
+
+<input
+type="number"
+id="riderReconciliation"
+placeholder="Enter amount"
+min="0">
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+Refund Report
+</td>
+
+<td>
+
+<input
+type="number"
+id="refundReport"
+placeholder="Enter amount"
+min="0">
+
+</td>
 </tr>
 
 </table>
 
+</div>
+
+
+<button
+onclick="saveFinancialAdjustments()">
+
+Save Financial Updates
+
+</button>
+
+
 <button
 onclick="generateFinancial()">
+
 Generate Financial Report
+
 </button>
 
 </div>
@@ -636,54 +700,119 @@ Generate Financial Report
 
 <!-- Incidents -->
 
+<!-- Customer Activity -->
+
 <div class="card">
 
 <h3>
-Incident Reports
+Customer Activity
 </h3>
+
+<div class="tableWrap">
 
 <table>
 
+<thead>
+
 <tr>
-<td>Delayed Repairs</td>
+
+<th>
+Metric
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
 
 <td>
-<span
-class="linkCase"
-onclick="showIncident('delay')">
-6 Cases
-</span>
+Total Customers
+</td>
+
+<td>
+<strong id="customerTotal">
+0
+</strong>
 </td>
 
 </tr>
 
 <tr>
-<td>Failed Deliveries</td>
 
 <td>
-<span
-class="linkCase"
-onclick="showIncident('delivery')">
-2 Cases
-</span>
+Total Requests
+</td>
+
+<td>
+<strong id="customerRequests">
+0
+</strong>
 </td>
 
 </tr>
 
 <tr>
-<td>Rejected Repairs</td>
 
 <td>
-<span
-class="linkCase"
-onclick="showIncident('reject')">
-3 Cases
-</span>
+Completed Requests
+</td>
+
+<td>
+<strong id="customerCompleted">
+0
+</strong>
 </td>
 
 </tr>
+
+<tr>
+
+<td>
+Cancelled Requests
+</td>
+
+<td>
+<strong id="customerCancelled">
+0
+</strong>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Completion Rate
+</td>
+
+<td>
+<strong id="customerCompletionRate">
+0%
+</strong>
+</td>
+
+</tr>
+
+</tbody>
 
 </table>
+
+</div>
+
+
+<button
+onclick="generateCustomerReport()">
+
+Generate Customer Report
+
+</button>
 
 </div>
 
@@ -692,35 +821,239 @@ onclick="showIncident('reject')">
 
 <!-- Device Analytics -->
 
+<!-- Technician Activity -->
+
 <div class="card">
 
 <h3>
-Device Analytics
+Technician Activity
 </h3>
+
+<div class="tableWrap">
 
 <table>
 
+<thead>
+
 <tr>
-<td>iPhone Screens</td>
-<td>42</td>
+
+<th>
+Metric
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+Approved Technicians
+</td>
+
+<td>
+<strong id="technicianTotal">
+0
+</strong>
+</td>
+
 </tr>
 
 <tr>
-<td>Samsung Batteries</td>
-<td>28</td>
+
+<td>
+Total Repair Requests
+</td>
+
+<td>
+<strong id="technicianRequests">
+0
+</strong>
+</td>
+
 </tr>
 
 <tr>
-<td>MacBook Repairs</td>
-<td>18</td>
+
+<td>
+Completed Repairs
+</td>
+
+<td>
+<strong id="technicianCompleted">
+0
+</strong>
+</td>
+
 </tr>
 
 <tr>
-<td>Windows Laptops</td>
-<td>22</td>
+
+<td>
+Rejected Repairs
+</td>
+
+<td>
+<strong id="technicianRejected">
+0
+</strong>
+</td>
+
 </tr>
+
+<tr>
+
+<td>
+Completion Rate
+</td>
+
+<td>
+<strong id="technicianCompletionRate">
+0%
+</strong>
+</td>
+
+</tr>
+
+</tbody>
 
 </table>
+
+</div>
+
+
+<button
+onclick="generateTechnicianReport()">
+
+Generate Technician Report
+
+</button>
+
+</div>
+
+<!-- Rider Activity -->
+
+<div class="card">
+
+<h3>
+Rider Activity
+</h3>
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Metric
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+Approved Riders
+</td>
+
+<td>
+<strong id="riderTotal">
+0
+</strong>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Total Deliveries
+</td>
+
+<td>
+<strong id="riderDeliveries">
+0
+</strong>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Completed Deliveries
+</td>
+
+<td>
+<strong id="riderCompleted">
+0
+</strong>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Failed Deliveries
+</td>
+
+<td>
+<strong id="riderFailed">
+0
+</strong>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Completion Rate
+</td>
+
+<td>
+
+<strong id="riderCompletionRate">
+0%
+</strong>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<button
+onclick="generateRiderReport()">
+
+Generate Rider Report
+
+</button>
 
 </div>
 
@@ -753,382 +1086,2063 @@ onclick="closeModal()">
 </div>
 
 
-
 <script>
 
-/* UPDATED PERFORMANCE REPORTS */
+/* =====================================================
+   STORAGE HELPERS
+===================================================== */
 
-const perfData={
+function getStorage(key){
 
-tech:{
-today:[
-['Chinedu',8,6,1,1,'75%'],
-['Sade',7,5,1,1,'71%']
-],
+    try{
 
-'7':[
-['Chinedu',31,26,2,3,'84%'],
-['Sade',28,23,2,3,'82%']
-],
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            );
 
-'30':[
-['Chinedu',102,89,5,8,'87%'],
-['Sade',95,81,6,8,'85%']
-]
-},
+        return Array.isArray(data)
+            ? data
+            : [];
 
+    }catch(error){
 
-rider:{
-today:[
-['Femi',7,6,1,'86%'],
-['Amina',6,5,1,'83%']
-],
+        console.error(
+            "Unable to read storage:",
+            key,
+            error
+        );
 
-'7':[
-['Femi',31,29,2,'94%'],
-['Amina',28,25,3,'89%']
-],
+        return [];
 
-'30':[
-['Femi',102,96,6,'94%'],
-['Amina',91,84,7,'92%']
-]
-},
-
-
-customer:{
-today:[
-['Ada',3,2,1,'67%'],
-['Musa',2,2,0,'100%']
-],
-
-'7':[
-['Ada',8,7,1,'88%'],
-['Musa',6,5,1,'83%']
-],
-
-'30':[
-['Ada',18,16,2,'89%'],
-['Musa',15,13,2,'87%']
-]
-}
-
-};
-
-
-
-function loadPerformance(){
-
-let t=
-document.getElementById(
-'reportType'
-).value;
-
-let p=
-document.getElementById(
-'period'
-).value;
-
-let head='';
-let rows='';
-
-
-if(t==='tech'){
-
-head=`
-
-<tr>
-<th>Technician</th>
-<th>Total Requested</th>
-<th>Completed</th>
-<th>Rejected</th>
-<th>Failed</th>
-<th>Success %</th>
-</tr>
-
-`;
-
-perfData[t][p].forEach(r=>{
-
-rows+=`
-
-<tr>
-<td>${r[0]}</td>
-<td>${r[1]}</td>
-<td>${r[2]}</td>
-<td>${r[3]}</td>
-<td>${r[4]}</td>
-<td>${r[5]}</td>
-</tr>
-
-`;
-
-});
+    }
 
 }
 
 
-if(t==='rider'){
+function setMetric(id,value){
 
-head=`
+    const element =
+        document.getElementById(id);
 
-<tr>
-<th>Rider</th>
-<th>Total Deliveries</th>
-<th>Completed</th>
-<th>Failed</th>
-<th>Success %</th>
-</tr>
+    if(element){
 
-`;
+        element.textContent =
+            value;
 
-perfData[t][p].forEach(r=>{
-
-rows+=`
-
-<tr>
-<td>${r[0]}</td>
-<td>${r[1]}</td>
-<td>${r[2]}</td>
-<td>${r[3]}</td>
-<td>${r[4]}</td>
-</tr>
-
-`;
-
-});
+    }
 
 }
 
 
+/* =====================================================
+   FORMAT CURRENCY
+===================================================== */
 
-if(t==='customer'){
+function formatNaira(value){
 
-head=`
-
-<tr>
-<th>Customer</th>
-<th>Total Requests</th>
-<th>Completed</th>
-<th>Cancelled</th>
-<th>Completion %</th>
-</tr>
-
-`;
-
-perfData[t][p].forEach(r=>{
-
-rows+=`
-
-<tr>
-<td>${r[0]}</td>
-<td>${r[1]}</td>
-<td>${r[2]}</td>
-<td>${r[3]}</td>
-<td>${r[4]}</td>
-</tr>
-
-`;
-
-});
+    return (
+        "₦" +
+        Number(value || 0)
+        .toLocaleString("en-NG")
+    );
 
 }
 
 
-document.querySelector(
-'#perfTable'
-).innerHTML=rows;
+/* =====================================================
+   NORMALIZE STATUS
+===================================================== */
 
-document.querySelector(
-'.tableWrap table thead'
-).innerHTML=head;
+function normalizeStatus(value){
+
+    return String(
+        value || ""
+    )
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g,"_");
 
 }
 
 
-loadPerformance();
+/* =====================================================
+   FINANCIAL STORAGE
+===================================================== */
 
+const FINANCIAL_STORAGE_KEY =
+    "techrider_financial_adjustments";
+
+
+function getFinancialAdjustments(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                FINANCIAL_STORAGE_KEY
+            )
+        ) || {
+
+            riderReconciliation:0,
+            refundReport:0
+
+        };
+
+    }catch(error){
+
+        return {
+
+            riderReconciliation:0,
+            refundReport:0
+
+        };
+
+    }
+
+}
+
+
+/* =====================================================
+   TECHNICIAN-ASSOCIATED REQUESTS
+
+   A request is counted here only when it has actually
+   been associated with a technician.
+
+===================================================== */
+
+function getTechnicianAssociatedRequests(){
+
+    const requests =
+        getStorage(
+            "techrider_requests"
+        );
+
+    const quotations =
+        getStorage(
+            "techrider_quotations"
+        );
+
+    const activeJobs =
+        getStorage(
+            "tech_active_jobs"
+        );
+
+
+    const associatedIds =
+        new Set();
+
+
+    /* -----------------------------------------------
+       REQUESTS WITH TECHNICIAN ASSOCIATION
+    ------------------------------------------------ */
+
+    requests.forEach(request=>{
+
+        const technicianId =
+            request.technicianId ||
+            request.assignedTechnicianId ||
+            request.technicianID;
+
+        const technicianName =
+            request.technicianName ||
+            request.assignedTechnicianName;
+
+
+        if(
+            technicianId ||
+            technicianName
+        ){
+
+            if(request.requestId){
+
+                associatedIds.add(
+                    request.requestId
+                );
+
+            }
+
+        }
+
+    });
+
+
+    /* -----------------------------------------------
+       QUOTATIONS
+
+       A quotation can only exist because a technician
+       has interacted with the repair request.
+    ------------------------------------------------ */
+
+    quotations.forEach(quotation=>{
+
+        if(quotation.requestId){
+
+            associatedIds.add(
+                quotation.requestId
+            );
+
+        }
+
+    });
+
+
+    /* -----------------------------------------------
+       ACTIVE TECHNICIAN JOBS
+    ------------------------------------------------ */
+
+    activeJobs.forEach(job=>{
+
+        if(job.requestId){
+
+            associatedIds.add(
+                job.requestId
+            );
+
+        }
+
+    });
+
+
+    return requests.filter(request=>{
+
+        return (
+            request.requestId &&
+            associatedIds.has(
+                request.requestId
+            )
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   CUSTOMER ACTIVITY
+===================================================== */
+
+function generateCustomerActivityReport(){
+
+    const customers =
+        getStorage(
+            "techrider_customers"
+        );
+
+    const requests =
+        getStorage(
+            "techrider_requests"
+        );
+
+    const disputes =
+        getStorage(
+            "allDisputes"
+        );
+
+
+    const completedRequests =
+        requests.filter(request=>{
+
+            const status =
+                normalizeStatus(
+                    request.status
+                );
+
+            return (
+                status === "completed" ||
+                status === "complete"
+            );
+
+        });
+
+
+    const cancelledRequests =
+        requests.filter(request=>{
+
+            const status =
+                normalizeStatus(
+                    request.status
+                );
+
+            return (
+                status === "cancelled" ||
+                status === "canceled"
+            );
+
+        });
+
+
+    const openDisputes =
+        disputes.filter(dispute=>{
+
+            const status =
+                normalizeStatus(
+                    dispute.status
+                );
+
+            return (
+                status !== "settled" &&
+                status !== "closed"
+            );
+
+        });
+
+
+    const completionRate =
+        requests.length > 0
+
+        ?
+
+        (
+            completedRequests.length /
+            requests.length
+        ) * 100
+
+        :
+
+        0;
+
+
+    return {
+
+        totalCustomers:
+            customers.length,
+
+        totalRequests:
+            requests.length,
+
+        completedRequests:
+            completedRequests.length,
+
+        cancelledRequests:
+            cancelledRequests.length,
+
+        completionRate:
+            completionRate.toFixed(1),
+
+        openDisputes:
+            openDisputes.length
+
+    };
+
+}
+
+
+/* =====================================================
+   TECHNICIAN ACTIVITY
+===================================================== */
+
+function generateTechnicianActivityReport(){
+
+    const technicians =
+        getStorage(
+            "techrider_technicians"
+        );
+
+    const quotations =
+        getStorage(
+            "techrider_quotations"
+        );
+
+    const activeJobs =
+        getStorage(
+            "tech_active_jobs"
+        );
+
+
+    const approvedTechnicians =
+        technicians.filter(
+            technician =>
+                String(
+                    technician.status || ""
+                ).toLowerCase()
+                === "approved"
+        );
+
+
+    const suspendedTechnicians =
+        technicians.filter(
+            technician =>
+                technician.suspended === true
+        );
+
+
+    /* -----------------------------------------------
+       ONLY TECHNICIAN-ASSOCIATED REQUESTS
+    ------------------------------------------------ */
+
+    const technicianRequests =
+        getTechnicianAssociatedRequests();
+
+
+    /* -----------------------------------------------
+       COMPLETED REPAIRS
+    ------------------------------------------------ */
+
+    const completedRepairs =
+        activeJobs.filter(job=>{
+
+            const status =
+                normalizeStatus(
+                    job.jobStatus ||
+                    job.status
+                );
+
+            return (
+                status === "completed" ||
+                status === "complete"
+            );
+
+        });
+
+
+    /* -----------------------------------------------
+       PENDING QUOTATIONS
+    ------------------------------------------------ */
+
+    const pendingQuotations =
+        quotations.filter(quotation=>{
+
+            return normalizeStatus(
+                quotation.quotationStatus
+            )
+            ===
+            "pending_admin_approval";
+
+        });
+
+
+    const completionRate =
+        technicianRequests.length > 0
+
+        ?
+
+        (
+            completedRepairs.length /
+            technicianRequests.length
+        ) * 100
+
+        :
+
+        0;
+
+
+    return {
+
+        totalTechnicians:
+            approvedTechnicians.length,
+
+        suspendedTechnicians:
+            suspendedTechnicians.length,
+
+        totalRequests:
+            technicianRequests.length,
+
+        completedJobs:
+            completedRepairs.length,
+
+        rejectedRepairs:
+            technicianRequests.filter(
+                request => {
+
+                    return (
+                        normalizeStatus(
+                            request.status
+                        )
+                        ===
+                        "rejected_by_technician"
+                    );
+
+                }
+            ).length,
+
+        pendingQuotations:
+            pendingQuotations.length,
+
+        completionRate:
+            completionRate.toFixed(1)
+
+    };
+
+}
+
+
+/* =====================================================
+   RIDER ACTIVITY
+===================================================== */
+
+function generateRiderActivityReport(){
+
+    const riders =
+        getStorage(
+            "techrider_riders"
+        );
+
+    const assignedJobs =
+        getStorage(
+            "assignedRiderJobs"
+        );
+
+    const activeJobs =
+        getStorage(
+            "activeRiderJobs"
+        );
+
+    const completedDeliveries =
+        getStorage(
+            "completedRiderDeliveries"
+        );
+
+
+    const approvedRiders =
+        riders.filter(rider=>{
+
+            return (
+                String(
+                    rider.status || ""
+                ).toLowerCase()
+                === "approved"
+            );
+
+        });
+
+
+    const suspendedRiders =
+        riders.filter(
+            rider =>
+                rider.suspended === true
+        );
+
+
+    const pendingDeliveries =
+        assignedJobs.filter(job=>{
+
+            return normalizeStatus(
+                job.status
+            ) !== "accepted";
+
+        });
+
+
+    const activeDeliveries =
+        activeJobs.filter(job=>{
+
+            const status =
+                normalizeStatus(
+                    job.deliveryStatus ||
+                    job.status
+                );
+
+            return (
+                status !== "completed" &&
+                status !== "complete"
+            );
+
+        });
+
+
+    const totalDeliveries =
+        assignedJobs.length +
+        activeJobs.length +
+        completedDeliveries.length;
+
+
+    const completionRate =
+        totalDeliveries > 0
+
+        ?
+
+        (
+            completedDeliveries.length /
+            totalDeliveries
+        ) * 100
+
+        :
+
+        0;
+
+
+    return {
+
+        totalRiders:
+            approvedRiders.length,
+
+        suspendedRiders:
+            suspendedRiders.length,
+
+        totalDeliveries:
+            totalDeliveries,
+
+        pendingDeliveries:
+            pendingDeliveries.length,
+
+        activeDeliveries:
+            activeDeliveries.length,
+
+        completedDeliveries:
+            completedDeliveries.length,
+
+        failedDeliveries:
+            activeJobs.filter(job=>{
+
+                return (
+                    normalizeStatus(
+                        job.deliveryStatus ||
+                        job.status
+                    )
+                    ===
+                    "failed"
+                );
+
+            }).length,
+
+        completionRate:
+            completionRate.toFixed(1)
+
+    };
+
+}
+
+/* =====================================================
+   FINANCIAL REPORT
+===================================================== */
+
+const TECHRIDER_COMMISSION_RATE = 0.20;
+
+
+/* =====================================================
+   CALCULATE CUSTOMER REPAIR PRICE
+===================================================== */
+
+function calculateRepairPricing(baseQuote){
+
+    const technicianQuote =
+        Number(baseQuote) || 0;
+
+    const platformCommission =
+        technicianQuote *
+        TECHRIDER_COMMISSION_RATE;
+
+    const customerRepairFee =
+        technicianQuote +
+        platformCommission;
+
+    return {
+
+        technicianQuote,
+
+        platformCommission,
+
+        customerRepairFee
+
+    };
+
+}
+
+
+/* =====================================================
+   FINANCIAL REPORT DATA
+===================================================== */
+
+function generateFinancialReportData(){
+
+    const requests =
+        getStorage(
+            "techrider_requests"
+        );
+
+    const quotations =
+        getStorage(
+            "techrider_quotations"
+        );
+
+    const activeJobs =
+        getStorage(
+            "tech_active_jobs"
+        );
+
+
+    /*
+    =====================================================
+       REPAIR FEES
+
+       repairPrice stored in the system represents the
+       technician's original quote.
+
+       TechRider adds 20% commission to that quote.
+
+       Example:
+
+       Technician quote     = ₦100,000
+       Commission (20%)     = ₦20,000
+       Customer repair fee  = ₦120,000
+    =====================================================
+    */
+
+    let repairFees = 0;
+
+    const processedRequestIds =
+        new Set();
+
+
+    /*
+    =====================================================
+       REQUESTS
+    =====================================================
+    */
+
+    requests.forEach(request => {
+
+        const baseQuote =
+            Number(
+                request.repairPrice
+            ) || 0;
+
+        const status =
+            normalizeStatus(
+                request.status
+            );
+
+
+        if(
+            baseQuote <= 0
+        ){
+            return;
+        }
+
+
+        if(
+            status === "completed" ||
+            status === "complete" ||
+            status === "quotation_sent" ||
+            status === "repair_in_progress" ||
+            status === "accepted"
+        ){
+
+            const pricing =
+                calculateRepairPricing(
+                    baseQuote
+                );
+
+
+            repairFees +=
+                pricing.customerRepairFee;
+
+
+            if(request.requestId){
+
+                processedRequestIds.add(
+                    request.requestId
+                );
+
+            }
+
+        }
+
+    });
+
+
+    /*
+    =====================================================
+       ACTIVE TECHNICIAN JOBS
+
+       Only add jobs that do not already exist inside
+       techrider_requests.
+
+       This prevents double counting.
+    =====================================================
+    */
+
+    activeJobs.forEach(job => {
+
+        if(
+            job.requestId &&
+            processedRequestIds.has(
+                job.requestId
+            )
+        ){
+
+            return;
+
+        }
+
+
+        const baseQuote =
+            Number(
+                job.repairPrice
+            ) || 0;
+
+
+        if(
+            baseQuote <= 0
+        ){
+
+            return;
+
+        }
+
+
+        const pricing =
+            calculateRepairPricing(
+                baseQuote
+            );
+
+
+        repairFees +=
+            pricing.customerRepairFee;
+
+
+        if(job.requestId){
+
+            processedRequestIds.add(
+                job.requestId
+            );
+
+        }
+
+    });
+
+
+    /*
+    =====================================================
+       TECHNICIAN EARNINGS
+
+       Technician earnings remain the ORIGINAL quote.
+
+       Example:
+
+       Quote = ₦100,000
+       Earnings = ₦100,000
+    =====================================================
+    */
+
+    let technicianEarnings = 0;
+
+
+    activeJobs.forEach(job => {
+
+        technicianEarnings +=
+            Number(
+                job.repairPrice
+            ) || 0;
+
+    });
+
+
+    /*
+    =====================================================
+       APPROVED QUOTATIONS
+
+       Only add approved quotations that have not already
+       become active technician jobs.
+    =====================================================
+    */
+
+    quotations.forEach(quotation => {
+
+        const status =
+            normalizeStatus(
+                quotation.quotationStatus
+            );
+
+
+        if(
+            status !== "approved" &&
+            status !== "admin_approved"
+        ){
+
+            return;
+
+        }
+
+
+        const baseQuote =
+            Number(
+                quotation.repairPrice
+            ) || 0;
+
+
+        if(
+            baseQuote <= 0
+        ){
+
+            return;
+
+        }
+
+
+        /*
+        Prevent duplicate technician earnings.
+        */
+
+        if(
+            quotation.requestId &&
+            processedRequestIds.has(
+                quotation.requestId
+            )
+        ){
+
+            return;
+
+        }
+
+
+        technicianEarnings +=
+            baseQuote;
+
+
+        const pricing =
+            calculateRepairPricing(
+                baseQuote
+            );
+
+
+        repairFees +=
+            pricing.customerRepairFee;
+
+
+        if(
+            quotation.requestId
+        ){
+
+            processedRequestIds.add(
+                quotation.requestId
+            );
+
+        }
+
+    });
+
+
+    /*
+    =====================================================
+       PLATFORM COMMISSION
+
+       Commission is always 20% of the technician's
+       original quote.
+
+       Customer repair fee already includes this amount.
+    =====================================================
+    */
+
+    const platformCommission =
+        technicianEarnings *
+        TECHRIDER_COMMISSION_RATE;
+
+
+    /*
+    =====================================================
+       FINANCIAL ADJUSTMENTS
+    =====================================================
+    */
+
+    const adjustments =
+        getFinancialAdjustments();
+
+
+    const riderReconciliation =
+        Number(
+            adjustments.riderReconciliation
+        ) || 0;
+
+
+    const refundReport =
+        Number(
+            adjustments.refundReport
+        ) || 0;
+
+
+    /*
+    =====================================================
+       TOTAL REVENUE
+
+       IMPORTANT:
+
+       Repair Fees already represent the COMPLETE amount
+       charged to customers.
+
+       Therefore:
+
+       Total Revenue = Repair Fees
+
+       We do NOT add platformCommission again because
+       that would double-count the 20% commission.
+    =====================================================
+    */
+
+    const totalRevenue =
+        repairFees;
+
+
+    return {
+
+        /*
+        Customer-facing amount
+        */
+
+        repairFees,
+
+
+        /*
+        TechRider's 20% share
+        */
+
+        platformCommission,
+
+
+        /*
+        Technician's original quote amount
+        */
+
+        technicianEarnings,
+
+
+        /*
+        Manual adjustments
+        */
+
+        riderReconciliation,
+
+        refundReport,
+
+
+        /*
+        Total customer-facing revenue
+        */
+
+        totalRevenue
+
+    };
+
+}
+
+
+/* =====================================================
+   RENDER KPI
+===================================================== */
+
+function renderFinancialKPI(){
+
+    const financial =
+        generateFinancialReportData();
+
+
+    setMetric(
+        "reportTotalRevenue",
+        formatNaira(
+            financial.totalRevenue
+        )
+    );
+
+
+    setMetric(
+        "reportTotalRequests",
+        getStorage(
+            "techrider_requests"
+        ).length
+    );
+
+
+}
+
+
+/* =====================================================
+   RENDER CUSTOMER ACTIVITY
+===================================================== */
+
+function renderCustomerActivity(){
+
+    const data =
+        generateCustomerActivityReport();
+
+
+    setMetric(
+        "customerTotal",
+        data.totalCustomers
+    );
+
+
+    setMetric(
+        "customerRequests",
+        data.totalRequests
+    );
+
+
+    setMetric(
+        "customerCompleted",
+        data.completedRequests
+    );
+
+
+    setMetric(
+        "customerCancelled",
+        data.cancelledRequests
+    );
+
+
+    setMetric(
+        "customerCompletionRate",
+        data.completionRate + "%"
+    );
+
+
+    setMetric(
+        "reportTotalCustomers",
+        data.totalCustomers
+    );
+
+}
+
+
+/* =====================================================
+   RENDER TECHNICIAN ACTIVITY
+===================================================== */
+
+function renderTechnicianActivity(){
+
+    const data =
+        generateTechnicianActivityReport();
+
+
+    setMetric(
+        "technicianTotal",
+        data.totalTechnicians
+    );
+
+
+    setMetric(
+        "technicianRequests",
+        data.totalRequests
+    );
+
+
+    setMetric(
+        "technicianCompleted",
+        data.completedJobs
+    );
+
+
+    setMetric(
+        "technicianRejected",
+        data.rejectedRepairs
+    );
+
+
+    setMetric(
+        "technicianCompletionRate",
+        data.completionRate + "%"
+    );
+
+
+    setMetric(
+        "reportTotalTechnicians",
+        data.totalTechnicians
+    );
+
+}
+
+
+/* =====================================================
+   RENDER RIDER ACTIVITY
+===================================================== */
+
+function renderRiderActivity(){
+
+    const data =
+        generateRiderActivityReport();
+
+
+    setMetric(
+        "riderTotal",
+        data.totalRiders
+    );
+
+
+    setMetric(
+        "riderDeliveries",
+        data.totalDeliveries
+    );
+
+
+    setMetric(
+        "riderCompleted",
+        data.completedDeliveries
+    );
+
+
+    setMetric(
+        "riderFailed",
+        data.failedDeliveries
+    );
+
+
+    setMetric(
+        "riderCompletionRate",
+        data.completionRate + "%"
+    );
+
+
+    setMetric(
+        "reportTotalRiders",
+        data.totalRiders
+    );
+
+}
+
+
+/* =====================================================
+   RENDER FINANCIAL REPORT
+===================================================== */
+
+function renderFinancialReport(){
+
+    const data =
+        generateFinancialReportData();
+
+
+    setMetric(
+        "repairFees",
+        formatNaira(
+            data.repairFees
+        )
+    );
+
+
+    setMetric(
+        "platformCommission",
+        formatNaira(
+            data.platformCommission
+        )
+    );
+
+
+    setMetric(
+        "technicianEarnings",
+        formatNaira(
+            data.technicianEarnings
+        )
+    );
+
+
+    const riderInput =
+        document.getElementById(
+            "riderReconciliation"
+        );
+
+
+    const refundInput =
+        document.getElementById(
+            "refundReport"
+        );
+
+
+    if(riderInput){
+
+        riderInput.value =
+            data.riderReconciliation;
+
+    }
+
+
+    if(refundInput){
+
+        refundInput.value =
+            data.refundReport;
+
+    }
+
+
+    renderFinancialKPI();
+
+}
+
+
+/* =====================================================
+   SAVE FINANCIAL ADJUSTMENTS
+===================================================== */
+
+function saveFinancialAdjustments(){
+
+    const riderInput =
+        document.getElementById(
+            "riderReconciliation"
+        );
+
+    const refundInput =
+        document.getElementById(
+            "refundReport"
+        );
+
+
+    const riderReconciliation =
+        Number(
+            riderInput?.value
+        ) || 0;
+
+
+    const refundReport =
+        Number(
+            refundInput?.value
+        ) || 0;
+
+
+    const data = {
+
+        riderReconciliation,
+
+        refundReport,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+
+        FINANCIAL_STORAGE_KEY,
+
+        JSON.stringify(data)
+
+    );
+
+
+    renderFinancialReport();
+
+
+    alert(
+        "Financial updates saved successfully."
+    );
+
+}
+
+
+/* =====================================================
+   GENERATE FINANCIAL REPORT
+===================================================== */
 
 function generateFinancial(){
 
-alert(
-'Financial report generated.'
+    const data =
+        generateFinancialReportData();
+
+
+    const report = [
+
+        "TECHRIDER FINANCIAL REPORT",
+
+        "Generated: " +
+        new Date().toLocaleString(
+            "en-NG"
+        ),
+
+        "",
+
+        "Repair Fees: " +
+        formatNaira(
+            data.repairFees
+        ),
+
+        "Platform Commission: " +
+        formatNaira(
+            data.platformCommission
+        ),
+
+        "Technician Earnings: " +
+        formatNaira(
+            data.technicianEarnings
+        ),
+
+        "Rider Reconciliation: " +
+        formatNaira(
+            data.riderReconciliation
+        ),
+
+        "Refund Report: " +
+        formatNaira(
+            data.refundReport
+        ),
+
+        "",
+
+        "Total Revenue: " +
+        formatNaira(
+            data.totalRevenue
+        )
+
+    ].join("\n");
+
+
+    const blob =
+        new Blob(
+            [report],
+            {
+                type:
+                    "text/plain;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "techrider-financial-report.txt";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    alert(
+        "Financial report generated successfully."
+    );
+
+}
+
+
+/* =====================================================
+   GENERATE CUSTOMER REPORT
+===================================================== */
+
+function generateCustomerReport(){
+
+    const data =
+        generateCustomerActivityReport();
+
+
+    const report = [
+
+        "TECHRIDER CUSTOMER ACTIVITY REPORT",
+
+        "Generated: " +
+        new Date().toLocaleString(
+            "en-NG"
+        ),
+
+        "",
+
+        "Total Customers: " +
+        data.totalCustomers,
+
+        "Total Requests: " +
+        data.totalRequests,
+
+        "Completed Requests: " +
+        data.completedRequests,
+
+        "Cancelled Requests: " +
+        data.cancelledRequests,
+
+        "Completion Rate: " +
+        data.completionRate +
+        "%",
+
+        "Open Disputes: " +
+        data.openDisputes
+
+    ].join("\n");
+
+
+    downloadTextReport(
+        report,
+        "techrider-customer-activity-report.txt"
+    );
+
+}
+
+
+/* =====================================================
+   GENERATE TECHNICIAN REPORT
+===================================================== */
+
+function generateTechnicianReport(){
+
+    const data =
+        generateTechnicianActivityReport();
+
+
+    const report = [
+
+        "TECHRIDER TECHNICIAN ACTIVITY REPORT",
+
+        "Generated: " +
+        new Date().toLocaleString(
+            "en-NG"
+        ),
+
+        "",
+
+        "Approved Technicians: " +
+        data.totalTechnicians,
+
+        "Suspended Technicians: " +
+        data.suspendedTechnicians,
+
+        "Technician-Associated Repair Requests: " +
+        data.totalRequests,
+
+        "Completed Repairs: " +
+        data.completedJobs,
+
+        "Rejected Repairs: " +
+        data.rejectedRepairs,
+
+        "Pending Quotations: " +
+        data.pendingQuotations,
+
+        "Completion Rate: " +
+        data.completionRate +
+        "%"
+
+    ].join("\n");
+
+
+    downloadTextReport(
+        report,
+        "techrider-technician-activity-report.txt"
+    );
+
+}
+
+
+/* =====================================================
+   GENERATE RIDER REPORT
+===================================================== */
+
+function generateRiderReport(){
+
+    const data =
+        generateRiderActivityReport();
+
+
+    const report = [
+
+        "TECHRIDER RIDER ACTIVITY REPORT",
+
+        "Generated: " +
+        new Date().toLocaleString(
+            "en-NG"
+        ),
+
+        "",
+
+        "Approved Riders: " +
+        data.totalRiders,
+
+        "Suspended Riders: " +
+        data.suspendedRiders,
+
+        "Total Deliveries: " +
+        data.totalDeliveries,
+
+        "Pending Deliveries: " +
+        data.pendingDeliveries,
+
+        "Active Deliveries: " +
+        data.activeDeliveries,
+
+        "Completed Deliveries: " +
+        data.completedDeliveries,
+
+        "Failed Deliveries: " +
+        data.failedDeliveries,
+
+        "Completion Rate: " +
+        data.completionRate +
+        "%"
+
+    ].join("\n");
+
+
+    downloadTextReport(
+        report,
+        "techrider-rider-activity-report.txt"
+    );
+
+}
+
+
+/* =====================================================
+   GENERIC TEXT REPORT DOWNLOAD
+===================================================== */
+
+function downloadTextReport(
+    content,
+    filename
+){
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type:
+                    "text/plain;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    alert(
+        "Report generated successfully."
+    );
+
+}
+
+
+/* =====================================================
+   REFRESH ALL REPORTS
+===================================================== */
+
+function refreshAllReports(){
+
+    renderCustomerActivity();
+
+    renderTechnicianActivity();
+
+    renderRiderActivity();
+
+    renderFinancialReport();
+
+}
+
+
+/* =====================================================
+   STORAGE EVENT
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(){
+
+        refreshAllReports();
+
+    }
 );
 
-}
 
+/* =====================================================
+   PAGE LOAD
+===================================================== */
 
-/* EXPORT */
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-function toggleExport(e){
+        refreshAllReports();
 
-e.stopPropagation();
-
-document
-.getElementById(
-'exportDropdown'
-)
-.classList.toggle(
-'show'
+    }
 );
 
-}
 
-function exportCSV(){
+/* =====================================================
+   LIVE REFRESH
 
-let blob=
-new Blob(
-['Sample report data'],
-{type:'text/csv'}
+   Useful because localStorage changes made from
+   another page are not always enough for same-page
+   testing.
+===================================================== */
+
+setInterval(
+    refreshAllReports,
+    14000
 );
 
-let a=
-document.createElement('a');
 
-a.href=
-URL.createObjectURL(blob);
-
-a.download=
-'report.csv';
-
-a.click();
-
-}
-
-function generatePDF(){
-
-alert(
-'PDF generation initiated.'
-);
-
-}
-
-
-
-/* INCIDENTS */
-
-function showIncident(type){
-
-let title='';
-let body='';
-
-if(type==='delay'){
-title='Delayed Repairs';
-body=
-'Chinedu — iPhone 12 delay<br>Sade — Parts unavailable';
-}
-
-if(type==='delivery'){
-title='Failed Deliveries';
-body=
-'Femi — customer unavailable<br>Amina — wrong address';
-}
-
-if(type==='reject'){
-title='Rejected Repairs';
-body=
-'Bola rejected water damage case';
-}
-
-document.getElementById(
-'modalTitle'
-).innerHTML=title;
-
-document.getElementById(
-'modalBody'
-).innerHTML=body;
-
-document.getElementById(
-'incidentModal'
-).style.display='block';
-
-}
-
-
-function closeModal(){
-
-document
-.getElementById(
-'incidentModal'
-)
-.style.display='none';
-
-}
-
-
-
-/* SIDEBAR */
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 function toggleSidebar(){
 
-document
-.getElementById(
-'sidebar'
-)
-.classList.toggle(
-'collapsed'
-);
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
+
+
+    if(
+        window.innerWidth <= 950
+    ){
+
+        sidebar.classList.toggle(
+            "open"
+        );
+
+        document
+        .getElementById(
+            "overlay"
+        )
+        .classList.toggle(
+            "show"
+        );
+
+        return;
+
+    }
+
+
+    sidebar.classList.toggle(
+        "collapsed"
+    );
 
 }
+
 
 function openSidebar(){
 
-document
-.getElementById(
-'sidebar'
-)
-.classList.add(
-'open'
-);
+    document
+    .getElementById(
+        "sidebar"
+    )
+    .classList.add(
+        "open"
+    );
 
-document
-.getElementById(
-'overlay'
-)
-.classList.add(
-'show'
-);
+
+    document
+    .getElementById(
+        "overlay"
+    )
+    .classList.add(
+        "show"
+    );
 
 }
 
 
-/* click anywhere closes modules */
+/* =====================================================
+   EXPORT DROPDOWN
+===================================================== */
+
+function toggleExport(event){
+
+    event.stopPropagation();
+
+
+    document
+    .getElementById(
+        "exportDropdown"
+    )
+    .classList.toggle(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   CSV EXPORT
+===================================================== */
+
+function exportCSV(){
+
+    const financial =
+        generateFinancialReportData();
+
+    const customer =
+        generateCustomerActivityReport();
+
+    const technician =
+        generateTechnicianActivityReport();
+
+    const rider =
+        generateRiderActivityReport();
+
+
+    const rows = [
+
+        [
+            "Report",
+            "Metric",
+            "Value"
+        ],
+
+        [
+            "Financial",
+            "Repair Fees",
+            financial.repairFees
+        ],
+
+        [
+            "Financial",
+            "Platform Commission",
+            financial.platformCommission
+        ],
+
+        [
+            "Financial",
+            "Technician Earnings",
+            financial.technicianEarnings
+        ],
+
+        [
+            "Financial",
+            "Rider Reconciliation",
+            financial.riderReconciliation
+        ],
+
+        [
+            "Financial",
+            "Refund Report",
+            financial.refundReport
+        ],
+
+        [
+            "Financial",
+            "Total Revenue",
+            financial.totalRevenue
+        ],
+
+        [
+            "Customer",
+            "Total Customers",
+            customer.totalCustomers
+        ],
+
+        [
+            "Customer",
+            "Total Requests",
+            customer.totalRequests
+        ],
+
+        [
+            "Customer",
+            "Completed Requests",
+            customer.completedRequests
+        ],
+
+        [
+            "Customer",
+            "Cancelled Requests",
+            customer.cancelledRequests
+        ],
+
+        [
+            "Technician",
+            "Approved Technicians",
+            technician.totalTechnicians
+        ],
+
+        [
+            "Technician",
+            "Repair Requests",
+            technician.totalRequests
+        ],
+
+        [
+            "Technician",
+            "Completed Repairs",
+            technician.completedJobs
+        ],
+
+        [
+            "Rider",
+            "Approved Riders",
+            rider.totalRiders
+        ],
+
+        [
+            "Rider",
+            "Total Deliveries",
+            rider.totalDeliveries
+        ],
+
+        [
+            "Rider",
+            "Completed Deliveries",
+            rider.completedDeliveries
+        ]
+
+    ];
+
+
+    const csv =
+        rows
+        .map(row=>{
+
+            return row
+            .map(value=>{
+
+                return `"${String(
+                    value
+                ).replace(
+                    /"/g,
+                    '""'
+                )}"`;
+
+            })
+            .join(",");
+
+        })
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "techrider-reports.csv";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================================
+   PDF / PRINT
+===================================================== */
+
+function generatePDF(){
+
+    window.print();
+
+}
+
+
+/* =====================================================
+   CLOSE DROPDOWN / SIDEBAR
+===================================================== */
 
 document.addEventListener(
-'click',
-function(e){
+    "click",
+    function(e){
+
+        const dropdown =
+            document.getElementById(
+                "exportDropdown"
+            );
+
+
+        if(
+            dropdown &&
+            !dropdown.contains(e.target)
+        ){
+
+            dropdown.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        if(
+            window.innerWidth <= 950 &&
+            !e.target.closest(
+                ".sidebar"
+            ) &&
+            !e.target.closest(
+                ".hamburger"
+            )
+        ){
+
+            document
+            .getElementById(
+                "sidebar"
+            )
+            .classList.remove(
+                "open"
+            );
+
+
+            document
+            .getElementById(
+                "overlay"
+            )
+            .classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
 
 document
 .getElementById(
-'exportDropdown'
+    "overlay"
 )
-.classList.remove(
-'show'
-);
+.addEventListener(
+    "click",
+    function(){
 
-if(
-e.target.id==='incidentModal'
-){
-closeModal();
-}
+        document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.remove(
+            "open"
+        );
 
-document
-.getElementById(
-'sidebar'
-)
-.classList.remove(
-'open'
-);
 
-document
-.getElementById(
-'overlay'
-)
-.classList.remove(
-'show'
-);
+        this.classList.remove(
+            "show"
+        );
 
-}
+    }
 );
 
 </script>

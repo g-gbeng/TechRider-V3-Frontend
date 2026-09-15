@@ -287,6 +287,52 @@ margin-right:8px;
 margin-bottom:8px;
 }
 
+/* =========================================
+   PENDING STATUS CONTROL
+========================================= */
+
+.statusSelect{
+    padding:9px 10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:white;
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    color:var(--deep-purple);
+    cursor:pointer;
+    min-width:150px;
+}
+
+.statusSelect:focus{
+    outline:none;
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(90,24,154,.10);
+}
+
+
+
+.statusSaveBtn{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+
+color:white;
+
+}
+
+
+.cancelStatusBtn{
+
+background:#ffe5e5;
+
+color:#b00020;
+
+}
+
 .viewBtn{
 background:#f2ecff;
 color:var(--purple);
@@ -300,6 +346,55 @@ color:#12643a;
 .deleteBtn{
 background:#ffe5e5;
 color:#b00020;
+}
+
+/* =========================================
+   QUOTE BUTTONS
+========================================= */
+
+.quoteBtn{
+background:#f3e8ff;
+color:var(--purple);
+}
+
+.sendQuoteBtn{
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+}
+
+.quoteSentBtn{
+background:#dff7ea;
+color:#12643a;
+cursor:default;
+}
+
+.cancelQuoteBtn{
+background:#ffe5e5;
+color:#b00020;
+}
+
+
+/* =========================================
+   QUOTE VALUES
+========================================= */
+
+.quoteAmount{
+font-weight:700;
+color:var(--purple);
+}
+
+.commissionAmount{
+font-weight:600;
+color:#12643a;
+}
+
+.customerPrice{
+font-weight:700;
+color:var(--deep-purple);
 }
 
 .timeline{
@@ -375,7 +470,7 @@ display:block;
 
 <div class="overlay" id="overlay"></div>
 
-<div class="sidebar collapsed" id="sidebar">
+<div class="sidebar" id="sidebar">
 
 <div class="brand" onclick="toggleSidebar()">
 <div class="logo">A</div>
@@ -433,7 +528,77 @@ placeholder="Search jobs...">
 
 </div>
 
+<!-- PENDING -->
 
+<!-- PENDING REQUESTS -->
+
+<!-- PENDING REQUESTS -->
+
+<div
+class="section filterGroup"
+data-group="pending">
+
+<div
+class="sectionHeader"
+onclick="toggleSection(this)">
+
+<h3>
+Pending Requests
+</h3>
+
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+
+<div class="sectionBody">
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Request ID</th>
+
+<th>Customer</th>
+
+<th>Device</th>
+
+<th>Technician</th>
+
+<th>Quote</th>
+
+<th>Customer Price</th>
+
+<th>Commission</th>
+
+<th>Status</th>
+
+<th>Updated</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="pendingRequestsTable">
+
+<!-- JavaScript will populate this -->
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
 
 <!-- ACCEPTED -->
 
@@ -567,91 +732,7 @@ Repair underway.
 
 
 
-<!-- PENDING -->
 
-<div class="section filterGroup collapsed"
-data-group="pending">
-
-<div class="sectionHeader"
-onclick="toggleSection(this)">
-<h3>Pending Requests</h3>
-<i class="fas fa-chevron-down"></i>
-</div>
-
-<div class="sectionBody">
-
-<div class="tableWrap">
-
-<table>
-<thead>
-<tr>
-<th>Customer</th>
-<th>Device</th>
-<th>Technician</th>
-<th>Updated</th>
-<th>Actions</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr data-search="ada iphone chinedu">
-
-<td>Ada</td>
-
-<td>
-<span class="deviceLink"
-onclick="showIssue('Phone not booting.')">
-iPhone 12
-</span>
-</td>
-
-<td>Chinedu</td>
-
-<td>43 min ago</td>
-
-<td>
-<button class="btn deleteBtn"
-onclick="deleteRow(this)">
-Delete
-</button>
-</td>
-
-</tr>
-
-
-<tr data-search="john samsung bola">
-
-<td>John</td>
-
-<td>
-<span class="deviceLink"
-onclick="showIssue('Broken display.')">
-Galaxy A52
-</span>
-</td>
-
-<td>Bola</td>
-
-<td>55 min ago</td>
-
-<td>
-<button class="btn deleteBtn"
-onclick="deleteRow(this)">
-Delete
-</button>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
 
 
 
@@ -808,199 +889,1715 @@ Close
 
 <script>
 
-const sidebar=
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+const sidebar =
 document.getElementById('sidebar');
 
-const overlay=
+const overlay =
 document.getElementById('overlay');
 
+
 function toggleSidebar(){
-sidebar.classList.toggle(
-'collapsed'
-);
+
+    if(window.innerWidth <= 900){
+
+        sidebar.classList.toggle('open');
+
+        overlay.classList.toggle('show');
+
+        return;
+
+    }
+
+    sidebar.classList.toggle('collapsed');
+
 }
+
 
 function openSidebar(){
-sidebar.classList.add('open');
-overlay.classList.add('show');
+
+    sidebar.classList.add('open');
+
+    overlay.classList.add('show');
+
 }
 
-overlay.onclick=function(){
-sidebar.classList.remove('open');
-overlay.classList.remove('show');
+
+overlay.onclick = function(){
+
+    sidebar.classList.remove('open');
+
+    overlay.classList.remove('show');
+
 };
 
 
-/* accordion */
+/* =====================================================
+   STORAGE HELPERS
+===================================================== */
+
+function getStorage(key){
+
+    try{
+
+        const data =
+        JSON.parse(
+            localStorage.getItem(key)
+        );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+
+    catch(error){
+
+        console.error(
+            `Unable to read ${key}`,
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveStorage(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =====================================================
+   STATUS NORMALIZER
+===================================================== */
+
+function normalizeStatus(value){
+
+    return String(
+        value || ''
+    )
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g,'_');
+
+}
+
+
+/* =====================================================
+   QUOTE CALCULATION
+===================================================== */
+
+const TECHRIDER_COMMISSION_RATE = 0.20;
+
+
+function calculateQuote(baseQuote){
+
+    const technicianQuote =
+        Number(baseQuote) || 0;
+
+    const platformCommission =
+        technicianQuote *
+        TECHRIDER_COMMISSION_RATE;
+
+    const customerPrice =
+        technicianQuote +
+        platformCommission;
+
+
+    return {
+
+        technicianQuote,
+
+        platformCommission,
+
+        customerPrice
+
+    };
+
+}
+
+
+/* =====================================================
+   GET REQUESTS
+===================================================== */
+
+function getRequests(){
+
+    return getStorage(
+        'techrider_requests'
+    );
+
+}
+
+
+/* =====================================================
+   GET QUOTATIONS
+===================================================== */
+
+function getQuotations(){
+
+    return getStorage(
+        'techrider_quotations'
+    );
+
+}
+
+
+/* =====================================================
+   FIND QUOTATION FOR REQUEST
+===================================================== */
+
+function getQuotationForRequest(
+    requestId
+){
+
+    const quotations =
+        getQuotations();
+
+
+    const matches =
+        quotations.filter(
+            quotation => {
+
+                return String(
+                    quotation.requestId
+                ) === String(
+                    requestId
+                );
+
+            }
+        );
+
+
+    if(matches.length === 0){
+
+        return null;
+
+    }
+
+
+    /*
+       Most recent quotation wins.
+    */
+
+    matches.sort(
+        (a,b)=>{
+
+            return (
+                new Date(
+                    b.createdAt || 0
+                )
+                -
+                new Date(
+                    a.createdAt || 0
+                )
+            );
+
+        }
+    );
+
+
+    return matches[0];
+
+}
+
+
+/* =====================================================
+   GET REQUEST TECHNICIAN
+===================================================== */
+
+function getTechnicianName(request){
+
+    return (
+
+        request.technicianName ||
+
+        request.assignedTechnicianName ||
+
+        request.assignedTechnician ||
+
+        'Not Assigned'
+
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT MONEY
+===================================================== */
+
+function formatNaira(value){
+
+    return (
+
+        '₦' +
+
+        Number(
+            value || 0
+        ).toLocaleString(
+            'en-NG'
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(value){
+
+    if(!value){
+
+        return 'Recently';
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return 'Recently';
+
+    }
+
+
+    return date.toLocaleString(
+        'en-NG',
+        {
+            day:'numeric',
+            month:'short',
+            year:'numeric',
+            hour:'numeric',
+            minute:'2-digit'
+        }
+    );
+
+}
+
+
+/* =====================================================
+   PENDING REQUESTS
+===================================================== */
+
+function loadPendingRequests(){
+
+    const tbody =
+        document.getElementById(
+            'pendingRequestsTable'
+        );
+
+
+    if(!tbody){
+
+        return;
+
+    }
+
+
+    const requests =
+        getRequests();
+
+
+    /*
+       Pending requests are requests that
+       have not been completed, cancelled,
+       rejected or otherwise closed.
+    */
+
+    const pendingRequests =
+        requests.filter(
+            request => {
+
+                const status =
+                    normalizeStatus(
+                        request.status
+                    );
+
+
+                return ![
+                    'completed',
+                    'complete',
+                    'cancelled',
+                    'canceled',
+                    'rejected',
+                    'rejected_by_technician'
+                ].includes(status);
+
+            }
+        );
+
+
+    tbody.innerHTML = '';
+
+
+    if(
+        pendingRequests.length === 0
+    ){
+
+        tbody.innerHTML = `
+
+        <tr>
+
+            <td colspan="10"
+                style="
+                text-align:center;
+                padding:30px;
+                color:#777;
+                ">
+
+                No pending repair requests.
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       Newest requests first
+    */
+
+    pendingRequests.sort(
+        (a,b)=>{
+
+            return (
+
+                new Date(
+                    b.updatedAt ||
+                    b.createdAt ||
+                    0
+                )
+
+                -
+
+                new Date(
+                    a.updatedAt ||
+                    a.createdAt ||
+                    0
+                )
+
+            );
+
+        }
+    );
+
+
+    pendingRequests.forEach(
+        request => {
+
+            const quotation =
+                getQuotationForRequest(
+                    request.requestId
+                );
+
+
+            let quoteData = null;
+
+
+            if(quotation){
+
+                quoteData =
+                    calculateQuote(
+                        quotation.repairPrice
+                    );
+
+            }
+
+
+            const quoteSent =
+                request.quoteSent === true;
+
+
+            let quoteDisplay =
+                '<span style="color:#999;">Not quoted</span>';
+
+
+            let customerPriceDisplay =
+                '<span style="color:#999;">—</span>';
+
+
+            let commissionDisplay =
+                '<span style="color:#999;">—</span>';
+
+
+            if(quoteData){
+
+                quoteDisplay = `
+
+                <span
+                class="quoteAmount">
+
+                ${formatNaira(
+                    quoteData.technicianQuote
+                )}
+
+                </span>
+
+                `;
+
+
+                customerPriceDisplay = `
+
+                <span
+                class="customerPrice">
+
+                ${formatNaira(
+                    quoteData.customerPrice
+                )}
+
+                </span>
+
+                `;
+
+
+                commissionDisplay = `
+
+                <span
+                class="commissionAmount">
+
+                ${formatNaira(
+                    quoteData.platformCommission
+                )}
+
+                </span>
+
+                `;
+
+            }
+
+
+            const status =
+                request.status ||
+                'Pending';
+
+let actionButtons = `
+
+<select
+class="statusSelect"
+onchange="
+updatePendingRequestStatus(
+'${escapeForAttribute(
+    request.requestId
+)}',
+this.value
+)
+">
+
+<option
+value="Pending"
+${
+    normalizeStatus(request.status) === 'pending'
+    ? 'selected'
+    : ''
+}>
+Pending
+</option>
+
+
+<option
+value="In Progress"
+${
+    normalizeStatus(request.status) === 'in_progress'
+    ? 'selected'
+    : ''
+}>
+In Progress
+</option>
+
+
+<option
+value="Cancelled"
+${
+    normalizeStatus(request.status) === 'cancelled'
+    ? 'selected'
+    : ''
+}>
+Cancelled
+</option>
+
+</select>
+
+`;
+
+
+/*
+=========================================
+QUOTE ACTION
+=========================================
+*/
+
+if(!quotation){
+
+    actionButtons += `
+
+    <span
+    style="
+    color:#999;
+    font-size:.85rem;
+    ">
+
+    Awaiting technician quote
+
+    </span>
+
+    `;
+
+}
+
+else if(quoteSent){
+
+    actionButtons += `
+
+    <button
+    class="btn quoteSentBtn"
+    disabled>
+
+    <i class="fas fa-check"></i>
+
+    Quote Sent
+
+    </button>
+
+    `;
+
+}
+
+else{
+
+    actionButtons += `
+
+    <button
+    class="btn sendQuoteBtn"
+    onclick="
+    sendQuoteToCustomer(
+        '${escapeForAttribute(
+            request.requestId
+        )}'
+    )
+    ">
+
+    <i class="fas fa-paper-plane"></i>
+
+    Send Quote
+
+    </button>
+
+    `;
+
+}
+
+
+            const row =
+                document.createElement('tr');
+
+
+            row.dataset.search = `
+
+                ${request.requestId || ''}
+
+                ${request.customerName || ''}
+
+                ${request.customerEmail || ''}
+
+                ${request.deviceType || ''}
+
+                ${request.brand || ''}
+
+                ${request.model || ''}
+
+                ${getTechnicianName(
+                    request
+                )}
+
+            `.toLowerCase();
+
+
+            row.innerHTML = `
+
+            <td>
+
+                <strong>
+                ${request.requestId || 'REQ-000'}
+                </strong>
+
+            </td>
+
+
+            <td>
+
+                ${request.customerName || 'N/A'}
+
+            </td>
+
+
+            <td>
+
+                <span
+                class="deviceLink"
+                onclick="
+                showIssue(
+                    '${escapeForAttribute(
+                        request.description ||
+                        'No issue description provided.'
+                    )}'
+                )
+                ">
+
+                ${request.deviceType || 'Device'}
+
+                ${request.brand || ''}
+
+                ${request.model || ''}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${getTechnicianName(
+                    request
+                )}
+
+            </td>
+
+
+            <td>
+
+                ${quoteDisplay}
+
+            </td>
+
+
+            <td>
+
+                ${customerPriceDisplay}
+
+            </td>
+
+
+            <td>
+
+                ${commissionDisplay}
+
+            </td>
+
+
+            <td>
+
+                <span
+                class="badge pending">
+
+                ${status}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${formatDate(
+                    request.updatedAt ||
+                    request.createdAt
+                )}
+
+            </td>
+
+
+            <td>
+
+                ${actionButtons}
+
+            </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+
+    applyFilter();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML ATTRIBUTE VALUES
+===================================================== */
+
+function escapeForAttribute(value){
+
+    return String(
+        value || ''
+    )
+    .replace(/\\/g,'\\\\')
+    .replace(/'/g,"\\'")
+    .replace(/"/g,'&quot;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+
+}
+
+
+/* =====================================================
+   SEND QUOTE TO CUSTOMER
+===================================================== */
+
+function sendQuoteToCustomer(
+    requestId
+){
+
+    const requests =
+        getRequests();
+
+
+    const requestIndex =
+        requests.findIndex(
+            request => {
+
+                return String(
+                    request.requestId
+                ) === String(
+                    requestId
+                );
+
+            }
+        );
+
+
+    if(requestIndex === -1){
+
+        alert(
+            'Repair request could not be found.'
+        );
+
+        return;
+
+    }
+
+
+    const request =
+        requests[requestIndex];
+
+
+    const quotation =
+        getQuotationForRequest(
+            requestId
+        );
+
+
+    if(!quotation){
+
+        alert(
+            'The technician has not submitted a quotation yet.'
+        );
+
+        return;
+
+    }
+
+
+    const quote =
+        calculateQuote(
+            quotation.repairPrice
+        );
+
+
+    if(
+        quote.technicianQuote <= 0
+    ){
+
+        alert(
+            'The technician quotation is invalid.'
+        );
+
+        return;
+
+    }
+
+
+    if(
+        request.quoteSent === true
+    ){
+
+        alert(
+            'This quotation has already been sent to the customer.'
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+
+            `Send repair quotation to ${
+                request.customerName ||
+                'the customer'
+            }?\n\n` +
+
+            `Technician quote: ${
+                formatNaira(
+                    quote.technicianQuote
+                )
+            }\n` +
+
+            `Platform commission: ${
+                formatNaira(
+                    quote.platformCommission
+                )
+            }\n` +
+
+            `Customer price: ${
+                formatNaira(
+                    quote.customerPrice
+                )
+            }`
+
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    /*
+       =========================================
+       UPDATE REQUEST
+       =========================================
+    */
+
+    requests[requestIndex] = {
+
+        ...request,
+
+        quoteSent:true,
+
+        quoteSentAt:
+            new Date().toISOString(),
+
+        technicianQuote:
+            quote.technicianQuote,
+
+        platformCommission:
+            quote.platformCommission,
+
+        customerRepairPrice:
+            quote.customerPrice,
+
+        /*
+           Keep repairPrice as the
+           technician's base quote for
+           backward compatibility.
+        */
+
+        repairPrice:
+            quote.technicianQuote,
+
+        quotationStatus:
+            'Quote Sent to Customer'
+
+    };
+
+
+    saveStorage(
+        'techrider_requests',
+        requests
+    );
+
+
+    /*
+       =========================================
+       CUSTOMER NOTIFICATION
+       =========================================
+    */
+
+    sendCustomerQuoteNotification(
+        requests[requestIndex],
+        quote,
+        quotation
+    );
+
+
+    /*
+       =========================================
+       ADMIN RECORD
+       =========================================
+    */
+
+    createQuoteSentAdminRecord(
+        requests[requestIndex],
+        quote
+    );
+
+
+    loadPendingRequests();
+
+
+    alert(
+        'Repair quotation sent to the customer successfully.'
+    );
+
+}
+
+
+/* =====================================================
+   CUSTOMER QUOTE NOTIFICATION
+===================================================== */
+
+function sendCustomerQuoteNotification(
+    request,
+    quote,
+    quotation
+){
+
+    /*
+       Dedicated customer notification
+       storage.
+
+       The customer notification page
+       will read this same key.
+    */
+
+    const notificationKey =
+        'techrider_customer_notifications';
+
+
+    const notifications =
+        getStorage(
+            notificationKey
+        );
+
+
+    const notification = {
+
+        id:
+            crypto.randomUUID
+            ? crypto.randomUUID()
+            : Date.now().toString(),
+
+        type:
+            'repair_quote',
+
+        customerId:
+            request.customerId ||
+            null,
+
+        customerEmail:
+            request.customerEmail ||
+            request.email ||
+            null,
+
+        customerName:
+            request.customerName ||
+            'Customer',
+
+        requestId:
+            request.requestId,
+
+        technicianId:
+            request.technicianId ||
+            request.assignedTechnicianId ||
+            quotation.technicianId ||
+            null,
+
+        technicianName:
+            request.technicianName ||
+            request.assignedTechnicianName ||
+            quotation.technicianName ||
+            'Selected Technician',
+
+        technicianQuote:
+            quote.technicianQuote,
+
+        platformCommission:
+            quote.platformCommission,
+
+        customerPrice:
+            quote.customerPrice,
+
+        title:
+            'Repair Quotation Received',
+
+        message:
+
+            `Hi ${
+                request.customerName ||
+                'Customer'
+            }, following assessment of your device by the selected technician, the price of your repair has been quoted at ${
+                formatNaira(
+                    quote.customerPrice
+                )
+            }.`,
+
+        actions: {
+
+            proceedToPayment:true,
+
+            cancelRequest:true
+
+        },
+
+        status:
+            'unread',
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    notifications.unshift(
+        notification
+    );
+
+
+    saveStorage(
+        notificationKey,
+        notifications
+    );
+
+}
+
+/* =====================================================
+   UPDATE PENDING REQUEST STATUS
+===================================================== */
+
+function updatePendingRequestStatus(
+    requestId,
+    newStatus
+){
+
+    const requests =
+        getStorage(
+            'techrider_requests'
+        );
+
+
+    const index =
+        requests.findIndex(
+            request => {
+
+                return String(
+                    request.requestId
+                ) === String(
+                    requestId
+                );
+
+            }
+        );
+
+
+    if(index === -1){
+
+        alert(
+            'Request could not be found.'
+        );
+
+        return;
+
+    }
+
+
+    const request =
+        requests[index];
+
+
+    const status =
+        String(
+            newStatus || ''
+        )
+        .trim()
+        .toLowerCase();
+
+
+    /*
+       =========================================
+       CANCELLED
+       =========================================
+    */
+
+    if(status === 'cancelled'){
+
+        const confirmed =
+            confirm(
+
+                `Are you sure you want to cancel request ${
+                    request.requestId
+                }?`
+
+            );
+
+
+        if(!confirmed){
+
+            loadPendingRequests();
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+       =========================================
+       UPDATE REQUEST
+       =========================================
+    */
+
+    requests[index] = {
+
+        ...request,
+
+        status:
+            newStatus,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    saveStorage(
+        'techrider_requests',
+        requests
+    );
+
+
+    /*
+       =========================================
+       ADMIN NOTIFICATION
+       =========================================
+    */
+
+    const notifications =
+        getStorage(
+            'admin_notifications'
+        );
+
+
+    notifications.unshift({
+
+        id:
+            Date.now(),
+
+        type:
+            'request_status_update',
+
+        requestId:
+            request.requestId,
+
+        customerId:
+            request.customerId ||
+            null,
+
+        customerName:
+            request.customerName ||
+            'Customer',
+
+        technicianId:
+            request.technicianId ||
+            request.assignedTechnicianId ||
+            null,
+
+        technicianName:
+            request.technicianName ||
+            request.assignedTechnicianName ||
+            null,
+
+        status:
+            newStatus,
+
+        message:
+
+            `Request ${
+                request.requestId
+            } was manually marked as ${
+                newStatus
+            } by Admin.`,
+
+        createdAt:
+            new Date().toISOString(),
+
+        read:false
+
+    });
+
+
+    saveStorage(
+        'admin_notifications',
+        notifications
+    );
+
+
+    /*
+       =========================================
+       REFRESH
+       =========================================
+    */
+
+    loadPendingRequests();
+
+
+    alert(
+        `Request ${
+            request.requestId
+        } marked as ${
+            newStatus
+        }.`
+    );
+
+}
+
+/* =====================================================
+   ADMIN QUOTE RECORD
+===================================================== */
+
+function createQuoteSentAdminRecord(
+    request,
+    quote
+){
+
+    const key =
+        'admin_notifications';
+
+
+    const notifications =
+        getStorage(key);
+
+
+    notifications.unshift({
+
+        id:
+            Date.now(),
+
+        type:
+            'quote_sent_to_customer',
+
+        requestId:
+            request.requestId,
+
+        customerId:
+            request.customerId,
+
+        customerName:
+            request.customerName,
+
+        technicianId:
+            request.technicianId ||
+            request.assignedTechnicianId,
+
+        technicianName:
+            request.technicianName ||
+            request.assignedTechnicianName,
+
+        technicianQuote:
+            quote.technicianQuote,
+
+        platformCommission:
+            quote.platformCommission,
+
+        customerPrice:
+            quote.customerPrice,
+
+        message:
+
+            `Repair quotation for ${
+                request.requestId
+            } was sent to ${
+                request.customerName ||
+                'the customer'
+            }. Customer price: ${
+                formatNaira(
+                    quote.customerPrice
+                )
+            }.`,
+
+        createdAt:
+            new Date().toISOString(),
+
+        read:false
+
+    });
+
+
+    saveStorage(
+        key,
+        notifications
+    );
+
+}
+
+
+/* =====================================================
+   ACCORDION
+===================================================== */
 
 function toggleSection(el){
 
-el.parentElement.classList.toggle(
-'collapsed'
-);
+    el.parentElement.classList.toggle(
+        'collapsed'
+    );
 
 }
 
 
-/* timeline */
+/* =====================================================
+   TIMELINE
+===================================================== */
 
 function toggleTimeline(btn){
 
-btn.closest('tr')
-.classList.toggle(
-'showTimeline'
-);
+    btn
+    .closest('tr')
+    .classList.toggle(
+        'showTimeline'
+    );
 
 }
 
 
-/* delete */
+/* =====================================================
+   DELETE ROW
+===================================================== */
 
 function deleteRow(btn){
 
-if(confirm(
-'Delete this record?'
-)){
-btn.closest('tr').remove();
-}
+    if(
+        !confirm(
+            'Delete this record?'
+        )
+    ){
+
+        return;
+
+    }
+
+
+    btn
+    .closest('tr')
+    .remove();
 
 }
 
 
-/* mark complete */
+/* =====================================================
+   MARK COMPLETED
+===================================================== */
 
 function markCompleted(btn){
 
-if(!confirm(
-'Move this job to completed?'
-)) return;
+    if(
+        !confirm(
+            'Move this job to completed?'
+        )
+    ){
 
-let row=
-btn.closest('tr');
+        return;
 
-row.querySelector(
-'.completeBtn'
-).remove();
+    }
 
-let status=
-row.querySelector(
-'.badge'
-);
 
-status.className=
-'badge done';
+    const row =
+        btn.closest('tr');
 
-status.innerText=
-'Completed';
 
-row.cells[6].innerText=
-'Just now';
+    const status =
+        row.querySelector(
+            '.badge'
+        );
 
-document
-.getElementById(
-'completedTable'
-)
-.prepend(row);
+
+    if(status){
+
+        status.className =
+            'badge done';
+
+        status.innerText =
+            'Completed';
+
+    }
+
+
+    const completeButton =
+        row.querySelector(
+            '.completeBtn'
+        );
+
+
+    if(completeButton){
+
+        completeButton.remove();
+
+    }
+
+
+    row.cells[6].innerText =
+        'Just now';
+
+
+    const completedTable =
+        document.getElementById(
+            'completedTable'
+        );
+
+
+    if(completedTable){
+
+        completedTable.prepend(
+            row
+        );
+
+    }
 
 }
 
 
-/* issue modal */
+/* =====================================================
+   ISSUE MODAL
+===================================================== */
 
 function showIssue(issue){
 
-document
-.getElementById(
-'issueText'
-).innerText=issue;
+    document
+    .getElementById(
+        'issueText'
+    )
+    .innerText =
+        issue;
 
-document
-.getElementById(
-'issueModal'
-)
-.classList.add('show');
+
+    document
+    .getElementById(
+        'issueModal'
+    )
+    .classList.add(
+        'show'
+    );
 
 }
+
 
 function closeIssue(){
 
-document
-.getElementById(
-'issueModal'
-)
-.classList.remove(
-'show'
-);
+    document
+    .getElementById(
+        'issueModal'
+    )
+    .classList.remove(
+        'show'
+    );
 
 }
 
 
-/* filtering */
+/* =====================================================
+   FILTERING
+===================================================== */
 
 function applyFilter(){
 
-let q=
-document
-.getElementById(
-'searchBox'
-)
-.value.toLowerCase();
+    const searchBox =
+        document.getElementById(
+            'searchBox'
+        );
 
-let group=
-document
-.getElementById(
-'sectionFilter'
-)
-.value;
 
-document
-.querySelectorAll(
-'.filterGroup'
-)
-.forEach(section=>{
+    const sectionFilter =
+        document.getElementById(
+            'sectionFilter'
+        );
 
-section.style.display=
-(group==='all' ||
-section.dataset.group===group)
-?'block'
-:'none';
 
-});
+    if(!searchBox ||
+       !sectionFilter){
 
-document
-.querySelectorAll(
-'tbody tr'
-)
-.forEach(row=>{
+        return;
 
-let s=
-row.dataset.search||'';
+    }
 
-row.style.display=
-s.includes(q)
-?'table-row'
-:'none';
 
-});
+    const q =
+        searchBox.value
+        .trim()
+        .toLowerCase();
+
+
+    const group =
+        sectionFilter.value;
+
+
+    document
+    .querySelectorAll(
+        '.filterGroup'
+    )
+    .forEach(
+        section => {
+
+            section.style.display =
+
+                (
+                    group === 'all' ||
+
+                    section.dataset.group ===
+                    group
+
+                )
+
+                ? 'block'
+                : 'none';
+
+        }
+    );
+
+
+    document
+    .querySelectorAll(
+        'tbody tr'
+    )
+    .forEach(
+        row => {
+
+            const searchText =
+                (
+                    row.dataset.search ||
+                    row.innerText ||
+                    ''
+                )
+                .toLowerCase();
+
+
+            row.style.display =
+
+                searchText.includes(q)
+
+                ? 'table-row'
+                : 'none';
+
+        }
+    );
 
 }
 
-document
-.getElementById(
-'searchBox'
-)
-.addEventListener(
-'input',
-applyFilter
-);
+
+/* =====================================================
+   FILTER EVENTS
+===================================================== */
 
 document
 .getElementById(
-'sectionFilter'
+    'searchBox'
 )
 .addEventListener(
-'change',
-applyFilter
+    'input',
+    applyFilter
+);
+
+
+document
+.getElementById(
+    'sectionFilter'
+)
+.addEventListener(
+    'change',
+    applyFilter
+);
+
+
+/* =====================================================
+   STORAGE SYNCHRONIZATION
+===================================================== */
+
+window.addEventListener(
+    'storage',
+    function(){
+
+        loadPendingRequests();
+
+    }
+);
+
+
+/* =====================================================
+   VISIBILITY REFRESH
+===================================================== */
+
+document.addEventListener(
+    'visibilitychange',
+    function(){
+
+        if(
+            !document.hidden
+        ){
+
+            loadPendingRequests();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function(){
+
+        loadPendingRequests();
+
+        applyFilter();
+
+    }
+);
+
+
+/* =====================================================
+   LIVE REFRESH
+===================================================== */
+
+setInterval(
+    loadPendingRequests,
+    7000
 );
 
 </script>
