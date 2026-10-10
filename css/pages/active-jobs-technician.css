@@ -1,0 +1,283 @@
+/* Styles for active-jobs-technician.html */
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--gray-badge:#9ca3af;
+--green:#16a34a;
+--blue:#2563eb;
+--red:#dc2626;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin-bottom:25px;
+gap:12px;
+}
+
+.header h2{
+color:var(--deep-purple);
+}
+
+.back{
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.9rem;
+font-weight:600;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+}
+
+/* CARD */
+
+.card{
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+}
+
+/* TOP */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
+}
+
+.title{
+font-weight:600;
+font-size:1rem;
+color:var(--deep-purple);
+line-height:1.5;
+}
+
+.badge{
+font-size:.78rem;
+padding:7px 12px;
+border-radius:20px;
+color:white;
+font-weight:600;
+white-space:nowrap;
+}
+
+.badge.pending{
+background:var(--gray-badge);
+color:white;
+}
+
+.badge.progress{
+background:var(--purple);
+}
+
+.badge.completed{
+background:var(--green);
+}
+
+.badge.cancelled{
+background:var(--red);
+}
+
+/* REQUEST ID */
+
+.request-id{
+margin-top:8px;
+display:inline-block;
+background:#f3e8ff;
+color:var(--purple);
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+}
+
+/* DETAILS */
+
+.details{
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:.88rem;
+color:#444;
+}
+
+.details div{
+line-height:1.5;
+}
+
+.details i{
+color:var(--purple);
+width:18px;
+margin-right:6px;
+}
+
+/* DESCRIPTION */
+
+.desc{
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+line-height:1.7;
+color:#333;
+}
+
+/* PRICE */
+
+.price-box{
+margin-top:15px;
+background:#f8f5ff;
+padding:14px;
+border-radius:12px;
+font-size:.9rem;
+color:var(--deep-purple);
+font-weight:600;
+}
+
+/* TIMESTAMP */
+
+.timestamp{
+margin-top:15px;
+font-size:.82rem;
+color:#777;
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
+/* STATUS MESSAGE */
+
+.status-message{
+margin-top:15px;
+padding:12px;
+border-radius:10px;
+font-size:.85rem;
+line-height:1.6;
+}
+
+.status-message.pending{
+background:#f3f4f6;
+color:#4b5563;
+}
+
+.status-message.progress{
+background:#eff6ff;
+color:#1d4ed8;
+}
+
+.status-message.cancelled{
+background:#fef2f2;
+color:#b91c1c;
+}
+
+/* EMPTY STATE */
+
+.empty{
+background:white;
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+color:#666;
+display:none;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+/* ---------- Mark repair done (Phase 2) ---------- */
+
+.done-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:14px;
+  padding:10px 16px;
+  border:none;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  font-weight:600;
+  font-size:.85rem;
+  cursor:pointer;
+}
+
+.done-btn:hover{
+  opacity:.9;
+}
+
+.done-btn:focus-visible{
+  outline:3px solid var(--lilac);
+  outline-offset:2px;
+}
+
+.done-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* Phase 3: rider details */
+.rider-line{
+margin-top:12px;
+padding:10px 14px;
+background:#f3e8ff;
+border-radius:12px;
+font-size:.9rem;
+color:#240046;
+}
+
+.rider-line i{
+color:#5a189a;
+margin-right:4px;
+}
+
+.rider-line a{
+color:#5a189a;
+font-weight:600;
+text-decoration:none;
+}

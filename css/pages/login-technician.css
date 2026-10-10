@@ -1,0 +1,188 @@
+/* Styles for login-technician.html */
+
+:root{
+      --purple:#5a189a;
+      --deep-purple:#240046;
+      --lilac:#e0aaff;
+      --white:#fff;
+    }
+
+    body{
+      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:15px;
+      animation:fadeIn 0.6s ease-in;
+    }
+
+    .container{
+      width:100%;
+      max-width:400px;
+      background:var(--white);
+      padding:25px;
+      border-radius:16px;
+      box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .logo{
+      width:60px;
+      height:60px;
+      background:var(--lilac);
+      color:var(--deep-purple);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      margin:auto;
+      font-size:1.4rem;
+    }
+
+    .header h2{
+      margin-top:10px;
+      color:var(--deep-purple);
+    }
+
+    .form{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .group{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    label{
+      font-size:0.85rem;
+      color:#444;
+    }
+
+    input{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      outline:none;
+      font-size:0.9rem;
+    }
+
+    .password-group{
+      position:relative;
+    }
+
+    .toggle{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      cursor:pointer;
+      color:#777;
+    }
+
+    .btn{
+      margin-top:10px;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--purple),var(--lilac));
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .links{
+      text-align:center;
+      font-size:0.85rem;
+      margin-top:10px;
+    }
+
+    .links a{
+      color:var(--purple);
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .links.secondary{
+      margin-top:5px;
+    }
+
+    .bottom-link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.85rem;
+    }
+
+    .bottom-link a {
+      color: var(--purple);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .bottom-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===============================
+      LOGIN MESSAGE
+=============================== */
+
+.login-message{
+
+    display:none;
+
+    margin-top:12px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    font-size:.9rem;
+
+    font-weight:500;
+
+}
+
+.login-message.success{
+
+    display:block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+}
+
+.login-message.error{
+
+    display:block;
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+}
+
+.login-message.pending{
+
+    display:block;
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+}

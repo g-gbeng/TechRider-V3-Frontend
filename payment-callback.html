@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider - Payment</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pages/payment-callback.css">
+  <script src="js/api.js" data-require-role="customer"></script>
+</head>
+<body>
+
+  <main class="card" aria-live="polite">
+
+    <div class="icon checking" id="statusIcon" aria-hidden="true">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <h1 id="statusTitle">Confirming your payment</h1>
+
+    <p id="statusText">
+      Please wait while we confirm your payment with Paystack.
+    </p>
+
+    <p class="reference" id="reference"></p>
+
+    <p class="test-note" id="testNote" hidden>
+      <i class="fas fa-flask"></i>
+      Test mode: no real money was charged.
+    </p>
+
+    <div class="actions" id="actions" hidden>
+      <a href="active-repairs-customer.html" class="btn primary">View my repairs</a>
+      <button type="button" class="btn secondary" id="retryBtn" hidden>Check again</button>
+    </div>
+
+  </main>
+
+  <script src="js/pages/payment-callback.js"></script>
+
+</body>
+</html>

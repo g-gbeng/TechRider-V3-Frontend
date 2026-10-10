@@ -1,0 +1,551 @@
+/* Styles for admin-job-monitoring.html */
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+}
+
+body{
+background:var(--gray);
+display:flex;
+min-height:100vh;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:900;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:270px;
+background:linear-gradient(
+180deg,
+var(--purple),
+var(--deep-purple)
+);
+padding:20px;
+color:white;
+position:fixed;
+height:100vh;
+overflow:auto;
+z-index:1000;
+transition:.3s;
+}
+
+.sidebar.collapsed{
+width:72px;
+}
+
+.sidebar.collapsed .text{
+display:none;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:25px;
+cursor:pointer;
+}
+
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+background:var(--lilac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+padding:12px;
+border-radius:12px;
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.nav a.active,
+.nav a:hover{
+background:rgba(255,255,255,.14);
+}
+
+/* MAIN */
+
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:20px;
+}
+
+/* TOPBAR */
+
+.topbar{
+background:white;
+padding:16px 18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.hamburger{
+display:none;
+cursor:pointer;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:var(--purple);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+/* FILTER BAR */
+
+.toolbar{
+background:white;
+padding:18px;
+border-radius:18px;
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.toolbar input,
+.toolbar select{
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+min-width:180px;
+flex:1;
+}
+
+/* SECTIONS */
+
+.section{
+background:white;
+border-radius:18px;
+margin-bottom:20px;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+
+.sectionHeader{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+background:white;
+}
+
+.sectionHeader h3{
+color:var(--deep-purple);
+}
+
+.sectionBody{
+padding:0 20px 20px;
+display:block;
+}
+
+.section.collapsed .sectionBody{
+display:none;
+}
+
+.tableWrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+min-width:1100px;
+border-collapse:collapse;
+}
+
+th,
+td{
+padding:15px;
+text-align:left;
+border-bottom:1px solid #eee;
+}
+
+th{
+background:#faf7ff;
+color:var(--deep-purple);
+}
+
+/* BADGES */
+
+.badge{
+padding:7px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+display:inline-block;
+}
+
+.accepted{
+background:#e9d8fd;
+color:var(--purple);
+}
+
+.transit{
+background:#dff7ea;
+color:#12643a;
+}
+
+.pending{
+background:#fff2cc;
+}
+
+.rejected{
+background:#ffe5e5;
+color:#b00020;
+}
+
+.done{
+background:#e8eefc;
+color:#2449a5;
+}
+
+/* BUTTONS */
+
+.btn{
+border:none;
+padding:10px 12px;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+margin-right:8px;
+margin-bottom:8px;
+}
+
+/* =========================================
+   PENDING STATUS CONTROL
+========================================= */
+
+.statusSelect{
+    padding:9px 10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:white;
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    color:var(--deep-purple);
+    cursor:pointer;
+    min-width:150px;
+}
+
+.statusSelect:focus{
+    outline:none;
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(90,24,154,.10);
+}
+
+.statusSaveBtn{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+
+color:white;
+
+}
+
+.cancelStatusBtn{
+
+background:#ffe5e5;
+
+color:#b00020;
+
+}
+
+.viewBtn{
+background:#f2ecff;
+color:var(--purple);
+}
+
+.completeBtn{
+background:#dff7ea;
+color:#12643a;
+}
+
+.deleteBtn{
+background:#ffe5e5;
+color:#b00020;
+}
+
+/* =========================================
+   QUOTE BUTTONS
+========================================= */
+
+.quoteBtn{
+background:#f3e8ff;
+color:var(--purple);
+}
+
+.sendQuoteBtn{
+background:linear-gradient(
+135deg,
+var(--purple),
+var(--lilac)
+);
+color:white;
+}
+
+.quoteSentBtn{
+background:#dff7ea;
+color:#12643a;
+cursor:default;
+}
+
+.cancelQuoteBtn{
+background:#ffe5e5;
+color:#b00020;
+}
+
+/* =========================================
+   QUOTE VALUES
+========================================= */
+
+.quoteAmount{
+font-weight:700;
+color:var(--purple);
+}
+
+.commissionAmount{
+font-weight:600;
+color:#12643a;
+}
+
+.customerPrice{
+font-weight:700;
+color:var(--deep-purple);
+}
+
+.timeline{
+display:none;
+margin-top:10px;
+padding:12px;
+background:#faf7ff;
+border-radius:12px;
+line-height:1.7;
+}
+
+.showTimeline .timeline{
+display:block;
+}
+
+.deviceLink{
+color:var(--purple);
+font-weight:600;
+cursor:pointer;
+text-decoration:underline;
+}
+
+.modal{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:18px;
+width:90%;
+max-width:450px;
+display:none;
+z-index:2000;
+box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+
+.modal.show{
+display:block;
+}
+
+.modal button{
+margin-top:18px;
+background:var(--purple);
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+transform:translateX(-100%);
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.hamburger{
+display:block;
+}
+
+}
+
+/* ---------- Commission setting + job actions (Phase 2) ---------- */
+
+.commissionForm{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-left:auto;
+  font-size:.85rem;
+  color:#444;
+}
+
+.commissionForm input{
+  width:70px;
+  padding:8px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.commissionForm .btn{
+  background:var(--purple, #5a189a);
+  color:#fff;
+}
+
+.stepBtn{
+  background:#2563eb;
+  color:#fff;
+}
+
+.refundFlag{
+  display:inline-block;
+  margin-top:4px;
+  padding:2px 8px;
+  border-radius:20px;
+  background:#fef3c7;
+  color:#92400e;
+  font-size:.75rem;
+  font-weight:600;
+}
+
+.btn:focus-visible{
+  outline:3px solid #e0aaff;
+  outline-offset:2px;
+}
+
+/* Phase 3: rider column */
+.riderNote{
+display:block;
+color:#777;
+font-size:.8rem;
+margin:4px 0;
+}
+
+.assignLink{
+color:#b45309;
+font-weight:600;
+font-size:.85rem;
+text-decoration:none;
+white-space:nowrap;
+}
+
+.assignLink:hover{
+text-decoration:underline;
+}
+
+/* Phase 5: refunds and payment checks */
+.refundFlag.done{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.refundFlag.bad{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.refundBtn{
+  margin-top:6px;
+  background:#b45309;
+  color:#fff;
+}
+
+.checkPaymentsBtn{
+  white-space:nowrap;
+}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+/* Phase 5: toolbar wraps on phones */
+.commissionForm{
+  flex-wrap:wrap;
+}
+
+@media(max-width:600px){
+  .toolbar input,
+  .toolbar select{
+    min-width:0;
+    width:100%;
+    flex-basis:100%;
+  }
+
+  .commissionForm{
+    margin-left:0;
+  }
+
+  .checkPaymentsBtn{
+    width:100%;
+  }
+}

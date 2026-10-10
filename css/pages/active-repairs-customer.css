@@ -1,0 +1,361 @@
+/* Styles for active-repairs-customer.html */
+
+:root{
+  --purple:#5a189a;
+  --deep-purple:#240046;
+  --lilac:#e0aaff;
+  --gray:#f6f6f6;
+  --white:#fff;
+  --green:#16a34a;
+  --red:#dc2626;
+  --gray-badge:#9ca3af;
+  --blue:#2563eb;
+}
+
+body{
+  background:var(--gray);
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  animation:fadeIn .6s ease;
+  min-height:100vh;
+}
+
+.container{
+  width:100%;
+  max-width:1100px;
+}
+
+/* HEADER */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.header-left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.header h2{
+  color:var(--deep-purple);
+}
+
+.header p{
+  color:#666;
+  font-size:.9rem;
+}
+
+.back-btn{
+  text-decoration:none;
+  background:var(--purple);
+  color:white;
+  padding:11px 15px;
+  border-radius:10px;
+  font-size:.88rem;
+  font-weight:600;
+  transition:.3s;
+}
+
+.back-btn:hover{
+  opacity:.92;
+}
+
+/* GRID */
+
+.repairs-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+/* CARD */
+
+.repair-card{
+  background:var(--white);
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+  transition:.3s;
+  animation:fadeIn .4s ease;
+}
+
+.repair-card:hover{
+  transform:translateY(-3px);
+}
+
+/* TOP */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.title{
+  font-size:1rem;
+  font-weight:600;
+  color:var(--deep-purple);
+  line-height:1.5;
+}
+
+.request-id{
+  margin-top:8px;
+  display:inline-block;
+  background:#f3e8ff;
+  color:var(--purple);
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:.75rem;
+  font-weight:600;
+}
+
+/* STATUS */
+
+.status{
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:.8rem;
+  font-weight:600;
+  white-space:nowrap;
+  text-transform:capitalize;
+  color:white;
+}
+
+.status.pending{
+  background:var(--gray-badge);
+}
+
+.status.in-progress{
+  background:var(--blue);
+}
+
+.status.cancelled{
+  background:var(--red);
+}
+
+/* DETAILS */
+
+.details{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:15px;
+  font-size:.88rem;
+  color:#444;
+}
+
+.details div{
+  line-height:1.5;
+}
+
+.details i{
+  width:18px;
+  margin-right:6px;
+  color:var(--purple);
+}
+
+/* DESCRIPTION */
+
+.desc{
+  margin-top:15px;
+  padding:14px;
+  background:#fafafa;
+  border-left:4px solid var(--purple);
+  border-radius:10px;
+  font-size:.88rem;
+  line-height:1.7;
+  color:#333;
+}
+
+/* QUOTATION */
+
+/* STATUS INFO */
+
+.status-info{
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  font-size:.85rem;
+  line-height:1.6;
+}
+
+.status-info.pending{
+  background:#f3f4f6;
+  color:#4b5563;
+}
+
+.status-info.in-progress{
+  background:#eff6ff;
+  color:#1d4ed8;
+}
+
+.status-info.cancelled{
+  background:#fef2f2;
+  color:#b91c1c;
+}
+
+/* TIMESTAMP */
+
+.timestamp{
+  margin-top:15px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.82rem;
+  color:#777;
+  flex-wrap:wrap;
+}
+
+/* EMPTY STATE */
+
+.empty{
+  background:white;
+  border-radius:18px;
+  padding:55px 20px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+  display:none;
+  animation:fadeIn .5s ease;
+}
+
+.empty i{
+  font-size:3rem;
+  margin-bottom:14px;
+  color:var(--purple);
+}
+
+.empty h3{
+  color:var(--deep-purple);
+  margin-bottom:8px;
+}
+
+.empty p{
+  color:#666;
+  font-size:.9rem;
+  line-height:1.6;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  body{
+    padding:15px;
+  }
+
+  .repairs-grid{
+    grid-template-columns:1fr;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .status{
+    align-self:flex-start;
+  }
+
+  .back-btn{
+    width:100%;
+    text-align:center;
+  }
+
+}
+
+/* ---------- Quote and actions (Phase 2) ---------- */
+
+.status.quote{
+  background:var(--purple);
+}
+
+.status-info.quote{
+  background:#f3e8ff;
+  color:var(--deep-purple);
+}
+
+.quote-box{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:#f3e8ff;
+  color:var(--deep-purple);
+}
+
+.quote-box strong{
+  font-size:1.2rem;
+}
+
+.card-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+
+.action-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  font-size:.85rem;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  transition:.2s;
+}
+
+.action-btn.primary{
+  background:var(--purple);
+  color:#fff;
+}
+
+.action-btn.secondary{
+  background:#f3f4f6;
+  color:#374151;
+}
+
+.action-btn.danger{
+  background:#fef2f2;
+  color:var(--red);
+}
+
+.action-btn:hover{
+  opacity:.9;
+}
+
+.action-btn:focus-visible{
+  outline:3px solid var(--lilac);
+  outline-offset:2px;
+}
+
+.action-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* Phase 3: rider details */
+.rider-phone{
+color:#5a189a;
+font-weight:600;
+text-decoration:none;
+}
+
+.rider-wait{
+color:#888;
+font-size:.85rem;
+}

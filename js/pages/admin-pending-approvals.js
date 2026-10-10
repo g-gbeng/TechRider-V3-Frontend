@@ -3,9 +3,7 @@
    PART 1 (Refactored)
 ========================================================== */
 
-const PENDING_KEY = "techrider_pending_registrations";
-const TECHNICIAN_KEY = "techrider_technicians";
-const RIDER_KEY = "techrider_riders";
+/* Applications are loaded from the TechRider server (see js/api.js) */
 
 /* ==========================================================
    DOM
@@ -48,56 +46,67 @@ let currentApplicant = null;
    STORAGE
 ========================================================== */
 
+/* Applications currently waiting for review (loaded from the server) */
+let pendingQueue = [];
+
+/* Turn a server account into the shape this page displays */
+function toApplicant(user){
+
+    const tech = user.technicianProfile || {};
+    const rider = user.riderProfile || {};
+
+    return {
+        id:user.id,
+        userType:user.role === "technician" ? "Technician" : "Rider",
+        fullName:user.fullName,
+        email:user.email,
+        phone:user.phone,
+        address:user.address,
+        specialization:tech.specialization,
+        experience:tech.yearsExperience,
+        vehicleType:rider.vehicleType,
+        vehicleBrand:rider.vehicleBrand,
+        plateNumber:rider.plateNumber,
+        submittedAt:user.createdAt,
+        documents:(user.documents || []).map(doc => ({
+            title:doc.label,
+            image:doc.url,
+            mimeType:doc.mimeType
+        }))
+    };
+
+}
+
+async function loadQueue(){
+
+    /* wait for the login check; stop if the visitor is being redirected */
+    if(!(await TechRiderAPI.ready)) return;
+
+    try{
+
+        const data =
+            await TechRiderAPI.get("/admin/applications");
+
+        pendingQueue =
+            data.applications.map(toApplicant);
+
+    }catch(err){
+
+        alert("Could not load applications: " + err.message);
+
+    }
+
+    renderQueue();
+
+}
+
 function getPendingRegistrations(){
 
-    return JSON.parse(
-        localStorage.getItem(PENDING_KEY)
-    ) || [];
+    return pendingQueue;
 
 }
 
-function savePendingRegistrations(data){
-
-    localStorage.setItem(
-        PENDING_KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-function getApprovedTechnicians(){
-
-    return JSON.parse(
-        localStorage.getItem(TECHNICIAN_KEY)
-    ) || [];
-
-}
-
-function getApprovedRiders(){
-
-    return JSON.parse(
-        localStorage.getItem(RIDER_KEY)
-    ) || [];
-
-}
-
-function saveApprovedTechnicians(data){
-
-    localStorage.setItem(
-        TECHNICIAN_KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-function saveApprovedRiders(data){
-
-    localStorage.setItem(
-        RIDER_KEY,
-        JSON.stringify(data)
-    );
-
-}
+const esc = TechRiderAPI.escapeHtml;
 
 /* ==========================================================
    SAFE PROPERTY HELPERS
@@ -288,7 +297,7 @@ function applicantCard(applicant){
 
 <div class="applicant-name">
 
-${value(getField(applicant,"fullName"))}
+${esc(value(getField(applicant,"fullName")))}
 
 </div>
 
@@ -296,7 +305,7 @@ ${value(getField(applicant,"fullName"))}
 
 <i class="fas fa-envelope"></i>
 
-${value(getField(applicant,"email"))}
+${esc(value(getField(applicant,"email")))}
 
 </div>
 
@@ -316,7 +325,7 @@ ${applicant.userType}
 
 <i class="fas fa-phone"></i>
 
-${value(getField(applicant,"phone"))}
+${esc(value(getField(applicant,"phone")))}
 
 </div>
 
@@ -324,7 +333,7 @@ ${value(getField(applicant,"phone"))}
 
 <i class="fas fa-location-dot"></i>
 
-${value(getField(applicant,"address"))}
+${esc(value(getField(applicant,"address")))}
 
 </div>
 
@@ -531,9 +540,8 @@ function populateModal(applicant){
 
         card.innerHTML = `
 
-<label>${field[0]}</label>
-
-<span>${value(field[1])}</span>
+<label>${esc(field[0])}</label>
+<span>${esc(value(field[1]))}</span>
 
 `;
 
@@ -588,6 +596,28 @@ This applicant has no stored images.
         const card = document.createElement("div");
 
         card.className = "document-card";
+
+        /* PDF documents open in a new tab */
+        if(doc.mimeType === "application/pdf"){
+
+            const link = document.createElement("a");
+            link.href = doc.image;
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.className = "document-info";
+            link.style.display = "block";
+            link.style.padding = "24px";
+            link.style.textAlign = "center";
+            link.innerHTML =
+                '<i class="fas fa-file-pdf" style="font-size:2rem;color:#d62839;"></i>' +
+                '<h4>' + esc(doc.title) + '</h4><p>PDF document: click to open</p>';
+
+            card.appendChild(link);
+            documentGrid.appendChild(card);
+
+            return;
+
+        }
 
         const img = document.createElement("img");
 
@@ -675,67 +705,42 @@ function closeModalFn(){
    APPROVE APPLICANT
 ========================================================== */
 
-function approveApplicantAction(){
+async function approveApplicantAction(){
 
     if(!currentApplicant) return;
 
-    let queue = getPendingRegistrations();
+    const applicant = currentApplicant;
 
-    queue = queue.filter(applicant =>
+    modalApprove.disabled = true;
 
-        String(applicant.id) !== String(currentApplicant.id)
+    try{
 
-    );
+        await TechRiderAPI.post(
+            "/admin/applications/" + applicant.id + "/approve"
+        );
 
-    savePendingRegistrations(queue);
+        pendingQueue = pendingQueue.filter(item =>
+            String(item.id) !== String(applicant.id)
+        );
 
-    if(currentApplicant.userType === "Technician"){
+        closeModalFn();
 
-        const technicians = getApprovedTechnicians();
+        renderQueue();
 
-        technicians.push({
+        alert(
+            applicant.userType +
+            " approved successfully."
+        );
 
-            ...currentApplicant,
+    }catch(err){
 
-            approvedAt:new Date().toISOString(),
+        alert(err.message);
 
-            status:"Approved"
+    }finally{
 
-        });
-
-        saveApprovedTechnicians(technicians);
-
-    }
-
-    else{
-
-        const riders = getApprovedRiders();
-
-        riders.push({
-
-            ...currentApplicant,
-
-            approvedAt:new Date().toISOString(),
-
-            status:"Approved"
-
-        });
-
-        saveApprovedRiders(riders);
+        modalApprove.disabled = false;
 
     }
-
-    closeModalFn();
-
-    renderQueue();
-
-    alert(
-
-        currentApplicant.userType +
-
-        " approved successfully."
-
-    );
 
 }
 
@@ -743,33 +748,53 @@ function approveApplicantAction(){
    REJECT APPLICANT
 ========================================================== */
 
-function rejectApplicantAction(){
+async function rejectApplicantAction(){
 
     if(!currentApplicant) return;
 
+    const applicant = currentApplicant;
+
     const confirmReject = confirm(
-
         "Reject this application?"
-
     );
 
     if(!confirmReject) return;
 
-    let queue = getPendingRegistrations();
-
-    queue = queue.filter(applicant =>
-
-        String(applicant.id) !== String(currentApplicant.id)
-
+    const reason = prompt(
+        "Reason for rejection (optional). The applicant sees this when they try to log in:",
+        ""
     );
 
-    savePendingRegistrations(queue);
+    if(reason === null) return;
 
-    closeModalFn();
+    modalReject.disabled = true;
 
-    renderQueue();
+    try{
 
-    alert("Application rejected.");
+        await TechRiderAPI.post(
+            "/admin/applications/" + applicant.id + "/reject",
+            { reason:reason.trim() }
+        );
+
+        pendingQueue = pendingQueue.filter(item =>
+            String(item.id) !== String(applicant.id)
+        );
+
+        closeModalFn();
+
+        renderQueue();
+
+        alert("Application rejected.");
+
+    }catch(err){
+
+        alert(err.message);
+
+    }finally{
+
+        modalReject.disabled = false;
+
+    }
 
 }
 
@@ -898,13 +923,13 @@ document.addEventListener(
 ========================================================== */
 
 document.addEventListener(
-
     "DOMContentLoaded",
-
     function(){
-
-        renderQueue();
-
+        loadQueue();
     }
-
 );
+
+/* Live updates: refresh as soon as the server says something changed */
+TechRiderAPI.onUpdate(() => {
+    if(!reviewModal.classList.contains("show")) loadQueue();
+});

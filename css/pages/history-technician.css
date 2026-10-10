@@ -1,0 +1,203 @@
+/* Styles for history-technician.html */
+
+:root{
+--purple:#5a189a;
+--deep-purple:#240046;
+--lilac:#e0aaff;
+--gray:#f6f6f6;
+--white:#fff;
+--green:#16a34a;
+--red:#dc2626;
+}
+
+body{
+background:var(--gray);
+padding:20px;
+animation:fadeIn .5s ease-in;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin-bottom:25px;
+gap:12px;
+}
+
+.header h2{
+color:var(--deep-purple);
+}
+
+.back{
+text-decoration:none;
+background:var(--purple);
+color:white;
+padding:11px 15px;
+border-radius:10px;
+font-size:.9rem;
+font-weight:600;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+}
+
+/* CARD */
+
+.card{
+background:var(--white);
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+}
+
+/* TOP */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
+}
+
+.title{
+font-weight:600;
+font-size:1rem;
+line-height:1.5;
+color:var(--deep-purple);
+}
+
+/* STATUS */
+
+.status{
+font-size:.75rem;
+padding:7px 12px;
+border-radius:20px;
+color:white;
+font-weight:600;
+white-space:nowrap;
+}
+
+.status.completed{
+background:var(--green);
+}
+
+.status.cancelled{
+background:var(--red);
+}
+
+/* REQUEST ID */
+
+.request-id{
+margin-top:8px;
+display:inline-block;
+background:#f3e8ff;
+color:var(--purple);
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+}
+
+/* DETAILS */
+
+.details{
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-size:.88rem;
+color:#444;
+}
+
+.details div{
+line-height:1.5;
+}
+
+.details i{
+color:var(--purple);
+width:18px;
+margin-right:6px;
+}
+
+/* DESCRIPTION */
+
+.desc{
+margin-top:15px;
+padding:14px;
+background:#fafafa;
+border-left:4px solid var(--purple);
+border-radius:10px;
+font-size:.88rem;
+line-height:1.7;
+color:#333;
+}
+
+/* PRICE */
+
+.price-box{
+margin-top:15px;
+background:#f8f5ff;
+padding:14px;
+border-radius:12px;
+font-size:.9rem;
+font-weight:600;
+color:var(--deep-purple);
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:15px;
+font-size:.82rem;
+color:#777;
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
+/* EMPTY STATE */
+
+.empty{
+background:white;
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+color:#666;
+display:none;
+}
+
+.empty i{
+font-size:2.5rem;
+margin-bottom:12px;
+color:var(--purple);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}

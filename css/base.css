@@ -1,0 +1,25 @@
+/* ==========================================================
+   TECHRIDER BASE STYLES
+   Loaded by every page before its own stylesheet.
+   Only rules that were identical across the pages live here.
+========================================================== */
+
+/* Reset + default font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Page fade-in used by most pages (some pages override it) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
