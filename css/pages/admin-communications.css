@@ -1,10 +1,10 @@
 /* Styles for admin-communications.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 }
 
 body{
@@ -178,7 +178,7 @@ overflow:hidden;
 
 .blockHeader{
 padding:14px 16px;
-background:#faf7ff;
+background:var(--tr-primary-50);
 display:flex;
 justify-content:space-between;
 cursor:pointer;
@@ -205,7 +205,7 @@ select,
 textarea{
 width:100%;
 padding:12px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:10px;
 }
 
@@ -223,7 +223,7 @@ border-radius:10px;
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 font-weight:600;
@@ -232,7 +232,7 @@ cursor:pointer;
 
 .userBox{
 margin-top:12px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:12px;
 overflow:hidden;
 }
@@ -244,18 +244,18 @@ overflow-y:auto;
 
 .userItem{
 padding:12px 14px;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 cursor:pointer;
 }
 
 .userItem.selected{
-background:#f2ecff;
+background:var(--tr-primary-100);
 color:var(--purple);
 font-weight:600;
 }
 
 .userItem:hover{
-background:#faf7ff;
+background:var(--tr-primary-50);
 }
 
 .tableWrap{
@@ -272,12 +272,12 @@ border-collapse:collapse;
 th,
 td{
 padding:14px;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 text-align:left;
 }
 
 th{
-background:#faf7ff;
+background:var(--tr-primary-50);
 color:var(--deep-purple);
 }
 
@@ -286,7 +286,7 @@ padding:6px 10px;
 border-radius:15px;
 font-size:.75rem;
 font-weight:600;
-background:#e9d8fd;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -329,13 +329,13 @@ min-height:auto;
 /* Phase 3: rider assignment */
 .cardNote{
 margin:6px 0 4px;
-color:#666;
+color:var(--tr-text-muted);
 font-size:.88rem;
 }
 
 #assignmentType:disabled{
-background:#f6f6f6;
-color:#333;
+background:var(--tr-surface-2);
+color:var(--tr-text);
 }
 
 .btn:disabled{
@@ -350,7 +350,7 @@ font-size:1rem;
 }
 
 .emptyNote{
-color:#888;
+color:var(--tr-text-soft);
 font-size:.9rem;
 }
 
@@ -360,12 +360,12 @@ justify-content:space-between;
 align-items:center;
 gap:12px;
 padding:12px 0;
-border-top:1px solid #eee;
+border-top:1px solid var(--tr-border);
 font-size:.92rem;
 }
 
 .deliveryMeta{
-color:#666;
+color:var(--tr-text-muted);
 font-size:.85rem;
 margin-top:4px;
 }
@@ -388,18 +388,18 @@ flex-shrink:0;
 }
 
 .btn.deleteBtn{
-background:#ef4444;
+background:var(--tr-danger);
 }
 
 /* Phase 4: recipients, templates and log */
 .userItem .userEmail{
 display:block;
 font-size:.78rem;
-color:#888;
+color:var(--tr-text-soft);
 }
 
 .userItem.empty{
-color:#888;
+color:var(--tr-text-soft);
 cursor:default;
 }
 
@@ -409,7 +409,7 @@ outline-offset:-2px;
 }
 
 .templatePick:disabled{
-color:#999;
+color:var(--tr-text-soft);
 }
 
 .urgentTag{
@@ -417,19 +417,19 @@ display:inline-block;
 margin-left:4px;
 padding:1px 6px;
 border-radius:6px;
-background:#fee2e2;
+background:var(--tr-danger-bg);
 color:#b91c1c;
 font-size:.72rem;
 font-weight:600;
 }
 
 .logCount{
-color:#888;
+color:var(--tr-text-soft);
 font-size:.85rem;
 }
 
 .logSubject{
-color:#777;
+color:var(--tr-text-soft);
 font-size:.8rem;
 margin-top:2px;
 }
@@ -466,7 +466,7 @@ vertical-align:top;
 
 .tableWrap td:last-child{
 white-space:nowrap;
-color:#777;
+color:var(--tr-text-soft);
 font-size:.8rem;
 }
 
@@ -487,3 +487,6 @@ input,
 textarea{
 max-width:100%;
 }
+
+.unlockBtn{ background:var(--tr-warning-bg); color:var(--tr-warning); }
+.lockedNote{ color:var(--tr-danger); }

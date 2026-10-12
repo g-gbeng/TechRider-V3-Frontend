@@ -41,7 +41,7 @@ history = data.deliveries;
 
 }catch(err){
 
-alert('Could not load your history: ' + err.message);
+TR.toast('Could not load your history: ' + err.message);
 
 }
 

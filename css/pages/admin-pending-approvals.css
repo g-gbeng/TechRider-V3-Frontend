@@ -2,13 +2,13 @@
 
 :root{
 
-    --purple:#5a189a;
-    --deep-purple:#240046;
-    --lilac:#e0aaff;
+    --purple:var(--tr-primary-700);
+    --deep-purple:var(--tr-primary-900);
+    --lilac:var(--tr-primary-200);
 
-    --green:#16a34a;
-    --red:#dc2626;
-    --orange:#f59e0b;
+    --green:var(--tr-success);
+    --red:var(--tr-danger);
+    --orange:var(--tr-star);
 
     --white:#ffffff;
     --gray:#f5f5f7;
@@ -106,7 +106,7 @@ body{
 
 .card h4{
 
-    color:#666;
+    color:var(--tr-text-muted);
 
     font-size:.95rem;
 
@@ -208,7 +208,7 @@ body{
 
 .section-count{
 
-    background:#f3e8ff;
+    background:var(--tr-primary-100);
 
     color:var(--purple);
 
@@ -316,7 +316,7 @@ body{
 
     margin-bottom:10px;
 
-    color:#555;
+    color:var(--tr-text-muted);
 
     font-size:.9rem;
 
@@ -392,7 +392,7 @@ body{
 
 .reject{
 
-    background:#f3f4f6;
+    background:var(--tr-surface-2);
 
 }
 
@@ -418,7 +418,7 @@ body{
 
     border-radius:18px;
 
-    color:#666;
+    color:var(--tr-text-muted);
 
     box-shadow:0 8px 22px rgba(0,0,0,.05);
 
@@ -506,7 +506,7 @@ body{
 
     border-radius:50%;
 
-    background:#f3f4f6;
+    background:var(--tr-surface-2);
 
     cursor:pointer;
 
@@ -548,7 +548,7 @@ body{
 
 .modal-subtitle{
 
-    color:#666;
+    color:var(--tr-text-muted);
 
     font-size:.9rem;
 
@@ -572,7 +572,7 @@ body{
 
 .detail-card{
 
-    background:#fafafa;
+    background:var(--tr-surface-2);
 
     border:1px solid var(--border);
 
@@ -588,7 +588,7 @@ body{
 
     font-size:.75rem;
 
-    color:#777;
+    color:var(--tr-text-soft);
 
     margin-bottom:6px;
 
@@ -638,7 +638,7 @@ body{
 
 .document-card{
 
-    background:#fafafa;
+    background:var(--tr-surface-2);
 
     border:1px solid var(--border);
 
@@ -686,7 +686,7 @@ body{
 
 .document-info p{
 
-    color:#666;
+    color:var(--tr-text-muted);
 
     font-size:.82rem;
 

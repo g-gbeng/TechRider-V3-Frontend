@@ -32,13 +32,9 @@ document.getElementById(
   "sidebarName"
 ).textContent = fullName;
 
-document.getElementById(
-  "sidebarLogo"
-).textContent = initials;
+TR.setAvatar(document.getElementById("sidebarLogo"), currentTechnician);
 
-document.getElementById(
-  "topAvatar"
-).textContent = initials;
+TR.setAvatar(document.getElementById("topAvatar"), currentTechnician);
 
 document.getElementById(
   "welcomeHeading"
@@ -49,6 +45,19 @@ document.getElementById(
   "welcomeSubText"
 ).textContent =
   `Here's a live overview of your repair requests, active jobs and latest notifications.`;
+
+/* Latest photo and star rating from the server */
+TechRiderAPI.ready.then(user => {
+  if(!user) return;
+  TR.setAvatar(document.getElementById("sidebarLogo"), user);
+  TR.setAvatar(document.getElementById("topAvatar"), user);
+  const rating = document.getElementById("myRating");
+  if(rating){
+    rating.innerHTML = user.reviewCount
+      ? `${TR.stars(user.rating, user.reviewCount)}`
+      : '<span class="tr-rating-text"><i class="far fa-star"></i> No ratings yet. Customers rate you after each repair.</span>';
+  }
+});
 
 /* SIDEBAR */
 const sidebar =

@@ -1,7 +1,7 @@
 /* Styles for admin-dashboard.html */
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-:root{--purple:#5a189a;--deep-purple:#240046;--lilac:#e0aaff;--gray:#f6f6f6}
+:root{--purple:var(--tr-primary-700);--deep-purple:var(--tr-primary-900);--lilac:var(--tr-primary-200);--gray:var(--tr-surface-2)}
 body{background:var(--gray);min-height:100vh;display:flex;animation:fadeIn .45s ease}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:900}
 .overlay.show{display:block}
@@ -20,7 +20,7 @@ body{background:var(--gray);min-height:100vh;display:flex;animation:fadeIn .45s 
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px}
 .card,.panel{background:#fff;padding:24px;border-radius:18px;box-shadow:0 5px 18px rgba(0,0,0,.05)}
 .metric{font-size:2rem;font-weight:700;margin-top:8px;color:var(--purple)}
-.subtext{margin-top:8px;font-size:.85rem;color:#666}
+.subtext{margin-top:8px;font-size:.85rem;color:var(--tr-text-muted)}
 .panels{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -33,8 +33,8 @@ display:flex;
 flex-direction:column;
 }
 .panel h3{margin-bottom:18px;color:var(--deep-purple)}
-.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #eee;gap:12px}.row:last-child{border-bottom:none}
-.badge{padding:7px 12px;border-radius:20px;background:#f3e8ff;color:var(--purple);font-size:.75rem;font-weight:600}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--tr-border);gap:12px}.row:last-child{border-bottom:none}
+.badge{padding:7px 12px;border-radius:20px;background:var(--tr-primary-100);color:var(--purple);font-size:.75rem;font-weight:600}
 .btn,.action-link{border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;background:linear-gradient(135deg,var(--purple),var(--lilac));color:#fff;text-decoration:none;display:inline-block;text-align:center}
 .quick-actions{display:flex;flex-direction:column;gap:12px}.quick-actions a{width:100%}
 @media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}.panels{grid-template-columns:1fr}}
@@ -45,7 +45,7 @@ flex-direction:column;
 .inboxPanel{margin-top:24px}
 .panelHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
 .panelHead h3{margin-bottom:0}
-.inboxCount{display:inline-block;min-width:22px;padding:2px 7px;margin-left:6px;border-radius:12px;background:#ef4444;color:#fff;font-size:.75rem;text-align:center;vertical-align:middle}
+.inboxCount{display:inline-block;min-width:22px;padding:2px 7px;margin-left:6px;border-radius:12px;background:var(--tr-danger);color:#fff;font-size:.75rem;text-align:center;vertical-align:middle}
 .inboxCount[hidden]{display:none}
 .linkBtn{background:none;border:none;color:var(--purple);font-weight:600;cursor:pointer;font-family:inherit}
 .linkBtn[hidden]{display:none}
@@ -54,5 +54,5 @@ flex-direction:column;
 .inboxRow.unread{background:linear-gradient(90deg,rgba(90,24,154,.06),transparent);padding-left:10px;border-radius:8px}
 .inboxTitle{color:var(--deep-purple);text-decoration:none;font-weight:500}
 .inboxTitle:hover{text-decoration:underline}
-.inboxMessage{color:#666;font-size:.88rem;margin-top:3px}
-.muted{color:#999;font-size:.8rem;white-space:nowrap;margin-left:6px}
+.inboxMessage{color:var(--tr-text-muted);font-size:.88rem;margin-top:3px}
+.muted{color:var(--tr-text-soft);font-size:.8rem;white-space:nowrap;margin-left:6px}

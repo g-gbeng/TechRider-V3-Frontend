@@ -1,14 +1,14 @@
 /* Styles for available-jobs-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 --white:#fff;
 --green:#10b981;
---red:#ef4444;
---orange:#f59e0b;
+--red:var(--tr-danger);
+--orange:var(--tr-star);
 }
 
 body{
@@ -49,7 +49,7 @@ font-size:2rem;
 
 .page-title p{
 margin-top:6px;
-color:#666;
+color:var(--tr-text-muted);
 font-size:.95rem;
 }
 
@@ -64,7 +64,7 @@ background:var(--white);
 border-radius:22px;
 padding:24px;
 box-shadow:0 6px 20px rgba(0,0,0,.05);
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 animation:fadeIn .4s ease;
 }
 
@@ -86,7 +86,7 @@ margin-bottom:10px;
 
 .job-time{
 font-size:.88rem;
-color:#777;
+color:var(--tr-text-soft);
 }
 
 .badges{
@@ -108,7 +108,7 @@ color:var(--purple);
 }
 
 .delivery{
-background:#dcfce7;
+background:var(--tr-success-bg);
 color:#047857;
 }
 
@@ -125,10 +125,10 @@ margin-bottom:24px;
 }
 
 .flow-box{
-background:#faf7ff;
+background:var(--tr-primary-50);
 padding:20px;
 border-radius:18px;
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 }
 
 .flow-head{
@@ -154,7 +154,7 @@ color:var(--purple);
 .info-row{
 margin-bottom:14px;
 line-height:1.7;
-color:#444;
+color:var(--tr-text);
 font-size:.94rem;
 word-break:break-word;
 }
@@ -190,7 +190,7 @@ border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 font-size:.9rem;
 }
@@ -198,7 +198,7 @@ font-size:.9rem;
 .route-content{
 font-size:.93rem;
 line-height:1.7;
-color:#444;
+color:var(--tr-text);
 }
 
 .route-content strong{
@@ -232,14 +232,14 @@ transform:translateY(-2px);
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
 
 .reject{
 background:#f1f1f1;
-color:#333;
+color:var(--tr-text);
 }
 
 .empty-state{
@@ -263,7 +263,7 @@ margin-bottom:10px;
 }
 
 .empty-state p{
-color:#777;
+color:var(--tr-text-soft);
 line-height:1.7;
 }
 
@@ -294,7 +294,7 @@ margin-bottom:14px;
 
 .modal-content p{
 line-height:1.7;
-color:#555;
+color:var(--tr-text-muted);
 margin-bottom:24px;
 }
 
@@ -312,7 +312,7 @@ flex:1;
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -369,7 +369,7 @@ width:100%;
 /* Phase 3 additions */
 .job-device{
 margin-top:6px;
-color:#555;
+color:var(--tr-text-muted);
 font-size:.9rem;
 }
 
@@ -379,7 +379,7 @@ margin-right:4px;
 }
 
 .muted{
-color:#999;
+color:var(--tr-text-soft);
 font-style:italic;
 }
 
@@ -387,7 +387,7 @@ font-style:italic;
 display:flex;
 gap:10px;
 align-items:flex-start;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--deep-purple);
 padding:12px 14px;
 border-radius:14px;
@@ -411,7 +411,7 @@ color:var(--deep-purple);
 
 .reason-input{
 width:100%;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:12px;
 padding:10px 12px;
 font-family:inherit;

@@ -1,10 +1,10 @@
 /* Styles for profile-technician.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
 }
 
@@ -102,7 +102,7 @@ body{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--deep-purple);
   padding:10px 14px;
   border-radius:10px;
@@ -125,7 +125,7 @@ body{
 .badge{
   margin-top:6px;
   font-size:.85rem;
-  color:#16a34a;
+  color:var(--tr-success);
 }
 
 /* DETAILS */
@@ -143,7 +143,7 @@ body{
 }
 
 .item{
-  background:#faf7ff;
+  background:var(--tr-primary-50);
   padding:16px;
   border-radius:14px;
 }
@@ -151,7 +151,7 @@ body{
 .item label{
   display:block;
   font-size:.78rem;
-  color:#666;
+  color:var(--tr-text-muted);
   margin-bottom:6px;
 }
 
@@ -194,7 +194,7 @@ body{
   background:linear-gradient(
     135deg,
     var(--purple),
-    #9d4edd
+    var(--tr-primary-500)
   );
 }
 

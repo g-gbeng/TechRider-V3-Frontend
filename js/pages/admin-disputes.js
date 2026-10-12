@@ -50,7 +50,7 @@ disputes = (await TechRiderAPI.get('/admin/disputes')).disputes;
 
 }catch(err){
 
-alert('Could not load disputes: ' + err.message);
+TR.toast('Could not load disputes: ' + err.message);
 
 }
 
@@ -194,7 +194,7 @@ if(!pendingId) return;
 const note = document.getElementById('resolutionNote').value.trim();
 
 if(!note){
-alert('Write a short resolution note for the user.');
+TR.toast('Write a short resolution note for the user.');
 return;
 }
 
@@ -208,7 +208,7 @@ closeModal();
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }finally{
 
@@ -247,7 +247,7 @@ await TechRiderAPI.del(`/admin/disputes/${encodeURIComponent(deleteId)}`);
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 

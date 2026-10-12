@@ -62,7 +62,7 @@ offeredJobs = data.deliveries;
 
 }catch(err){
 
-alert('Could not load jobs: ' + err.message);
+TR.toast('Could not load jobs: ' + err.message);
 
 }
 
@@ -254,14 +254,14 @@ await TechRiderAPI.post(`/deliveries/${encodeURIComponent(selectedJobId)}/accept
 
 closeAcceptModal();
 
-alert('Job accepted. You can now see the contact numbers on Active Jobs.');
+TR.toast('Job accepted. You can now see the contact numbers on Active Jobs.');
 
 window.location.href = 'active-jobs-rider.html';
 
 }catch(err){
 
 closeAcceptModal();
-alert(err.message);
+TR.toast(err.message, "error");
 fetchJobs();
 
 }finally{
@@ -313,12 +313,12 @@ await TechRiderAPI.post(
 
 closeRejectModal();
 
-alert('Job rejected. The admin will assign another rider.');
+TR.toast('Job rejected. The admin will assign another rider.');
 
 }catch(err){
 
 closeRejectModal();
-alert(err.message);
+TR.toast(err.message, "error");
 
 }finally{
 

@@ -1,10 +1,10 @@
 /* Styles for admin-reports.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 }
 
 body{
@@ -129,7 +129,7 @@ border-radius:10px;
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 font-weight:600;
@@ -156,11 +156,11 @@ z-index:50;
 .dropMenu div{
 padding:14px;
 cursor:pointer;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 }
 
 .dropMenu div:hover{
-background:#faf7ff;
+background:var(--tr-primary-50);
 }
 
 .dropdown.show .dropMenu{
@@ -190,7 +190,7 @@ box-shadow:0 6px 18px rgba(0,0,0,.04);
 
 .stat h4{
 margin-bottom:8px;
-color:#666;
+color:var(--tr-text-muted);
 }
 
 .stat h2{
@@ -233,7 +233,7 @@ font-weight:600;
 select{
 width:100%;
 padding:12px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:10px;
 }
 
@@ -243,7 +243,7 @@ width:100%;
 
 padding:12px;
 
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 
 border-radius:10px;
 
@@ -275,7 +275,7 @@ margin-top:16px;
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -294,12 +294,12 @@ border-collapse:collapse;
 th,
 td{
 padding:14px;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 text-align:left;
 }
 
 th{
-background:#faf7ff;
+background:var(--tr-primary-50);
 }
 
 .linkCase{
@@ -428,14 +428,14 @@ min-width:100%;
 /* Phase 4 additions */
 .rowHint{
 font-size:.75rem;
-color:#888;
+color:var(--tr-text-soft);
 margin-top:2px;
 }
 
 .statHint{
 display:block;
 font-size:.72rem;
-color:#999;
+color:var(--tr-text-soft);
 margin-top:4px;
 }
 

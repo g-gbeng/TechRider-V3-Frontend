@@ -37,7 +37,7 @@ async function loadReport(){
 
     }catch(err){
 
-        alert("Could not load reports: " + err.message);
+        TR.toast("Could not load reports: " + err.message);
         return;
 
     }
@@ -104,7 +104,7 @@ async function saveFinancialAdjustments(button){
     const refundsPaid = document.getElementById("refundsPaid").value;
 
     if([riderReconciliation, refundsPaid].some(v => v !== "" && (isNaN(v) || Number(v) < 0))){
-        alert("Enter amounts of zero or more.");
+        TR.toast("Enter amounts of zero or more.");
         return;
     }
 
@@ -118,11 +118,11 @@ async function saveFinancialAdjustments(button){
         })).report;
 
         render();
-        alert("Financial updates saved.");
+        TR.toast("Financial updates saved.");
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }finally{
 
@@ -282,7 +282,7 @@ async function exportJobsCSV(){
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }
 

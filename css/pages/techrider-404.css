@@ -1,9 +1,9 @@
 /* Styles for techrider-404.html */
 
 :root{
---purple:#5a189a;
---deep:#240046;
---lilac:#e0aaff;
+--purple:var(--tr-primary-700);
+--deep:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
 }
 
 body{
@@ -80,7 +80,7 @@ margin-bottom:14px;
 max-width:600px;
 margin:auto;
 line-height:1.8;
-color:#555;
+color:var(--tr-text-muted);
 margin-bottom:35px;
 }
 
@@ -103,7 +103,7 @@ background:
 linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -116,7 +116,7 @@ margin-top:20px;
 }
 
 .linkCard{
-background:#faf7ff;
+background:var(--tr-primary-50);
 padding:20px;
 border-radius:18px;
 text-decoration:none;
@@ -161,7 +161,7 @@ padding:14px;
 border-radius:12px;
 text-decoration:none;
 font-weight:600;
-background:#faf7ff;
+background:var(--tr-primary-50);
 color:var(--purple);
 }
 

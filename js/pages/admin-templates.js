@@ -15,7 +15,7 @@ async function loadTemplates(){
 
   }catch(err){
 
-    alert('Could not load templates: ' + err.message);
+    TR.toast('Could not load templates: ' + err.message);
 
   }
 
@@ -33,7 +33,7 @@ async function saveTemplate(kind, prefix, button){
   const [title, subject, body] = fields.map(input => input.value.trim());
 
   if(!title || !subject || !body){
-    alert(`Please fill all ${kind} fields.`);
+    TR.toast(`Please fill all ${kind} fields.`);
     return;
   }
 
@@ -47,7 +47,7 @@ async function saveTemplate(kind, prefix, button){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }finally{
 
@@ -71,14 +71,17 @@ async function editTemplate(id){
   const template = templates.find(t => t.id === id);
   if(!template) return;
 
-  const title = prompt('Edit Title', template.title);
-  if(title === null) return;
-
-  const subject = prompt('Edit Subject', template.subject);
-  if(subject === null) return;
-
-  const body = prompt('Edit Body', template.body);
-  if(body === null) return;
+  const values = await TR.form({
+    title: `Edit ${template.kind} template`,
+    confirmText: 'Save changes',
+    fields: [
+      { name: 'title', label: 'Title', value: template.title, required: true, maxLength: 120 },
+      { name: 'subject', label: 'Subject', value: template.subject, maxLength: 200 },
+      { name: 'body', label: 'Message', value: template.body, multiline: true, required: true, maxLength: 5000 }
+    ]
+  });
+  if(!values) return;
+  const { title, subject, body } = values;
 
   try{
 
@@ -90,7 +93,7 @@ async function editTemplate(id){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 
@@ -104,7 +107,12 @@ async function deleteTemplate(id){
   const template = templates.find(t => t.id === id);
   if(!template) return;
 
-  if(!confirm(`Are you sure you want to delete the ${template.kind} template "${template.title}"?`)){
+  if(!(await TR.confirm({
+    title: 'Delete template?',
+    message: `The ${template.kind} template "${template.title}" will be removed. This can't be undone.`,
+    confirmText: 'Delete',
+    danger: true
+  }))){
     return;
   }
 
@@ -114,7 +122,7 @@ async function deleteTemplate(id){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 

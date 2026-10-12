@@ -203,7 +203,7 @@ async function withButton(button, work){
     try{
         await work();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
     }finally{
         button.disabled = false;
     }
@@ -212,7 +212,7 @@ async function withButton(button, work){
 
 }
 
-function sendGroupNotification(button){
+async function sendGroupNotification(button){
 
     const group = document.getElementById('notificationGroup').value;
     const title = document.getElementById('groupNotificationTitle').value.trim();
@@ -220,13 +220,13 @@ function sendGroupNotification(button){
     const priority = document.getElementById('notificationPriority').value.toLowerCase();
 
     if(!message){
-        alert('Please enter a notification message.');
+        TR.toast('Please enter a notification message.');
         return;
     }
 
     const label = document.getElementById('notificationGroup').selectedOptions[0].text.trim();
 
-    if(!confirm(`Send this notification to all ${label.toLowerCase()}?`)) return;
+    if(!(await TR.confirm({ title: 'Send notification?', message: `This goes to all ${label.toLowerCase()}.`, confirmText: 'Send', icon: 'fa-paper-plane' }))) return;
 
     withButton(button, async () => {
 
@@ -240,7 +240,7 @@ function sendGroupNotification(button){
 
         document.getElementById('groupNotificationTitle').value = '';
         document.getElementById('groupNotificationMessage').value = '';
-        alert(`Notification sent to ${result.sent} ${result.sent === 1 ? 'person' : 'people'}.`);
+        TR.toast(`Notification sent to ${result.sent} ${result.sent === 1 ? 'person' : 'people'}.`);
 
     });
 
@@ -253,12 +253,12 @@ function sendIndividualNotification(button){
     const message = document.getElementById('individualNotificationMessage').value.trim();
 
     if(!userId){
-        alert('Please select a recipient.');
+        TR.toast('Please select a recipient.');
         return;
     }
 
     if(!message){
-        alert('Please enter a notification message.');
+        TR.toast('Please enter a notification message.');
         return;
     }
 
@@ -273,13 +273,13 @@ function sendIndividualNotification(button){
 
         document.getElementById('individualNotificationTitle').value = '';
         document.getElementById('individualNotificationMessage').value = '';
-        alert(`Notification sent to ${result.log.recipientLabel}.`);
+        TR.toast(`Notification sent to ${result.log.recipientLabel}.`);
 
     });
 
 }
 
-function prepareEmail(mode, button){
+async function prepareEmail(mode, button){
 
     const isGroup = mode === 'group';
 
@@ -300,24 +300,24 @@ function prepareEmail(mode, button){
         body.audience = 'individual';
         body.userId = selectedUserId('emailUsers');
         if(!body.userId){
-            alert('Please select an email recipient.');
+            TR.toast('Please select an email recipient.');
             return;
         }
     }
 
     if(!subject){
-        alert('Please enter an email subject.');
+        TR.toast('Please enter an email subject.');
         return;
     }
 
     if(!message){
-        alert('Please enter an email message.');
+        TR.toast('Please enter an email message.');
         return;
     }
 
     if(isGroup){
         const label = document.getElementById('emailGroup').selectedOptions[0].text.trim();
-        if(!confirm(`Email all ${label.toLowerCase()}?`)) return;
+        if(!(await TR.confirm({ title: 'Send email?', message: `This emails all ${label.toLowerCase()}.`, confirmText: 'Send email', icon: 'fa-envelope' }))) return;
     }
 
     withButton(button, async () => {
@@ -328,11 +328,11 @@ function prepareEmail(mode, button){
         messageInput.value = '';
 
         if(result.status === 'logged'){
-            alert(`Email prepared for ${result.sent} ${result.sent === 1 ? 'person' : 'people'}. Email sending is not set up on the server yet, so it was printed in the server terminal instead of delivered.`);
+            TR.toast(`Email prepared for ${result.sent} ${result.sent === 1 ? 'person' : 'people'}. Email sending is not set up on the server yet, so it was printed in the server terminal instead of delivered.`);
         }else if(result.failed){
-            alert(`Email sent to ${result.sent}; ${result.failed} could not be sent.`);
+            TR.toast(`Email sent to ${result.sent}; ${result.failed} could not be sent.`);
         }else{
-            alert(`Email sent to ${result.sent} ${result.sent === 1 ? 'person' : 'people'}.`);
+            TR.toast(`Email sent to ${result.sent} ${result.sent === 1 ? 'person' : 'people'}.`);
         }
 
     });
@@ -644,7 +644,7 @@ function updateAssignmentDetails(userChanged){
 /* Remove the old "Remove Selected Job" action: the server decides which jobs need a rider */
 function removeAvailableJob(){
 
-    alert('Jobs leave this list by themselves once a rider is assigned. To stop a job, cancel it on Job Monitoring.');
+    TR.toast('Jobs leave this list by themselves once a rider is assigned. To stop a job, cancel it on Job Monitoring.');
 
 }
 
@@ -664,12 +664,12 @@ async function createAssignment(){
 
     if(!job || !rider || !address){
 
-        alert('Choose a job and a rider, and check the customer address.');
+        TR.toast('Choose a job and a rider, and check the customer address.');
         return;
 
     }
 
-    if(!confirm(`Assign ${job.code} (${job.riderTripType}) to ${rider.fullName}?`)){
+    if(!(await TR.confirm({ title: 'Assign rider?', message: `${rider.fullName} will be asked to do the ${job.riderTripType} for ${job.code}.`, confirmText: 'Assign', icon: 'fa-motorcycle' }))){
         return;
     }
 
@@ -691,11 +691,11 @@ async function createAssignment(){
         addressInput.value = '';
         instructionsInput.value = '';
 
-        alert(`${job.code} has been assigned to ${rider.fullName}. They have been notified.`);
+        TR.toast(`${job.code} has been assigned to ${rider.fullName}. They have been notified.`);
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }finally{
 
@@ -729,8 +729,17 @@ function renderActiveDeliveries(){
                 <div class="deliveryMeta">
                     ${escapeHtml(d.rider ? d.rider.fullName : 'Rider')}
                     · <span class="deliveryStatus status-${escapeHtml(d.status)}">${escapeHtml(d.statusLabel)}</span>
+                    ${d.handoverCode ? `· Handover code <strong>${escapeHtml(d.handoverCode)}</strong>` : ''}
+                    ${d.handoverAttempts >= 5 ? '· <strong class="lockedNote">Locked: too many wrong codes</strong>' : ''}
                 </div>
             </div>
+            ${d.handoverAttempts >= 5 ? `
+            <button
+                type="button"
+                class="btn smallBtn unlockBtn"
+                data-unlock="${escapeHtml(d.id)}">
+                Unlock
+            </button>` : ''}
             ${d.status === 'picked_up' ? '' : `
             <button
                 type="button"
@@ -745,24 +754,51 @@ function renderActiveDeliveries(){
 }
 
 
+/* Wrong handover codes lock a delivery; check with the receiver first */
+async function unlockDelivery(id, button){
+
+    const ok = await TR.confirm({
+        title: 'Unlock this delivery?',
+        message: 'The rider gets 5 more tries at the handover code. Call the person receiving the device first to make sure the rider is really there.',
+        confirmText: 'Unlock',
+        icon: 'fa-lock-open'
+    });
+    if(!ok) return;
+
+    button.disabled = true;
+    try{
+        await TechRiderAPI.post(`/admin/deliveries/${encodeURIComponent(id)}/unlock`);
+        TR.toast('Unlocked. The rider can enter the code again.', 'success');
+        await refreshAssignments(true);
+    }catch(err){
+        TR.toast(err.message, 'error');
+        button.disabled = false;
+    }
+
+}
+
 async function cancelDelivery(id, code){
 
-    const reason = prompt(`Why are you cancelling ${code}? The rider will see this.`);
+    const reason = await TR.prompt({
+        title: `Cancel ${code}?`,
+        message: 'The rider will see your reason.',
+        label: 'Reason',
+        multiline: true,
+        required: 'Give a reason for cancelling.',
+        confirmText: 'Cancel delivery',
+        cancelText: 'Keep it',
+        danger: true
+    });
     if(reason === null) return;
-
-    if(!reason.trim()){
-        alert('Give a reason for cancelling.');
-        return;
-    }
 
     try{
 
         await TechRiderAPI.post(`/admin/deliveries/${encodeURIComponent(id)}/cancel`, { reason: reason.trim() });
-        alert(`${code} was cancelled. The job is back in the list so you can assign another rider.`);
+        TR.toast(`${code} was cancelled. The job is back in the list so you can assign another rider.`);
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }
 
@@ -780,6 +816,8 @@ document.addEventListener('DOMContentLoaded', function(){
         .addEventListener('click', e => {
             const button = e.target.closest('button[data-delivery]');
             if(button) cancelDelivery(button.dataset.delivery, button.dataset.code);
+            const unlock = e.target.closest('button[data-unlock]');
+            if(unlock) unlockDelivery(unlock.dataset.unlock, unlock);
         });
 
 });

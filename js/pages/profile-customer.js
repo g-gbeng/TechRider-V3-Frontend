@@ -119,7 +119,7 @@
           })
           .catch((err) => {
 
-            alert(err.message);
+            TR.toast(err.message, "error");
 
           })
           .finally(() => {

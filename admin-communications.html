@@ -7,7 +7,7 @@ content="width=device-width,initial-scale=1.0">
 
 <title>TechRider Communications</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 rel="stylesheet">
 
 <link rel="stylesheet"
@@ -16,6 +16,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages/admin-communications.css">
 <script src="js/api.js" data-require-role="admin"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -89,7 +90,7 @@ Collective Email
 
 <div class="blockBody">
 
-<label>User Group</label>
+<label for="emailGroup">User Group</label>
 
 <select id="emailGroup">
     <option value="customers">Customers</option>
@@ -118,7 +119,7 @@ Collective Email
     placeholder="Enter email subject">
 
 
-<label>Message</label>
+<label for="groupEmailMessage">Message</label>
 
 <textarea
     id="groupEmailMessage"
@@ -148,7 +149,7 @@ Individual Email
 
 <div class="blockBody">
 
-<label>User Category</label>
+<label for="emailCategory">User Category</label>
 
 <select
     id="emailCategory"
@@ -199,7 +200,7 @@ id="emailUsers"></div>
     placeholder="Enter email subject">
 
 
-<label>Message</label>
+<label for="individualEmailMessage">Message</label>
 
 <textarea
     id="individualEmailMessage"
@@ -239,7 +240,7 @@ Collective Notifications
 
 <div class="blockBody">
 
-<label>Target Group</label>
+<label for="notificationGroup">Target Group</label>
 
 <select id="notificationGroup">
 
@@ -261,7 +262,7 @@ Collective Notifications
 
 </select>
 
-<label>Priority</label>
+<label for="notificationPriority">Priority</label>
 
 <select id="notificationPriority">
 
@@ -294,7 +295,7 @@ Collective Notifications
     maxlength="140"
     placeholder="Optional, e.g. Holiday hours">
 
-<label>Message</label>
+<label for="groupNotificationMessage">Message</label>
 
 <textarea
     id="groupNotificationMessage"
@@ -324,7 +325,7 @@ Individual Notifications
 
 <div class="blockBody">
 
-<label>User Category</label>
+<label for="notifyCategory">User Category</label>
 
 <select
     id="notifyCategory"
@@ -373,7 +374,7 @@ id="notifyUsers"></div>
     maxlength="140"
     placeholder="Optional">
 
-<label>Message</label>
+<label for="individualNotificationMessage">Message</label>
 
 <textarea
     id="individualNotificationMessage"
@@ -506,7 +507,7 @@ Paid repairs waiting for pickup, and finished repairs waiting to go back to the 
 
 <h3>Communications Log</h3>
 
-<label>Filter Logs</label>
+<label for="logFilter">Filter Logs</label>
 
 <select
 id="logFilter"

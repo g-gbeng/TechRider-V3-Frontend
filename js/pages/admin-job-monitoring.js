@@ -94,7 +94,7 @@ async function loadJobs(){
 
     }catch(err){
 
-        alert('Could not load jobs: ' + err.message);
+        TR.toast('Could not load jobs: ' + err.message);
 
     }
 
@@ -134,10 +134,17 @@ function formatDate(value){
 }
 
 /* Rider column: who is on the trip, or a prompt to assign one */
+function chatButton(job){
+
+    return `<button class="btn viewBtn tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}"><i class="fas fa-comments"></i> Messages</button>`;
+
+}
+
 function riderCell(job){
 
     if(job.rider && job.rider.active){
-        return `${esc(job.rider.fullName)}<br><span class="riderNote">${esc(job.rider.deliveryTypeLabel)}: ${esc(job.rider.deliveryStatusLabel)}</span>`;
+        return `${esc(job.rider.fullName)}<br><span class="riderNote">${esc(job.rider.deliveryTypeLabel)}: ${esc(job.rider.deliveryStatusLabel)}</span>` +
+            (job.rider.handoverCode ? `<br><span class="riderNote" title="The receiver reads this to the rider">Handover code: <strong>${esc(job.rider.handoverCode)}</strong></span>` : '');
     }
 
     if(job.needsRider){
@@ -273,6 +280,7 @@ function renderAccepted(rows){
 <td>${formatDate(job.updatedAt)}</td>
 <td>
 <button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
+${chatButton(job)}
 ${waiting}${steps}
 <button class="btn cancelStatusBtn" onclick="cancelJob(${jsArg(job.id)}, this)">Cancel</button>
 <div class="timeline">${timelineHtml(job)}</div>
@@ -309,6 +317,7 @@ ${refundCell(job)}
 <td>${formatDate(job.updatedAt)}</td>
 <td>
 <button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
+${chatButton(job)}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`;
@@ -337,6 +346,7 @@ function renderCompleted(rows){
 <td>${formatDate(job.completedAt || job.updatedAt)}</td>
 <td>
 <button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
+${chatButton(job)}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`).join('');
@@ -357,6 +367,8 @@ function renderAll(){
 
     applyFilter();
 
+    TR.chat.refreshBadges();
+
 }
 
 /* =====================================================
@@ -369,12 +381,15 @@ async function sendQuote(id, button){
     const base = job.quote.technicianPrice;
     const commission = Math.round(base * commissionRate);
 
-    const confirmed = confirm(
-        `Send repair quotation to ${job.customer.fullName}?\n\n` +
-        `Technician quote: ₦${base.toLocaleString('en-NG')}\n` +
-        `Platform commission (${Math.round(commissionRate * 1000) / 10}%): ₦${commission.toLocaleString('en-NG')}\n` +
-        `Customer price: ₦${(base + commission).toLocaleString('en-NG')}`
-    );
+    const confirmed = await TR.confirm({
+        title: `Send quote to ${job.customer.fullName}?`,
+        message:
+            `Technician quote: ₦${base.toLocaleString('en-NG')}\n` +
+            `Platform commission (${Math.round(commissionRate * 1000) / 10}%): ₦${commission.toLocaleString('en-NG')}\n` +
+            `Customer pays: ₦${(base + commission).toLocaleString('en-NG')}`,
+        confirmText: 'Send quote',
+        icon: 'fa-file-invoice'
+    });
 
     if(!confirmed) return;
 
@@ -384,7 +399,7 @@ async function sendQuote(id, button){
         await TechRiderAPI.post(`/admin/requests/${encodeURIComponent(id)}/send-quote`);
         await loadJobs();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
         button.disabled = false;
     }
 
@@ -394,7 +409,7 @@ async function moveJob(id, status, button){
 
     const job = jobs.find(j => j.id === id);
 
-    if(!confirm(`${STEP_LABELS[status] || status} for ${job.code}?`)) return;
+    if(!(await TR.confirm({ title: `${STEP_LABELS[status] || status}?`, message: `This moves ${job.code} along and tells the customer.`, confirmText: STEP_LABELS[status] || 'Confirm' }))) return;
 
     button.disabled = true;
 
@@ -402,7 +417,7 @@ async function moveJob(id, status, button){
         await TechRiderAPI.patch(`/admin/requests/${encodeURIComponent(id)}/status`, { status });
         await loadJobs();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
         button.disabled = false;
     }
 
@@ -450,21 +465,27 @@ async function refundJob(id, button){
     const job = jobs.find(j => j.id === id);
     const amount = job.quote ? formatNaira(job.quote.customerPrice) : 'the payment';
 
-    if(!confirm(`Refund ${amount} for ${job.code} to the customer's original payment method?`)) return;
-
-    const note = prompt('Optional note for your records (the customer does not see this):', '') || '';
+    const note = await TR.prompt({
+        title: `Refund ${amount}?`,
+        message: `The money for ${job.code} goes back to the customer's original payment method.`,
+        label: 'Note for your records (optional, the customer does not see this)',
+        multiline: true,
+        confirmText: `Refund ${amount}`,
+        icon: 'fa-rotate-left'
+    });
+    if(note === null) return;
 
     button.disabled = true;
 
     try{
         const { request } = await TechRiderAPI.post(`/admin/requests/${encodeURIComponent(id)}/refund`, { note });
         const status = request.refund ? request.refund.status : '';
-        alert(status === 'processed'
+        TR.toast(status === 'processed'
             ? `Refund of ${amount} completed.`
             : `Refund of ${amount} started. Paystack usually completes refunds within a few days; this page will update when it does.`);
         await loadJobs();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
         button.disabled = false;
     }
 
@@ -482,10 +503,10 @@ async function checkPayments(button){
             `${summary.refundsChecked} refund${summary.refundsChecked === 1 ? '' : 's'} in progress checked, ${summary.refundsUpdated} updated`
         ];
         if(summary.errors) parts.push(`${summary.errors} could not be checked (see the server log)`);
-        alert(parts.join('.\n') + '.');
+        TR.toast(parts.join('.\n') + '.');
         await loadJobs();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
     }finally{
         button.disabled = false;
     }
@@ -498,18 +519,19 @@ async function cancelJob(id, button){
 
     const job = jobs.find(j => j.id === id);
 
-    const reason = prompt(
-        `Cancel ${job.code}? Give a reason (shown to the customer and technician):` +
-        (job.paidAt ? '\n\nThe customer has paid: this job will be flagged for a refund.' : ''),
-        ''
-    );
+    const reason = await TR.prompt({
+        title: `Cancel ${job.code}?`,
+        message: 'The customer and technician will see your reason.' +
+            (job.paidAt ? '\n\nThe customer has paid, so this job will be flagged for a refund.' : ''),
+        label: 'Reason',
+        multiline: true,
+        required: 'A reason is required to cancel a job.',
+        confirmText: 'Cancel job',
+        cancelText: 'Keep job',
+        danger: true
+    });
 
     if(reason === null) return;
-
-    if(!reason.trim()){
-        alert('A reason is required to cancel a job.');
-        return;
-    }
 
     button.disabled = true;
 
@@ -517,7 +539,7 @@ async function cancelJob(id, button){
         await TechRiderAPI.patch(`/admin/requests/${encodeURIComponent(id)}/status`, { status:'cancelled', note:reason.trim() });
         await loadJobs();
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
         button.disabled = false;
     }
 
@@ -533,11 +555,11 @@ document
     const percent = Number(document.getElementById('commissionInput').value);
 
     if(!Number.isFinite(percent) || percent < 0 || percent > 50){
-        alert('Commission must be between 0% and 50%.');
+        TR.toast('Commission must be between 0% and 50%.');
         return;
     }
 
-    if(!confirm(`Set the commission to ${percent}%? This applies to quotes sent from now on. Quotes already sent keep their price.`)){
+    if(!(await TR.confirm({ title: `Set commission to ${percent}%?`, message: 'This applies to quotes sent from now on. Quotes already sent keep their price.', confirmText: 'Save commission', icon: 'fa-percent' }))){
         return;
     }
 
@@ -545,9 +567,9 @@ document
         const { settings } = await TechRiderAPI.put('/admin/settings', { commissionRate:percent / 100 });
         commissionRate = settings.commissionRate;
         renderAll();
-        alert(`Commission saved: ${Math.round(commissionRate * 1000) / 10}%`);
+        TR.toast(`Commission saved: ${Math.round(commissionRate * 1000) / 10}%`);
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
     }
 
 });
@@ -574,7 +596,7 @@ function showIssue(id){
 
     document.getElementById('issueText').innerText =
         job
-        ? `${job.brand} ${job.model} (${job.deviceType})\n\n${job.description}\n\nLocation: ${job.location}`
+        ? `${job.brand} ${job.model} (${job.deviceType})\n\n${(job.faults || []).join(', ')}${job.faults && job.faults.length && job.description ? '\n' : ''}${job.description || ''}\n\nLocation: ${job.location}${job.landmark ? ' (' + job.landmark + ')' : ''}${job.contactPhone ? '\nContact phone: ' + job.contactPhone : ''}`
         : '';
 
     document.getElementById('issueModal').classList.add('show');

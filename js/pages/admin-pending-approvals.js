@@ -92,7 +92,7 @@ async function loadQueue(){
 
     }catch(err){
 
-        alert("Could not load applications: " + err.message);
+        TR.toast("Could not load applications: " + err.message);
 
     }
 
@@ -447,7 +447,7 @@ function openApplicant(id){
 
     if(!currentApplicant){
 
-        alert("Applicant not found.");
+        TR.toast("Applicant not found.");
 
         return;
 
@@ -727,14 +727,14 @@ async function approveApplicantAction(){
 
         renderQueue();
 
-        alert(
+        TR.toast(
             applicant.userType +
             " approved successfully."
         );
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }finally{
 
@@ -754,16 +754,16 @@ async function rejectApplicantAction(){
 
     const applicant = currentApplicant;
 
-    const confirmReject = confirm(
-        "Reject this application?"
-    );
-
-    if(!confirmReject) return;
-
-    const reason = prompt(
-        "Reason for rejection (optional). The applicant sees this when they try to log in:",
-        ""
-    );
+    const reason = await TR.prompt({
+        title: "Reject this application?",
+        message: `${applicant.fullName || "The applicant"} won't be able to use TechRider. They see your reason when they try to log in.`,
+        label: "Reason (optional)",
+        placeholder: "e.g. The ID document was unreadable",
+        multiline: true,
+        maxLength: 500,
+        confirmText: "Reject application",
+        danger: true
+    });
 
     if(reason === null) return;
 
@@ -784,11 +784,11 @@ async function rejectApplicantAction(){
 
         renderQueue();
 
-        alert("Application rejected.");
+        TR.toast("Application rejected.");
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
 
     }finally{
 

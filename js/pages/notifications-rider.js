@@ -35,7 +35,7 @@ notifications = data.notifications;
 
 }catch(err){
 
-alert('Could not load notifications: ' + err.message);
+TR.toast('Could not load notifications: ' + err.message);
 
 }
 
@@ -149,7 +149,7 @@ if(n) n.read = true;
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 
@@ -176,7 +176,7 @@ notifications.forEach(n => { n.read = true; });
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 
@@ -196,7 +196,7 @@ REMOVE NOTIFICATION
 ========================= */
 async function removeNotification(id){
 
-if(!confirm('Delete this notification?')){
+if(!(await TR.confirm({ title: 'Delete notification?', confirmText: 'Delete', danger: true }))){
 return;
 }
 
@@ -207,7 +207,7 @@ notifications = notifications.filter(n => n.id !== id);
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 

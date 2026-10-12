@@ -18,6 +18,8 @@ brand:r.brand,
 model:r.model,
 deviceType:r.deviceType,
 description:r.description,
+faults:r.faults || [],
+landmark:r.landmark || '',
 location:r.location,
 technicianName:r.technician ? r.technician.fullName : '',
 repairPrice:r.quote ? (r.quote.technicianPrice) : 0,
@@ -231,7 +233,8 @@ ${esc(job.model || 'N/A')}
 
 <br><br>
 
-${esc(job.description || 'No description provided.')}
+${job.faults && job.faults.length ? `<div class="fault-tags">${job.faults.map(f => `<span class="tr-pill">${esc(f)}</span>`).join('')}</div>` : ''}
+${esc(job.description || (job.faults && job.faults.length ? '' : 'No description provided.'))}
 
 </div>
 
@@ -292,7 +295,7 @@ data.requests.map(toHistoryItem);
 
 }}catch(err){{
 
-alert('Could not load your history: ' + err.message);
+TR.toast('Could not load your history: ' + err.message);
 
 }}
 

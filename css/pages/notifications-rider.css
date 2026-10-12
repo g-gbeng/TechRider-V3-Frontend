@@ -1,10 +1,10 @@
 /* Styles for notifications-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 --white:#fff;
 }
 
@@ -78,7 +78,7 @@ padding:10px 16px;
 border-radius:10px;
 cursor:pointer;
 font-weight:600;
-background:#eee;
+background:var(--tr-border);
 transition:.3s;
 }
 
@@ -86,7 +86,7 @@ transition:.3s;
 background:linear-gradient(
 135deg,
 var(--purple),
-#9d4edd
+var(--tr-primary-500)
 );
 color:white;
 }
@@ -96,7 +96,7 @@ display:flex;
 align-items:center;
 gap:10px;
 font-weight:500;
-color:#444;
+color:var(--tr-text);
 }
 
 .mark-all input{
@@ -144,7 +144,7 @@ padding:8px 14px;
 border-radius:999px;
 font-size:.78rem;
 font-weight:600;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -158,14 +158,14 @@ font-weight:600;
 }
 
 .notice p{
-color:#444;
+color:var(--tr-text);
 line-height:1.7;
 margin-bottom:14px;
 }
 
 .time{
 font-size:.85rem;
-color:#777;
+color:var(--tr-text-soft);
 margin-bottom:18px;
 }
 
@@ -199,7 +199,7 @@ color:white;
 
 .remove-btn{
 background:#ececec;
-color:#333;
+color:var(--tr-text);
 }
 
 /* EMPTY */
@@ -210,7 +210,7 @@ text-align:center;
 background:white;
 padding:45px 20px;
 border-radius:18px;
-color:#666;
+color:var(--tr-text-muted);
 box-shadow:0 5px 18px rgba(0,0,0,.05);
 }
 

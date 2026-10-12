@@ -122,7 +122,7 @@ async function markAsRead(id){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 
@@ -146,7 +146,7 @@ markAllCheckbox.addEventListener('change', async () => {
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 

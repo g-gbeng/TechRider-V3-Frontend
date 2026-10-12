@@ -805,7 +805,7 @@ No approved technicians or riders found.
 
     }catch(err){
 
-        alert("Could not load records: " + err.message);
+        TR.toast("Could not load records: " + err.message);
 
     }
 

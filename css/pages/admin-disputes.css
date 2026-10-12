@@ -1,11 +1,11 @@
 /* Styles for admin-disputes.html */
 
 :root{
---purple:#5a189a;
---deep:#240046;
---lilac:#e0aaff;
---gray:#f7f5fb;
---danger:#dc2626;
+--purple:var(--tr-primary-700);
+--deep:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-primary-50);
+--danger:var(--tr-danger);
 }
 
 body{
@@ -219,14 +219,14 @@ table-layout:fixed;
 th,
 td{
 padding:16px;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 text-align:left;
 vertical-align:middle;
 font-size:.94rem;
 }
 
 th{
-background:#faf7ff;
+background:var(--tr-primary-50);
 font-size:.95rem;
 color:var(--deep);
 }
@@ -237,7 +237,7 @@ width:30%;
 }
 
 .groupRow td{
-background:#faf7ff;
+background:var(--tr-primary-50);
 font-weight:700;
 color:var(--deep);
 padding:18px;
@@ -277,7 +277,7 @@ background:
 linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -322,7 +322,7 @@ color:var(--deep);
 .modalContent p{
 margin-top:18px;
 line-height:1.8;
-color:#555;
+color:var(--tr-text-muted);
 }
 
 .modalActions{
@@ -337,7 +337,7 @@ flex-wrap:wrap;
 .emptyRow td{
 text-align:center;
 padding:30px;
-color:#777;
+color:var(--tr-text-soft);
 }
 
 /* mobile */
@@ -436,7 +436,7 @@ margin:12px 0 6px;
 
 .noteInput{
 width:100%;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:10px;
 padding:10px 12px;
 font-family:inherit;
@@ -453,7 +453,7 @@ font-size:.92rem;
 
 .detailGrid dt{
 font-weight:600;
-color:#555;
+color:var(--tr-text-muted);
 }
 
 .detailMessage{

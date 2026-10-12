@@ -46,6 +46,12 @@ function renderTechnicians(technicians){
   techGrid.innerHTML = "";
 
   if(technicians.length === 0){
+    emptyState.innerHTML = TR.empty({
+      icon: "fa-user-gear",
+      title: "No technicians available right now",
+      text: "Your request is saved. Check back soon, or find it later under Active Repairs to choose a technician.",
+      action: { label: "Go to Active Repairs", href: "active-repairs-customer.html" }
+    });
     emptyState.style.display = "block";
     return;
   }
@@ -88,13 +94,24 @@ function renderTechnicians(technicians){
           ${tech.yearsExperience ? ` · ${esc(tech.yearsExperience)} yrs experience` : ""}
         </div>
 
+        <div class="rating-row">
+          ${TR.stars(tech.rating, tech.reviewCount)}
+          ${tech.reviewCount ? `<button type="button" class="reviews-link" data-reviews>Read reviews</button>` : ""}
+        </div>
+
         <div class="location">
           <i class="fas fa-location-dot"></i>
            ${esc(tech.location || "Location unavailable")}
+          ${tech.jobsCompleted ? ` · <i class="fas fa-circle-check"></i> ${tech.jobsCompleted} repair${tech.jobsCompleted === 1 ? "" : "s"} done` : ""}
         </div>
 
       </div>
     `;
+
+    card.querySelector("[data-reviews]")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showReviews(tech);
+    });
 
     /* SELECT TECHNICIAN (click or Enter) */
 
@@ -127,6 +144,41 @@ function renderTechnicians(technicians){
 }
 
 /* =========================
+   REVIEWS
+========================= */
+
+async function showReviews(tech){
+
+  const backdrop = document.createElement("div");
+  backdrop.className = "tr-dialog-backdrop";
+  backdrop.innerHTML = `
+    <div class="tr-dialog reviews-dialog" role="dialog" aria-modal="true" aria-labelledby="reviewsTitle">
+      <h2 id="reviewsTitle"><i class="fas fa-star"></i>${esc(tech.fullName)}</h2>
+      <p>${TR.stars(tech.rating, tech.reviewCount)}</p>
+      <div class="reviews-list">${TR.skeleton(2)}</div>
+      <div class="tr-dialog-actions"><button type="button" class="tr-btn tr-btn-primary" data-close>Close</button></div>
+    </div>`;
+  document.body.appendChild(backdrop);
+  const close = () => { backdrop.remove(); document.removeEventListener("keydown", onKey, true); };
+  const onKey = (e) => { if(e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey, true);
+  backdrop.addEventListener("click", (e) => { if(e.target === backdrop || e.target.closest("[data-close]")) close(); });
+  backdrop.querySelector("[data-close]").focus();
+
+  try{
+    const { reviews } = await TechRiderAPI.get(`/technicians/${encodeURIComponent(tech.id)}/reviews`);
+    backdrop.querySelector(".reviews-list").innerHTML = reviews.map(r => `
+      <div class="review">
+        <div>${TR.stars(r.rating)} <span class="review-by">${esc(r.by)} · ${esc(TR.ago(r.createdAt))}</span></div>
+        ${r.comment ? `<p>${esc(r.comment)}</p>` : ""}
+      </div>`).join("") || "<p>No reviews yet.</p>";
+  }catch(err){
+    backdrop.querySelector(".reviews-list").innerHTML = `<p>${esc(err.message)}</p>`;
+  }
+
+}
+
+/* =========================
    SUBMIT REQUEST
 ========================= */
 
@@ -150,7 +202,7 @@ submitBtn.addEventListener("click", async () => {
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
     submitBtn.disabled = false;
 
   }
@@ -194,6 +246,8 @@ document
 
   if(!requestId) return;
 
+  techGrid.innerHTML = TR.skeleton(3);
+
   if(!(await TechRiderAPI.ready)) return;
 
   try{
@@ -207,7 +261,9 @@ document
 
   }catch(err){
 
-    alert("Could not load technicians: " + err.message);
+    techGrid.innerHTML = "";
+    emptyState.innerHTML = TR.empty({ icon: "fa-wifi", title: "Couldn't load technicians", text: err.message });
+    emptyState.style.display = "block";
 
   }
 

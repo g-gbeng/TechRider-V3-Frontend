@@ -1,9 +1,9 @@
 /* Styles for login-technician.html */
 
 :root{
-      --purple:#5a189a;
-      --deep-purple:#240046;
-      --lilac:#e0aaff;
+      --purple:var(--tr-primary-700);
+      --deep-purple:var(--tr-primary-900);
+      --lilac:var(--tr-primary-200);
       --white:#fff;
     }
 
@@ -32,7 +32,7 @@
     }
 
     .header p {
-      color: #666;
+      color: var(--tr-text-muted);
       font-size: 0.9rem;
     }
 
@@ -68,13 +68,13 @@
 
     label{
       font-size:0.85rem;
-      color:#444;
+      color:var(--tr-text);
     }
 
     input{
       padding:12px;
       border-radius:10px;
-      border:1px solid #ddd;
+      border:1px solid var(--tr-border);
       outline:none;
       font-size:0.9rem;
     }
@@ -89,7 +89,7 @@
       top:50%;
       transform:translateY(-50%);
       cursor:pointer;
-      color:#777;
+      color:var(--tr-text-soft);
     }
 
     .btn{
@@ -161,7 +161,7 @@
 
     display:block;
 
-    background:#dcfce7;
+    background:var(--tr-success-bg);
 
     color:#166534;
 
@@ -171,7 +171,7 @@
 
     display:block;
 
-    background:#fee2e2;
+    background:var(--tr-danger-bg);
 
     color:#b91c1c;
 
@@ -181,7 +181,7 @@
 
     display:block;
 
-    background:#fef3c7;
+    background:var(--tr-warning-bg);
 
     color:#92400e;
 

@@ -355,7 +355,7 @@ function validateForm(){
 
     if(passwordInput.value!==confirmPasswordInput.value){
 
-        alert("Passwords do not match.");
+        TR.toast("Passwords do not match.");
 
         return false;
 
@@ -363,7 +363,7 @@ function validateForm(){
 
     if(phoneInput.value.length!==11){
 
-        alert("Phone number must contain exactly 11 digits.");
+        TR.toast("Phone number must contain exactly 11 digits.");
 
         return false;
 
@@ -475,7 +475,7 @@ form.addEventListener("submit", async function (e) {
 
         console.error(error);
 
-        alert(
+        TR.toast(
 
             error.message ||
             "An unexpected error occurred while submitting your registration."

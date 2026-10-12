@@ -1,10 +1,10 @@
 /* Styles for dashboard-technician.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
 }
 
@@ -171,7 +171,7 @@ body{
 }
 
 .welcomeText p{
-  color:#666;
+  color:var(--tr-text-muted);
   margin-top:4px;
   font-size:.92rem;
   line-height:1.5;
@@ -227,7 +227,7 @@ body{
   width:55px;
   height:55px;
   border-radius:16px;
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--purple);
   display:flex;
   align-items:center;
@@ -247,7 +247,7 @@ body{
 }
 
 .cardSub{
-  color:#666;
+  color:var(--tr-text-muted);
   margin-top:6px;
   line-height:1.5;
   font-size:.92rem;
@@ -260,7 +260,7 @@ body{
   linear-gradient(
     135deg,
     var(--purple),
-    #c77dff
+    var(--tr-primary-400)
   );
 
   color:white;
@@ -323,3 +323,6 @@ body{
   }
 
 }
+
+/* star rating under the welcome text */
+.my-rating{ margin-top:6px; min-height:1.2em; }

@@ -202,7 +202,8 @@
   }
 
   function clearSession() {
-    Object.values(SESSION_KEYS).concat("techrider_currentUser").forEach((key) => {
+    // the saved customer location goes too, so the next person on this device doesn't see it
+    Object.values(SESSION_KEYS).concat("techrider_currentUser", "techrider_customer_location").forEach((key) => {
       try { localStorage.removeItem(key); } catch (e) { /* ignore */ }
     });
   }
@@ -366,6 +367,11 @@
         }
       });
       socket.on("notification", runUpdateHandlers);
+      // new job messages: chat windows and "Messages" buttons listen for this
+      socket.on("message", (detail) => {
+        summaryAt = 0;
+        window.dispatchEvent(new CustomEvent("tr:message", { detail }));
+      });
       // after being offline, catch up on anything missed
       socket.io.on("reconnect", () => runUpdateHandlers({ type: "reconnect" }));
       window.TechRiderAPI.liveSocket = socket;
@@ -379,9 +385,16 @@
     window.TechRiderAPI.ready.then((user) => { if (user) startLive(); });
   }
 
+  /* fn({ request }) runs when a new job message arrives for this user */
+  function onMessage(fn) {
+    window.addEventListener("tr:message", (e) => fn(e.detail || {}));
+    window.TechRiderAPI.ready.then((user) => { if (user) startLive(); });
+  }
+
   window.TechRiderAPI = {
     notificationSummary,
     onUpdate,
+    onMessage,
     API_BASE,
     ApiError,
     get: (path) => request("GET", path),

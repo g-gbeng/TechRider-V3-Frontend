@@ -2,39 +2,49 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "routes": [
     {
+      "src": "/(.*)",
+      "headers": {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(self)",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(js|css)/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      },
+      "continue": true
+    },
+    {
       "src": "/api/(.*)",
       "dest": "${BACKEND_URL}/api/$1",
-      "env": ["BACKEND_URL"],
+      "env": [
+        "BACKEND_URL"
+      ],
       "transforms": [
         {
           "type": "request.headers",
           "op": "set",
-          "target": { "key": "x-proxy-secret" },
+          "target": {
+            "key": "x-proxy-secret"
+          },
           "args": "$PROXY_SECRET",
-          "env": ["PROXY_SECRET"]
+          "env": [
+            "PROXY_SECRET"
+          ]
         }
       ]
     },
     {
       "src": "/uploads/(.*)",
       "dest": "${BACKEND_URL}/uploads/$1",
-      "env": ["BACKEND_URL"]
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000" }
+      "env": [
+        "BACKEND_URL"
       ]
-    },
-    {
-      "source": "/(js|css)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     }
   ]
 }

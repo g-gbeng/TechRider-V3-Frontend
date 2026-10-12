@@ -22,6 +22,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages/available-jobs-rider.css">
 <script src="js/api.js" data-require-role="rider"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -55,7 +56,7 @@ Assigned pickup and delivery requests from TechRider admin.
 
 <div
 class="jobs-container"
-id="jobsContainer">
+id="jobsContainer"><div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div>
 </div>
 
 <div

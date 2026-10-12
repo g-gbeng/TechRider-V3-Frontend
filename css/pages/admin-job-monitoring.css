@@ -1,10 +1,10 @@
 /* Styles for admin-job-monitoring.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 }
 
 body{
@@ -159,7 +159,7 @@ margin-bottom:20px;
 .toolbar input,
 .toolbar select{
 padding:12px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:10px;
 min-width:180px;
 flex:1;
@@ -211,11 +211,11 @@ th,
 td{
 padding:15px;
 text-align:left;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--tr-border);
 }
 
 th{
-background:#faf7ff;
+background:var(--tr-primary-50);
 color:var(--deep-purple);
 }
 
@@ -230,7 +230,7 @@ display:inline-block;
 }
 
 .accepted{
-background:#e9d8fd;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -244,8 +244,8 @@ background:#fff2cc;
 }
 
 .rejected{
-background:#ffe5e5;
-color:#b00020;
+background:var(--tr-danger-bg);
+color:var(--tr-danger);
 }
 
 .done{
@@ -271,7 +271,7 @@ margin-bottom:8px;
 
 .statusSelect{
     padding:9px 10px;
-    border:1px solid #ddd;
+    border:1px solid var(--tr-border);
     border-radius:10px;
     background:white;
     font-family:'Poppins',sans-serif;
@@ -302,14 +302,14 @@ color:white;
 
 .cancelStatusBtn{
 
-background:#ffe5e5;
+background:var(--tr-danger-bg);
 
-color:#b00020;
+color:var(--tr-danger);
 
 }
 
 .viewBtn{
-background:#f2ecff;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -319,8 +319,8 @@ color:#12643a;
 }
 
 .deleteBtn{
-background:#ffe5e5;
-color:#b00020;
+background:var(--tr-danger-bg);
+color:var(--tr-danger);
 }
 
 /* =========================================
@@ -328,7 +328,7 @@ color:#b00020;
 ========================================= */
 
 .quoteBtn{
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -348,8 +348,8 @@ cursor:default;
 }
 
 .cancelQuoteBtn{
-background:#ffe5e5;
-color:#b00020;
+background:var(--tr-danger-bg);
+color:var(--tr-danger);
 }
 
 /* =========================================
@@ -375,7 +375,7 @@ color:var(--deep-purple);
 display:none;
 margin-top:10px;
 padding:12px;
-background:#faf7ff;
+background:var(--tr-primary-50);
 border-radius:12px;
 line-height:1.7;
 }
@@ -446,18 +446,18 @@ display:block;
   gap:6px;
   margin-left:auto;
   font-size:.85rem;
-  color:#444;
+  color:var(--tr-text);
 }
 
 .commissionForm input{
   width:70px;
   padding:8px;
-  border:1px solid #ddd;
+  border:1px solid var(--tr-border);
   border-radius:8px;
 }
 
 .commissionForm .btn{
-  background:var(--purple, #5a189a);
+  background:var(--purple, var(--tr-primary-700));
   color:#fff;
 }
 
@@ -471,21 +471,21 @@ display:block;
   margin-top:4px;
   padding:2px 8px;
   border-radius:20px;
-  background:#fef3c7;
+  background:var(--tr-warning-bg);
   color:#92400e;
   font-size:.75rem;
   font-weight:600;
 }
 
 .btn:focus-visible{
-  outline:3px solid #e0aaff;
+  outline:3px solid var(--tr-primary-200);
   outline-offset:2px;
 }
 
 /* Phase 3: rider column */
 .riderNote{
 display:block;
-color:#777;
+color:var(--tr-text-soft);
 font-size:.8rem;
 margin:4px 0;
 }
@@ -504,12 +504,12 @@ text-decoration:underline;
 
 /* Phase 5: refunds and payment checks */
 .refundFlag.done{
-  background:#dcfce7;
+  background:var(--tr-success-bg);
   color:#166534;
 }
 
 .refundFlag.bad{
-  background:#fee2e2;
+  background:var(--tr-danger-bg);
   color:#991b1b;
 }
 
@@ -549,3 +549,6 @@ text-decoration:underline;
     width:100%;
   }
 }
+
+.tr-chat-btn{ position:relative; }
+.tr-chat-btn i{ margin-right:4px; }

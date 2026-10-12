@@ -1,4 +1,4 @@
-/* Scripts for disputes-rider.html */
+/* Scripts for disputes-customer.html, disputes-technician.html and disputes-rider.html */
 
 /* Login is checked by the page guard in js/api.js */
 const esc = TechRiderAPI.escapeHtml;
@@ -20,7 +20,7 @@ async function submitDispute(){
   const message = messageInput.value.trim();
 
   if(!category || !message){
-    alert('Please choose a category and describe the issue.');
+    TR.toast('Please choose a category and describe the issue.');
     return;
   }
 
@@ -35,12 +35,12 @@ async function submitDispute(){
     jobInput.value = '';
     messageInput.value = '';
 
-    alert(`Dispute ${dispute.code} submitted. TechRider will review it and notify you when it is settled.`);
+    TR.toast(`Dispute ${dispute.code} submitted. TechRider will review it and notify you when it is settled.`);
     loadDisputes();
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }finally{
 

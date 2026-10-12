@@ -1,10 +1,10 @@
 /* Styles for profile-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 --white:#fff;
 }
 
@@ -116,7 +116,7 @@ color:var(--deep-purple);
 
 .profile-role{
 margin-top:6px;
-color:#777;
+color:var(--tr-text-soft);
 font-size:.92rem;
 }
 
@@ -125,7 +125,7 @@ margin-top:18px;
 display:inline-block;
 padding:12px 18px;
 border-radius:12px;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 font-weight:600;
 cursor:pointer;
@@ -158,7 +158,7 @@ transition:.3s;
 }
 
 .jobs-btn{
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 }
 
@@ -166,7 +166,7 @@ color:var(--purple);
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -210,7 +210,7 @@ flex-direction:column;
 .group label{
 margin-bottom:8px;
 font-weight:600;
-color:#444;
+color:var(--tr-text);
 font-size:.95rem;
 }
 
@@ -218,7 +218,7 @@ font-size:.95rem;
 background:#f7f7f7;
 padding:15px;
 border-radius:14px;
-color:#555;
+color:var(--tr-text-muted);
 font-size:.95rem;
 word-break:break-word;
 min-height:54px;
@@ -227,7 +227,7 @@ align-items:center;
 }
 
 .verify-box{
-background:#f3e8ff;
+background:var(--tr-primary-100);
 padding:16px;
 border-radius:14px;
 color:var(--purple);
@@ -249,7 +249,7 @@ width:100%;
 max-width:240px;
 border-radius:14px;
 overflow:hidden;
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 }
 
 .document-preview img{

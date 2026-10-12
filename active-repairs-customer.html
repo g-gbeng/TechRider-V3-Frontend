@@ -14,7 +14,7 @@
   </title>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/pages/active-repairs-customer.css">
   <script src="js/api.js" data-require-role="customer"></script>
+<script src="js/ui.js"></script>
 
 </head>
 
@@ -44,7 +45,7 @@
         </h2>
 
         <p>
-          Track your current repair requests in real time
+          Follow each repair from quote to return
         </p>
 
       </div>
@@ -72,26 +73,13 @@
 
     <!-- EMPTY STATE -->
 
-    <div
-      class="empty"
-      id="emptyState"
-    >
+    <div class="empty-wrap" id="emptyState"></div>
 
-      <i class="fas fa-tools"></i>
-
-      <h3>
-        No Active Repairs
-      </h3>
-
-      <p>
-        Your pending or in-progress
-        repair requests will appear here.
-      </p>
-
-    </div>
+    <p class="history-link"><a href="history-customer.html"><i class="fas fa-clock-rotate-left"></i> See finished and cancelled repairs</a></p>
 
   </div>
 
+  <script src="js/chat.js"></script>
   <script src="js/pages/active-repairs-customer.js"></script>
 
 </body>

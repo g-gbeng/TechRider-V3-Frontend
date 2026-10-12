@@ -354,38 +354,13 @@ async function toggleSuspend(id){
        CONFIRMATION
     ------------------------- */
 
-    let reason = "";
+    const decision = await TR.suspendDialog(rider.fullName, rider.suspended, "rider");
 
-    if(!rider.suspended){
-
-        const confirmed = confirm(
-            `Suspend ${rider.fullName}?\n\nThis rider will no longer be able to access their Rider Dashboard until reactivated.`
-        );
-
-        if(!confirmed){
-            return;
-        }
-
-        reason = prompt(
-            "Reason for suspension (shown to the rider):",
-            ""
-        );
-
-        if(reason === null){
-            return;
-        }
-
-    }else{
-
-        const confirmed = confirm(
-            `Reactivate ${rider.fullName}?\n\nThis rider will regain access to their Rider Dashboard.`
-        );
-
-        if(!confirmed){
-            return;
-        }
-
+    if(!decision){
+        return;
     }
+
+    const reason = decision.reason;
 
     /* -------------------------
        SAVE ON THE SERVER
@@ -403,7 +378,7 @@ async function toggleSuspend(id){
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
         return;
 
     }
@@ -647,7 +622,7 @@ INITIAL LOAD
 
     }catch(err){
 
-        alert("Could not load riders: " + err.message);
+        TR.toast("Could not load riders: " + err.message);
 
     }
 

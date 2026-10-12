@@ -94,7 +94,7 @@
       // PHONE NUMBER CHECK
       if (phoneInput.value.length !== 11) {
 
-        alert('Phone number must be exactly 11 digits');
+        TR.toast('Phone number must be exactly 11 digits');
         valid = false;
       }
 
@@ -110,13 +110,13 @@
           password: pwd
         })
           .then(() => {
-            alert('Account created successfully!');
+            TR.toast('Account created successfully!');
 
             // REDIRECT
             window.location.href = "login-customer.html";
           })
           .catch((err) => {
-            alert(err.message);
+            TR.toast(err.message, "error");
           })
           .finally(() => {
             createBtn.disabled = false;

@@ -22,6 +22,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages/active-jobs-rider.css">
 <script src="js/api.js" data-require-role="rider"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -61,17 +62,6 @@ id="jobsContainer">
 <div
 class="empty-state"
 id="emptyState">
-
-<i class="fas fa-truck"></i>
-
-<h3>
-No Active Deliveries
-</h3>
-
-<p>
-Accepted rider deliveries will appear here.
-</p>
-
 </div>
 
 </div>
@@ -90,6 +80,13 @@ Complete Delivery
 <p id="completeText">
 Are you sure you want to mark this delivery as completed?
 </p>
+
+<div class="handover-field" id="handoverField" hidden>
+<label for="handoverInput">Handover code</label>
+<input id="handoverInput" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="4 digits">
+<small id="handoverHelp">Ask the person receiving the device for the 4-digit code in their TechRider app.</small>
+<div class="handover-error" id="handoverError" role="alert"></div>
+</div>
 
 <div class="modal-actions">
 
@@ -116,6 +113,7 @@ Mark Completed
 
 </div>
 
+<script src="js/chat.js"></script>
 <script src="js/pages/active-jobs-rider.js"></script>
 
 </body>

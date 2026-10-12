@@ -19,6 +19,8 @@ brand:r.brand,
 model:r.model,
 deviceType:r.deviceType,
 description:r.description,
+faults:r.faults || [],
+landmark:r.landmark || '',
 location:r.location,
 customerName:r.customer ? r.customer.fullName : '',
 deviceImages:r.images || [],
@@ -39,7 +41,7 @@ data.requests.map(toJob);
 
 }catch(err){
 
-alert('Could not load jobs: ' + err.message);
+TR.toast('Could not load jobs: ' + err.message);
 
 }
 
@@ -214,7 +216,8 @@ ${esc(job.model || 'N/A')}
 <strong>Issue Description:</strong>
 <br><br>
 
-${esc(job.description || 'No description provided.')}
+${job.faults && job.faults.length ? `<div class="fault-tags">${job.faults.map(f => `<span class="tr-pill">${esc(f)}</span>`).join('')}</div>` : ''}
+${esc(job.description || (job.faults && job.faults.length ? '' : 'No description provided.'))}
 
 </div>
 
@@ -368,7 +371,7 @@ document.getElementById(
 
 if(price==='' || Number(price)<=0){
 
-alert(
+TR.toast(
 'Please enter a valid repair amount.'
 );
 
@@ -389,7 +392,7 @@ await TechRiderAPI.post(
 { price:Number(price) }
 );
 
-alert(
+TR.toast(
 'Repair quotation sent successfully. Job moved to Active Jobs.'
 );
 
@@ -399,7 +402,7 @@ await loadJobs();
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 
@@ -417,21 +420,15 @@ getAvailableJobs();
 const job =
 jobs[index];
 
-const confirmReject =
-confirm(
-'Are you sure you want to reject this repair request? The customer will be asked to choose another technician.'
-);
-
-if(!confirmReject){
-
-return;
-
-}
-
-const reason = prompt(
-'Reason (optional, shared with TechRider):',
-''
-);
+const reason = await TR.prompt({
+title: 'Decline this repair?',
+message: 'The customer will be asked to choose another technician.',
+label: 'Reason (optional, shared with TechRider)',
+multiline: true,
+maxLength: 300,
+confirmText: 'Decline job',
+danger: true
+});
 
 if(reason === null){
 
@@ -446,7 +443,7 @@ await TechRiderAPI.post(
 { reason }
 );
 
-alert(
+TR.toast(
 'Repair request rejected. The customer will choose another technician.'
 );
 
@@ -454,7 +451,7 @@ await loadJobs();
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 
 }
 

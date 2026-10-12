@@ -27,8 +27,31 @@ createdAt:r.createdAt,
 updatedAt:r.updatedAt,
 completedAt:r.completedAt || r.cancelledAt,
 refund:r.refund,
-refundDue:r.refundDue
+refundDue:r.refundDue,
+review:r.review || null,
+canReview:Boolean(r.canReview),
+raw:r
 };
+
+}
+
+/* Your rating, or a button to rate a completed repair */
+function reviewBlock(request){
+
+if(request.review){
+return `<div class="review-note">
+<div><strong>Your rating:</strong> ${TR.stars(request.review.rating)}</div>
+${request.review.comment ? `<q>${esc(request.review.comment)}</q>` : ''}
+</div>`;
+}
+
+if(request.canReview){
+return `<button type="button" class="rate-btn" data-rate="${esc(request.id)}">
+<i class="fas fa-star"></i> Rate this repair
+</button>`;
+}
+
+return '';
 
 }
 
@@ -158,6 +181,12 @@ historyGrid.innerHTML = '';
 
 if(historyRequests.length === 0){
 
+emptyState.innerHTML = TR.empty({
+icon:'fa-clock-rotate-left',
+title:'No past repairs yet',
+text:'Finished and cancelled repairs will be listed here, with your ratings and any refunds.',
+action:{ label:'Request a repair', href:'repair-request.html', icon:'fa-plus' }
+});
 emptyState.style.display =
 'block';
 
@@ -298,6 +327,8 @@ request.repairPrice
 
 ${refundNote(request)}
 
+${reviewBlock(request)}
+
 <div class="footer">
 
 <div>
@@ -345,6 +376,21 @@ ${request.requestId || request.id}
 INITIAL LOAD (from the server)
 ========================================= */
 
+historyGrid.addEventListener('click', async e => {
+
+const button = e.target.closest('[data-rate]');
+if(!button) return;
+const item = historyItems.find(h => h.id === button.dataset.rate);
+const updated = await TR.rate(item.raw);
+if(updated){
+historyItems = historyItems.map(h => h.id === updated.id ? toHistoryItem(updated) : h);
+renderHistory();
+}
+
+});
+
+historyGrid.innerHTML = TR.skeleton(2);
+
 (async function init(){{
 
 if(!(await TechRiderAPI.ready)) return;
@@ -359,7 +405,7 @@ data.requests.map(toHistoryItem);
 
 }}catch(err){{
 
-alert('Could not load your history: ' + err.message);
+TR.toast('Could not load your history: ' + err.message);
 
 }}
 

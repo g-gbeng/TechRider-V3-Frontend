@@ -1,13 +1,13 @@
 /* Styles for active-repairs-customer.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
-  --green:#16a34a;
-  --red:#dc2626;
+  --green:var(--tr-success);
+  --red:var(--tr-danger);
   --gray-badge:#9ca3af;
   --blue:#2563eb;
 }
@@ -48,7 +48,7 @@ body{
 }
 
 .header p{
-  color:#666;
+  color:var(--tr-text-muted);
   font-size:.9rem;
 }
 
@@ -110,7 +110,7 @@ body{
 .request-id{
   margin-top:8px;
   display:inline-block;
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--purple);
   padding:6px 12px;
   border-radius:20px;
@@ -150,7 +150,7 @@ body{
   gap:10px;
   margin-top:15px;
   font-size:.88rem;
-  color:#444;
+  color:var(--tr-text);
 }
 
 .details div{
@@ -168,12 +168,12 @@ body{
 .desc{
   margin-top:15px;
   padding:14px;
-  background:#fafafa;
+  background:var(--tr-surface-2);
   border-left:4px solid var(--purple);
   border-radius:10px;
   font-size:.88rem;
   line-height:1.7;
-  color:#333;
+  color:var(--tr-text);
 }
 
 /* QUOTATION */
@@ -189,7 +189,7 @@ body{
 }
 
 .status-info.pending{
-  background:#f3f4f6;
+  background:var(--tr-surface-2);
   color:#4b5563;
 }
 
@@ -211,7 +211,7 @@ body{
   align-items:center;
   gap:8px;
   font-size:.82rem;
-  color:#777;
+  color:var(--tr-text-soft);
   flex-wrap:wrap;
 }
 
@@ -239,7 +239,7 @@ body{
 }
 
 .empty p{
-  color:#666;
+  color:var(--tr-text-muted);
   font-size:.9rem;
   line-height:1.6;
 }
@@ -279,7 +279,7 @@ body{
 }
 
 .status-info.quote{
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--deep-purple);
 }
 
@@ -290,7 +290,7 @@ body{
   margin-top:14px;
   padding:14px 16px;
   border-radius:12px;
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--deep-purple);
 }
 
@@ -325,7 +325,7 @@ body{
 }
 
 .action-btn.secondary{
-  background:#f3f4f6;
+  background:var(--tr-surface-2);
   color:#374151;
 }
 
@@ -350,12 +350,218 @@ body{
 
 /* Phase 3: rider details */
 .rider-phone{
-color:#5a189a;
+color:var(--tr-primary-700);
 font-weight:600;
 text-decoration:none;
 }
 
 .rider-wait{
-color:#888;
+color:var(--tr-text-soft);
 font-size:.85rem;
+}
+
+/* ---------- Progress, next step, rider (tracking update) ---------- */
+
+.repairs-grid{
+  grid-template-columns:repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+}
+
+.title{
+  font-size:1.05rem;
+}
+
+.progress{
+  list-style:none;
+  display:flex;
+  margin:18px 0 6px;
+  padding:0;
+  counter-reset:step;
+}
+
+.progress li{
+  flex:1;
+  position:relative;
+  text-align:center;
+  font-size:.7rem;
+  color:var(--tr-text-soft);
+  min-width:0;
+}
+
+/* line between the dots */
+.progress li::before{
+  content:"";
+  position:absolute;
+  top:15px;
+  left:-50%;
+  width:100%;
+  height:3px;
+  background:var(--tr-border);
+  z-index:0;
+}
+
+.progress li:first-child::before{ display:none; }
+.progress li.done::before,
+.progress li.current::before{ background:var(--tr-primary-500); }
+
+.progress .dot{
+  position:relative;
+  z-index:1;
+  width:32px;
+  height:32px;
+  margin:0 auto 6px;
+  border-radius:50%;
+  background:var(--tr-surface);
+  border:2px solid var(--tr-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.75rem;
+}
+
+.progress li.done .dot{
+  background:var(--tr-primary-500);
+  border-color:var(--tr-primary-500);
+  color:#fff;
+}
+
+.progress li.current .dot{
+  background:var(--tr-primary-900);
+  border-color:var(--tr-primary-900);
+  color:#fff;
+  box-shadow:0 0 0 4px var(--tr-primary-100);
+}
+
+.progress li.current .label{
+  color:var(--tr-primary-900);
+  font-weight:600;
+}
+
+.progress .label{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.next-step{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:var(--tr-primary-50);
+  border:1px solid var(--tr-primary-100);
+}
+
+.next-step p{
+  font-size:.9rem;
+  color:var(--tr-text);
+  line-height:1.5;
+}
+
+.next-step.quote{ background:var(--tr-primary-100); border-color:var(--tr-primary-200); }
+.next-step.cancelled{ background:var(--tr-danger-bg); border-color:#fecaca; }
+
+.next-step .quote-box{
+  background:var(--tr-surface);
+}
+
+.next-step .tr-test-banner{ margin:12px 0 0; }
+
+.action-btn.big{
+  width:100%;
+  margin-top:14px;
+  padding:13px 16px;
+  font-size:.95rem;
+  justify-content:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+}
+
+.action-btn.small{
+  padding:7px 12px;
+  font-size:.8rem;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.rider-box{
+  margin-top:14px;
+  padding:14px 16px;
+  border:1px solid var(--tr-border);
+  border-radius:12px;
+}
+
+.rider-line{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:.88rem;
+}
+
+.rider-line > div{ flex:1; min-width:0; }
+
+.rider-line small{
+  display:block;
+  color:var(--tr-text-muted);
+  font-size:.78rem;
+}
+
+.rider-icon{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--tr-primary-100);
+  color:var(--tr-primary-700);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+details.more{
+  margin-top:14px;
+  border-top:1px solid var(--tr-border);
+  padding-top:12px;
+}
+
+details.more summary{
+  cursor:pointer;
+  font-size:.85rem;
+  font-weight:600;
+  color:var(--tr-primary-700);
+  list-style-position:inside;
+}
+
+details.more .details{ margin-top:12px; }
+details.more .desc{ white-space:pre-line; }
+
+.card-actions .tr-chat-btn{ position:relative; }
+
+.history-link{
+  text-align:center;
+  margin:22px 0 6px;
+  font-size:.88rem;
+}
+
+.history-link a{
+  color:var(--tr-primary-700);
+  text-decoration:none;
+  font-weight:500;
+}
+
+.empty-wrap{
+  background:var(--tr-surface);
+  border-radius:16px;
+  display:none;
+}
+
+@media(max-width:480px){
+  .progress .label{ font-size:.62rem; }
+  .progress .dot{ width:28px; height:28px; }
+  .progress li::before{ top:13px; }
+  .rider-line{ flex-wrap:wrap; }
 }

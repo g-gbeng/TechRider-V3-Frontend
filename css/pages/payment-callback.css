@@ -1,12 +1,12 @@
 /* Styles for payment-callback.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
-  --green:#16a34a;
-  --red:#dc2626;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
+  --green:var(--tr-success);
+  --red:var(--tr-danger);
 }
 
 body{
@@ -41,12 +41,12 @@ body{
 }
 
 .icon.checking{
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--purple);
 }
 
 .icon.success{
-  background:#dcfce7;
+  background:var(--tr-success-bg);
   color:var(--green);
 }
 
@@ -62,7 +62,7 @@ h1{
 }
 
 p{
-  color:#555;
+  color:var(--tr-text-muted);
   line-height:1.7;
   font-size:.95rem;
 }
@@ -70,7 +70,7 @@ p{
 .reference{
   margin-top:10px;
   font-size:.8rem;
-  color:#888;
+  color:var(--tr-text-soft);
   word-break:break-all;
 }
 
@@ -113,7 +113,7 @@ p{
 }
 
 .btn.secondary{
-  background:#f3f4f6;
+  background:var(--tr-surface-2);
   color:#374151;
 }
 

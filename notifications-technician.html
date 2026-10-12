@@ -12,7 +12,7 @@ Technician Notifications - TechRider
 </title>
 
 <link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
   rel="stylesheet"
 >
 
@@ -24,6 +24,7 @@ Technician Notifications - TechRider
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages/notifications-technician.css">
 <script src="js/api.js" data-require-role="technician"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -105,7 +106,7 @@ Technician Notifications - TechRider
   <div
     class="list"
     id="notificationList"
-  ></div>
+  ><div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div></div>
 
   <!-- EMPTY -->
   <div

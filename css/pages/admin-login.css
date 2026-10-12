@@ -1,16 +1,16 @@
 /* Styles for admin-login.html */
 
 :root{
---purple:#5a189a;
---deep:#240046;
---lilac:#e0aaff;
+--purple:var(--tr-primary-700);
+--deep:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
 }
 
 body{
 min-height:100vh;
 display:grid;
 grid-template-columns:1fr 1fr;
-background:#f7f5fb;
+background:var(--tr-primary-50);
 animation:fadeIn .45s ease;
 }
 
@@ -113,11 +113,11 @@ margin-bottom:10px;
 
 .notice{
 font-size:.9rem;
-background:#faf7ff;
+background:var(--tr-primary-50);
 padding:12px;
 border-radius:10px;
 margin:18px 0 24px;
-color:#5a189a;
+color:var(--tr-primary-700);
 }
 
 label{
@@ -134,7 +134,7 @@ position:relative;
 input{
 width:100%;
 padding:13px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:10px;
 }
 
@@ -143,7 +143,7 @@ position:absolute;
 right:14px;
 top:15px;
 cursor:pointer;
-color:#777;
+color:var(--tr-text-soft);
 }
 
 .row{
@@ -169,7 +169,7 @@ background:
 linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 font-weight:600;
@@ -182,7 +182,7 @@ display:none;
 padding:12px;
 border-radius:10px;
 background:#ffe5ea;
-color:#b00020;
+color:var(--tr-danger);
 }
 
 .success{

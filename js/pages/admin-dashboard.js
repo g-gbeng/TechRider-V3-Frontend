@@ -175,7 +175,7 @@ document.getElementById("markAllRead").addEventListener("click", async () => {
     try{
         await TechRiderAPI.patch("/notifications/read-all");
     }catch(err){
-        alert(err.message);
+        TR.toast(err.message, "error");
     }
     loadInbox();
 

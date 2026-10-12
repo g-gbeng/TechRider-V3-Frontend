@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TechRider - Customer Dashboard</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/pages/dashboard-customer.css">
   <script src="js/api.js" data-require-role="customer"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -125,6 +126,24 @@
 
     </div>
 
+    <!-- RATE A FINISHED REPAIR (filled by the script) -->
+    <div id="rateSlot"></div>
+
+    <!-- CURRENT LOCATION -->
+    <section class="location-card" id="locationCard" aria-labelledby="locationTitle">
+      <div class="location-icon"><i class="fas fa-location-dot"></i></div>
+      <div class="location-body">
+        <h3 id="locationTitle">Your location</h3>
+        <p class="location-main" id="locationMain">Share your location and we'll fill in your pickup address for you.</p>
+        <p class="location-sub" id="locationSub"></p>
+      </div>
+      <div class="location-actions">
+        <button type="button" class="location-btn" id="locationBtn">
+          <i class="fas fa-location-crosshairs"></i> <span>Show my location</span>
+        </button>
+      </div>
+    </section>
+
     <!-- DASHBOARD CARDS -->
     <div class="cards">
 
@@ -188,21 +207,22 @@
     </div>
 
     <!-- ACTION -->
-    <div
+    <a
       class="action"
-      onclick="location.href='repair-request.html'"
+      href="repair-request.html"
     >
 
-      <h3>Request Repair</h3>
+      <h3><i class="fas fa-plus"></i> Request a repair</h3>
 
       <p>
-        Get technical help instantly
+        Tell us what's wrong. We collect it, fix it and bring it back.
       </p>
 
-    </div>
+    </a>
 
   </div>
 
+  <script src="js/location.js"></script>
   <script src="js/pages/dashboard-customer.js"></script>
 
 </body>

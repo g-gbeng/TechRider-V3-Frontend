@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechRider</title>
+  <title>TechRider · Phone and laptop repairs, collected and returned</title>
+  <meta name="description" content="TechRider collects your phone or laptop, gets it fixed by a vetted technician, and brings it back. You approve the price before you pay.">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome for Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="css/base.css">
@@ -16,57 +14,180 @@
 </head>
 <body>
 
-  <div class="container">
-
-    <!-- LEFT SIDE -->
-    <div class="left">
-      <h1>Seamless Rides & Smart Repairs</h1>
+  <!-- TOP BAR -->
+  <header class="nav">
+    <a href="index.html" class="brand">
+      <span class="brand-icon"><i class="fas fa-bolt"></i></span>
+      TechRider
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#safe">Why it's safe</a>
+      <a href="#join">Work with us</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#login" class="link-btn">Log in</a>
+      <a href="signup-customer.html" class="pill-btn">Get started</a>
     </div>
+  </header>
 
-    <!-- RIGHT SIDE -->
-    <div class="right">
+  <main>
 
-      <div class="welcome">
-        <div class="brand-icon">
-          <i class="fas fa-bolt"></i>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <span class="eyebrow"><i class="fas fa-location-dot"></i> Pickup and return at your door</span>
+        <h1>Your phone or laptop fixed, without leaving home.</h1>
+        <p class="lead">
+          Tell us what's wrong. A vetted technician prices the repair, you approve it,
+          and a TechRider rider collects your device and brings it back fixed.
+        </p>
+        <div class="hero-ctas">
+          <a href="signup-customer.html" class="cta primary">
+            <i class="fas fa-screwdriver-wrench"></i> Get a repair
+          </a>
+          <a href="login-customer.html" class="cta ghost">
+            I already have an account
+          </a>
         </div>
-        <div class="welcome-text">
-          <h2>Welcome to TechRider</h2>
-          <p>Select how you want to use the platform</p>
-        </div>
+        <ul class="hero-points">
+          <li><i class="fas fa-circle-check"></i> See the price before you pay</li>
+          <li><i class="fas fa-circle-check"></i> Follow every step live</li>
+          <li><i class="fas fa-circle-check"></i> Refunds if a paid job is cancelled</li>
+        </ul>
       </div>
 
-      <div class="options">
-
-        <a href="signup-customer.html" class="option-card" id="customerOption">
-          <i class="fas fa-user"></i>
-          <div class="option-text">
-            <h3>Customer</h3>
-            <p>Book rides and request technicians easily</p>
+      <!-- a small picture of a repair being tracked -->
+      <div class="hero-card" aria-hidden="true">
+        <div class="hc-top">
+          <div>
+            <strong>iPhone 12</strong>
+            <span>REQ-7F3A21 · Cracked screen</span>
           </div>
-        </a>
+          <span class="hc-status">Repairing</span>
+        </div>
+        <ol class="hc-steps">
+          <li class="done"><span></span>Requested</li>
+          <li class="done"><span></span>Quote</li>
+          <li class="done"><span></span>Paid</li>
+          <li class="done"><span></span>Collected</li>
+          <li class="current"><span></span>Repairing</li>
+          <li><span></span>Returned</li>
+        </ol>
+        <div class="hc-row">
+          <div class="hc-avatar">T</div>
+          <div><strong>Your technician</strong><span><i class="fas fa-star"></i> Rated by customers</span></div>
+        </div>
+        <div class="hc-msg"><i class="fas fa-comments"></i> "Screen replaced. Testing the battery now."</div>
+      </div>
+    </section>
 
-        <a href="signup-technician.html" class="option-card" id="technicianOption">
-          <i class="fas fa-tools"></i>
-          <div class="option-text">
-            <h3>Technician</h3>
-            <p>Offer repair services and manage jobs</p>
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <h2>How it works</h2>
+      <p class="section-lead">Five steps, and you can follow each one from your phone.</p>
+      <ol class="steps">
+        <li>
+          <span class="step-icon"><i class="fas fa-file-pen"></i></span>
+          <h3>Request</h3>
+          <p>Pick your device, tick what's wrong and add photos. Your address fills in from your location.</p>
+        </li>
+        <li>
+          <span class="step-icon"><i class="fas fa-user-gear"></i></span>
+          <h3>Choose a technician</h3>
+          <p>Compare verified technicians by rating, experience and reviews from other customers.</p>
+        </li>
+        <li>
+          <span class="step-icon"><i class="fas fa-file-invoice"></i></span>
+          <h3>Approve the price</h3>
+          <p>You get one clear price that includes pickup and return. Pay securely with Paystack only if you agree.</p>
+        </li>
+        <li>
+          <span class="step-icon"><i class="fas fa-motorcycle"></i></span>
+          <h3>We collect it</h3>
+          <p>A rider picks up your device and takes it straight to your technician.</p>
+        </li>
+        <li>
+          <span class="step-icon"><i class="fas fa-house-circle-check"></i></span>
+          <h3>Fixed and returned</h3>
+          <p>Your device comes back to your door. Give the rider your handover code, then rate the repair.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- SAFETY -->
+    <section class="section safe" id="safe">
+      <h2>Why it's safe to hand over your device</h2>
+      <div class="safe-grid">
+        <div class="safe-item">
+          <i class="fas fa-id-card"></i>
+          <h3>Checked technicians and riders</h3>
+          <p>Everyone who repairs or carries your device sends their ID and is approved by TechRider first.</p>
+        </div>
+        <div class="safe-item">
+          <i class="fas fa-key"></i>
+          <h3>Handover codes</h3>
+          <p>Your device is only marked delivered when you read your 4-digit code to the rider, so it can't go to the wrong person.</p>
+        </div>
+        <div class="safe-item">
+          <i class="fas fa-lock"></i>
+          <h3>Pay only when you agree</h3>
+          <p>No payment until you approve the quote. Payments go through Paystack; we never see your card.</p>
+        </div>
+        <div class="safe-item">
+          <i class="fas fa-scale-balanced"></i>
+          <h3>Disputes and refunds</h3>
+          <p>If something goes wrong, raise a dispute and our team steps in. Paid jobs that get cancelled are refunded.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN + LOG IN -->
+    <section class="section" id="join">
+      <h2>Work with TechRider</h2>
+      <p class="section-lead">Earn with your skills or your bike. Customers come to you.</p>
+      <div class="join-grid">
+        <a href="signup-technician.html" class="join-card">
+          <i class="fas fa-screwdriver-wrench"></i>
+          <div>
+            <h3>Technicians</h3>
+            <p>Get repair jobs near you, set your price and build your rating.</p>
           </div>
+          <i class="fas fa-arrow-right go"></i>
         </a>
-
-        <a href="signup-rider.html" class="option-card" id="riderOption">
+        <a href="signup-rider.html" class="join-card">
           <i class="fas fa-motorcycle"></i>
-          <div class="option-text">
-            <h3>Rider</h3>
-            <p>Accept ride requests and earn</p>
+          <div>
+            <h3>Riders</h3>
+            <p>Collect and deliver devices between customers and technicians.</p>
           </div>
+          <i class="fas fa-arrow-right go"></i>
         </a>
-
       </div>
 
-    </div>
+      <div class="login-box" id="login">
+        <h3>Already on TechRider? Log in as a…</h3>
+        <div class="login-links">
+          <a href="login-customer.html"><i class="fas fa-user"></i> Customer</a>
+          <a href="login-technician.html"><i class="fas fa-screwdriver-wrench"></i> Technician</a>
+          <a href="login-rider.html"><i class="fas fa-motorcycle"></i> Rider</a>
+        </div>
+      </div>
+    </section>
 
-  </div>
+  </main>
 
+  <footer class="footer">
+    <span>© <span id="year">2026</span> TechRider</span>
+    <nav aria-label="Footer">
+      <a href="faq.html">FAQ</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-of-service.html">Terms</a>
+    </nav>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="js/ui.js"></script>
 </body>
 </html>

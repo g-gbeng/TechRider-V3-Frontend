@@ -1,9 +1,9 @@
 /* Styles for awaiting-approval-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
 --white:#fff;
 }
 
@@ -48,13 +48,13 @@ color:var(--deep-purple);
 p{
 margin-top:10px;
 font-size:0.9rem;
-color:#555;
+color:var(--tr-text-muted);
 }
 
 .status{
 margin-top:20px;
 text-align:left;
-background:#fafafa;
+background:var(--tr-surface-2);
 padding:15px;
 border-radius:12px;
 }
@@ -87,5 +87,5 @@ color:white;
 }
 
 .logout{
-background:#eee;
+background:var(--tr-border);
 }

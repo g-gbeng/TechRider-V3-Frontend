@@ -1,13 +1,13 @@
 /* Styles for active-jobs-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 --white:#fff;
 --green:#10b981;
---orange:#f59e0b;
+--orange:var(--tr-star);
 }
 
 body{
@@ -48,7 +48,7 @@ font-size:2rem;
 
 .page-title p{
 margin-top:6px;
-color:#666;
+color:var(--tr-text-muted);
 font-size:.95rem;
 }
 
@@ -63,7 +63,7 @@ background:var(--white);
 border-radius:22px;
 padding:24px;
 box-shadow:0 6px 20px rgba(0,0,0,.05);
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 animation:fadeIn .4s ease;
 }
 
@@ -85,7 +85,7 @@ margin-bottom:10px;
 
 .job-time{
 font-size:.88rem;
-color:#777;
+color:var(--tr-text-soft);
 }
 
 .badges{
@@ -107,7 +107,7 @@ color:var(--purple);
 }
 
 .delivery{
-background:#dcfce7;
+background:var(--tr-success-bg);
 color:#047857;
 }
 
@@ -124,10 +124,10 @@ margin-bottom:24px;
 }
 
 .flow-box{
-background:#faf7ff;
+background:var(--tr-primary-50);
 padding:20px;
 border-radius:18px;
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 }
 
 .flow-head{
@@ -153,7 +153,7 @@ color:var(--purple);
 .info-row{
 margin-bottom:14px;
 line-height:1.7;
-color:#444;
+color:var(--tr-text);
 font-size:.94rem;
 word-break:break-word;
 }
@@ -189,7 +189,7 @@ border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 font-size:.9rem;
 }
@@ -197,7 +197,7 @@ font-size:.9rem;
 .route-content{
 font-size:.93rem;
 line-height:1.7;
-color:#444;
+color:var(--tr-text);
 }
 
 .route-content strong{
@@ -231,7 +231,7 @@ transform:translateY(-2px);
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -257,7 +257,7 @@ margin-bottom:10px;
 }
 
 .empty-state p{
-color:#777;
+color:var(--tr-text-soft);
 line-height:1.7;
 }
 
@@ -288,7 +288,7 @@ margin-bottom:14px;
 
 .modal-content p{
 line-height:1.7;
-color:#555;
+color:var(--tr-text-muted);
 margin-bottom:24px;
 }
 
@@ -306,7 +306,7 @@ flex:1;
 background:linear-gradient(
 135deg,
 var(--purple),
-#c77dff
+var(--tr-primary-400)
 );
 color:white;
 }
@@ -363,7 +363,7 @@ width:100%;
 /* Phase 3 additions */
 .job-device{
 margin-top:6px;
-color:#555;
+color:var(--tr-text-muted);
 font-size:.9rem;
 }
 
@@ -394,7 +394,7 @@ color:var(--purple);
 display:flex;
 gap:10px;
 align-items:flex-start;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--deep-purple);
 padding:12px 14px;
 border-radius:14px;
@@ -415,3 +415,45 @@ margin-right:6px;
 opacity:.6;
 cursor:not-allowed;
 }
+
+/* ---------- Handover code, maps, messages ---------- */
+.empty-state{ padding:10px 20px; }
+.empty-state .tr-empty-icon i{ font-size:1.5rem; margin:0; color:inherit; }
+
+.chat-btn{
+background:var(--tr-surface);
+color:var(--tr-primary-700);
+border:1px solid var(--tr-border);
+position:relative;
+}
+
+.chat-btn i{ margin-right:6px; }
+
+.actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+
+.map-link{
+display:inline-flex;
+align-items:center;
+gap:6px;
+margin-top:10px;
+font-size:.82rem;
+font-weight:600;
+color:var(--tr-primary-700);
+text-decoration:none;
+}
+
+.handover-field{ margin:16px 0 4px; text-align:left; }
+.handover-field label{ display:block; font-weight:600; font-size:.88rem; margin-bottom:6px; color:var(--tr-text); }
+.handover-field input{
+width:100%;
+padding:12px;
+font-size:1.6rem;
+letter-spacing:.5em;
+text-align:center;
+border:2px solid var(--tr-primary-200);
+border-radius:12px;
+font-variant-numeric:tabular-nums;
+}
+.handover-field input:focus{ border-color:var(--tr-primary-500); outline:none; box-shadow:var(--tr-focus); }
+.handover-field small{ display:block; margin-top:6px; color:var(--tr-text-muted); font-size:.78rem; line-height:1.4; }
+.handover-error{ color:var(--tr-danger); font-size:.82rem; margin-top:6px; min-height:1em; }

@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Select Technician - TechRider</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pages/select-technician.css">
 <script src="js/api.js" data-require-role="customer"></script>
+<script src="js/ui.js"></script>
 </head>
 
 <body>
@@ -27,10 +28,7 @@
 
   <div class="tech-grid" id="techGrid"></div>
 
-  <div class="empty" id="emptyState">
-    <i class="fas fa-user-slash"></i>
-    <p>No technicians available</p>
-  </div>
+  <div class="empty" id="emptyState"></div>
 
   <div class="submit-wrapper">
     <button

@@ -1,10 +1,10 @@
 /* Styles for select-technician.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
 }
 
@@ -120,7 +120,7 @@ body{
 
 .specialization{
   font-size:.85rem;
-  color:#666;
+  color:var(--tr-text-muted);
   margin-top:4px;
 }
 
@@ -209,7 +209,7 @@ body{
   width:70px;
   height:70px;
   border-radius:50%;
-  background:#f3e8ff;
+  background:var(--tr-primary-100);
   color:var(--purple);
   display:flex;
   align-items:center;
@@ -224,7 +224,7 @@ body{
 }
 
 .modal-card p{
-  color:#555;
+  color:var(--tr-text-muted);
   line-height:1.8;
   font-size:.95rem;
 }
@@ -252,3 +252,17 @@ body{
   }
 
 }
+
+/* ---------- Ratings and reviews ---------- */
+.empty{ padding:10px; }
+.empty .tr-empty-icon i{ font-size:1.5rem; margin:0; color:inherit; }
+.rating-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:4px 0; }
+.reviews-link{
+  background:none; border:0; padding:0;
+  color:var(--tr-primary-700); font-size:.8rem; font-weight:600;
+  text-decoration:underline; cursor:pointer;
+}
+.reviews-dialog .reviews-list{ margin-top:12px; display:grid; gap:12px; max-height:50vh; overflow:auto; }
+.reviews-dialog .review{ border-top:1px solid var(--tr-border); padding-top:10px; }
+.reviews-dialog .review p{ color:var(--tr-text); margin-top:4px; white-space:normal; }
+.review-by{ font-size:.78rem; color:var(--tr-text-soft); margin-left:6px; }

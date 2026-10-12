@@ -69,6 +69,17 @@ ${phoneLink(stop.phone)}
 ${esc(stop.address)}
 </div>
 
+${stop.landmark ? `
+<div class="info-row">
+<strong>Landmark:</strong>
+${esc(stop.landmark)}
+</div>` : ''}
+
+${stop.mapUrl ? `
+<a class="map-link" href="${esc(stop.mapUrl)}" target="_blank" rel="noopener">
+<i class="fas fa-map-location-dot"></i> Open in Maps
+</a>` : ''}
+
 </div>`;
 
 }
@@ -87,7 +98,7 @@ activeJobs = data.deliveries;
 
 }catch(err){
 
-alert('Could not load deliveries: ' + err.message);
+TR.toast('Could not load deliveries: ' + err.message);
 
 }
 
@@ -107,6 +118,12 @@ jobsContainer.innerHTML = '';
 
 if(activeJobs.length === 0){
 
+emptyState.innerHTML = TR.empty({
+icon:'fa-motorcycle',
+title:'No active deliveries',
+text:'Deliveries you accept will appear here with directions and contact numbers.',
+action:{ label:'See available jobs', href:'available-jobs-rider.html' }
+});
 emptyState.style.display = 'block';
 return;
 
@@ -206,6 +223,14 @@ ${job.instructions ? `
 
 <div class="actions">
 
+${job.request ? `
+<button
+class="btn chat-btn tr-chat-btn"
+data-chat="${esc(job.request.id)}"
+data-chat-title="${esc(job.request.code)} · ${esc(job.code)}">
+<i class="fas fa-comments"></i> Messages
+</button>` : ''}
+
 ${next ? `
 <button
 class="btn complete-btn"
@@ -224,13 +249,15 @@ ${next.button}
 
 }).join('');
 
+TR.chat.refreshBadges();
+
 }
 
 document
 .getElementById('jobsContainer')
 .addEventListener('click', e => {
 
-const button = e.target.closest('button[data-id]');
+const button = e.target.closest('button.complete-btn[data-id]');
 if(button) openCompleteModal(button.dataset.id);
 
 });
@@ -250,9 +277,23 @@ document.getElementById('completeTitle').textContent = next.title;
 document.getElementById('completeText').textContent = next.text(job);
 document.getElementById('completeConfirmBtn').textContent = next.button;
 
+// delivering needs the receiver's 4-digit handover code
+const needsCode = job.status === 'picked_up' && job.needsHandoverCode;
+const field = document.getElementById('handoverField');
+const input = document.getElementById('handoverInput');
+field.hidden = !needsCode;
+input.value = '';
+document.getElementById('handoverError').textContent = job.handoverLocked
+? 'Too many wrong codes. Call the TechRider admin to unlock this delivery.'
+: '';
+document.getElementById('handoverHelp').textContent =
+`Ask ${job.to.name} for the 4-digit code in their TechRider app, once they have the device.`;
+
 document
 .getElementById('completeModal')
 .style.display = 'flex';
+
+setTimeout(() => (needsCode ? input : document.getElementById('completeConfirmBtn')).focus(), 30);
 
 }
 
@@ -277,19 +318,36 @@ const next = job && NEXT_STEP[job.status];
 if(!next) return;
 
 const button = document.getElementById('completeConfirmBtn');
+const needsCode = job.status === 'picked_up' && job.needsHandoverCode;
+const code = document.getElementById('handoverInput').value.replace(/\D/g, '');
+const errorBox = document.getElementById('handoverError');
+
+if(needsCode && code.length !== 4){
+errorBox.textContent = 'Enter the 4-digit code.';
+document.getElementById('handoverInput').focus();
+return;
+}
+
 button.disabled = true;
 
 try{
 
-await TechRiderAPI.post(`/deliveries/${encodeURIComponent(job.id)}/${next.path}`);
+await TechRiderAPI.post(`/deliveries/${encodeURIComponent(job.id)}/${next.path}`, needsCode ? { code } : undefined);
 
 closeCompleteModal();
-alert(next.done);
+TR.toast(next.done, 'success');
 
 }catch(err){
 
+// a wrong code keeps the box open so the rider can try again
+if(needsCode && (err.status === 400 || err.status === 409)){
+errorBox.textContent = err.message;
+button.disabled = false;
+document.getElementById('handoverInput').select();
+return;
+}
 closeCompleteModal();
-alert(err.message);
+TR.toast(err.message, "error");
 
 }finally{
 
@@ -319,6 +377,12 @@ closeCompleteModal();
 INIT
 Refreshes every 30 seconds in case the admin cancels a delivery.
 ========================= */
+document.getElementById('jobsContainer').innerHTML = TR.skeleton(1);
+
+document.getElementById('handoverInput').addEventListener('keydown', e => {
+if(e.key === 'Enter') confirmCompleteDelivery();
+});
+
 (async function init(){
 
 if(!(await TechRiderAPI.ready)) return;

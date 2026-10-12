@@ -1,4 +1,4 @@
-/* Scripts for reset-password-technician.html */
+/* Scripts for reset-password.html?role=customer|technician|rider[&token=...] */
 
     /*
       This page is used two ways:
@@ -6,8 +6,12 @@
       2. From the profile page while logged in: change password, confirming the current one.
     */
 
-    const ROLE = 'technician';
-    const token = new URLSearchParams(window.location.search).get('token');
+    const params = new URLSearchParams(window.location.search);
+    const ROLES = ['customer', 'technician', 'rider'];
+    const ROLE = ROLES.includes(params.get('role')) ? params.get('role') : 'customer';
+    const token = params.get('token');
+
+    document.getElementById('loginLink').href = TechRiderAPI.LOGIN_PAGES[ROLE];
 
     const newPassword = document.getElementById('newPassword');
     const confirmPassword = document.getElementById('confirmPassword');
@@ -57,8 +61,8 @@
           submitButton.disabled = false;
         })
         .catch(() => {
-          alert('Open the reset link from your email, or request a new one.');
-          window.location.replace('forgot-password-technician.html');
+          TR.toast('Open the reset link from your email, or request a new one.');
+          window.location.replace(`forgot-password.html?role=${ROLE}`);
         });
     }
 
@@ -91,19 +95,19 @@
             currentPassword: currentPassword.value,
             newPassword: newPassword.value
           });
-          alert('Password changed successfully.');
-          window.location.href = "profile-technician.html";
+          TR.toast('Password changed successfully.');
+          window.location.href = `profile-${ROLE}.html`;
         } else {
           const result = await TechRiderAPI.post('/auth/reset-password', {
             token: token,
             password: newPassword.value
           });
           TechRiderAPI.clearSession();
-          alert(result.message);
-          window.location.href = "login-technician.html";
+          TR.toast(result.message);
+          window.location.href = TechRiderAPI.LOGIN_PAGES[ROLE];
         }
       } catch (err) {
-        alert(err.message);
+        TR.toast(err.message, "error");
       } finally {
         submitButton.disabled = false;
       }

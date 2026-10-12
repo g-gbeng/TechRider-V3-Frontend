@@ -92,6 +92,12 @@ function renderJobs(){
 jobsGrid.innerHTML = '';
 
 if(activeJobs.length === 0){
+emptyState.innerHTML = TR.empty({
+icon:'fa-screwdriver-wrench',
+title:'No active jobs',
+text:'Jobs you have quoted on will appear here. New requests show up in Available Jobs.',
+action:{ label:'See available jobs', href:'available-jobs-technician.html' }
+});
 emptyState.style.display = 'block';
 return;
 }
@@ -139,8 +145,8 @@ ${esc(job.model)}
 </div>
 
 <div class="desc">
-<strong>Issue Description:</strong>
-<br><br>
+<strong>Problem:</strong>
+${job.faults && job.faults.length ? `<div class="fault-tags">${job.faults.map(f => `<span class="tr-pill">${esc(f)}</span>`).join('')}</div>` : '<br>'}
 ${esc(job.description)}
 </div>
 
@@ -160,9 +166,26 @@ job.rider && job.rider.active
 <strong>Rider:</strong>
 ${esc(job.rider.fullName)} (${esc(job.rider.deliveryTypeLabel)}: ${esc(job.rider.deliveryStatusLabel)})
 ${job.rider.phone ? `· <a href="tel:${esc(job.rider.phone)}">${esc(job.rider.phone)}</a>` : ''}
-</div>`
+</div>
+${job.rider.handoverCode ? `
+<div class="tr-handover">
+<div class="code" aria-label="Handover code ${esc(job.rider.handoverCode.split('').join(' '))}">${esc(job.rider.handoverCode)}</div>
+<p><strong>Handover code.</strong> Read it to the rider only once the device is in your hands.</p>
+</div>` : ''}`
 : ''
 }
+
+${job.review ? `
+<div class="review-line">
+${TR.stars(job.review.rating)}
+${job.review.comment ? `<q>${esc(job.review.comment)}</q>` : ''}
+</div>` : ''}
+
+<div class="card-actions">
+<button class="tr-btn tr-btn-ghost tr-btn-sm tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}">
+<i class="fas fa-comments"></i> Messages
+</button>
+</div>
 
 ${
 job.status === 'repair_in_progress'
@@ -183,6 +206,8 @@ ${formatDate(job.updatedAt)}
 
 });
 
+TR.chat.refreshBadges();
+
 }
 
 /* =========================================
@@ -195,7 +220,7 @@ const button = e.target.closest('.done-btn');
 
 if(!button) return;
 
-if(!confirm('Mark this repair as done? TechRider will arrange to return the device to the customer.')){
+if(!(await TR.confirm({ title: 'Mark repair as done?', message: 'TechRider will arrange a rider to return the device to the customer.', confirmText: 'Yes, it\'s done', icon: 'fa-circle-check' }))){
 return;
 }
 
@@ -212,7 +237,7 @@ await loadJobs();
 
 }catch(err){
 
-alert(err.message);
+TR.toast(err.message, "error");
 button.disabled = false;
 
 }
@@ -241,6 +266,8 @@ if(err.status !== 401) console.error(err);
 renderJobs();
 
 }
+
+jobsGrid.innerHTML = TR.skeleton(2);
 
 (async function init(){
 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TechRider - Customer Signup</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="css/base.css">
@@ -33,7 +33,7 @@
     <form id="signupForm">
 
       <div class="input-group">
-        <label>Full Name</label>
+        <label for="name">Full Name</label>
         <input
           type="text"
           id="name"
@@ -43,7 +43,7 @@
       </div>
 
       <div class="input-group">
-        <label>Email</label>
+        <label for="email">Email</label>
         <input
           type="email"
           id="email"
@@ -53,7 +53,7 @@
       </div>
 
       <div class="input-group">
-        <label>Phone Number</label>
+        <label for="phone">Phone Number</label>
         <input
           type="tel"
           id="phone"
@@ -66,7 +66,7 @@
       </div>
 
       <div class="input-group">
-        <label>Password</label>
+        <label for="password">Password</label>
 
         <input
           type="password"
@@ -84,7 +84,7 @@
       </div>
 
       <div class="input-group">
-        <label>Confirm Password</label>
+        <label for="confirmPassword">Confirm Password</label>
 
         <input
           type="password"
@@ -105,11 +105,11 @@
       </button>
 
       <div class="bottom-links">
-        <a href="terms-of-service-customer.html">
+        <a href="terms-of-service.html?role=customer">
           Terms of Service
         </a>
 
-        <a href="privacy-policy-customer.html">
+        <a href="privacy-policy.html?role=customer">
           Privacy Policy
         </a>
       </div>
@@ -119,6 +119,7 @@
   </div>
 
   <script src="js/api.js"></script>
+<script src="js/ui.js"></script>
   <script src="js/pages/signup-customer.js"></script>
 
 </body>

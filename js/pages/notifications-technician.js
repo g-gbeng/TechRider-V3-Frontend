@@ -39,7 +39,7 @@ async function loadNotifications(){
 
   }catch(err){
 
-    alert("Could not load notifications: " + err.message);
+    TR.toast("Could not load notifications: " + err.message);
 
   }
 
@@ -77,7 +77,7 @@ async function markAsRead(id){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 
@@ -100,7 +100,7 @@ async function markAllAsRead(){
 
   }catch(err){
 
-    alert(err.message);
+    TR.toast(err.message, "error");
 
   }
 

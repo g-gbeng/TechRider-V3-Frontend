@@ -1,10 +1,10 @@
 /* Styles for admin-templates.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
 }
 
@@ -81,7 +81,7 @@ input,
 textarea{
   width:100%;
   padding:14px;
-  border:1px solid #ddd;
+  border:1px solid var(--tr-border);
   border-radius:12px;
   margin-bottom:12px;
   outline:none;
@@ -125,8 +125,8 @@ button{
 
 /* TEMPLATE CARD */
 .card{
-  background:#faf7ff;
-  border:1px solid #eee;
+  background:var(--tr-primary-50);
+  border:1px solid var(--tr-border);
   border-radius:16px;
   padding:16px;
   margin-top:14px;
@@ -140,12 +140,12 @@ button{
 
 .card-subject{
   font-size:.85rem;
-  color:#666;
+  color:var(--tr-text-muted);
   margin-bottom:10px;
 }
 
 .card-body{
-  color:#444;
+  color:var(--tr-text);
   line-height:1.7;
   font-size:.9rem;
   white-space:pre-wrap;
@@ -172,7 +172,7 @@ button{
 .empty{
   text-align:center;
   padding:25px;
-  color:#777;
+  color:var(--tr-text-soft);
   font-size:.92rem;
 }
 

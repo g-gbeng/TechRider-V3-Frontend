@@ -1,16 +1,16 @@
 /* Styles for signup-technician.html */
 
 :root{
-    --purple:#5a189a;
-    --deep-purple:#240046;
-    --lilac:#e0aaff;
+    --purple:var(--tr-primary-700);
+    --deep-purple:var(--tr-primary-900);
+    --lilac:var(--tr-primary-200);
     --white:#ffffff;
     --light:#f7f5fc;
     --border:#dddddd;
-    --success:#16a34a;
-    --danger:#dc2626;
-    --warning:#f59e0b;
-    --text:#444;
+    --success:var(--tr-success);
+    --danger:var(--tr-danger);
+    --warning:var(--tr-star);
+    --text:var(--tr-text);
     --shadow:0 15px 40px rgba(0,0,0,.12);
 }
 
@@ -62,7 +62,7 @@ body{
 
 .header p{
     margin-top:5px;
-    color:#666;
+    color:var(--tr-text-muted);
     font-size:.9rem;
 }
 
@@ -156,7 +156,7 @@ textarea:focus{
     top:45px;
     right:16px;
     cursor:pointer;
-    color:#777;
+    color:var(--tr-text-soft);
     transition:.25s;
 }
 
@@ -196,7 +196,7 @@ textarea:focus{
 
 .upload-box small{
     display:block;
-    color:#666;
+    color:var(--tr-text-muted);
     margin-top:8px;
 }
 
@@ -214,13 +214,13 @@ textarea:focus{
     height:180px;
     object-fit:cover;
     border-radius:12px;
-    border:1px solid #ddd;
+    border:1px solid var(--tr-border);
 }
 
 .file-name{
     margin-top:8px;
     font-size:.82rem;
-    color:#666;
+    color:var(--tr-text-muted);
     word-break:break-word;
 }
 

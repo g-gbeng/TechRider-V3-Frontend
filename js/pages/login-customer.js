@@ -54,7 +54,7 @@
         loginError.style.display = 'none';
 
         // SUCCESS MESSAGE
-        alert('Login successful!');
+        TR.toast('Login successful!');
 
         // REDIRECT TO DASHBOARD
         window.location.href =

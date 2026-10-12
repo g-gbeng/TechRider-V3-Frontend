@@ -1,11 +1,11 @@
 /* Styles for history-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
---green:#16a34a;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
+--green:var(--tr-success);
 }
 
 body{
@@ -94,7 +94,7 @@ align-items:center;
 gap:8px;
 padding:8px 16px;
 border-radius:30px;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 font-size:.82rem;
 font-weight:600;
@@ -106,7 +106,7 @@ align-items:center;
 gap:8px;
 padding:8px 16px;
 border-radius:30px;
-background:#dcfce7;
+background:var(--tr-success-bg);
 color:var(--green);
 font-size:.82rem;
 font-weight:600;
@@ -122,7 +122,7 @@ margin-bottom:20px;
 }
 
 .info-box{
-background:#faf7ff;
+background:var(--tr-primary-50);
 padding:18px;
 border-radius:14px;
 }
@@ -140,7 +140,7 @@ gap:8px;
 .job-info{
 margin-bottom:10px;
 font-size:.93rem;
-color:#444;
+color:var(--tr-text);
 line-height:1.5;
 word-break:break-word;
 }
@@ -153,12 +153,12 @@ width:18px;
 
 .time-box{
 padding-top:15px;
-border-top:1px solid #eee;
+border-top:1px solid var(--tr-border);
 }
 
 .completed-time{
 font-size:.92rem;
-color:#555;
+color:var(--tr-text-muted);
 line-height:1.6;
 }
 
@@ -175,7 +175,7 @@ text-align:center;
 background:white;
 padding:45px 20px;
 border-radius:18px;
-color:#666;
+color:var(--tr-text-muted);
 }
 
 /* MOBILE */
@@ -212,11 +212,11 @@ flex-direction:column;
 
 /* Phase 3: declined and cancelled trips */
 .status-declined{
-background:#fee2e2;
-color:#dc2626;
+background:var(--tr-danger-bg);
+color:var(--tr-danger);
 }
 
 .status-cancelled{
-background:#f3f4f6;
+background:var(--tr-surface-2);
 color:#6b7280;
 }

@@ -800,24 +800,13 @@ async function toggleSuspend(email){
        CONFIRM
     ========================== */
 
-    let reason = "";
+    const decision = await TR.suspendDialog(customer.fullName, customer.suspended, "customer");
 
-    if(!customer.suspended){
-
-        reason = prompt(
-            `Suspend ${customer.fullName}?\n\nReason for suspension (shown to the customer):`,
-            ""
-        );
-
-        if(reason === null){
-            return;
-        }
-
-    }else if(!confirm(`Reactivate ${customer.fullName}?`)){
-
+    if(!decision){
         return;
-
     }
+
+    const reason = decision.reason;
 
     /* ==========================
        SAVE ON THE SERVER
@@ -835,7 +824,7 @@ async function toggleSuspend(email){
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
         return;
 
     }
@@ -846,14 +835,14 @@ async function toggleSuspend(email){
 
     if(customer.suspended){
 
-        alert(
+        TR.toast(
             `${customer.fullName} has been suspended.`
         );
 
     }
     else{
 
-        alert(
+        TR.toast(
             `${customer.fullName} has been reactivated.`
         );
 
@@ -932,7 +921,7 @@ document.addEventListener(
 
         }catch(err){
 
-            alert("Could not load customers: " + err.message);
+            TR.toast("Could not load customers: " + err.message);
 
         }
 

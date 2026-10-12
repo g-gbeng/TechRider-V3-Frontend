@@ -1,10 +1,10 @@
 /* Styles for profile-customer.html */
 
 :root{
-  --purple:#5a189a;
-  --deep-purple:#240046;
-  --lilac:#e0aaff;
-  --gray:#f6f6f6;
+  --purple:var(--tr-primary-700);
+  --deep-purple:var(--tr-primary-900);
+  --lilac:var(--tr-primary-200);
+  --gray:var(--tr-surface-2);
   --white:#fff;
 }
 
@@ -142,7 +142,7 @@ body{
   display:flex;
   justify-content:space-between;
   padding:10px 0;
-  border-bottom:1px solid #ddd;
+  border-bottom:1px solid var(--tr-border);
   font-size:0.88rem;
   gap:10px;
 }
@@ -152,7 +152,7 @@ body{
 }
 
 .label{
-  color:#555;
+  color:var(--tr-text-muted);
 }
 
 .value{

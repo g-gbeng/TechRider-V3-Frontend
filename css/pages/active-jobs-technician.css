@@ -1,15 +1,15 @@
 /* Styles for active-jobs-technician.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
---gray:#f6f6f6;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--gray:var(--tr-surface-2);
 --white:#fff;
 --gray-badge:#9ca3af;
---green:#16a34a;
+--green:var(--tr-success);
 --blue:#2563eb;
---red:#dc2626;
+--red:var(--tr-danger);
 }
 
 body{
@@ -118,7 +118,7 @@ background:var(--red);
 .request-id{
 margin-top:8px;
 display:inline-block;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 color:var(--purple);
 padding:6px 12px;
 border-radius:20px;
@@ -134,7 +134,7 @@ display:flex;
 flex-direction:column;
 gap:10px;
 font-size:.88rem;
-color:#444;
+color:var(--tr-text);
 }
 
 .details div{
@@ -152,12 +152,12 @@ margin-right:6px;
 .desc{
 margin-top:15px;
 padding:14px;
-background:#fafafa;
+background:var(--tr-surface-2);
 border-left:4px solid var(--purple);
 border-radius:10px;
 font-size:.88rem;
 line-height:1.7;
-color:#333;
+color:var(--tr-text);
 }
 
 /* PRICE */
@@ -177,7 +177,7 @@ font-weight:600;
 .timestamp{
 margin-top:15px;
 font-size:.82rem;
-color:#777;
+color:var(--tr-text-soft);
 display:flex;
 align-items:center;
 gap:8px;
@@ -195,7 +195,7 @@ line-height:1.6;
 }
 
 .status-message.pending{
-background:#f3f4f6;
+background:var(--tr-surface-2);
 color:#4b5563;
 }
 
@@ -216,7 +216,7 @@ background:white;
 padding:50px 20px;
 border-radius:18px;
 text-align:center;
-color:#666;
+color:var(--tr-text-muted);
 display:none;
 }
 
@@ -265,19 +265,26 @@ grid-template-columns:1fr;
 .rider-line{
 margin-top:12px;
 padding:10px 14px;
-background:#f3e8ff;
+background:var(--tr-primary-100);
 border-radius:12px;
 font-size:.9rem;
-color:#240046;
+color:var(--tr-primary-900);
 }
 
 .rider-line i{
-color:#5a189a;
+color:var(--tr-primary-700);
 margin-right:4px;
 }
 
 .rider-line a{
-color:#5a189a;
+color:var(--tr-primary-700);
 font-weight:600;
 text-decoration:none;
 }
+
+/* ---------- Faults, handover code, messages ---------- */
+.fault-tags{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.card-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+.review-line{ margin-top:12px; font-size:.85rem; color:var(--tr-text-muted); }
+.review-line q{ display:block; margin-top:4px; font-style:italic; }
+#emptyState.empty{ padding:10px; }

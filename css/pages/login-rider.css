@@ -1,9 +1,9 @@
 /* Styles for login-rider.html */
 
 :root{
---purple:#5a189a;
---deep-purple:#240046;
---lilac:#e0aaff;
+--purple:var(--tr-primary-700);
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
 --white:#fff;
 }
 
@@ -51,7 +51,7 @@ color:var(--deep-purple);
 
 .header p{
 font-size:.88rem;
-color:#666;
+color:var(--tr-text-muted);
 margin-top:6px;
 }
 
@@ -79,13 +79,13 @@ display:block;
 margin-bottom:6px;
 font-size:.86rem;
 font-weight:500;
-color:#333;
+color:var(--tr-text);
 }
 
 input{
 width:100%;
 padding:13px 14px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:12px;
 outline:none;
 font-size:.95rem;
@@ -110,7 +110,7 @@ top:50%;
 right:15px;
 transform:translateY(-50%);
 cursor:pointer;
-color:#666;
+color:var(--tr-text-muted);
 }
 
 .bottom-link{
@@ -163,7 +163,7 @@ transform:translateY(-1px);
 margin-top:14px;
 padding:12px;
 border-radius:12px;
-background:#ffe5e5;
+background:var(--tr-danger-bg);
 color:#c1121f;
 font-size:.88rem;
 display:none;
@@ -175,7 +175,7 @@ line-height:1.5;
 margin-top:14px;
 padding:12px;
 border-radius:12px;
-background:#dcfce7;
+background:var(--tr-success-bg);
 color:#166534;
 font-size:.88rem;
 display:none;
@@ -218,7 +218,7 @@ padding:12px;
 
 border-radius:12px;
 
-background:#fef3c7;
+background:var(--tr-warning-bg);
 
 color:#92400e;
 

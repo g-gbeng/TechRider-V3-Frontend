@@ -300,28 +300,13 @@ async function toggleSuspend(technicianId){
         ? "reactivate"
         : "suspend";
 
-    const confirmed = confirm(
-        `Are you sure you want to ${action} ${technician.fullName}?`
-    );
+    const decision = await TR.suspendDialog(technician.fullName, technician.suspended, "technician");
 
-    if(!confirmed){
+    if(!decision){
         return;
     }
 
-    let reason = "";
-
-    if(!technician.suspended){
-
-        reason = prompt(
-            "Reason for suspension (shown to the technician):",
-            ""
-        );
-
-        if(reason === null){
-            return;
-        }
-
-    }
+    const reason = decision.reason;
 
     /* -----------------------------
        SAVE ON THE SERVER
@@ -339,7 +324,7 @@ async function toggleSuspend(technicianId){
 
     }catch(err){
 
-        alert(err.message);
+        TR.toast(err.message, "error");
         return;
 
     }
@@ -348,7 +333,7 @@ async function toggleSuspend(technicianId){
     applyFiltersAndSort();
     updateMetrics();
 
-    alert(
+    TR.toast(
         technician.suspended
         ? `${technician.fullName} has been suspended successfully.`
         : `${technician.fullName} has been reactivated successfully.`
@@ -725,7 +710,7 @@ sortFilter.addEventListener(
 
     }catch(err){
 
-        alert("Could not load technicians: " + err.message);
+        TR.toast("Could not load technicians: " + err.message);
 
     }
 

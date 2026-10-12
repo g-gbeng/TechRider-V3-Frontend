@@ -2,9 +2,9 @@
 
 :root{
 --purple:#6a0dad;
---deep-purple:#240046;
---lilac:#e0aaff;
---bg:#f7f5fb;
+--deep-purple:var(--tr-primary-900);
+--lilac:var(--tr-primary-200);
+--bg:var(--tr-primary-50);
 --white:#ffffff;
 --shadow:0 8px 24px rgba(0,0,0,0.06);
 }
@@ -39,7 +39,7 @@ background:
 linear-gradient(
 135deg,
 var(--purple),
-#9d4edd
+var(--tr-primary-500)
 );
 color:white;
 border:none;
@@ -64,7 +64,7 @@ color:var(--deep-purple);
 
 .headerText p{
 margin-top:6px;
-color:#666;
+color:var(--tr-text-muted);
 }
 
 .searchWrap{
@@ -78,7 +78,7 @@ margin-bottom:24px;
 .searchBox{
 width:100%;
 padding:15px 18px;
-border:1px solid #ddd;
+border:1px solid var(--tr-border);
 border-radius:12px;
 font-size:1rem;
 outline:none;
@@ -135,13 +135,13 @@ color:var(--deep-purple);
 
 .sectionTitle i{
 font-size:1.2rem;
-background:#f1e8ff;
+background:var(--tr-primary-100);
 padding:12px;
 border-radius:12px;
 }
 
 .faqItem{
-border:1px solid #eee;
+border:1px solid var(--tr-border);
 border-radius:16px;
 padding:16px;
 margin-bottom:16px;
@@ -170,7 +170,7 @@ transition:.3s;
 max-height:0;
 overflow:hidden;
 transition:max-height .35s ease;
-color:#666;
+color:var(--tr-text-muted);
 line-height:1.8;
 font-size:.95rem;
 }
@@ -193,7 +193,7 @@ background:
 linear-gradient(
 135deg,
 var(--purple),
-#9d4edd
+var(--tr-primary-500)
 );
 color:white;
 padding:24px;
