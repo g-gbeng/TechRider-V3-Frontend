@@ -56,7 +56,68 @@
   --tr-space-6: 32px;
 
   --tr-focus: 0 0 0 3px rgba(157, 78, 221, .45);
+
+  /* text roles that flip in dark mode */
+  --tr-heading: var(--tr-primary-900);   /* titles and strong text */
+  --tr-link: var(--tr-primary-700);      /* purple text: links, ghost buttons */
+  --tr-success-text: #166534;
+  --tr-danger-text: #991b1b;
+
+  color-scheme: light;
 }
+
+/* ---------------------------------------------------------- 1b. dark mode
+   js/theme.js sets <html data-theme="dark"> from the saved choice
+   (Light, Dark, or Device = follow the phone/computer setting).
+   Brand purples used as backgrounds (sidebars, buttons) stay the same;
+   surfaces, text, borders and soft tints change. */
+html[data-theme="dark"] {
+  --tr-primary-100: #2c2040;
+  --tr-primary-50:  #1d1629;
+
+  --tr-text: #ece7f3;
+  --tr-text-muted: #b8aec6;
+  --tr-text-soft: #8c829b;
+
+  --tr-surface: #1a1424;
+  --tr-surface-2: #110d18;
+  --tr-border: #33293f;
+
+  --tr-heading: #ecdcff;
+  --tr-link: #d4a6ff;
+
+  --tr-success: #22c55e;
+  --tr-success-bg: rgba(34, 197, 94, .14);
+  --tr-success-text: #86efac;
+  --tr-warning: #fbbf24;
+  --tr-warning-bg: rgba(251, 191, 36, .13);
+  --tr-danger: #e5484d;
+  --tr-danger-bg: rgba(248, 113, 113, .14);
+  --tr-danger-text: #fca5a5;
+  --tr-info: #60a5fa;
+  --tr-info-bg: rgba(96, 165, 250, .14);
+
+  --tr-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  --tr-shadow-lg: 0 18px 50px rgba(0, 0, 0, .55);
+
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body { background-color: var(--tr-surface-2); color: var(--tr-text); }
+
+/* form fields and tables that relied on browser defaults */
+html[data-theme="dark"] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), select, textarea) {
+  background-color: var(--tr-surface);
+  color: var(--tr-text);
+  border-color: var(--tr-border);
+}
+html[data-theme="dark"] ::placeholder { color: var(--tr-text-soft); opacity: 1; }
+html[data-theme="dark"] :is(th, td) { border-color: var(--tr-border); }
+html[data-theme="dark"] :is(hr) { border-color: var(--tr-border); }
+html[data-theme="dark"] img:not(.tr-avatar-img) { filter: brightness(.92); }
+
+/* smooth switch between themes (not on first paint) */
+html.tr-theme-anim, html.tr-theme-anim * { transition: background-color .25s ease, color .25s ease, border-color .25s ease !important; }
 
 /* ---------------------------------------------------------- 2. reset */
 * {
@@ -170,7 +231,7 @@ img { max-width: 100%; }
 }
 .tr-dialog h2 {
   font-size: 1.1rem;
-  color: var(--tr-primary-900);
+  color: var(--tr-heading);
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -214,7 +275,7 @@ img { max-width: 100%; }
 .tr-btn-primary:hover { background: var(--tr-primary-900); }
 .tr-btn-danger { background: var(--tr-danger); color: #fff; }
 .tr-btn-danger:hover { background: #b91c1c; }
-.tr-btn-ghost { background: var(--tr-surface); color: var(--tr-primary-700); border-color: var(--tr-border); }
+.tr-btn-ghost { background: var(--tr-surface); color: var(--tr-link); border-color: var(--tr-border); }
 .tr-btn-ghost:hover { background: var(--tr-primary-50); }
 .tr-btn-sm { padding: 7px 12px; font-size: .82rem; }
 
@@ -254,11 +315,11 @@ img { max-width: 100%; }
   margin: 0 auto 14px;
   border-radius: 50%;
   background: var(--tr-primary-100);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.5rem;
 }
-.tr-empty h3 { color: var(--tr-primary-900); font-size: 1.05rem; margin-bottom: 6px; }
+.tr-empty h3 { color: var(--tr-heading); font-size: 1.05rem; margin-bottom: 6px; }
 .tr-empty p { font-size: .9rem; max-width: 380px; margin: 0 auto; line-height: 1.5; }
 .tr-empty .tr-btn { margin-top: 16px; }
 
@@ -280,7 +341,7 @@ img { max-width: 100%; }
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 10px; border-radius: 999px;
   font-size: .75rem; font-weight: 600;
-  background: var(--tr-primary-100); color: var(--tr-primary-700);
+  background: var(--tr-primary-100); color: var(--tr-link);
 }
 
 .tr-test-banner {
@@ -364,7 +425,7 @@ img { max-width: 100%; }
   padding: 12px 14px;
   margin-top: 12px;
 }
-.tr-handover .code { font-size: 1.5rem; font-weight: 700; letter-spacing: .3em; color: var(--tr-primary-900); font-variant-numeric: tabular-nums; }
+.tr-handover .code { font-size: 1.5rem; font-weight: 700; letter-spacing: .3em; color: var(--tr-heading); font-variant-numeric: tabular-nums; }
 .tr-handover p { font-size: .8rem; color: var(--tr-text-muted); line-height: 1.4; }
 
 /* ---------------------------------------------------------- 3g. rating box */
@@ -384,7 +445,7 @@ img { max-width: 100%; }
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 12px; border-radius: 9px;
   border: 1px solid var(--tr-border); background: var(--tr-surface);
-  color: var(--tr-primary-700); font-size: .82rem; font-weight: 600;
+  color: var(--tr-link); font-size: .82rem; font-weight: 600;
   cursor: pointer; white-space: nowrap; position: relative;
 }
 .tr-menu-btn:hover, .tr-menu.open .tr-menu-btn { border-color: var(--tr-primary-400); background: var(--tr-primary-50); }
@@ -417,7 +478,7 @@ img { max-width: 100%; }
 }
 .tr-menu-item i { width: 16px; text-align: center; color: var(--tr-primary-500); }
 .tr-menu-item:hover, .tr-menu-item:focus-visible { background: var(--tr-primary-50); outline: none; box-shadow: none; }
-.tr-menu-item.primary { color: var(--tr-primary-700); font-weight: 600; }
+.tr-menu-item.primary { color: var(--tr-link); font-weight: 600; }
 .tr-menu-item.danger { color: var(--tr-danger); }
 .tr-menu-item.danger i { color: var(--tr-danger); }
 .tr-menu-item.danger:hover { background: var(--tr-danger-bg); }
@@ -442,8 +503,14 @@ img { max-width: 100%; }
 .sidebar.collapsed .tr-nav-badge { position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; line-height: 16px; font-size: .6rem; padding: 0 4px; }
 
 /* ---------------------------------------------------------- 3j. page fade-in + scroll reveals (js/ui.js) */
-@keyframes trPageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-html.tr-motion body.tr-page-in { animation: trPageIn .45s ease-out both; }
+/* Opacity only, and nothing kept after it ends: a transform left on <body>
+   would make fixed elements (sidebars, toasts, dialogs) scroll with the page. */
+@keyframes trPageIn { from { opacity: 0; } to { opacity: 1; } }
+html.tr-motion body.tr-page-in { animation: trPageIn .4s ease-out backwards; }
+
+/* Sidebars stay pinned to the window and scroll on their own when they're
+   taller than the screen */
+.sidebar { top: 0; overscroll-behavior: contain; }
 html.tr-motion .tr-reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -451,3 +518,46 @@ html.tr-motion .tr-reveal {
   transition-delay: var(--tr-delay, 0ms);
 }
 html.tr-motion .tr-reveal.tr-in { opacity: 1; transform: none; }
+
+/* ---------------------------------------------------------- 3k. dark mode touch-ups */
+html[data-theme="dark"] .tr-skel { background: linear-gradient(90deg, #2a2236 0%, #362c45 40%, #2a2236 80%); background-size: 300% 100%; }
+html[data-theme="dark"] .tr-skeleton-card,
+html[data-theme="dark"] .tr-dialog,
+html[data-theme="dark"] .tr-toast,
+html[data-theme="dark"] .tr-menu-list { border: 1px solid var(--tr-border); }
+html[data-theme="dark"] .tr-test-banner { border-color: rgba(251, 191, 36, .35); }
+html[data-theme="dark"] .tr-dialog-backdrop,
+html[data-theme="dark"] .tr-chat-backdrop { background: rgba(0, 0, 0, .65); }
+
+/* ---------------------------------------------------------- 3l. theme picker (js/theme.js) */
+.tr-theme-choice {
+  display: inline-grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  padding: 4px; border-radius: 12px;
+  background: var(--tr-surface-2); border: 1px solid var(--tr-border);
+}
+.tr-theme-choice button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 8px 14px; border: 0; border-radius: 9px; background: transparent;
+  color: var(--tr-text-muted); font-size: .84rem; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.tr-theme-choice button[aria-pressed="true"] { background: var(--tr-surface); color: var(--tr-link); font-weight: 600; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
+.tr-theme-card {
+  margin-top: 20px; padding: 18px 20px; border-radius: 16px;
+  background: var(--tr-surface); border: 1px solid var(--tr-border);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+}
+.tr-theme-card h3 { font-size: 1rem; color: var(--tr-heading); }
+.tr-theme-card p { font-size: .82rem; color: var(--tr-text-muted); margin-top: 2px; }
+.tr-theme-toggle {
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 1px solid var(--tr-border); background: var(--tr-surface);
+  color: var(--tr-link); cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; font-size: .95rem;
+}
+.tr-theme-toggle:hover { border-color: var(--tr-primary-400); }
+.tr-theme-floating { position: fixed; top: 14px; right: 14px; z-index: 50; }
+.tr-theme-link { cursor: pointer; }
+/* red counters keep a strong red so white numbers stay readable */
+html[data-theme="dark"] :is(.tr-nav-badge, .tr-chat-count, .notificationBadge, #notificationBadge, .inboxCount, .badge-count) { background: #dc2626; color: #fff; }
+html[data-theme="dark"] .btn.deleteBtn, html[data-theme="dark"] .badge.pending { background: #b91c1c; color: #fff; }
+html[data-theme="dark"] .badge.pending { background: #4b5563; }

@@ -107,7 +107,7 @@ max-width:100%;
 }
 
 .topbar{
-background:white;
+background:var(--tr-surface);
 padding:18px;
 border-radius:16px;
 display:flex;
@@ -146,7 +146,7 @@ position:absolute;
 right:0;
 top:50px;
 width:180px;
-background:white;
+background:var(--tr-surface);
 border-radius:12px;
 overflow:hidden;
 box-shadow:0 8px 20px rgba(0,0,0,.08);
@@ -178,7 +178,7 @@ margin-bottom:22px;
 }
 
 .stat{
-background:white;
+background:var(--tr-surface);
 border-radius:18px;
 padding:22px;
 height:145px;
@@ -194,7 +194,7 @@ color:var(--tr-text-muted);
 }
 
 .stat h2{
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 /* Modules */
@@ -208,7 +208,7 @@ align-items:stretch;
 }
 
 .card{
-background:white;
+background:var(--tr-surface);
 border-radius:20px;
 padding:24px;
 min-height:500px;
@@ -220,7 +220,7 @@ box-shadow:0 6px 18px rgba(0,0,0,.04);
 
 .card h3{
 margin-bottom:18px;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 label{
@@ -303,7 +303,7 @@ background:var(--tr-primary-50);
 }
 
 .linkCase{
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 cursor:pointer;
 }
@@ -319,7 +319,7 @@ z-index:3000;
 }
 
 .modalContent{
-background:white;
+background:var(--tr-surface);
 width:90%;
 max-width:700px;
 margin:70px auto;
@@ -443,3 +443,13 @@ button:disabled{
 opacity:.6;
 cursor:not-allowed;
 }
+
+/* ---------- pricing note + payouts ---------- */
+.pricingNote, .cardHint { font-size: .82rem; color: var(--tr-text-muted); margin: 10px 0 14px; line-height: 1.5; }
+.emptyRow { text-align: center; color: var(--tr-text-soft); padding: 18px; }
+#payoutTable td, tfoot td { padding: 10px 12px; }
+tfoot td { border-top: 2px solid var(--tr-border); }
+/* two-column money table: never needs to scroll sideways */
+table.financialTable { min-width: 0; }
+table.financialTable td:last-child { text-align: right; white-space: nowrap; }
+.card{ min-width:0; } /* let wide tables scroll inside their card on phones */

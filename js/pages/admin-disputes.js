@@ -105,12 +105,17 @@ html += group.map(d => `
 <td>${esc(d.requestCode || 'N/A')}</td>
 <td>${esc(d.statusLabel)}</td>
 <td class="actionCell">
-<button class="btn viewBtn" data-action="view" data-id="${esc(d.id)}">View</button>
+<div class="tr-menu">
+<button type="button" class="tr-menu-btn" aria-haspopup="menu" aria-expanded="false">Actions <i class="fas fa-chevron-down chev" aria-hidden="true"></i></button>
+<div class="tr-menu-list" role="menu" hidden>
+<button type="button" role="menuitem" class="tr-menu-item viewBtn" data-action="view" data-id="${esc(d.id)}"><i class="fas fa-eye"></i> View dispute</button>
 ${
 isSettled
-? `<button class="btn deleteBtn" data-action="delete" data-id="${esc(d.id)}">Delete</button>`
-: `<button class="btn settleBtn" data-action="settle" data-id="${esc(d.id)}">Mark Settled</button>`
+? `<div class="tr-menu-sep" role="separator"></div><button type="button" role="menuitem" class="tr-menu-item deleteBtn danger" data-action="delete" data-id="${esc(d.id)}"><i class="fas fa-trash-can"></i> Delete</button>`
+: `<button type="button" role="menuitem" class="tr-menu-item settleBtn primary" data-action="settle" data-id="${esc(d.id)}"><i class="fas fa-gavel"></i> Mark settled</button>`
 }
+</div>
+</div>
 </td>
 </tr>
 `).join('');

@@ -119,7 +119,7 @@ padding:20px;
 /* TOPBAR */
 
 .topbar{
-background:white;
+background:var(--tr-surface);
 padding:16px 18px;
 border-radius:16px;
 display:flex;
@@ -147,7 +147,7 @@ color:white;
 /* FILTER BAR */
 
 .toolbar{
-background:white;
+background:var(--tr-surface);
 padding:18px;
 border-radius:18px;
 display:flex;
@@ -168,7 +168,7 @@ flex:1;
 /* SECTIONS */
 
 .section{
-background:white;
+background:var(--tr-surface);
 border-radius:18px;
 margin-bottom:20px;
 overflow:hidden;
@@ -181,11 +181,11 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 cursor:pointer;
-background:white;
+background:var(--tr-surface);
 }
 
 .sectionHeader h3{
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 .sectionBody{
@@ -216,7 +216,7 @@ border-bottom:1px solid var(--tr-border);
 
 th{
 background:var(--tr-primary-50);
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 /* BADGES */
@@ -231,16 +231,16 @@ display:inline-block;
 
 .accepted{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .transit{
-background:#dff7ea;
-color:#12643a;
+background:var(--tr-success-bg);
+color:var(--tr-success-text);
 }
 
 .pending{
-background:#fff2cc;
+background:var(--tr-warning-bg);
 }
 
 .rejected{
@@ -273,10 +273,10 @@ margin-bottom:8px;
     padding:9px 10px;
     border:1px solid var(--tr-border);
     border-radius:10px;
-    background:white;
+    background:var(--tr-surface);
     font-family:'Poppins',sans-serif;
     font-weight:600;
-    color:var(--deep-purple);
+    color:var(--tr-heading);
     cursor:pointer;
     min-width:150px;
 }
@@ -310,12 +310,12 @@ color:var(--tr-danger);
 
 .viewBtn{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .completeBtn{
-background:#dff7ea;
-color:#12643a;
+background:var(--tr-success-bg);
+color:var(--tr-success-text);
 }
 
 .deleteBtn{
@@ -329,7 +329,7 @@ color:var(--tr-danger);
 
 .quoteBtn{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .sendQuoteBtn{
@@ -342,8 +342,8 @@ color:white;
 }
 
 .quoteSentBtn{
-background:#dff7ea;
-color:#12643a;
+background:var(--tr-success-bg);
+color:var(--tr-success-text);
 cursor:default;
 }
 
@@ -358,17 +358,17 @@ color:var(--tr-danger);
 
 .quoteAmount{
 font-weight:700;
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .commissionAmount{
 font-weight:600;
-color:#12643a;
+color:var(--tr-success-text);
 }
 
 .customerPrice{
 font-weight:700;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 .timeline{
@@ -385,7 +385,7 @@ display:block;
 }
 
 .deviceLink{
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 cursor:pointer;
 text-decoration:underline;
@@ -396,7 +396,7 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:white;
+background:var(--tr-surface);
 padding:25px;
 border-radius:18px;
 width:90%;
@@ -472,7 +472,7 @@ display:block;
   padding:2px 8px;
   border-radius:20px;
   background:var(--tr-warning-bg);
-  color:#92400e;
+  color:var(--tr-warning);
   font-size:.75rem;
   font-weight:600;
 }
@@ -491,7 +491,7 @@ margin:4px 0;
 }
 
 .assignLink{
-color:#b45309;
+color:var(--tr-warning);
 font-weight:600;
 font-size:.85rem;
 text-decoration:none;
@@ -505,17 +505,17 @@ text-decoration:underline;
 /* Phase 5: refunds and payment checks */
 .refundFlag.done{
   background:var(--tr-success-bg);
-  color:#166534;
+  color:var(--tr-success-text);
 }
 
 .refundFlag.bad{
   background:var(--tr-danger-bg);
-  color:#991b1b;
+  color:var(--tr-danger-text);
 }
 
 .refundBtn{
   margin-top:6px;
-  background:#b45309;
+  background:var(--tr-warning);
   color:#fff;
 }
 
@@ -556,3 +556,10 @@ text-decoration:underline;
 /* ---------- Actions menu column ---------- */
 .actionsCell { white-space: nowrap; vertical-align: middle; }
 .actionsCell .riderNote { display: block; margin-top: 6px; white-space: normal; max-width: 180px; }
+
+/* ---------- pricing settings + zone tag ---------- */
+.pricingForm { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.pf-field { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.pf-field input { width: 90px; }
+.zoneTag { display: inline-block; margin-top: 4px; font-size: .68rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--tr-surface-2); color: var(--tr-text-muted); }
+.zoneTag.island { background: #e0f2fe; color: #0369a1; }

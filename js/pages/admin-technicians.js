@@ -453,32 +453,13 @@ tech.submittedAt
 
 <td>
 
-<div class="actions">
-
-<button
-class="btn btnGhost">
-
-Profile
-
-</button>
-
-<button
-class="btn btnPrimary">
-
-${
-
-tech.suspended ?
-
-"Reactivate"
-
-:
-
-"Suspend"
-
-}
-
-</button>
-
+<div class="tr-menu">
+<button type="button" class="tr-menu-btn" aria-haspopup="menu" aria-expanded="false">Actions <i class="fas fa-chevron-down chev" aria-hidden="true"></i></button>
+<div class="tr-menu-list" role="menu" hidden>
+<button type="button" role="menuitem" class="tr-menu-item btnGhost"><i class="fas fa-id-card"></i> View profile</button>
+<div class="tr-menu-sep" role="separator"></div>
+<button type="button" role="menuitem" class="tr-menu-item btnPrimary ${tech.suspended ? "" : "danger"}"><i class="fas ${tech.suspended ? "fa-user-check" : "fa-ban"}"></i> ${tech.suspended ? "Reactivate" : "Suspend"}</button>
+</div>
 </div>
 
 </td>

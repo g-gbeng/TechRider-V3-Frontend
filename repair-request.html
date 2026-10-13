@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#240046">
+  <script src="js/theme.js"></script>
   <title>TechRider - Repair Request</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -113,6 +115,27 @@
             <label for="contactPhone">Phone for the rider <span class="optional">(if not yours)</span></label>
             <input id="contactPhone" type="tel" inputmode="numeric" placeholder="11 digits" maxlength="11">
           </div>
+        </div>
+
+        <div class="group">
+          <span class="group-label" id="zoneLabel">Pickup and delivery area</span>
+          <div class="zone-cards" role="radiogroup" aria-labelledby="zoneLabel">
+            <label class="zone-card">
+              <input type="radio" name="zone" value="mainland" checked>
+              <span class="zone-body">
+                <strong><i class="fas fa-city"></i> Lagos Mainland</strong>
+                <span class="zone-fee" id="feeMainland">₦6,000</span>
+              </span>
+            </label>
+            <label class="zone-card">
+              <input type="radio" name="zone" value="island">
+              <span class="zone-body">
+                <strong><i class="fas fa-water"></i> Lagos Island</strong>
+                <span class="zone-fee" id="feeIsland">₦10,000</span>
+              </span>
+            </label>
+          </div>
+          <small class="zone-note" id="zoneNote">Logistics fee, added to your repair quote. It covers both the pickup from you and the delivery back to you.</small>
         </div>
       </fieldset>
 

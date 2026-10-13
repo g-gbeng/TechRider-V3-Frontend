@@ -33,16 +33,16 @@ margin-bottom:24px;
 
 .back-btn{
 text-decoration:none;
-background:white;
+background:var(--tr-surface);
 padding:12px 18px;
 border-radius:14px;
 font-weight:600;
-color:var(--purple);
+color:var(--tr-link);
 box-shadow:0 5px 15px rgba(0,0,0,.05);
 }
 
 .page-title h2{
-color:var(--deep-purple);
+color:var(--tr-heading);
 font-size:2rem;
 }
 
@@ -59,7 +59,7 @@ gap:22px;
 }
 
 .job-card{
-background:var(--white);
+background:var(--tr-surface);
 border-radius:22px;
 padding:24px;
 box-shadow:0 6px 20px rgba(0,0,0,.05);
@@ -79,7 +79,7 @@ margin-bottom:22px;
 .job-id{
 font-size:1.05rem;
 font-weight:700;
-color:var(--deep-purple);
+color:var(--tr-heading);
 margin-bottom:10px;
 }
 
@@ -102,17 +102,17 @@ font-weight:700;
 }
 
 .pickup{
-background:#ede9fe;
-color:var(--purple);
+background:var(--tr-primary-100);
+color:var(--tr-link);
 }
 
 .delivery{
 background:var(--tr-success-bg);
-color:#047857;
+color:var(--tr-success-text);
 }
 
 .status-tag{
-background:#fff7ed;
+background:var(--tr-warning-bg);
 color:#c2410c;
 }
 
@@ -135,19 +135,19 @@ display:flex;
 align-items:center;
 gap:10px;
 margin-bottom:16px;
-color:var(--deep-purple);
+color:var(--tr-heading);
 font-weight:700;
 }
 
 .flow-head i{
-background:#ede9fe;
+background:var(--tr-primary-100);
 width:38px;
 height:38px;
 border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .info-row{
@@ -159,11 +159,11 @@ word-break:break-word;
 }
 
 .info-row strong{
-color:#222;
+color:var(--tr-text);
 }
 
 .route-box{
-background:white;
+background:var(--tr-surface);
 border-radius:16px;
 padding:16px;
 margin-top:18px;
@@ -190,7 +190,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 font-size:.9rem;
 }
 
@@ -202,7 +202,7 @@ color:var(--tr-text);
 
 .route-content strong{
 display:block;
-color:var(--deep-purple);
+color:var(--tr-heading);
 margin-bottom:4px;
 }
 
@@ -238,7 +238,7 @@ color:white;
 
 .empty-state{
 display:none;
-background:white;
+background:var(--tr-surface);
 padding:60px 20px;
 border-radius:22px;
 text-align:center;
@@ -247,12 +247,12 @@ box-shadow:0 6px 20px rgba(0,0,0,.05);
 
 .empty-state i{
 font-size:3rem;
-color:var(--purple);
+color:var(--tr-link);
 margin-bottom:18px;
 }
 
 .empty-state h3{
-color:var(--deep-purple);
+color:var(--tr-heading);
 margin-bottom:10px;
 }
 
@@ -273,7 +273,7 @@ z-index:5000;
 }
 
 .modal-content{
-background:white;
+background:var(--tr-surface);
 width:100%;
 max-width:420px;
 padding:28px;
@@ -282,7 +282,7 @@ animation:fadeIn .3s ease;
 }
 
 .modal-content h3{
-color:var(--deep-purple);
+color:var(--tr-heading);
 margin-bottom:14px;
 }
 
@@ -312,7 +312,7 @@ color:white;
 }
 
 .cancel-btn{
-background:#efefef;
+background:var(--tr-surface-2);
 }
 
 @media(max-width:900px){
@@ -368,12 +368,12 @@ font-size:.9rem;
 }
 
 .job-device i{
-color:var(--purple);
+color:var(--tr-link);
 margin-right:4px;
 }
 
 .phone-link{
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 text-decoration:none;
 }
@@ -387,7 +387,7 @@ opacity:.55;
 }
 
 .route-step.current .route-content strong{
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .instructions{
@@ -395,7 +395,7 @@ display:flex;
 gap:10px;
 align-items:flex-start;
 background:var(--tr-primary-100);
-color:var(--deep-purple);
+color:var(--tr-heading);
 padding:12px 14px;
 border-radius:14px;
 margin-top:18px;
@@ -404,7 +404,7 @@ font-size:.92rem;
 
 .instructions i{
 margin-top:3px;
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .complete-btn i{
@@ -422,7 +422,7 @@ cursor:not-allowed;
 
 .chat-btn{
 background:var(--tr-surface);
-color:var(--tr-primary-700);
+color:var(--tr-link);
 border:1px solid var(--tr-border);
 position:relative;
 }
@@ -438,7 +438,7 @@ gap:6px;
 margin-top:10px;
 font-size:.82rem;
 font-weight:600;
-color:var(--tr-primary-700);
+color:var(--tr-link);
 text-decoration:none;
 }
 
@@ -457,3 +457,4 @@ font-variant-numeric:tabular-nums;
 .handover-field input:focus{ border-color:var(--tr-primary-500); outline:none; box-shadow:var(--tr-focus); }
 .handover-field small{ display:block; margin-top:6px; color:var(--tr-text-muted); font-size:.78rem; line-height:1.4; }
 .handover-error{ color:var(--tr-danger); font-size:.82rem; margin-top:6px; min-height:1em; }
+.payout-tag{ background:var(--tr-success-bg) !important; color:var(--tr-success-text) !important; } .payout-tag i{ margin-right:4px; }

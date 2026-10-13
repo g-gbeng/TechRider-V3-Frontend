@@ -440,24 +440,13 @@ ${customer.createdAt
 
 <td>
 
-<div class="actions">
-
-<button
-class="btn btnGhost"
-onclick="viewHistory(${jsArg(customer.email)})">
-
-History
-
-</button>
-
-<button
-class="btn btnPrimary"
-onclick="toggleSuspend(${jsArg(customer.email)})">
-
-${customer.suspended ? "Reactivate" : "Suspend"}
-
-</button>
-
+<div class="tr-menu">
+<button type="button" class="tr-menu-btn" aria-haspopup="menu" aria-expanded="false">Actions <i class="fas fa-chevron-down chev" aria-hidden="true"></i></button>
+<div class="tr-menu-list" role="menu" hidden>
+<button type="button" role="menuitem" class="tr-menu-item btnGhost" onclick="viewHistory(${jsArg(customer.email)})"><i class="fas fa-clock-rotate-left"></i> Repair history</button>
+<div class="tr-menu-sep" role="separator"></div>
+<button type="button" role="menuitem" class="tr-menu-item btnPrimary ${customer.suspended ? "" : "danger"}" onclick="toggleSuspend(${jsArg(customer.email)})"><i class="fas ${customer.suspended ? "fa-user-check" : "fa-ban"}"></i> ${customer.suspended ? "Reactivate" : "Suspend"}</button>
+</div>
 </div>
 
 </td>

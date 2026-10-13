@@ -18,7 +18,7 @@ body{
 }
 
 .container{
-  background:var(--white);
+  background:var(--tr-surface);
   padding:30px;
   border-radius:18px;
   max-width:420px;
@@ -42,7 +42,7 @@ body{
 
 h2{
   margin-top:15px;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 p{
@@ -68,7 +68,7 @@ p{
 }
 
 .status i{
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 .btn{

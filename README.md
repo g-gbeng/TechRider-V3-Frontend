@@ -23,6 +23,10 @@ js/
 Never use the browser's `alert()`, `confirm()` or `prompt()`. Use
 `TR.toast()`, `await TR.confirm()` and `await TR.prompt()` from js/ui.js.
 Colours live as variables at the top of css/base.css (`--tr-primary-700` etc.).
+Use `--tr-surface`, `--tr-text`, `--tr-heading` and `--tr-link` rather than fixed
+colours so pages work in dark mode: js/theme.js (loaded first in every page's
+<head>) sets `<html data-theme="light|dark">` from the saved choice (Light, Dark
+or Device), and css/base.css swaps the variables.
 
 The login and notifications pages share one stylesheet and script for all three
 roles (css/pages/login.css + js/pages/login.js, css/pages/notifications.css +

@@ -33,10 +33,10 @@ flex-wrap:wrap;
 
 .back-btn{
 text-decoration:none;
-background:white;
+background:var(--tr-surface);
 padding:13px 18px;
 border-radius:14px;
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 box-shadow:0 5px 16px rgba(0,0,0,.05);
 }
@@ -73,7 +73,7 @@ gap:24px;
 /* LEFT SIDEBAR CARD */
 
 .side-card{
-background:white;
+background:var(--tr-surface);
 border-radius:24px;
 padding:28px;
 box-shadow:0 8px 24px rgba(0,0,0,.05);
@@ -111,7 +111,7 @@ object-fit:cover;
 .profile-name{
 font-size:1.25rem;
 font-weight:700;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 .profile-role{
@@ -126,7 +126,7 @@ display:inline-block;
 padding:12px 18px;
 border-radius:12px;
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 cursor:pointer;
 font-size:.92rem;
@@ -159,7 +159,7 @@ transition:.3s;
 
 .jobs-btn{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .password-btn{
@@ -172,8 +172,8 @@ color:white;
 }
 
 .logout-btn{
-background:#ffe9ec;
-color:#d90429;
+background:var(--tr-danger-bg);
+color:var(--tr-danger-text);
 }
 
 .action-btn:hover{
@@ -183,7 +183,7 @@ transform:translateY(-2px);
 /* MAIN PROFILE CARD */
 
 .profile-card{
-background:white;
+background:var(--tr-surface);
 padding:30px;
 border-radius:24px;
 box-shadow:0 8px 24px rgba(0,0,0,.05);
@@ -192,7 +192,7 @@ box-shadow:0 8px 24px rgba(0,0,0,.05);
 .section-title{
 font-size:1.3rem;
 font-weight:700;
-color:var(--deep-purple);
+color:var(--tr-heading);
 margin-bottom:24px;
 }
 
@@ -215,7 +215,7 @@ font-size:.95rem;
 }
 
 .info-field{
-background:#f7f7f7;
+background:var(--tr-surface-2);
 padding:15px;
 border-radius:14px;
 color:var(--tr-text-muted);
@@ -230,7 +230,7 @@ align-items:center;
 background:var(--tr-primary-100);
 padding:16px;
 border-radius:14px;
-color:var(--purple);
+color:var(--tr-link);
 font-weight:600;
 display:flex;
 align-items:center;

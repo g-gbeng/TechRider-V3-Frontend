@@ -44,7 +44,7 @@ body{
 }
 
 .header h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .header p{
@@ -78,7 +78,7 @@ body{
 /* CARD */
 
 .repair-card{
-  background:var(--white);
+  background:var(--tr-surface);
   padding:22px;
   border-radius:18px;
   box-shadow:0 10px 25px rgba(0,0,0,.05);
@@ -103,7 +103,7 @@ body{
 .title{
   font-size:1rem;
   font-weight:600;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   line-height:1.5;
 }
 
@@ -111,7 +111,7 @@ body{
   margin-top:8px;
   display:inline-block;
   background:var(--tr-primary-100);
-  color:var(--purple);
+  color:var(--tr-link);
   padding:6px 12px;
   border-radius:20px;
   font-size:.75rem;
@@ -160,7 +160,7 @@ body{
 .details i{
   width:18px;
   margin-right:6px;
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 /* DESCRIPTION */
@@ -194,13 +194,13 @@ body{
 }
 
 .status-info.in-progress{
-  background:#eff6ff;
+  background:var(--tr-info-bg);
   color:#1d4ed8;
 }
 
 .status-info.cancelled{
-  background:#fef2f2;
-  color:#b91c1c;
+  background:var(--tr-danger-bg);
+  color:var(--tr-danger-text);
 }
 
 /* TIMESTAMP */
@@ -218,7 +218,7 @@ body{
 /* EMPTY STATE */
 
 .empty{
-  background:white;
+  background:var(--tr-surface);
   border-radius:18px;
   padding:55px 20px;
   text-align:center;
@@ -230,11 +230,11 @@ body{
 .empty i{
   font-size:3rem;
   margin-bottom:14px;
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 .empty h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:8px;
 }
 
@@ -280,7 +280,7 @@ body{
 
 .status-info.quote{
   background:var(--tr-primary-100);
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .quote-box{
@@ -291,7 +291,7 @@ body{
   padding:14px 16px;
   border-radius:12px;
   background:var(--tr-primary-100);
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .quote-box strong{
@@ -326,11 +326,11 @@ body{
 
 .action-btn.secondary{
   background:var(--tr-surface-2);
-  color:#374151;
+  color:var(--tr-text);
 }
 
 .action-btn.danger{
-  background:#fef2f2;
+  background:var(--tr-danger-bg);
   color:var(--red);
 }
 
@@ -350,7 +350,7 @@ body{
 
 /* Phase 3: rider details */
 .rider-phone{
-color:var(--tr-primary-700);
+color:var(--tr-link);
 font-weight:600;
 text-decoration:none;
 }
@@ -432,7 +432,7 @@ font-size:.85rem;
 }
 
 .progress li.current .label{
-  color:var(--tr-primary-900);
+  color:var(--tr-heading);
   font-weight:600;
 }
 
@@ -458,7 +458,7 @@ font-size:.85rem;
 }
 
 .next-step.quote{ background:var(--tr-primary-100); border-color:var(--tr-primary-200); }
-.next-step.cancelled{ background:var(--tr-danger-bg); border-color:#fecaca; }
+.next-step.cancelled{ background:var(--tr-danger-bg); border-color:var(--tr-danger-bg); }
 
 .next-step .quote-box{
   background:var(--tr-surface);
@@ -515,7 +515,7 @@ font-size:.85rem;
   height:38px;
   border-radius:50%;
   background:var(--tr-primary-100);
-  color:var(--tr-primary-700);
+  color:var(--tr-link);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -532,7 +532,7 @@ details.more summary{
   cursor:pointer;
   font-size:.85rem;
   font-weight:600;
-  color:var(--tr-primary-700);
+  color:var(--tr-link);
   list-style-position:inside;
 }
 
@@ -548,7 +548,7 @@ details.more .desc{ white-space:pre-line; }
 }
 
 .history-link a{
-  color:var(--tr-primary-700);
+  color:var(--tr-link);
   text-decoration:none;
   font-weight:500;
 }
@@ -565,3 +565,13 @@ details.more .desc{ white-space:pre-line; }
   .progress li::before{ top:13px; }
   .rider-line{ flex-wrap:wrap; }
 }
+
+/* ---------- quote breakdown ---------- */
+.quote-box.breakdown { display: block; padding: 6px 16px; }
+.q-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 9px 0; font-size: .9rem; }
+.q-row + .q-row { border-top: 1px dashed var(--tr-primary-200); }
+.q-row strong { font-size: 1rem; white-space: nowrap; }
+.q-row small { display: block; font-size: .75rem; color: var(--tr-text-muted); margin-top: 2px; }
+.q-zone { font-size: .68rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--tr-primary-100); color: var(--tr-link); margin-left: 4px; }
+.q-total span { font-weight: 600; color: var(--tr-heading); }
+.q-total strong { font-size: 1.25rem; color: var(--tr-heading); }

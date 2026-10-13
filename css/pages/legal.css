@@ -29,7 +29,7 @@ body{
 }
 
 .header h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .back-btn{
@@ -42,7 +42,7 @@ body{
 }
 
 .card{
-  background:var(--white);
+  background:var(--tr-surface);
   padding:25px;
   border-radius:16px;
   box-shadow:0 10px 25px rgba(0,0,0,0.05);
@@ -50,7 +50,7 @@ body{
 }
 
 .card h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-top:20px;
   margin-bottom:10px;
 }

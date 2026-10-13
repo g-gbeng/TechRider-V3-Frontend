@@ -33,7 +33,7 @@ body{
 }
 
 .header h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .back-btn{
@@ -55,7 +55,7 @@ body{
 
 /* CARD */
 .tech-card{
-  background:white;
+  background:var(--tr-surface);
   padding:18px;
   border-radius:16px;
   box-shadow:0 8px 20px rgba(0,0,0,.05);
@@ -74,7 +74,7 @@ body{
 
 .tech-card.active{
   border-color:var(--purple);
-  background:#faf5ff;
+  background:var(--tr-primary-50);
 }
 
 /* AVATAR */
@@ -106,7 +106,7 @@ body{
 
 .name{
   font-weight:600;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   display:flex;
   align-items:center;
   gap:8px;
@@ -127,7 +127,7 @@ body{
 .location{
   margin-top:6px;
   font-size:.82rem;
-  color:var(--purple);
+  color:var(--tr-link);
   font-weight:500;
   display:flex;
   align-items:center;
@@ -168,14 +168,14 @@ body{
 .empty{
   text-align:center;
   padding:40px;
-  background:white;
+  background:var(--tr-surface);
   border-radius:16px;
   display:none;
 }
 
 .empty i{
   font-size:2.5rem;
-  color:var(--purple);
+  color:var(--tr-link);
   margin-bottom:10px;
 }
 
@@ -196,7 +196,7 @@ body{
 }
 
 .modal-card{
-  background:white;
+  background:var(--tr-surface);
   width:100%;
   max-width:500px;
   border-radius:22px;
@@ -210,7 +210,7 @@ body{
   height:70px;
   border-radius:50%;
   background:var(--tr-primary-100);
-  color:var(--purple);
+  color:var(--tr-link);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -219,7 +219,7 @@ body{
 }
 
 .modal-card h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:12px;
 }
 
@@ -259,7 +259,7 @@ body{
 .rating-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:4px 0; }
 .reviews-link{
   background:none; border:0; padding:0;
-  color:var(--tr-primary-700); font-size:.8rem; font-weight:600;
+  color:var(--tr-link); font-size:.8rem; font-weight:600;
   text-decoration:underline; cursor:pointer;
 }
 .reviews-dialog .reviews-list{ margin-top:12px; display:grid; gap:12px; max-height:50vh; overflow:auto; }

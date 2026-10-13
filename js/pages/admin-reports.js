@@ -59,17 +59,29 @@ function render(){
     setMetric("reportGenerated", "Updated " + new Date(report.generatedAt).toLocaleTimeString("en-GB", { hour:"2-digit", minute:"2-digit" }));
 
     // Financial
-    setMetric("repairFees", formatNaira(financial.repairFees));
-    setMetric("platformCommission", formatNaira(financial.platformCommission));
-    setMetric("technicianEarnings", formatNaira(financial.technicianEarnings));
-    setMetric("refundsDue", formatNaira(financial.refundsDue));
-    setMetric("refundsProcessed", formatNaira(financial.refundsProcessed));
-
-    // Don't overwrite a number the admin is typing
-    for(const [id, value] of [["riderReconciliation", financial.riderReconciliation], ["refundsPaid", financial.refundsPaid]]){
-        const input = document.getElementById(id);
-        if(document.activeElement !== input) input.value = value || "";
+    for(const key of ["customerPayments", "repairFees", "technicianEarnings", "platformCommission", "logisticsFees", "deliveryPayouts", "platformNet", "refundsDue", "refundsProcessed"]){
+        setMetric(key, formatNaira(financial[key]));
     }
+    if(financial.tripFees){
+        setMetric("pricingNote",
+            `Current pricing: ${Math.round(financial.commissionRate * 1000) / 10}% commission · ` +
+            `mainland ${formatNaira(financial.tripFees.mainland)} and island ${formatNaira(financial.tripFees.island)} per trip ` +
+            `(customers pay two trips). Change these on Job Monitoring.`);
+    }
+
+    // Delivery payouts per rider
+    const payouts = report.deliveryPayouts || [];
+    document.getElementById("payoutTable").innerHTML = payouts.length
+        ? payouts.map(p => `
+<tr>
+<td>${TR.esc(p.fullName)}</td>
+<td>${TR.esc(p.phone || "—")}</td>
+<td>${p.trips}</td>
+<td>${p.lastDeliveredAt ? new Date(p.lastDeliveredAt).toLocaleDateString("en-NG", { day:"numeric", month:"short", year:"numeric" }) : "—"}</td>
+<td><strong>${formatNaira(p.payout)}</strong></td>
+</tr>`).join("")
+        : `<tr><td colspan="5" class="emptyRow">No delivered trips yet.</td></tr>`;
+    setMetric("payoutTotal", formatNaira(financial.deliveryPayouts));
 
     // Customers
     setMetric("customerTotal", customers.total);
@@ -91,44 +103,6 @@ function render(){
     setMetric("riderCompleted", riders.delivered);
     setMetric("riderFailed", riders.failed);
     setMetric("riderCompletionRate", percent(riders.completionRate));
-
-}
-
-/* =====================================================
-   SAVE THE ADMIN'S OWN FIGURES
-===================================================== */
-
-async function saveFinancialAdjustments(button){
-
-    const riderReconciliation = document.getElementById("riderReconciliation").value;
-    const refundsPaid = document.getElementById("refundsPaid").value;
-
-    if([riderReconciliation, refundsPaid].some(v => v !== "" && (isNaN(v) || Number(v) < 0))){
-        TR.toast("Enter amounts of zero or more.");
-        return;
-    }
-
-    if(button) button.disabled = true;
-
-    try{
-
-        report = (await TechRiderAPI.put("/admin/reports/adjustments", {
-            riderReconciliation: riderReconciliation === "" ? 0 : Number(riderReconciliation),
-            refundsPaid: refundsPaid === "" ? 0 : Number(refundsPaid)
-        })).report;
-
-        render();
-        TR.toast("Financial updates saved.");
-
-    }catch(err){
-
-        TR.toast(err.message, "error");
-
-    }finally{
-
-        if(button) button.disabled = false;
-
-    }
 
 }
 
@@ -171,15 +145,19 @@ function generateFinancial(){
 
     textReport("TECHRIDER FINANCIAL REPORT", [
         "Paid jobs: " + f.paidJobs,
-        "Repair Fees (paid by customers): " + formatNaira(f.repairFees),
-        "Platform Commission: " + formatNaira(f.platformCommission),
+        "Customer Payments: " + formatNaira(f.customerPayments),
+        "  Repair Fees (technician quotes + commission): " + formatNaira(f.repairFees),
+        "  Logistics Fees (pickup and return): " + formatNaira(f.logisticsFees),
         "Technician Earnings: " + formatNaira(f.technicianEarnings),
+        "Platform Commission: " + formatNaira(f.platformCommission),
+        "Delivery Payouts (owed to riders): " + formatNaira(f.deliveryPayouts),
+        "TechRider Net (commission + logistics - payouts): " + formatNaira(f.platformNet),
         "Refunds Due: " + formatNaira(f.refundsDue),
         "Refunded through Paystack: " + formatNaira(f.refundsProcessed),
-        "Refunds Paid outside Paystack: " + formatNaira(f.refundsPaid),
-        "Rider Reconciliation: " + formatNaira(f.riderReconciliation),
         "",
-        "Total Revenue: " + formatNaira(f.totalRevenue)
+        "DELIVERY PAYOUTS BY RIDER",
+        ...((report.deliveryPayouts || []).map(p => `  ${p.fullName}: ${p.trips} trip${p.trips === 1 ? "" : "s"}, ${formatNaira(p.payout)}`)),
+        ...((report.deliveryPayouts || []).length ? [] : ["  No delivered trips yet."])
     ], "techrider-financial-report");
 
 }
@@ -239,14 +217,15 @@ function exportCSV(){
     const rows = [
         ["Report", "Metric", "Value"],
         ["Financial", "Paid Jobs", f.paidJobs],
+        ["Financial", "Customer Payments (NGN)", f.customerPayments],
         ["Financial", "Repair Fees (NGN)", f.repairFees],
-        ["Financial", "Platform Commission (NGN)", f.platformCommission],
+        ["Financial", "Logistics Fees (NGN)", f.logisticsFees],
         ["Financial", "Technician Earnings (NGN)", f.technicianEarnings],
+        ["Financial", "Platform Commission (NGN)", f.platformCommission],
+        ["Financial", "Delivery Payouts (NGN)", f.deliveryPayouts],
+        ["Financial", "TechRider Net (NGN)", f.platformNet],
         ["Financial", "Refunds Due (NGN)", f.refundsDue],
         ["Financial", "Refunded through Paystack (NGN)", f.refundsProcessed],
-        ["Financial", "Refunds Paid outside Paystack (NGN)", f.refundsPaid],
-        ["Financial", "Rider Reconciliation (NGN)", f.riderReconciliation],
-        ["Financial", "Total Revenue (NGN)", f.totalRevenue],
         ["Customer", "Total Customers", c.total],
         ["Customer", "Total Requests", c.requests],
         ["Customer", "Completed Requests", c.completed],
@@ -381,3 +360,19 @@ document.getElementById("overlay").addEventListener("click", function(){
     }, 60000);
 
 })();
+
+/* Delivery payouts per rider, as a spreadsheet */
+function exportPayoutsCSV(){
+
+    if(!report) return;
+    const cell = (v) => {
+        let t = v === undefined || v === null ? "" : String(v);
+        if(/^[=+\-@]/.test(t)) t = "'" + t;
+        return `"${t.replace(/"/g, '""')}"`;
+    };
+    const rows = [["Rider", "Phone", "Trips delivered", "Last delivery", "Payout (NGN)"]]
+        .concat((report.deliveryPayouts || []).map(p => [p.fullName, p.phone, p.trips, p.lastDeliveredAt ? String(p.lastDeliveredAt).slice(0, 10) : "", p.payout]))
+        .concat([["Total", "", "", "", report.financial.deliveryPayouts]]);
+    download("\ufeff" + rows.map(r => r.map(cell).join(",")).join("\r\n"), `techrider-delivery-payouts-${stamp()}.csv`, "text/csv;charset=utf-8");
+
+}

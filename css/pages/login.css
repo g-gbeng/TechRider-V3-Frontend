@@ -111,7 +111,7 @@ body.login-page {
 /* ---------- form card ---------- */
 .login-card { padding: 36px 40px; }
 
-.mobile-brand { display: none; color: var(--tr-primary-900); margin-bottom: 18px; }
+.mobile-brand { display: none; color: var(--tr-heading); margin-bottom: 18px; }
 .mobile-brand .brand-icon { background: var(--tr-primary-900); }
 
 .role-tabs {
@@ -139,16 +139,16 @@ body.login-page {
   white-space: nowrap;
 }
 
-.role-tab:hover { color: var(--tr-primary-700); }
+.role-tab:hover { color: var(--tr-link); }
 
 .role-tab.active {
   background: var(--tr-surface);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(36, 0, 70, .08);
 }
 
-.login-card h1 { font-size: 1.6rem; color: var(--tr-primary-900); }
+.login-card h1 { font-size: 1.6rem; color: var(--tr-heading); }
 
 .login-sub { color: var(--tr-text-muted); font-size: .92rem; margin: 6px 0 24px; }
 
@@ -158,7 +158,7 @@ body.login-page {
 
 .label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 
-.forgot { font-size: .82rem; color: var(--tr-primary-700); text-decoration: none; font-weight: 500; }
+.forgot { font-size: .82rem; color: var(--tr-link); text-decoration: none; font-weight: 500; }
 .forgot:hover { text-decoration: underline; }
 
 /* icon, input and eye button share one row, so the eye always lines up */
@@ -217,7 +217,7 @@ body.login-page {
   font-size: .95rem;
 }
 
-.toggle-password:hover { color: var(--tr-primary-700); background: var(--tr-primary-50); }
+.toggle-password:hover { color: var(--tr-link); background: var(--tr-primary-50); }
 
 /* hide the browser's own reveal button (Edge) so there is only one eye */
 input::-ms-reveal, input::-ms-clear { display: none; }
@@ -235,9 +235,9 @@ input::-ms-reveal, input::-ms-clear { display: none; }
 
 .login-message.show { display: flex; }
 .login-message i { margin-top: 2px; }
-.login-message.error { background: var(--tr-danger-bg); color: #991b1b; }
+.login-message.error { background: var(--tr-danger-bg); color: var(--tr-danger-text); }
 .login-message.pending { background: var(--tr-warning-bg); color: var(--tr-warning); }
-.login-message.success { background: var(--tr-success-bg); color: #166534; }
+.login-message.success { background: var(--tr-success-bg); color: var(--tr-success-text); }
 
 .login-btn {
   width: 100%;
@@ -263,7 +263,7 @@ input::-ms-reveal, input::-ms-clear { display: none; }
 @keyframes trSlide { to { transform: translateX(5px); } }
 
 .signup-line { text-align: center; margin-top: 22px; font-size: .9rem; color: var(--tr-text-muted); }
-.signup-line a { color: var(--tr-primary-700); font-weight: 600; text-decoration: none; }
+.signup-line a { color: var(--tr-link); font-weight: 600; text-decoration: none; }
 .signup-line a:hover { text-decoration: underline; }
 
 /* ---------- small screens: just the form ---------- */

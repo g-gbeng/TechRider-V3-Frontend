@@ -33,7 +33,7 @@ gap:12px;
 }
 
 .header h2{
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 .back{
@@ -57,7 +57,7 @@ gap:18px;
 /* CARD */
 
 .card{
-background:var(--white);
+background:var(--tr-surface);
 padding:22px;
 border-radius:18px;
 box-shadow:0 10px 25px rgba(0,0,0,0.05);
@@ -82,7 +82,7 @@ margin-bottom:15px;
 font-weight:600;
 font-size:1rem;
 line-height:1.5;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 /* STATUS */
@@ -110,7 +110,7 @@ background:var(--red);
 margin-top:8px;
 display:inline-block;
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 padding:6px 12px;
 border-radius:20px;
 font-size:.75rem;
@@ -133,7 +133,7 @@ line-height:1.5;
 }
 
 .details i{
-color:var(--purple);
+color:var(--tr-link);
 width:18px;
 margin-right:6px;
 }
@@ -155,12 +155,12 @@ color:var(--tr-text);
 
 .price-box{
 margin-top:15px;
-background:#f8f5ff;
+background:var(--tr-primary-50);
 padding:14px;
 border-radius:12px;
 font-size:.9rem;
 font-weight:600;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 /* FOOTER */
@@ -178,7 +178,7 @@ flex-wrap:wrap;
 /* EMPTY STATE */
 
 .empty{
-background:white;
+background:var(--tr-surface);
 padding:50px 20px;
 border-radius:18px;
 text-align:center;
@@ -189,7 +189,7 @@ display:none;
 .empty i{
 font-size:2.5rem;
 margin-bottom:12px;
-color:var(--purple);
+color:var(--tr-link);
 }
 
 /* MOBILE */

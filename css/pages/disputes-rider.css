@@ -53,7 +53,7 @@ body{
 
 .headerText h1{
   font-size:2rem;
-  color:var(--deep);
+  color:var(--tr-heading);
 }
 
 .headerText p{
@@ -73,7 +73,7 @@ body{
 /* CARD */
 
 .card{
-  background:white;
+  background:var(--tr-surface);
   border-radius:26px;
   padding:24px;
   box-shadow:var(--shadow);
@@ -86,7 +86,7 @@ body{
   align-items:center;
   gap:12px;
   margin-bottom:24px;
-  color:var(--deep);
+  color:var(--tr-heading);
 }
 
 .sectionTitle i{
@@ -177,7 +177,7 @@ body{
 
 .disputeId{
   font-weight:700;
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 .statusBadge{
@@ -188,13 +188,13 @@ body{
 }
 
 .pending{
-  background:#fff4cc;
-  color:#8a6d00;
+  background:var(--tr-warning-bg);
+  color:var(--tr-warning);
 }
 
 .settled{
-  background:#d1fae5;
-  color:#047857;
+  background:var(--tr-success-bg);
+  color:var(--tr-success-text);
 }
 
 .historyMessage{
@@ -225,7 +225,7 @@ body{
 }
 
 .communicationBox h3{
-  color:var(--deep);
+  color:var(--tr-heading);
   margin-bottom:10px;
 }
 
@@ -245,7 +245,7 @@ body{
   flex:1;
   min-width:200px;
   text-decoration:none;
-  background:white;
+  background:var(--tr-surface);
   border:1px solid var(--tr-border);
   padding:14px;
   border-radius:14px;
@@ -253,7 +253,7 @@ body{
   align-items:center;
   justify-content:center;
   gap:10px;
-  color:var(--deep);
+  color:var(--tr-heading);
   font-weight:600;
   transition:.3s;
 }
@@ -396,8 +396,8 @@ body{
 margin:10px 0;
 padding:10px 12px;
 border-radius:10px;
-background:#ecfdf5;
-color:#065f46;
+background:var(--tr-success-bg);
+color:var(--tr-success-text);
 font-size:.9rem;
 line-height:1.5;
 }

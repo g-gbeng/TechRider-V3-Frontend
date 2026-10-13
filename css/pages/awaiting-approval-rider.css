@@ -18,7 +18,7 @@ animation:fadeIn .6s ease-in;
 }
 
 .container{
-background:var(--white);
+background:var(--tr-surface);
 padding:30px;
 border-radius:18px;
 max-width:420px;
@@ -42,7 +42,7 @@ color:var(--deep-purple);
 
 h2{
 margin-top:15px;
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 p{
@@ -68,7 +68,7 @@ font-size:0.85rem;
 }
 
 .status i{
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .btn{

@@ -22,7 +22,7 @@ body{
 .card{
   width:100%;
   max-width:440px;
-  background:#fff;
+  background:var(--tr-surface);
   border-radius:20px;
   padding:36px 28px;
   text-align:center;
@@ -42,7 +42,7 @@ body{
 
 .icon.checking{
   background:var(--tr-primary-100);
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 .icon.success{
@@ -51,12 +51,12 @@ body{
 }
 
 .icon.failed{
-  background:#fef2f2;
+  background:var(--tr-danger-bg);
   color:var(--red);
 }
 
 h1{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:1.4rem;
   margin-bottom:10px;
 }
@@ -78,8 +78,8 @@ p{
   margin-top:14px;
   padding:10px 12px;
   border-radius:10px;
-  background:#fffbeb;
-  color:#92400e;
+  background:var(--tr-warning-bg);
+  color:var(--tr-warning);
   font-size:.85rem;
 }
 

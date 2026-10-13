@@ -110,7 +110,7 @@ body{
 
 /* TOPBAR */
 .topbar{
-  background:white;
+  background:var(--tr-surface);
   border-radius:16px;
   padding:18px;
   display:flex;
@@ -124,7 +124,7 @@ body{
   display:none;
   font-size:1.3rem;
   cursor:pointer;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .welcome-section{
@@ -134,7 +134,7 @@ body{
 }
 
 .welcome-section h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:1.3rem;
 }
 
@@ -173,7 +173,7 @@ body{
 }
 
 .card{
-  background:white;
+  background:var(--tr-surface);
   padding:25px;
   border-radius:16px;
   box-shadow:0 5px 20px rgba(0,0,0,0.05);
@@ -186,7 +186,7 @@ body{
 }
 
 .card h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:10px;
   font-size:1rem;
 }
@@ -200,7 +200,7 @@ body{
   margin-top:12px;
   font-size:2rem;
   font-weight:700;
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 /* NOTIFICATION PREVIEW */
@@ -212,7 +212,7 @@ body{
   margin-top:12px;
   padding:10px;
   border-radius:10px;
-  background:#f8f3ff;
+  background:var(--tr-primary-50);
   font-size:0.85rem;
   color:var(--tr-text);
 }
@@ -327,7 +327,7 @@ body{
   flex-shrink:0;
   border-radius:50%;
   background:var(--tr-primary-100);
-  color:var(--tr-primary-700);
+  color:var(--tr-link);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -350,7 +350,7 @@ body{
 }
 
 .location-main{
-  color:var(--tr-primary-900);
+  color:var(--tr-heading);
   font-weight:600;
   font-size:1rem;
   margin-top:2px;
@@ -382,7 +382,7 @@ body{
   border-radius:10px;
   border:1px solid var(--tr-primary-400);
   background:var(--tr-surface);
-  color:var(--tr-primary-700);
+  color:var(--tr-link);
   font-weight:600;
   font-size:.85rem;
   cursor:pointer;

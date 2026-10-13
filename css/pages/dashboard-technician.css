@@ -139,7 +139,7 @@ body{
 
 /* TOPBAR */
 .topbar{
-  background:white;
+  background:var(--tr-surface);
   border-radius:20px;
   padding:20px;
   display:flex;
@@ -161,12 +161,12 @@ body{
   font-size:1.3rem;
   cursor:pointer;
   display:none;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-top:5px;
 }
 
 .welcomeText h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:1.5rem;
 }
 
@@ -201,7 +201,7 @@ body{
 }
 
 .card{
-  background:white;
+  background:var(--tr-surface);
   padding:30px;
   border-radius:22px;
   box-shadow:0 10px 30px rgba(0,0,0,.05);
@@ -228,7 +228,7 @@ body{
   height:55px;
   border-radius:16px;
   background:var(--tr-primary-100);
-  color:var(--purple);
+  color:var(--tr-link);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -236,14 +236,14 @@ body{
 }
 
 .card h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:1.05rem;
 }
 
 .cardCount{
   font-size:2rem;
   font-weight:700;
-  color:var(--purple);
+  color:var(--tr-link);
 }
 
 .cardSub{

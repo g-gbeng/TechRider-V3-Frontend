@@ -172,6 +172,8 @@ ${esc(device)}${job.request ? ' · ' + esc(job.request.code) : ''}
 ${esc(job.typeLabel)}
 </div>
 
+${job.payout != null ? `<div class="tag payout-tag" title="What you earn for this trip"><i class="fas fa-wallet"></i> ${TR.naira(job.payout)}</div>` : ''}
+
 <div class="tag status-tag">
 ${job.status === 'picked_up' ? 'On the way' : 'Go to pickup'}
 </div>

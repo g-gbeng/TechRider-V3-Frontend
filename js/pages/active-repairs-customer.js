@@ -219,6 +219,31 @@ function secondaryActions(repair){
 RENDER ACTIVE REPAIRS
 ========================================= */
 
+/* Quote: the repair and the pickup & return fee, then the total to pay */
+function quoteBreakdown(q){
+
+  const zone = q.zone === 'island' ? 'Island' : 'Mainland';
+
+  return `
+    <div class="quote-box breakdown">
+      <div class="q-row">
+        <span>Repair quote</span>
+        <strong>${formatNaira(q.repairPrice)}</strong>
+      </div>
+      ${q.logisticsFee ? `
+      <div class="q-row">
+        <span>Logistics <span class="q-zone">${zone}</span>
+          <small>Covers both pickup from you and delivery back to you</small></span>
+        <strong>${formatNaira(q.logisticsFee)}</strong>
+      </div>` : ''}
+      <div class="q-row q-total">
+        <span>Total to pay</span>
+        <strong>${formatNaira(q.customerPrice)}</strong>
+      </div>
+    </div>`;
+
+}
+
 function issueText(repair){
 
   const parts = [];
@@ -266,10 +291,7 @@ function renderRepairs(){
         <div class="next-step ${statusClass}">
           <p>${esc(getStatusMessage(repair))}</p>
           ${repair.status === 'quote_sent' && repair.quote ? `
-            <div class="quote-box">
-              <span>Repair price (includes pickup and return)</span>
-              <strong>${formatNaira(repair.quote.customerPrice)}</strong>
-            </div>` : ''}
+            ${quoteBreakdown(repair.quote)}` : ''}
           ${action}
           ${repair.status === 'quote_sent' ? '<div class="test-banner-slot"></div>' : ''}
         </div>
@@ -281,7 +303,7 @@ function renderRepairs(){
           <div class="details">
             <div><i class="fas fa-user-gear"></i><strong>Technician:</strong> ${esc(repair.technician ? repair.technician.fullName : 'Not chosen yet')}</div>
             <div><i class="fas fa-location-dot"></i><strong>Address:</strong> ${esc(repair.location)}${repair.landmark ? ` (${esc(repair.landmark)})` : ''}</div>
-            ${repair.quote && repair.status !== 'quote_sent' ? `<div><i class="fas fa-receipt"></i><strong>Price:</strong> ${formatNaira(repair.quote.customerPrice)}</div>` : ''}
+            ${repair.quote && repair.status !== 'quote_sent' ? `<div><i class="fas fa-receipt"></i><strong>Price:</strong> ${formatNaira(repair.quote.customerPrice)}${repair.quote.logisticsFee ? ` (repair ${formatNaira(repair.quote.repairPrice)} + pickup &amp; return ${formatNaira(repair.quote.logisticsFee)})` : ''}</div>` : ''}
             <div><i class="fas fa-clock"></i><strong>Requested:</strong> ${esc(formatDate(repair.createdAt))}</div>
           </div>
           <div class="desc"><strong>Problem</strong><br>${esc(issueText(repair))}</div>
@@ -308,7 +330,10 @@ async function acceptQuote(id, button){
 
   const ok = await TR.confirm({
     title:`Pay ${formatNaira(repair.quote.customerPrice)}?`,
-    message:`You'll be taken to Paystack to pay securely for ${repair.code}. Once paid, we'll send a rider to collect your device.`,
+    message:
+      `Repair quote: ${formatNaira(repair.quote.repairPrice)}\n` +
+      (repair.quote.logisticsFee ? `Logistics (pickup and delivery back): ${formatNaira(repair.quote.logisticsFee)}\n` : '') +
+      `\nYou'll be taken to Paystack to pay securely for ${repair.code}. Once paid, we'll send a rider to collect your device.`,
     confirmText:'Continue to payment',
     icon:'fa-lock'
   });

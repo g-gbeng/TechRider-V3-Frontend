@@ -21,7 +21,7 @@ animation:fadeIn .4s ease;
 .suspendedCard{
 width:100%;
 max-width:620px;
-background:white;
+background:var(--tr-surface);
 border-radius:30px;
 padding:45px 35px;
 text-align:center;
@@ -53,7 +53,7 @@ align-items:center;
 background:
 linear-gradient(
 135deg,
-#ffccd5,
+var(--tr-danger-bg),
 #ff8fab
 );
 color:var(--tr-danger);
@@ -62,7 +62,7 @@ font-size:2.8rem;
 
 h1{
 font-size:2rem;
-color:var(--deep);
+color:var(--tr-heading);
 margin-bottom:16px;
 }
 
@@ -84,7 +84,7 @@ text-align:left;
 .reasonTitle{
 font-weight:700;
 margin-bottom:10px;
-color:var(--deep);
+color:var(--tr-heading);
 }
 
 .reasonText{
@@ -125,8 +125,8 @@ color:white;
 }
 
 .refreshBtn{
-background:#ece4ff;
-color:var(--deep);
+background:var(--tr-primary-100);
+color:var(--tr-heading);
 }
 
 .contactBtn:hover,

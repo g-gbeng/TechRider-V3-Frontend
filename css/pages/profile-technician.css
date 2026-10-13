@@ -32,7 +32,7 @@ body{
 }
 
 .header h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .back-btn{
@@ -47,7 +47,7 @@ body{
 /* CARD */
 
 .card{
-  background:var(--white);
+  background:var(--tr-surface);
   border-radius:20px;
   padding:25px;
   box-shadow:0 10px 25px rgba(0,0,0,.05);
@@ -103,7 +103,7 @@ body{
   align-items:center;
   gap:8px;
   background:var(--tr-primary-100);
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   padding:10px 14px;
   border-radius:10px;
   cursor:pointer;
@@ -119,7 +119,7 @@ body{
 .name{
   font-size:1.2rem;
   font-weight:600;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .badge{
@@ -131,7 +131,7 @@ body{
 /* DETAILS */
 
 .section-title{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:18px;
   font-size:1rem;
 }
@@ -156,7 +156,7 @@ body{
 }
 
 .item p{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:.95rem;
   font-weight:500;
   word-break:break-word;
@@ -199,8 +199,8 @@ body{
 }
 
 .password-btn{
-  background:#ede4ff;
-      color:var(--purple);
+  background:var(--tr-primary-100);
+      color:var(--tr-link);
 
 }
 

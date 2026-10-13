@@ -97,7 +97,7 @@ padding:20px;
 }
 
 .topbar{
-background:white;
+background:var(--tr-surface);
 padding:16px 18px;
 border-radius:16px;
 display:flex;
@@ -132,7 +132,7 @@ margin-bottom:20px;
 }
 
 .card{
-background:white;
+background:var(--tr-surface);
 padding:22px;
 border-radius:18px;
 }
@@ -140,13 +140,13 @@ border-radius:18px;
 .metric{
 font-size:2rem;
 font-weight:700;
-color:var(--purple);
+color:var(--tr-link);
 margin-top:8px;
 }
 
 /* Toolbar */
 .toolbar{
-background:white;
+background:var(--tr-surface);
 padding:18px;
 border-radius:18px;
 display:flex;
@@ -166,7 +166,7 @@ flex:1;
 
 /* Table */
 .tableWrap{
-background:white;
+background:var(--tr-surface);
 border-radius:18px;
 padding:20px;
 overflow-x:auto;
@@ -185,7 +185,7 @@ border-bottom:1px solid var(--tr-border);
 }
 
 th{
-color:var(--deep-purple);
+color:var(--tr-heading);
 }
 
 .badge{
@@ -198,7 +198,7 @@ display:inline-block;
 
 .activeStat{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .suspendedStat{
@@ -222,7 +222,7 @@ cursor:pointer;
 
 .btnGhost{
 background:var(--tr-primary-100);
-color:var(--purple);
+color:var(--tr-link);
 }
 
 .btnPrimary{

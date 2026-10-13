@@ -32,7 +32,7 @@ body{
 }
 
 .topbar h1{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   font-size:1.8rem;
 }
 
@@ -63,7 +63,7 @@ body{
 
 /* SECTION */
 .section{
-  background:white;
+  background:var(--tr-surface);
   padding:22px;
   border-radius:18px;
   box-shadow:0 10px 25px rgba(0,0,0,.05);
@@ -71,7 +71,7 @@ body{
 }
 
 .section h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:18px;
   font-size:1.2rem;
 }
@@ -134,7 +134,7 @@ button{
 
 .card-title{
   font-weight:600;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:5px;
 }
 
@@ -159,12 +159,12 @@ button{
 }
 
 .edit-btn{
-  background:#ece4ff;
-  color:var(--deep-purple);
+  background:var(--tr-primary-100);
+  color:var(--tr-heading);
 }
 
 .delete-btn{
-  background:#ffdfe4;
+  background:var(--tr-danger-bg);
   color:#a1001d;
 }
 

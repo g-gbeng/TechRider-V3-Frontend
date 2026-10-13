@@ -30,7 +30,7 @@ body.notifications-page {
   border-radius: 10px;
   background: var(--tr-surface);
   border: 1px solid var(--tr-border);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   font-size: .85rem;
   font-weight: 600;
   text-decoration: none;
@@ -40,7 +40,7 @@ body.notifications-page {
 
 .inbox-title h1 {
   font-size: 1.5rem;
-  color: var(--tr-primary-900);
+  color: var(--tr-heading);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -90,7 +90,7 @@ body.notifications-page {
 
 .filter-btn.active {
   background: var(--tr-primary-100);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   font-weight: 600;
 }
 
@@ -102,7 +102,7 @@ body.notifications-page {
   border-radius: 10px;
   border: 1px solid var(--tr-border);
   background: var(--tr-surface);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   font-size: .85rem;
   font-weight: 600;
   cursor: pointer;
@@ -152,7 +152,7 @@ body.notifications-page {
   align-items: center;
   justify-content: center;
   background: var(--tr-primary-100);
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
 }
 
 .kind-payment .n-icon { background: var(--tr-success-bg); color: var(--tr-success); }
@@ -192,7 +192,7 @@ body.notifications-page {
   border-radius: 999px;
 }
 
-.n-tag.from { background: var(--tr-primary-100); color: var(--tr-primary-700); }
+.n-tag.from { background: var(--tr-primary-100); color: var(--tr-link); }
 .n-tag.urgent { background: var(--tr-danger-bg); color: var(--tr-danger); }
 
 .notification-message {
@@ -216,7 +216,7 @@ body.notifications-page {
 .n-time { color: var(--tr-text-soft); }
 
 .job-link {
-  color: var(--tr-primary-700);
+  color: var(--tr-link);
   font-weight: 600;
   text-decoration: none;
   display: inline-flex;
@@ -243,11 +243,11 @@ body.notifications-page {
   gap: 6px;
 }
 
-.mark-btn { padding: 0 10px; color: var(--tr-primary-700); }
+.mark-btn { padding: 0 10px; color: var(--tr-link); }
 .mark-btn:hover { background: var(--tr-primary-50); border-color: var(--tr-primary-200); }
 
 .delete-btn { width: 32px; justify-content: center; color: var(--tr-text-soft); }
-.delete-btn:hover { color: var(--tr-danger); border-color: #fecaca; background: var(--tr-danger-bg); }
+.delete-btn:hover { color: var(--tr-danger); border-color: var(--tr-danger-bg); background: var(--tr-danger-bg); }
 
 .notifications-list .tr-empty { background: var(--tr-surface); border-radius: 14px; border: 1px solid var(--tr-border); }
 

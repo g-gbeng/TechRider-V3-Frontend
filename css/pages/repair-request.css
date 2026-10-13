@@ -20,7 +20,7 @@ body{
 .container{
   width:100%;
   max-width:900px;
-  background:var(--white);
+  background:var(--tr-surface);
   border-radius:18px;
   padding:20px;
   box-shadow:0 15px 40px rgba(0,0,0,0.08);
@@ -36,7 +36,7 @@ body{
 }
 
 .header h2{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 .back-btn{
@@ -117,7 +117,7 @@ textarea{
 
 .section legend{
   font-weight:600;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   padding:0 6px;
   display:flex;
   align-items:center;
@@ -129,7 +129,7 @@ textarea{
   height:24px;
   border-radius:50%;
   background:var(--tr-primary-100);
-  color:var(--purple);
+  color:var(--tr-link);
   font-size:.8rem;
   display:inline-flex;
   align-items:center;
@@ -188,7 +188,7 @@ textarea{
 .chip input:checked + span{
   background:var(--tr-primary-100);
   border-color:var(--tr-primary-500);
-  color:var(--tr-primary-900);
+  color:var(--tr-heading);
   font-weight:500;
 }
 
@@ -218,7 +218,7 @@ textarea{
   border-radius:10px;
   border:1px solid var(--tr-primary-400);
   background:var(--tr-surface);
-  color:var(--purple);
+  color:var(--tr-link);
   font-weight:600;
   font-size:.88rem;
   cursor:pointer;
@@ -280,3 +280,22 @@ textarea{
 /* keep inputs inside their column on small screens */
 .grid > .group{ min-width:0; }
 .group input, .group select, .group textarea{ width:100%; min-width:0; }
+
+/* ---------- island / mainland ---------- */
+.group-label { font-size: .85rem; color: var(--tr-text); font-weight: 500; }
+.zone-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.zone-card { position: relative; cursor: pointer; }
+.zone-card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.zone-body {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 14px; border-radius: 12px;
+  border: 1.5px solid var(--tr-border); background: var(--tr-surface);
+  transition: border-color .15s, background .15s;
+}
+.zone-body strong { font-size: .9rem; color: var(--tr-text); font-weight: 600; }
+.zone-body strong i { color: var(--tr-primary-500); margin-right: 6px; }
+.zone-fee { font-size: 1.05rem; font-weight: 700; color: var(--tr-link); }
+.zone-card input:checked + .zone-body { border-color: var(--tr-primary-500); background: var(--tr-primary-50); box-shadow: 0 0 0 3px var(--tr-primary-100); }
+.zone-card input:focus-visible + .zone-body { outline: 2px solid var(--tr-primary-500); outline-offset: 2px; }
+.zone-note { font-size: .78rem; color: var(--tr-text-muted); line-height: 1.45; }
+@media (max-width: 420px) { .zone-cards { grid-template-columns: 1fr; } }

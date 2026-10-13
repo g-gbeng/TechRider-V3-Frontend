@@ -51,6 +51,7 @@ const jsArg = (value) => esc(JSON.stringify(String(value ?? '')));
 let jobs = [];
 
 let commissionRate = 0.2;
+let tripFees = { mainland: 3000, island: 5000 }; // one trip; a job has two (pickup + return)
 
 const GROUPS = {
     pending: ['awaiting_technician', 'quoted', 'quote_sent'],
@@ -91,6 +92,7 @@ async function loadJobs(){
         jobs = data.requests;
 
         commissionRate = data.commissionRate;
+        if(data.logisticsFees) tripFees = data.logisticsFees;
 
     }catch(err){
 
@@ -219,7 +221,7 @@ function renderPending(rows){
     const tbody = document.getElementById('pendingRequestsTable');
 
     if(rows.length === 0){
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:30px;color:#777;">No pending repair requests.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:30px;color:#777;">No pending repair requests.</td></tr>`;
         return;
     }
 
@@ -227,13 +229,10 @@ function renderPending(rows){
 
         const q = job.quote || {};
 
-        /* Before the quote is sent, show what the customer WOULD pay at today's rate */
+        /* Before the quote is sent, show what the customer WOULD pay at today's prices */
         const preview = q.technicianPrice != null && !q.customerPrice
-            ? {
-                commission: Math.round(q.technicianPrice * commissionRate),
-                customerPrice: q.technicianPrice + Math.round(q.technicianPrice * commissionRate)
-              }
-            : q;
+            ? pricePreview(q.technicianPrice, job.zone)
+            : { ...q, logisticsFee: q.logisticsFee || 0 };
 
         const quoteItem = job.status === 'quoted'
             ? menuItem('sendQuoteBtn primary', 'fa-paper-plane', 'Send quote to customer', `sendQuote(${jsArg(job.id)}, this)`)
@@ -248,12 +247,22 @@ function renderPending(rows){
 <td>${deviceCell(job)}</td>
 <td>${esc(job.technician ? job.technician.fullName : (job.declinedCount ? 'Declined, customer choosing again' : 'Not chosen yet'))}</td>
 <td class="quoteAmount">${formatNaira(q.technicianPrice)}</td>
-<td class="customerPrice">${formatNaira(preview.customerPrice)}</td>
 <td class="commissionAmount">${formatNaira(preview.commission)}</td>
+<td class="logisticsAmount">${q.technicianPrice != null ? formatNaira(preview.logisticsFee) : '—'}<br><span class="zoneTag ${esc(job.zone)}">${job.zone === 'island' ? 'Island' : 'Mainland'}</span></td>
+<td class="customerPrice">${formatNaira(preview.customerPrice)}</td>
 <td>${badge(job)}</td>
 <td>${formatDate(job.updatedAt)}</td>
 <td class="actionsCell">
-${actionMenu([quoteItem, menuItem('', 'fa-circle-info', 'View issue', `showIssue(${jsArg(job.id)})`), chatButton(job), separator, cancelItem(job)], job.status === 'quoted')}
+${actionMenu([
+    quoteItem,
+    ['awaiting_technician', 'quoted'].includes(job.status)
+        ? menuItem('zoneBtn', 'fa-map', `Change to ${job.zone === 'island' ? 'Mainland' : 'Island'} pricing`, `changeZone(${jsArg(job.id)}, ${jsArg(job.zone === 'island' ? 'mainland' : 'island')}, this)`)
+        : '',
+    menuItem('', 'fa-circle-info', 'View issue', `showIssue(${jsArg(job.id)})`),
+    chatButton(job),
+    separator,
+    cancelItem(job)
+], job.status === 'quoted')}
 </td>
 </tr>`;
 
@@ -374,8 +383,11 @@ function renderAll(){
     renderRejected(inGroup('rejected'));
     renderCompleted(inGroup('completed'));
 
-    document.getElementById('commissionInput').value =
-        Math.round(commissionRate * 1000) / 10;
+    // don't overwrite a number the admin is typing
+    const fill = (id, value) => { const el = document.getElementById(id); if(document.activeElement !== el) el.value = value; };
+    fill('commissionInput', Math.round(commissionRate * 1000) / 10);
+    fill('mainlandFeeInput', tripFees.mainland);
+    fill('islandFeeInput', tripFees.island);
 
     applyFilter();
 
@@ -387,18 +399,58 @@ function renderAll(){
    ACTIONS
 ===================================================== */
 
+/* What the customer would pay today: technician + commission + two trips */
+function pricePreview(technicianPrice, zone){
+
+    const commission = Math.round(technicianPrice * commissionRate);
+    const logisticsFee = (zone === 'island' ? tripFees.island : tripFees.mainland) * 2;
+    return {
+        technicianPrice,
+        commission,
+        repairPrice: technicianPrice + commission,
+        logisticsFee,
+        customerPrice: technicianPrice + commission + logisticsFee
+    };
+
+}
+
+async function changeZone(id, zone, button){
+
+    const job = jobs.find(j => j.id === id);
+    const fee = (zone === 'island' ? tripFees.island : tripFees.mainland) * 2;
+    const ok = await TR.confirm({
+        title: `Use ${zone === 'island' ? 'Island' : 'Mainland'} pricing?`,
+        message: `Pickup and return for ${job.code} will cost the customer ${formatNaira(fee)}. Address: ${job.location}`,
+        confirmText: 'Change zone',
+        icon: 'fa-map'
+    });
+    if(!ok) return;
+
+    button.disabled = true;
+    try{
+        await TechRiderAPI.patch(`/admin/requests/${encodeURIComponent(id)}/zone`, { zone });
+        TR.toast(`${job.code} now uses ${zone} pricing.`, 'success');
+        await loadJobs();
+    }catch(err){
+        TR.toast(err.message, 'error');
+        button.disabled = false;
+    }
+
+}
+
 async function sendQuote(id, button){
 
     const job = jobs.find(j => j.id === id);
-    const base = job.quote.technicianPrice;
-    const commission = Math.round(base * commissionRate);
+    const p = pricePreview(job.quote.technicianPrice, job.zone);
 
     const confirmed = await TR.confirm({
         title: `Send quote to ${job.customer.fullName}?`,
         message:
-            `Technician quote: ₦${base.toLocaleString('en-NG')}\n` +
-            `Platform commission (${Math.round(commissionRate * 1000) / 10}%): ₦${commission.toLocaleString('en-NG')}\n` +
-            `Customer pays: ₦${(base + commission).toLocaleString('en-NG')}`,
+            `Technician quote: ${formatNaira(p.technicianPrice)}\n` +
+            `Platform commission (${Math.round(commissionRate * 1000) / 10}%): ${formatNaira(p.commission)}\n` +
+            `Logistics, ${job.zone === 'island' ? 'Island' : 'Mainland'} (pickup + return): ${formatNaira(p.logisticsFee)}\n\n` +
+            `Customer sees: repair ${formatNaira(p.repairPrice)} + logistics ${formatNaira(p.logisticsFee)}\n` +
+            `Customer pays: ${formatNaira(p.customerPrice)}`,
         confirmText: 'Send quote',
         icon: 'fa-file-invoice'
     });
@@ -565,21 +617,37 @@ document
     e.preventDefault();
 
     const percent = Number(document.getElementById('commissionInput').value);
+    const mainland = Number(document.getElementById('mainlandFeeInput').value);
+    const island = Number(document.getElementById('islandFeeInput').value);
 
     if(!Number.isFinite(percent) || percent < 0 || percent > 50){
         TR.toast('Commission must be between 0% and 50%.');
         return;
     }
+    if(![mainland, island].every(f => Number.isFinite(f) && f >= 0 && f <= 1000000)){
+        TR.toast('Trip fees must be between ₦0 and ₦1,000,000.');
+        return;
+    }
 
-    if(!(await TR.confirm({ title: `Set commission to ${percent}%?`, message: 'This applies to quotes sent from now on. Quotes already sent keep their price.', confirmText: 'Save commission', icon: 'fa-percent' }))){
+    if(!(await TR.confirm({
+        title: 'Save pricing?',
+        message:
+            `Commission: ${percent}%\n` +
+            `Mainland: ${formatNaira(mainland)} per trip (customer pays ${formatNaira(mainland * 2)} for pickup + return)\n` +
+            `Island: ${formatNaira(island)} per trip (customer pays ${formatNaira(island * 2)})\n\n` +
+            'This applies to quotes sent from now on. Quotes already sent keep their price. Riders earn the trip fee for each delivered trip.',
+        confirmText: 'Save pricing',
+        icon: 'fa-tags'
+    }))){
         return;
     }
 
     try{
-        const { settings } = await TechRiderAPI.put('/admin/settings', { commissionRate:percent / 100 });
+        const { settings } = await TechRiderAPI.put('/admin/settings', { commissionRate:percent / 100, mainlandTripFee: mainland, islandTripFee: island });
         commissionRate = settings.commissionRate;
+        tripFees = settings.logisticsFees;
         renderAll();
-        TR.toast(`Commission saved: ${Math.round(commissionRate * 1000) / 10}%`);
+        TR.toast(`Pricing saved: ${Math.round(commissionRate * 1000) / 10}% commission, mainland ${formatNaira(tripFees.mainland)}, island ${formatNaira(tripFees.island)} per trip.`, 'success');
     }catch(err){
         TR.toast(err.message, "error");
     }

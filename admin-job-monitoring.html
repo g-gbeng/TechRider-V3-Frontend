@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#240046">
+  <script src="js/theme.js"></script>
 
 <title>TechRider - Job Monitoring</title>
 
@@ -78,10 +80,20 @@ placeholder="Search jobs...">
 <option value="completed">Completed</option>
 </select>
 
-<form id="commissionForm" class="commissionForm" title="TechRider commission added to each technician quote">
+<form id="commissionForm" class="commissionForm pricingForm" title="Pricing for quotes sent from now on">
+<span class="pf-field" title="TechRider commission added to each technician quote">
 <label for="commissionInput">Commission</label>
 <input id="commissionInput" type="number" min="0" max="50" step="0.5" required>
 <span>%</span>
+</span>
+<span class="pf-field" title="One rider trip on the mainland (the customer pays two: pickup and return)">
+<label for="mainlandFeeInput">Mainland trip ₦</label>
+<input id="mainlandFeeInput" type="number" min="0" max="1000000" step="100" required>
+</span>
+<span class="pf-field" title="One rider trip on the island (the customer pays two: pickup and return)">
+<label for="islandFeeInput">Island trip ₦</label>
+<input id="islandFeeInput" type="number" min="0" max="1000000" step="100" required>
+</span>
 <button type="submit" class="btn">Save</button>
 </form>
 
@@ -138,9 +150,11 @@ Pending Requests
 
 <th>Quote</th>
 
-<th>Customer Price</th>
-
 <th>Commission</th>
+
+<th>Logistics</th>
+
+<th>Customer Pays</th>
 
 <th>Status</th>
 

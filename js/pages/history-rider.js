@@ -125,6 +125,7 @@ return `
 <div class="job-type">
 <i class="fas fa-box"></i>
 ${esc(job.typeLabel)} · ${esc(job.code)}
+${job.status === 'delivered' && job.payout != null ? `<span class="payout-earned"><i class="fas fa-wallet"></i> Earned ${TR.naira(job.payout)}</span>` : ''}
 </div>
 
 <div class="status status-${esc(job.status)}">

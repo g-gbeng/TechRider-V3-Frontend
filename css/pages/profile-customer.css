@@ -19,7 +19,7 @@ body{
 .container{
   width:100%;
   max-width:900px;
-  background:var(--white);
+  background:var(--tr-surface);
   border-radius:18px;
   box-shadow:0 18px 45px rgba(0,0,0,0.08);
   overflow:hidden;
@@ -87,8 +87,8 @@ body{
   height:28px;
   border-radius:50%;
   border:none;
-  background:white;
-  color:var(--purple);
+  background:var(--tr-surface);
+  color:var(--tr-link);
   cursor:pointer;
   display:flex;
   align-items:center;
@@ -107,8 +107,8 @@ body{
 }
 
 .back-btn{
-  background:white;
-  color:var(--purple);
+  background:var(--tr-surface);
+  color:var(--tr-link);
   padding:10px 14px;
   border-radius:10px;
   text-decoration:none;
@@ -133,7 +133,7 @@ body{
 }
 
 .card h3{
-  color:var(--deep-purple);
+  color:var(--tr-heading);
   margin-bottom:14px;
   font-size:1rem;
 }
@@ -159,7 +159,7 @@ body{
   font-weight:500;
   text-align:right;
   word-break:break-word;
-  color:var(--deep-purple);
+  color:var(--tr-heading);
 }
 
 /* ACTIONS */
@@ -197,8 +197,8 @@ body{
 }
 
 .btn.secondary{
-  background:#ede4ff;
-  color:var(--purple);
+  background:var(--tr-primary-100);
+  color:var(--tr-link);
 }
 
 .btn.danger{

@@ -21,6 +21,8 @@ description:r.description,
 location:r.location,
 technicianName:r.technician ? r.technician.fullName : '',
 repairPrice:r.quote ? (r.quote.customerPrice) : 0,
+repairOnly:r.quote ? r.quote.repairPrice : 0,
+logisticsFee:r.quote ? (r.quote.logisticsFee || 0) : 0,
 status:r.status === 'completed' ? 'completed' : 'cancelled',
 statusLabel:r.statusLabel,
 createdAt:r.createdAt,
@@ -310,12 +312,13 @@ request.repairPrice
 <div class="price-box">
 
 <strong>
-Final Repair Cost
+Total paid
 </strong>
 
 ₦${Number(
 request.repairPrice
 ).toLocaleString()}
+${request.logisticsFee ? `<small class="price-split">Repair ${TR.naira(request.repairOnly)} + pickup &amp; return ${TR.naira(request.logisticsFee)}</small>` : ''}
 
 </div>
 

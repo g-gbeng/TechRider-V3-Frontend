@@ -99,6 +99,7 @@ function fillAddress(data, how){
   setState(a.state);
   pin = { lat: data.lat, lng: data.lng };
   pinnedValues = { street: field("street").value, area: field("area").value };
+  if(!zoneChosen) setZone(suggestedZone());
   const when = TR.ago(data.at);
   locateStatus.innerHTML = `<i class="fas fa-circle-check"></i> ${how === "saved" ? `Filled from your location (${esc(when)})` : "Filled from your current location"}. Check it and edit anything that's off.`;
   locateStatus.className = "locate-status ok";
@@ -127,6 +128,32 @@ useLocationBtn.addEventListener("click", async () => {
     useLocationBtn.disabled = false;
   }
 });
+
+/* ==========================================
+    ISLAND OR MAINLAND (pickup & delivery price)
+    Suggested from the address as it's typed; once the
+    customer picks one themselves, we leave it alone.
+========================================== */
+
+let ISLAND_AREAS = ['victoria island', 'ikoyi', 'lekki', 'ajah', 'lagos island', 'oniru', 'eko atlantic', 'banana island', 'sangotedo', 'chevron', 'osapa', 'ikate', 'agungi', 'marina', 'epe', 'ibeju', 'obalende', 'awoyaya', 'badore', 'admiralty'];
+let zoneChosen = false;
+
+function suggestedZone(){
+  const text = ` ${[field("street").value, field("area").value, field("landmark").value].join(" ").toLowerCase()} `;
+  if(/\bvi\b/.test(text)) return "island";
+  return ISLAND_AREAS.some(a => text.includes(a)) ? "island" : "mainland";
+}
+
+function setZone(zone){
+  const input = form.querySelector(`input[name="zone"][value="${zone}"]`);
+  if(input) input.checked = true;
+}
+
+["street", "area", "landmark"].forEach(id => field(id).addEventListener("input", () => {
+  if(!zoneChosen) setZone(suggestedZone());
+}));
+
+form.querySelectorAll('input[name="zone"]').forEach(r => r.addEventListener("change", () => { zoneChosen = true; }));
 
 /* ==========================================
     IMAGE COMPRESSION + SELECTION
@@ -239,6 +266,7 @@ form.addEventListener("submit", async function(e){
     data.append("location", [field("street").value.trim(), field("area").value.trim(), field("state").value].filter(Boolean).join(", "));
     data.append("landmark", field("landmark").value.trim());
     data.append("contactPhone", field("contactPhone").value.trim());
+    data.append("zone", (form.querySelector('input[name="zone"]:checked') || {}).value || "mainland");
     if(pin){
       data.append("lat", pin.lat);
       data.append("lng", pin.lng);
@@ -274,7 +302,15 @@ form.addEventListener("submit", async function(e){
   if(!user) return;
 
   // the server's fault list wins if it has changed
-  TechRiderAPI.get("/requests/options").then(({ faults }) => {
+  TechRiderAPI.get("/requests/options").then(({ faults, logistics, islandAreas }) => {
+    if(logistics){
+      document.getElementById("feeMainland").textContent = TR.naira(logistics.mainland);
+      document.getElementById("feeIsland").textContent = TR.naira(logistics.island);
+    }
+    if(Array.isArray(islandAreas) && islandAreas.length){
+      ISLAND_AREAS = islandAreas;
+      if(!zoneChosen) setZone(suggestedZone());
+    }
     if(Array.isArray(faults) && faults.join("|") !== FAULTS.join("|")){
       const ticked = chosenFaults();
       FAULTS = faults;
