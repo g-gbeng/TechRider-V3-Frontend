@@ -116,7 +116,7 @@ function getStatusMessage(repair){
     case 'pickup_in_transit':
       return 'Your device has been collected and is on its way to the technician.';
     case 'repair_in_progress':
-      return 'The technician is working on your device. Message them below if you have questions.';
+      return 'The technician is working on your device. Questions? Message TechRider support below.';
     case 'repair_done':
       return riderComing
         ? `The repair is finished. ${repair.rider.fullName} will bring your device back.`
@@ -191,7 +191,7 @@ function secondaryActions(repair){
 
   buttons.push(
     `<button class="action-btn secondary tr-chat-btn" data-chat="${esc(repair.id)}" data-chat-title="${esc(repair.code)} · ${esc(repair.brand)} ${esc(repair.model)}">
-       <i class="fas fa-comments"></i> Messages
+       <i class="fas fa-headset"></i> Message support
      </button>`
   );
 

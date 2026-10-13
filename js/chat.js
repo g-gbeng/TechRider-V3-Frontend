@@ -57,7 +57,7 @@
       list.innerHTML = TR.empty({
         icon: "fa-comments",
         title: "No messages yet",
-        text: "Ask a question about this repair. Everyone working on it, and TechRider support, can see this conversation."
+        text: "Ask TechRider support anything about this repair. We pass what is needed on to your technician and rider, so every price is agreed through TechRider."
       });
     } else {
       list.innerHTML = data.messages.map((m) => `
@@ -111,10 +111,10 @@
       <section class="tr-chat" role="dialog" aria-modal="true" aria-labelledby="tr-chat-title">
         <header class="tr-chat-head">
           <i class="fas fa-comments" aria-hidden="true"></i>
-          <h2 id="tr-chat-title">Messages<small class="tr-chat-sub">${esc(title || "")}</small></h2>
+          <h2 id="tr-chat-title">TechRider support<small class="tr-chat-sub">${esc(title || "")}</small></h2>
           <button type="button" class="tr-chat-close" aria-label="Close messages"><i class="fas fa-xmark"></i></button>
         </header>
-        <div class="tr-chat-note"><i class="fas fa-shield-halved"></i> Keep payments on TechRider. Never send money or card details here.</div>
+        <div class="tr-chat-note"><i class="fas fa-shield-halved"></i> Only pay through TechRider. If anyone asks you to pay them directly, tell us here.</div>
         <div class="tr-chat-list" aria-live="polite">${TR.skeleton(2)}</div>
         <p class="tr-chat-closed tr-chat-note" hidden>This job is closed, so new messages are off. Raise a dispute if something went wrong.</p>
         <form class="tr-chat-form">

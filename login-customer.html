@@ -3,94 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechRider - Customer Login</title>
+  <title>TechRider · Customer login</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/pages/login-customer.css">
+  <link rel="stylesheet" href="css/pages/login.css">
 </head>
-<body>
+<body class="login-page" data-role="customer">
 
-  <div class="container">
+  <main class="login-shell">
 
-    <!-- HEADER -->
-    <div class="header">
-
-      <div class="icon">
-        <i class="fas fa-user"></i>
+    <!-- brand panel (hidden on small screens) -->
+    <aside class="login-panel" aria-hidden="true">
+      <a href="index.html" class="panel-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
+      <div class="panel-body">
+        <span class="panel-role"><i class="fas fa-user"></i> Customers</span>
+        <h2>Repairs without the running around.</h2>
+        <ul><li><i class="fas fa-route"></i> Follow every step of your repair live</li><li><i class="fas fa-lock"></i> Approve the price before you pay</li><li><i class="fas fa-headset"></i> Message TechRider support any time</li></ul>
       </div>
+      <p class="panel-foot">Need help? <a href="mailto:techridersupport@gmail.com">techridersupport@gmail.com</a></p>
+    </aside>
 
-      <h2>Customer Login</h2>
-      <p>Welcome back to TechRider</p>
+    <!-- form -->
+    <section class="login-card" aria-labelledby="loginTitle">
 
-    </div>
+      <a href="index.html" class="mobile-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
 
-    <!-- SIGNUP LINK -->
-    <div class="top-link">
-      Don’t have an account?
-      <a href="signup-customer.html">Sign up</a>
-    </div>
+      <nav class="role-tabs" aria-label="Log in as"><a href="login-customer.html" class="role-tab active" aria-current="page"><i class="fas fa-user"></i> Customer</a><a href="login-technician.html" class="role-tab"><i class="fas fa-screwdriver-wrench"></i> Technician</a><a href="login-rider.html" class="role-tab"><i class="fas fa-motorcycle"></i> Rider</a></nav>
 
-    <!-- FORM -->
-    <form id="loginForm">
+      <h1 id="loginTitle">Welcome back</h1>
+      <p class="login-sub">Log in to request and follow your repairs.</p>
 
-      <div class="input-group">
+      <form id="loginForm" novalidate>
 
-        <label for="email">Email Address</label>
+        <div class="field">
+          <label for="email">Email address</label>
+          <div class="input-wrap">
+            <i class="fas fa-envelope input-icon" aria-hidden="true"></i>
+            <input type="email" id="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+        </div>
 
-        <input
-          type="email"
-          id="email"
-          placeholder="Enter your email"
-          required
-        >
+        <div class="field">
+          <div class="label-row">
+            <label for="password">Password</label>
+            <a href="forgot-password.html?role=customer" class="forgot">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <i class="fas fa-lock input-icon" aria-hidden="true"></i>
+            <input type="password" id="password" autocomplete="current-password" placeholder="Your password" required>
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password" aria-pressed="false">
+              <i class="fas fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
-      </div>
+        <div class="login-message" id="loginMessage" role="alert" aria-live="assertive"></div>
 
-      <div class="input-group">
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span>Log in</span> <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
 
-        <label for="password">Password</label>
+      </form>
 
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          required
-        >
+      <p class="signup-line">New to TechRider? <a href="signup-customer.html">Create a customer account</a></p>
 
-        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+    </section>
 
-      </div>
-
-      <!-- ERROR MESSAGE -->
-      <div class="error-message" id="loginError">
-        Invalid email or password
-      </div>
-
-      <div class="extra-links">
-        <a href="forgot-password.html?role=customer">
-          Forgot Password?
-        </a>
-      </div>
-
-      <button type="submit" class="btn">
-        Login
-      </button>
-
-    </form>
-
-    <!-- FOOTER NOTE -->
-    <div class="bottom-link">
-      Secure access for TechRider customers
-    </div>
-
-  </div>
+  </main>
 
   <script src="js/api.js"></script>
-<script src="js/ui.js"></script>
-  <script src="js/pages/login-customer.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/login.js"></script>
 
 </body>
 </html>

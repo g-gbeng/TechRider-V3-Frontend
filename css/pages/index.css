@@ -457,3 +457,75 @@ a { color: inherit; }
   .cta { width: 100%; justify-content: center; }
   .hc-steps li { font-size: .55rem; }
 }
+
+/* ---------- footer contacts ---------- */
+.footer-brand { display: flex; flex-direction: column; gap: 6px; }
+.footer-contact { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.footer-contact i { margin-right: 4px; color: var(--tr-primary-500); }
+.footer-contact .fa-whatsapp { color: #25d366; }
+.hc-msg strong { color: var(--tr-primary-900); font-weight: 600; }
+
+/* ---------- animations (only when html has .motion) ---------- */
+.nav { transition: box-shadow .25s ease, background .25s ease; }
+.nav.scrolled { box-shadow: 0 6px 20px rgba(36, 0, 70, .08); }
+
+@keyframes trUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes trDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes trCardIn { from { opacity: 0; transform: translateY(30px) rotate(4deg) scale(.96); } to { opacity: 1; transform: rotate(1.5deg); } }
+@keyframes trFloat { 0%, 100% { transform: rotate(1.5deg) translateY(0); } 50% { transform: rotate(1.5deg) translateY(-8px); } }
+@keyframes trFill { from { transform: scale(.4); background: var(--tr-surface); border-color: var(--tr-border); } }
+@keyframes trLine { from { transform: scaleX(0); } }
+@keyframes trPulse { 0%, 100% { box-shadow: 0 0 0 4px var(--tr-primary-100); } 50% { box-shadow: 0 0 0 8px rgba(243, 232, 255, .5); } }
+
+/* page load: top bar, then the hero text line by line, then the card */
+.motion .nav { animation: trDown .6s ease-out both; }
+.motion .hero-text > * { animation: trUp .7s cubic-bezier(.2, .7, .2, 1) both; }
+.motion .hero-text > :nth-child(1) { animation-delay: .10s; }
+.motion .hero-text > :nth-child(2) { animation-delay: .20s; }
+.motion .hero-text > :nth-child(3) { animation-delay: .32s; }
+.motion .hero-text > :nth-child(4) { animation-delay: .44s; }
+.motion .hero-text > :nth-child(5) { animation-delay: .56s; }
+
+.motion .hero-card {
+  animation: trCardIn .9s cubic-bezier(.2, .7, .2, 1) .35s both, trFloat 6s ease-in-out 1.6s infinite;
+}
+
+/* the example progress bar fills step by step */
+.motion .hc-steps li.done::before,
+.motion .hc-steps li.current::before { transform-origin: left; animation: trLine .35s ease-out both; }
+.motion .hc-steps li.done span,
+.motion .hc-steps li.current span { animation: trFill .35s ease-out both; }
+.motion .hc-steps li:nth-child(1) span { animation-delay: .9s; }
+.motion .hc-steps li:nth-child(2)::before, .motion .hc-steps li:nth-child(2) span { animation-delay: 1.05s; }
+.motion .hc-steps li:nth-child(3)::before, .motion .hc-steps li:nth-child(3) span { animation-delay: 1.2s; }
+.motion .hc-steps li:nth-child(4)::before, .motion .hc-steps li:nth-child(4) span { animation-delay: 1.35s; }
+.motion .hc-steps li:nth-child(5)::before, .motion .hc-steps li:nth-child(5) span { animation-delay: 1.5s; }
+.motion .hc-steps li.current span { animation: trFill .35s ease-out 1.5s both, trPulse 2s ease-in-out 2s infinite; }
+.motion .hc-row, .motion .hc-msg { animation: trUp .6s ease-out both; }
+.motion .hc-row { animation-delay: 1.7s; }
+.motion .hc-msg { animation-delay: 1.9s; }
+
+/* scroll reveals (classes added by js/pages/index.js) */
+.motion .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease-out, transform .7s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.motion .reveal.in { opacity: 1; transform: none; }
+
+/* cards lift a little more when they arrive, and on hover */
+.motion .steps li.reveal { transform: translateY(36px) scale(.97); }
+.motion .steps li.reveal.in { transform: none; }
+.steps li, .safe-item { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.steps li:hover { transform: translateY(-4px); box-shadow: var(--tr-shadow); border-color: var(--tr-primary-200); }
+.safe-item:hover { transform: translateY(-4px); border-color: rgba(224, 170, 255, .4); }
+.motion .steps li.reveal.in:hover { transform: translateY(-4px); }
+
+.step-icon { transition: transform .3s ease; }
+.steps li:hover .step-icon { transform: rotate(-8deg) scale(1.08); }
+
+@media (max-width: 800px) {
+  .motion .hero-card { animation: trUp .8s ease-out .35s both; }
+  @keyframes trFloat { 0%, 100% { transform: none; } }
+}

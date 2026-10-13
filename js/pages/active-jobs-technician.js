@@ -181,11 +181,7 @@ ${TR.stars(job.review.rating)}
 ${job.review.comment ? `<q>${esc(job.review.comment)}</q>` : ''}
 </div>` : ''}
 
-<div class="card-actions">
-<button class="tr-btn tr-btn-ghost tr-btn-sm tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}">
-<i class="fas fa-comments"></i> Messages
-</button>
-</div>
+
 
 ${
 job.status === 'repair_in_progress'
@@ -206,7 +202,6 @@ ${formatDate(job.updatedAt)}
 
 });
 
-TR.chat.refreshBadges();
 
 }
 

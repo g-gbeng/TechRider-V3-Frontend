@@ -1,134 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider · Notifications</title>
 
-<title>
-Technician Notifications - TechRider
-</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
->
-
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
->
-
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/pages/notifications-technician.css">
-<script src="js/api.js" data-require-role="technician"></script>
-<script src="js/ui.js"></script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pages/notifications.css">
+  <script src="js/api.js" data-require-role="technician"></script>
+  <script src="js/ui.js"></script>
 </head>
+<body class="notifications-page" data-role="technician" data-jobs-page="active-jobs-technician.html">
 
-<body>
+  <main class="inbox">
 
-<div class="container">
+    <header class="inbox-head">
+      <a href="dashboard-technician.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span>Dashboard</span></a>
+      <div class="inbox-title">
+        <h1>Notifications <span class="unread-pill" id="unreadPill" hidden></span></h1>
+        <p>Updates about your jobs and messages from TechRider.</p>
+      </div>
+    </header>
 
-  <!-- HEADER -->
-  <div class="header">
-
-    <div class="headerLeft">
-
-      <h2>
-        Notifications
-      </h2>
-
-      <p>
-        View updates, alerts and admin messages
-      </p>
-
+    <div class="inbox-tools">
+      <div class="filter-group" role="tablist" aria-label="Show">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="unread" role="tab" aria-selected="false">Unread</button>
+        <button class="filter-btn" data-filter="read" role="tab" aria-selected="false">Read</button>
+      </div>
+      <button type="button" class="mark-all-btn" id="markAllBtn"><i class="fas fa-check-double"></i> Mark all as read</button>
     </div>
 
-    <a
-      href="dashboard-technician.html"
-      class="back"
-    >
-      <i class="fas fa-arrow-left"></i>
-      Dashboard
-    </a>
+    <section class="notifications-list" id="notificationsContainer" aria-live="polite">
+      <div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div>
+    </section>
 
-  </div>
+  </main>
 
-  <!-- CONTROLS -->
-  <div class="controls">
-
-    <div class="filters">
-
-      <button
-        class="filterBtn active"
-        onclick="setFilter('all', this)"
-      >
-        All
-      </button>
-
-      <button
-        class="filterBtn"
-        onclick="setFilter('unread', this)"
-      >
-        Unread
-      </button>
-
-      <button
-        class="filterBtn"
-        onclick="setFilter('read', this)"
-      >
-        Read
-      </button>
-
-    </div>
-
-    <div class="actions">
-
-      <label class="markAll">
-
-        <input
-          type="checkbox"
-          id="markAllCheckbox"
-          onchange="markAllAsRead()"
-        >
-
-        Mark all as read
-
-      </label>
-
-    </div>
-
-  </div>
-
-  <!-- LIST -->
-  <div
-    class="list"
-    id="notificationList"
-  ><div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div></div>
-
-  <!-- EMPTY -->
-  <div
-    class="empty"
-    id="emptyState"
-  >
-
-    <i class="fas fa-bell-slash"></i>
-
-    <h3>
-      No Notifications
-    </h3>
-
-    <p>
-      Notifications from admin will appear here.
-    </p>
-
-  </div>
-
-</div>
-
-<script src="js/pages/notifications-technician.js"></script>
+  <script src="js/pages/notifications.js"></script>
 
 </body>
 </html>

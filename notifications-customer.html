@@ -1,107 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider · Notifications</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<title>TechRider - Notifications</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/pages/notifications-customer.css">
-<script src="js/api.js" data-require-role="customer"></script>
-<script src="js/ui.js"></script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pages/notifications.css">
+  <script src="js/api.js" data-require-role="customer"></script>
+  <script src="js/ui.js"></script>
 </head>
+<body class="notifications-page" data-role="customer" data-jobs-page="active-repairs-customer.html">
 
-<body>
+  <main class="inbox">
 
-<div class="container">
+    <header class="inbox-head">
+      <a href="dashboard-customer.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span>Dashboard</span></a>
+      <div class="inbox-title">
+        <h1>Notifications <span class="unread-pill" id="unreadPill" hidden></span></h1>
+        <p>Updates about your jobs and messages from TechRider.</p>
+      </div>
+    </header>
 
-  <!-- HEADER -->
-  <div class="header">
-
-    <div class="header-left">
-
-      <h2>
-        Notifications
-      </h2>
-
-      <p>
-        Stay updated with your TechRider activities
-      </p>
-
+    <div class="inbox-tools">
+      <div class="filter-group" role="tablist" aria-label="Show">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="unread" role="tab" aria-selected="false">Unread</button>
+        <button class="filter-btn" data-filter="read" role="tab" aria-selected="false">Read</button>
+      </div>
+      <button type="button" class="mark-all-btn" id="markAllBtn"><i class="fas fa-check-double"></i> Mark all as read</button>
     </div>
 
-    <a
-      href="dashboard-customer.html"
-      class="back-btn"
-    >
-      <i class="fas fa-arrow-left"></i>
-      Back
-    </a>
+    <section class="notifications-list" id="notificationsContainer" aria-live="polite">
+      <div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div>
+    </section>
 
-  </div>
+  </main>
 
-  <!-- CONTROLS -->
-  <div class="controls">
-
-    <!-- FILTERS -->
-    <div class="filter-group">
-
-      <button
-        class="filter-btn active"
-        data-filter="all"
-      >
-        All
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="read"
-      >
-        Read
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="unread"
-      >
-        Unread
-      </button>
-
-    </div>
-
-    <!-- MARK ALL -->
-    <div class="mark-all">
-
-      <input
-        type="checkbox"
-        id="markAllCheckbox"
-      >
-
-      <label for="markAllCheckbox">
-        Mark all as read
-      </label>
-
-    </div>
-
-  </div>
-
-  <!-- NOTIFICATIONS -->
-  <div
-    class="notifications-container"
-    id="notificationsContainer"
-  ><div class="tr-skeleton-list" aria-busy="true" aria-label="Loading"><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div><div class="tr-skeleton-card"><span class="tr-skel"></span><span class="tr-skel w80"></span><span class="tr-skel w60"></span></div></div>
-
-  </div>
-
-</div>
-
-<script src="js/pages/notifications-customer.js"></script>
+  <script src="js/pages/notifications.js"></script>
 
 </body>
 </html>

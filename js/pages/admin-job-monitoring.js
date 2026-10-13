@@ -237,6 +237,7 @@ function renderPending(rows){
 <td>${formatDate(job.updatedAt)}</td>
 <td>
 ${action}
+${chatButton(job)}
 <button class="btn cancelStatusBtn" onclick="cancelJob(${jsArg(job.id)}, this)">Cancel</button>
 </td>
 </tr>`;

@@ -24,6 +24,10 @@ Never use the browser's `alert()`, `confirm()` or `prompt()`. Use
 `TR.toast()`, `await TR.confirm()` and `await TR.prompt()` from js/ui.js.
 Colours live as variables at the top of css/base.css (`--tr-primary-700` etc.).
 
+The login and notifications pages share one stylesheet and script for all three
+roles (css/pages/login.css + js/pages/login.js, css/pages/notifications.css +
+js/pages/notifications.js); each role's HTML file only sets `data-role`.
+
 Forgot password, reset password, privacy and terms are one page each, with the
 role in the address (`forgot-password.html?role=rider`). The old per-role
 addresses still work: they forward to the shared pages.

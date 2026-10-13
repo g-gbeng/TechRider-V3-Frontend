@@ -412,3 +412,6 @@ line-height:1.5;
 opacity:.6;
 cursor:not-allowed;
 }
+
+/* long email addresses wrap instead of widening the page */
+.contactBtn{ max-width:100%; overflow-wrap:anywhere; white-space:normal; text-align:center; }

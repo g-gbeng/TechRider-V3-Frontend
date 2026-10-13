@@ -1,0 +1,264 @@
+/* Styles for notifications-customer.html, notifications-technician.html
+   and notifications-rider.html */
+
+body.notifications-page {
+  min-height: 100vh;
+  background: var(--tr-surface-2);
+  padding: 24px 16px 40px;
+}
+
+.inbox {
+  max-width: 760px;
+  margin: 0 auto;
+  animation: fadeIn .4s ease;
+}
+
+/* ---------- header ---------- */
+.inbox-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--tr-surface);
+  border: 1px solid var(--tr-border);
+  color: var(--tr-primary-700);
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-btn:hover { border-color: var(--tr-primary-400); }
+
+.inbox-title h1 {
+  font-size: 1.5rem;
+  color: var(--tr-primary-900);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.inbox-title p { color: var(--tr-text-muted); font-size: .9rem; margin-top: 2px; }
+
+.unread-pill {
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--tr-primary-700);
+  color: #fff;
+}
+
+/* ---------- filters + mark all ---------- */
+.inbox-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.filter-group {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 12px;
+  background: var(--tr-surface);
+  border: 1px solid var(--tr-border);
+}
+
+.filter-btn {
+  border: 0;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 9px;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--tr-text-muted);
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: var(--tr-primary-100);
+  color: var(--tr-primary-700);
+  font-weight: 600;
+}
+
+.mark-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--tr-border);
+  background: var(--tr-surface);
+  color: var(--tr-primary-700);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mark-all-btn:disabled { color: var(--tr-text-soft); cursor: default; }
+
+/* ---------- list ---------- */
+.notifications-list { display: flex; flex-direction: column; gap: 10px; }
+
+.n-group {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--tr-text-soft);
+  font-weight: 600;
+  margin: 10px 4px 0;
+}
+
+.n-group:first-child { margin-top: 0; }
+
+.notification-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--tr-surface);
+  border: 1px solid var(--tr-border);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.notification-card:hover { box-shadow: 0 6px 18px rgba(36, 0, 70, .06); }
+
+.notification-card.unread {
+  border-color: var(--tr-primary-200);
+  background: linear-gradient(90deg, var(--tr-primary-50), var(--tr-surface) 40%);
+}
+
+.notification-card.urgent { border-left: 4px solid var(--tr-danger); }
+
+.n-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tr-primary-100);
+  color: var(--tr-primary-700);
+}
+
+.kind-payment .n-icon { background: var(--tr-success-bg); color: var(--tr-success); }
+.kind-alert .n-icon { background: var(--tr-danger-bg); color: var(--tr-danger); }
+.kind-admin .n-icon { background: var(--tr-primary-900); color: var(--tr-primary-200); }
+.kind-general .n-icon { background: var(--tr-surface-2); color: var(--tr-text-muted); }
+
+.n-body { flex: 1; min-width: 0; }
+
+.n-top { display: flex; align-items: flex-start; gap: 8px; }
+
+.notification-title {
+  flex: 1;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--tr-text);
+  line-height: 1.35;
+}
+
+.notification-card:not(.unread) .notification-title { font-weight: 500; }
+
+.n-dot {
+  width: 9px;
+  height: 9px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--tr-primary-500);
+  flex-shrink: 0;
+}
+
+.n-tags { display: flex; gap: 6px; margin-top: 6px; }
+
+.n-tag {
+  font-size: .7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.n-tag.from { background: var(--tr-primary-100); color: var(--tr-primary-700); }
+.n-tag.urgent { background: var(--tr-danger-bg); color: var(--tr-danger); }
+
+.notification-message {
+  margin-top: 6px;
+  font-size: .88rem;
+  color: var(--tr-text-muted);
+  line-height: 1.55;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.n-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: .8rem;
+}
+
+.n-time { color: var(--tr-text-soft); }
+
+.job-link {
+  color: var(--tr-primary-700);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.job-link i { font-size: .7rem; }
+.job-link:hover { text-decoration: underline; }
+
+.n-actions { margin-left: auto; display: inline-flex; gap: 6px; }
+
+.mark-btn,
+.delete-btn {
+  border: 1px solid var(--tr-border);
+  background: var(--tr-surface);
+  border-radius: 8px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mark-btn { padding: 0 10px; color: var(--tr-primary-700); }
+.mark-btn:hover { background: var(--tr-primary-50); border-color: var(--tr-primary-200); }
+
+.delete-btn { width: 32px; justify-content: center; color: var(--tr-text-soft); }
+.delete-btn:hover { color: var(--tr-danger); border-color: #fecaca; background: var(--tr-danger-bg); }
+
+.notifications-list .tr-empty { background: var(--tr-surface); border-radius: 14px; border: 1px solid var(--tr-border); }
+
+/* ---------- small screens ---------- */
+@media (max-width: 560px) {
+  body.notifications-page { padding: 16px 12px 32px; }
+  .inbox-head { flex-direction: column; gap: 12px; }
+  .inbox-tools { flex-direction: column; align-items: stretch; }
+  .filter-group { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .mark-all-btn { justify-content: center; }
+  .notification-card { padding: 14px 12px; gap: 12px; }
+  .n-icon { width: 34px; height: 34px; border-radius: 10px; font-size: .85rem; }
+  .n-actions { margin-left: 0; width: 100%; justify-content: flex-end; }
+}

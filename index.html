@@ -11,6 +11,7 @@
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/pages/index.css">
+  <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("motion");</script>
 </head>
 <body>
 
@@ -79,7 +80,7 @@
           <div class="hc-avatar">T</div>
           <div><strong>Your technician</strong><span><i class="fas fa-star"></i> Rated by customers</span></div>
         </div>
-        <div class="hc-msg"><i class="fas fa-comments"></i> "Screen replaced. Testing the battery now."</div>
+        <div class="hc-msg"><i class="fas fa-headset"></i> <strong>TechRider Support:</strong> "Your new screen is in. We'll book the return as soon as testing is done."</div>
       </div>
     </section>
 
@@ -179,7 +180,13 @@
   </main>
 
   <footer class="footer">
-    <span>© <span id="year">2026</span> TechRider</span>
+    <div class="footer-brand">
+      <span>© <span id="year">2026</span> TechRider</span>
+      <div class="footer-contact">
+        <a href="mailto:techridersupport@gmail.com"><i class="fas fa-envelope"></i> techridersupport@gmail.com</a>
+        <a href="https://wa.me/2349069436272" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> +234 906 943 6272</a>
+      </div>
+    </div>
     <nav aria-label="Footer">
       <a href="faq.html">FAQ</a>
       <a href="privacy-policy.html">Privacy</a>
@@ -188,6 +195,7 @@
   </footer>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="js/pages/index.js"></script>
   <script src="js/ui.js"></script>
 </body>
 </html>

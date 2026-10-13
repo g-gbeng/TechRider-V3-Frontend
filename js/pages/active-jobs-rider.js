@@ -223,14 +223,6 @@ ${job.instructions ? `
 
 <div class="actions">
 
-${job.request ? `
-<button
-class="btn chat-btn tr-chat-btn"
-data-chat="${esc(job.request.id)}"
-data-chat-title="${esc(job.request.code)} · ${esc(job.code)}">
-<i class="fas fa-comments"></i> Messages
-</button>` : ''}
-
 ${next ? `
 <button
 class="btn complete-btn"
@@ -249,7 +241,6 @@ ${next.button}
 
 }).join('');
 
-TR.chat.refreshBadges();
 
 }
 
