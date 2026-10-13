@@ -373,6 +373,145 @@
     setTimeout(() => backdrop.querySelector(".tr-rate-stars button").focus(), 30);
   });
 
+  /* ------------------------------------------------------------ action menus */
+  /* Markup:
+       <div class="tr-menu">
+         <button type="button" class="tr-menu-btn" aria-haspopup="menu" aria-expanded="false">Actions</button>
+         <div class="tr-menu-list" role="menu" hidden> <button role="menuitem" class="tr-menu-item">…</button> … </div>
+       </div>
+     The list opens below the button (or above when there is no room), is
+     never clipped by scrolling tables, and closes on a choice, Escape
+     or a click elsewhere. */
+  let openMenu = null;
+
+  function closeMenu(focusButton) {
+    if (!openMenu) return;
+    const { menu, list, btn } = openMenu;
+    list.hidden = true;
+    list.style.cssText = "";
+    btn.setAttribute("aria-expanded", "false");
+    menu.classList.remove("open");
+    if (focusButton) btn.focus();
+    openMenu = null;
+  }
+
+  function placeMenu() {
+    if (!openMenu) return;
+    const { btn, list } = openMenu;
+    const r = btn.getBoundingClientRect();
+    list.style.position = "fixed";
+    list.style.minWidth = Math.max(r.width, 190) + "px";
+    const w = list.offsetWidth, h = list.offsetHeight;
+    const left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
+    const below = r.bottom + 6 + h <= window.innerHeight - 8;
+    list.style.left = left + "px";
+    list.style.top = (below ? r.bottom + 6 : Math.max(8, r.top - h - 6)) + "px";
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tr-menu-btn");
+    if (btn) {
+      const menu = btn.closest(".tr-menu");
+      const wasOpen = openMenu && openMenu.menu === menu;
+      closeMenu();
+      if (wasOpen) return;
+      const list = menu.querySelector(".tr-menu-list");
+      list.hidden = false;
+      menu.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      openMenu = { menu, list, btn };
+      placeMenu();
+      const first = list.querySelector(".tr-menu-item:not(:disabled)");
+      if (first && e.detail === 0) first.focus(); // opened from the keyboard
+      return;
+    }
+    if (openMenu && e.target.closest(".tr-menu-item")) {
+      setTimeout(() => closeMenu(), 0); // let the item's own click run first
+      return;
+    }
+    if (openMenu && !e.target.closest(".tr-menu-list")) closeMenu();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!openMenu) return;
+    const items = [...openMenu.list.querySelectorAll(".tr-menu-item:not(:disabled)")];
+    const i = items.indexOf(document.activeElement);
+    if (e.key === "Escape") { e.preventDefault(); closeMenu(true); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); (items[i + 1] || items[0]).focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); (items[i - 1] || items[items.length - 1]).focus(); }
+    else if (e.key === "Tab") closeMenu();
+  });
+
+  // keep the open list attached to its button while the page or a table scrolls
+  window.addEventListener("scroll", () => placeMenu(), true);
+  window.addEventListener("resize", () => closeMenu());
+
+  /* ------------------------------------------------------------ page fade-in + scroll reveals */
+  /* Every page fades in once the login check has shown it, and cards below
+     the fold slide up as they scroll into view. Lists that re-render later
+     (live updates) don't flash: cards already on screen just appear.
+     Nothing moves when the device asks for reduced motion. The home page
+     has its own animations (js/pages/index.js). */
+  const REVEAL = [
+    ".card", ".repair-card", ".job-card", ".tech-card", ".notification-card", ".history-card",
+    ".history-item", ".faqItem", ".contactCard", ".linkCard", ".panel", ".location-card",
+    ".rate-banner", ".action", ".section", ".table-container", ".tableCard", ".chart-card",
+    ".stat-card", ".deliveryRow", ".tr-empty"
+  ].join(",");
+  const SKIP = ".sidebar, #sidebar, .tr-dialog, .tr-chat, .tr-menu-list, .tr-skeleton-list, .modal, .login-shell, .hero";
+
+  function startMotion() {
+    const root = document.documentElement;
+    if (root.classList.contains("motion")) return; // home page
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
+    root.classList.add("tr-motion");
+
+    const pageShownAt = Date.now();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        io.unobserve(el);
+        el.classList.add("tr-in");
+        setTimeout(() => el.classList.remove("tr-reveal", "tr-in"), 900);
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
+
+    function consider(el) {
+      if (el.dataset.trSeen || el.closest(SKIP)) return;
+      if (el.parentElement && el.parentElement.closest(REVEAL)) return; // only the outer card
+      el.dataset.trSeen = "1";
+      const r = el.getBoundingClientRect();
+      const onScreen = r.top < window.innerHeight && r.bottom > 0;
+      // late re-renders that are already visible stay still (no flicker on refresh)
+      if (onScreen && Date.now() - pageShownAt > 1500) return;
+      const siblings = el.parentElement ? [...el.parentElement.children].filter((c) => c.matches(REVEAL)) : [];
+      el.style.setProperty("--tr-delay", `${Math.min(6, Math.max(0, siblings.indexOf(el))) * 60}ms`);
+      el.classList.add("tr-reveal");
+      io.observe(el);
+    }
+
+    const scan = (node) => {
+      if (node.nodeType !== 1) return;
+      if (node.matches(REVEAL)) consider(node);
+      node.querySelectorAll(REVEAL).forEach(consider);
+    };
+    scan(document.body);
+    new MutationObserver((list) => list.forEach((m) => m.addedNodes.forEach(scan)))
+      .observe(document.body, { childList: true, subtree: true });
+  }
+
+  function whenShown(fn) {
+    const go = () => (window.TechRiderAPI ? window.TechRiderAPI.ready : Promise.resolve()).then(() => requestAnimationFrame(fn));
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
+    else go();
+  }
+  whenShown(() => {
+    document.body.classList.add("tr-page-in");
+    startMotion();
+  });
+
   /* ------------------------------------------------------------ money + time */
   TR.naira = (n) => "₦" + Math.round(Number(n) || 0).toLocaleString("en-NG");
   TR.ago = (date) => {

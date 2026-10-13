@@ -302,3 +302,8 @@ TR.toast('Could not load your history: ' + err.message);
 renderHistory();
 
 }})();
+
+/* Opening this page clears its sidebar badge (marks these updates as seen) */
+TechRiderAPI.ready.then(user => {
+  if(user) TechRiderAPI.patch('/notifications/read-all', { types: ['review'] }).catch(() => {});
+});

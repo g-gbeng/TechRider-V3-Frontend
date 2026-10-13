@@ -136,9 +136,28 @@ function formatDate(value){
 /* Rider column: who is on the trip, or a prompt to assign one */
 function chatButton(job){
 
-    return `<button class="btn viewBtn tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}"><i class="fas fa-comments"></i> Messages</button>`;
+    return `<button type="button" role="menuitem" class="tr-menu-item tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}"><i class="fas fa-comments"></i> Messages</button>`;
 
 }
+
+/* One tidy "Actions" menu per row. items are menu-item HTML strings ('' skipped);
+   needs = true puts a red dot on the button (something is waiting for you). */
+function actionMenu(items, needs = false){
+
+    return `
+<div class="tr-menu ${needs ? 'needs' : ''}">
+<button type="button" class="tr-menu-btn" aria-haspopup="menu" aria-expanded="false">Actions <i class="fas fa-chevron-down chev" aria-hidden="true"></i></button>
+<div class="tr-menu-list" role="menu" hidden>${items.filter(Boolean).join('')}</div>
+</div>`;
+
+}
+
+const menuItem = (cls, icon, label, onclick) =>
+    `<button type="button" role="menuitem" class="tr-menu-item ${cls}" onclick="${onclick}"><i class="fas ${icon}"></i> ${esc(label)}</button>`;
+
+const timelineItem = () => menuItem('viewBtn', 'fa-clock-rotate-left', 'View timeline', 'toggleTimeline(this)');
+const cancelItem = (job) => menuItem('cancelStatusBtn danger', 'fa-ban', 'Cancel job', `cancelJob(${jsArg(job.id)}, this)`);
+const separator = '<div class="tr-menu-sep" role="separator"></div>';
 
 function riderCell(job){
 
@@ -216,13 +235,11 @@ function renderPending(rows){
               }
             : q;
 
-        let action = '';
-
-        if(job.status === 'quoted'){
-            action = `<button class="btn sendQuoteBtn" onclick="sendQuote(${jsArg(job.id)}, this)">Send Quote</button>`;
-        }else if(job.status === 'quote_sent'){
-            action = `<button class="btn quoteSentBtn" disabled>Quote Sent</button>`;
-        }
+        const quoteItem = job.status === 'quoted'
+            ? menuItem('sendQuoteBtn primary', 'fa-paper-plane', 'Send quote to customer', `sendQuote(${jsArg(job.id)}, this)`)
+            : job.status === 'quote_sent'
+            ? `<button type="button" role="menuitem" class="tr-menu-item quoteSentBtn" disabled><i class="fas fa-check"></i> Quote sent</button>`
+            : '';
 
         return `
 <tr data-search="${esc(searchText(job))}">
@@ -235,10 +252,8 @@ function renderPending(rows){
 <td class="commissionAmount">${formatNaira(preview.commission)}</td>
 <td>${badge(job)}</td>
 <td>${formatDate(job.updatedAt)}</td>
-<td>
-${action}
-${chatButton(job)}
-<button class="btn cancelStatusBtn" onclick="cancelJob(${jsArg(job.id)}, this)">Cancel</button>
+<td class="actionsCell">
+${actionMenu([quoteItem, menuItem('', 'fa-circle-info', 'View issue', `showIssue(${jsArg(job.id)})`), chatButton(job), separator, cancelItem(job)], job.status === 'quoted')}
 </td>
 </tr>`;
 
@@ -259,7 +274,7 @@ function renderAccepted(rows){
 
         const steps = job.nextSteps
             .filter(step => step !== 'cancelled')
-            .map(step => `<button class="btn ${step === 'completed' ? 'completeBtn' : 'stepBtn'}" onclick="moveJob(${jsArg(job.id)}, ${jsArg(step)}, this)">${esc(STEP_LABELS[step] || step)}</button>`)
+            .map(step => menuItem(`${step === 'completed' ? 'completeBtn' : 'stepBtn'} primary`, step === 'completed' ? 'fa-flag-checkered' : 'fa-forward-step', STEP_LABELS[step] || step, `moveJob(${jsArg(job.id)}, ${jsArg(step)}, this)`))
             .join('');
 
         const waiting = job.status === 'repair_in_progress'
@@ -267,7 +282,7 @@ function renderAccepted(rows){
             : job.riderOnJob
             ? '<span class="riderNote">The rider moves this job along</span>'
             : job.needsRider && steps
-            ? '<span class="riderNote">No rider? Move it by hand:</span>'
+            ? '<span class="riderNote">No rider? Move it by hand from Actions.</span>'
             : '';
 
         return `
@@ -279,11 +294,9 @@ function renderAccepted(rows){
 <td>${badge(job)}</td>
 <td>${riderCell(job)}</td>
 <td>${formatDate(job.updatedAt)}</td>
-<td>
-<button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
-${chatButton(job)}
-${waiting}${steps}
-<button class="btn cancelStatusBtn" onclick="cancelJob(${jsArg(job.id)}, this)">Cancel</button>
+<td class="actionsCell">
+${actionMenu([steps, timelineItem(), chatButton(job), separator, cancelItem(job)])}
+${waiting}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`;
@@ -316,9 +329,8 @@ ${esc(outcome)}
 ${refundCell(job)}
 </td>
 <td>${formatDate(job.updatedAt)}</td>
-<td>
-<button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
-${chatButton(job)}
+<td class="actionsCell">
+${actionMenu([timelineItem(), chatButton(job)])}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`;
@@ -345,9 +357,8 @@ function renderCompleted(rows){
 <td>${badge(job)}</td>
 <td>${riderCell(job)}</td>
 <td>${formatDate(job.completedAt || job.updatedAt)}</td>
-<td>
-<button class="btn viewBtn" onclick="toggleTimeline(this)">Timeline</button>
-${chatButton(job)}
+<td class="actionsCell">
+${actionMenu([timelineItem(), chatButton(job)])}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`).join('');

@@ -552,3 +552,7 @@ text-decoration:underline;
 
 .tr-chat-btn{ position:relative; }
 .tr-chat-btn i{ margin-right:4px; }
+
+/* ---------- Actions menu column ---------- */
+.actionsCell { white-space: nowrap; vertical-align: middle; }
+.actionsCell .riderNote { display: block; margin-top: 6px; white-space: normal; max-width: 180px; }

@@ -2,401 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TechRider - Technician Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechRider · Technician sign up</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/pages/signup-technician.css">
+  <link rel="stylesheet" href="css/pages/login.css">
+  <link rel="stylesheet" href="css/pages/signup.css">
 </head>
+<body class="login-page signup-page" data-role="technician">
 
-<body>
-
-<body>
-
-<!-- SUCCESS TOAST -->
-
-<div class="toast" id="successToast">
+  <!-- shown after the application is sent (js/pages/signup-*.js) -->
+  <div class="toast" id="successToast" role="status">
     <i class="fas fa-check-circle"></i>
-    <span id="toastMessage">
-        Registration submitted successfully.
-    </span>
-</div>
+    <span id="toastMessage">Registration submitted successfully.</span>
+  </div>
 
-<div class="container">
+  <main class="login-shell signup-shell">
 
-    <div class="header">
+    <aside class="login-panel" aria-hidden="true">
+      <a href="index.html" class="panel-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
+      <div class="panel-body">
+        <span class="panel-role"><i class="fas fa-screwdriver-wrench"></i> Technicians</span>
+        <h2>Join TechRider's network of verified technicians.</h2>
+        <ul><li><i class="fas fa-bell"></i> Repair jobs sent straight to you</li><li><i class="fas fa-tag"></i> You set the price for every repair</li><li><i class="fas fa-star"></i> Ratings that grow your reputation</li></ul>
+        <ol class="panel-steps"><li><span>1</span>Fill in your details</li><li><span>2</span>Upload your ID and business documents</li><li><span>3</span>TechRider checks them and approves you</li></ol>
+      </div>
+      <p class="panel-foot">Questions? <a href="mailto:techridersupport@gmail.com">techridersupport@gmail.com</a></p>
+    </aside>
 
-        <div class="logo">
-            <i class="fas fa-tools"></i>
-        </div>
+    <section class="login-card signup-card" aria-labelledby="signupTitle">
 
-        <h2>Technician Signup</h2>
+      <a href="index.html" class="mobile-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
 
-        <p>
-            Register as a verified TechRider technician
-        </p>
+      <nav class="role-tabs" aria-label="Sign up as"><a href="signup-customer.html" class="role-tab"><i class="fas fa-user"></i> Customer</a><a href="signup-technician.html" class="role-tab active" aria-current="page"><i class="fas fa-screwdriver-wrench"></i> Technician</a><a href="signup-rider.html" class="role-tab"><i class="fas fa-motorcycle"></i> Rider</a></nav>
 
-    </div>
+      <h1 id="signupTitle">Create your technician account</h1>
+      <p class="login-sub">Tell us about you and your workshop. We review every application.</p>
 
-    <div class="top-link">
-        Already have an account?
-        <a href="login-technician.html">
-            Log in
-        </a>
-    </div>
+      <div class="form-progress" aria-hidden="true">
+        <div class="form-progress-bar"><span id="formProgressFill"></span></div>
+        <span class="form-progress-text" id="formProgressText">0% done</span>
+      </div>
 
-    <form
-        id="signupForm"
-        class="form"
-        novalidate
-    >
-
-        <!-- FULL NAME -->
-
-        <div class="group">
-
-            <label for="fullName">
-                Full Name
-            </label>
-
-            <input
-                type="text"
-                id="fullName"
-                placeholder="Enter your full name"
-                required
-            >
-
+      <form id="signupForm" class="form" novalidate>
+        
+        <fieldset class="form-section" data-section>
+          <legend><span class="step-no">1</span> About you <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <div class="section-grid">
+          <div class="group">
+            <label for="fullName">Full name</label>
+            <div class="input-wrap has-icon"><i class="fas fa-user input-icon" aria-hidden="true"></i><input type="text" id="fullName" autocomplete="name" placeholder="e.g. Tunde Bello" required></div>
             <small class="error-message"></small>
-
-        </div>
-
-        <!-- EMAIL -->
-
-        <div class="group">
-
-            <label for="email">
-                Email Address
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                placeholder="example@email.com"
-                required
-            >
-
+          </div>
+          <div class="group">
+            <label for="email">Email address</label>
+            <div class="input-wrap has-icon"><i class="fas fa-envelope input-icon" aria-hidden="true"></i><input type="email" id="email" autocomplete="email" placeholder="you@example.com" required></div>
             <small class="error-message"></small>
-
-        </div>
-
-        <!-- PHONE -->
-
-        <div class="group">
-
-            <label for="phone">
-                Phone Number
-            </label>
-
-            <input
-                type="tel"
-                id="phone"
-                maxlength="11"
-                placeholder="08012345678"
-                required
-            >
-
+          </div>
+          <div class="group">
+            <label for="phone">Phone number</label>
+            <div class="input-wrap has-icon"><i class="fas fa-phone input-icon" aria-hidden="true"></i><input id="phone" type="tel" maxlength="11" inputmode="numeric" pattern="[0-9]{11}" autocomplete="tel" placeholder="08012345678" required></div>
             <small class="error-message"></small>
-
-        </div>
-
-        <!-- ADDRESS -->
-
-        <div class="group">
-
-            <label for="address">
-                Business Address
-            </label>
-
-            <input
-                type="text"
-                id="address"
-                placeholder="Enter your address"
-                required
-            >
-
+          </div>
+          <div class="group">
+            <label for="address">Business address</label>
+            <div class="input-wrap has-icon"><i class="fas fa-location-dot input-icon" aria-hidden="true"></i><input type="text" id="address" autocomplete="street-address" placeholder="Street, area, city" required></div>
             <small class="error-message"></small>
-
-        </div>
-
-
-        <!-- SPECIALIZATION -->
-
-        <div class="group">
-
-            <label for="specialization">
-                Specialization
-            </label>
-
-            <select
-                id="specialization"
-                required
-            >
+          </div>
+          </div>
+        </fieldset>
+        <fieldset class="form-section" data-section>
+          <legend><span class="step-no">2</span> Your work <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <div class="section-grid">
+          <div class="group">
+            <label for="specialization">Specialization</label>
+            <div class="input-wrap has-icon"><i class="fas fa-screwdriver-wrench input-icon" aria-hidden="true"></i><select id="specialization" required>
                 <option value="">Select your specialization</option>
                 <option value="Phone repair">Phone repair</option>
                 <option value="Laptop repair">Laptop repair</option>
                 <option value="Phone and laptop repair">Phone and laptop repair</option>
-            </select>
-
+              </select></div>
             <small class="error-message"></small>
-
-        </div>
-
-
-        <!-- EXPERIENCE -->
-
-        <div class="group">
-
-            <label for="experience">
-                Years of Experience
-            </label>
-
-            <input
-                type="number"
-                id="experience"
-                min="0"
-                max="60"
-                placeholder="e.g. 5"
-                required
-            >
-
+          </div>
+          <div class="group">
+            <label for="experience">Years of experience</label>
+            <div class="input-wrap has-icon"><i class="fas fa-award input-icon" aria-hidden="true"></i><input type="number" id="experience" min="0" max="60" placeholder="e.g. 5" required></div>
             <small class="error-message"></small>
-
-        </div>
-
-       
-        <!-- FACIAL IMAGE -->
-
-        <div class="group">
-
-            <label>
-                Passport / Facial Photograph
+          </div>
+          </div>
+        </fieldset>
+        <fieldset class="form-section" data-section>
+          <legend><span class="step-no">3</span> Verification documents <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <div class="section-grid">
+          <div class="group upload-group">
+            <span class="upload-label" id="facialImageLabel">Passport / facial photograph</span>
+            <label class="upload-box" for="facialImage">
+              <span class="upload-icon"><i class="fas fa-camera"></i></span>
+              <span class="upload-text"><strong>Choose a file</strong><small>A clear photo of your face</small></span>
+              <span class="upload-done"><i class="fas fa-circle-check"></i></span>
+              <input type="file" id="facialImage" accept="image/*" aria-labelledby="facialImageLabel" required>
             </label>
-
-            <div class="upload-box">
-
-                <i class="fas fa-image"></i>
-
-                <input
-                    type="file"
-                    id="facialImage"
-                    accept="image/*"
-                    required
-                >
-
-                <small>
-                    Upload a clear passport photograph.
-                </small>
-
+            <div class="preview-container" id="facialPreview">
+              <img id="facialPreviewImage" src="" alt="">
+              <div class="file-name" id="facialFileName"></div>
             </div>
-
-            <div
-                class="preview-container"
-                id="facialPreview"
-            >
-
-                <img
-                    id="facialPreviewImage"
-                    src=""
-                    alt="Facial Preview"
-                >
-
-                <div
-                    class="file-name"
-                    id="facialFileName"
-                ></div>
-
-            </div>
-
-        </div>
-
-        <!-- GOVERNMENT ID -->
-
-        <div class="group">
-
-            <label>
-                Government ID
+          </div>
+          <div class="group upload-group">
+            <span class="upload-label" id="governmentIdLabel">Government ID</span>
+            <label class="upload-box" for="governmentId">
+              <span class="upload-icon"><i class="fas fa-id-card"></i></span>
+              <span class="upload-text"><strong>Choose a file</strong><small>National ID, driver's licence or passport</small></span>
+              <span class="upload-done"><i class="fas fa-circle-check"></i></span>
+              <input type="file" id="governmentId" accept="image/*,.pdf" aria-labelledby="governmentIdLabel" required>
             </label>
-
-            <div class="upload-box">
-
-                <i class="fas fa-id-card"></i>
-
-                <input
-                    type="file"
-                    id="governmentId"
-                    accept="image/*,.pdf"
-                    required
-                >
-
-                <small>
-                    National ID, Driver's License or International Passport.
-                </small>
-
+            <div class="preview-container" id="governmentPreview">
+              <img id="governmentPreviewImage" src="" alt="">
+              <div class="file-name" id="governmentFileName"></div>
             </div>
-
-            <div
-                class="preview-container"
-                id="governmentPreview"
-            >
-
-                <img
-                    id="governmentPreviewImage"
-                    src=""
-                    alt=""
-                >
-
-                <div
-                    class="file-name"
-                    id="governmentFileName"
-                ></div>
-
-            </div>
-
-        </div>
-
-        <!-- BUSINESS LICENSE -->
-
-        <div class="group">
-
-            <label>
-                Business License / CAC Document
+          </div>
+          <div class="group upload-group">
+            <span class="upload-label" id="businessLicenseLabel">Business licence / CAC document</span>
+            <label class="upload-box" for="businessLicense">
+              <span class="upload-icon"><i class="fas fa-file-contract"></i></span>
+              <span class="upload-text"><strong>Choose a file</strong><small>Your business registration or licence</small></span>
+              <span class="upload-done"><i class="fas fa-circle-check"></i></span>
+              <input type="file" id="businessLicense" accept="image/*,.pdf" aria-labelledby="businessLicenseLabel" required>
             </label>
-
-            <div class="upload-box">
-
-                <i class="fas fa-file-contract"></i>
-
-                <input
-                    type="file"
-                    id="businessLicense"
-                    accept="image/*,.pdf"
-                    required
-                >
-
-                <small>
-                    Upload your business registration or license.
-                </small>
-
+            <div class="preview-container" id="businessPreview">
+              <img id="businessPreviewImage" src="" alt="">
+              <div class="file-name" id="businessFileName"></div>
             </div>
+          </div>
+          </div>
+        </fieldset>
+        <fieldset class="form-section" data-section>
+          <legend><span class="step-no">4</span> Choose a password <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <div class="section-grid">
+          <div class="group password-group">
+            <label for="password">Password</label>
+            <div class="input-wrap has-icon"><i class="fas fa-lock input-icon" aria-hidden="true"></i><input type="password" id="password" autocomplete="new-password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&]).{8,}$" placeholder="Create a strong password"><i class="fas fa-eye toggle-password" onclick="togglePassword(this)" role="button" tabindex="0" aria-label="Show password"></i></div>
+            <div class="strength" id="passwordStrength"></div>
+          </div>
+          <div class="group password-group">
+            <label for="confirmPassword">Confirm password</label>
+            <div class="input-wrap has-icon"><i class="fas fa-lock input-icon" aria-hidden="true"></i><input type="password" id="confirmPassword" autocomplete="new-password" placeholder="Type it again" required><i class="fas fa-eye toggle-password" onclick="togglePassword(this)" role="button" tabindex="0" aria-label="Show password"></i></div>
+            
+          </div>
+          </div>
+        </fieldset>
 
-            <div
-                class="preview-container"
-                id="businessPreview"
-            >
+        <button class="login-btn" id="submitBtn" type="submit"><span>Submit my application</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
 
-                <img
-                    id="businessPreviewImage"
-                    src=""
-                    alt=""
-                >
+        <p class="legal-line">By signing up you agree to our
+          <a href="terms-of-service.html?role=technician">Terms of Service</a> and
+          <a href="privacy-policy.html?role=technician">Privacy Policy</a>.</p>
 
-                <div
-                    class="file-name"
-                    id="businessFileName"
-                ></div>
+      </form>
 
-            </div>
+      <p class="signup-line">Already have an account? <a href="login-technician.html">Log in</a></p>
 
-        </div>
+    </section>
 
-        <!-- PASSWORD -->
+  </main>
 
-        <div class="group password-group">
-
-            <label for="password">
-                Password
-            </label>
-
-            <input
-                type="password"
-                id="password"
-                required
-                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&]).{8,}$"
-                placeholder="Create a strong password"
-            >
-
-            <i
-                class="fas fa-eye toggle"
-                onclick="togglePassword(this)"
-            ></i>
-
-            <div
-                class="strength"
-                id="passwordStrength"
-            ></div>
-
-        </div>
-
-        <!-- CONFIRM PASSWORD -->
-
-        <div class="group password-group">
-
-            <label for="confirmPassword">
-                Confirm Password
-            </label>
-
-            <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm password"
-                required
-            >
-
-            <i
-                class="fas fa-eye toggle"
-                onclick="togglePassword(this)"
-            ></i>
-
-        </div>
-
-        <!-- SUBMIT -->
-
-        <button
-            class="btn"
-            id="submitBtn"
-            type="submit"
-        >
-
-            Create Technician Account
-
-        </button>
-
-        <div class="links">
-
-            <a href="terms-of-service.html?role=technician">
-                Terms of Service
-            </a>
-
-            |
-
-            <a href="privacy-policy.html?role=technician">
-                Privacy Policy
-            </a>
-
-        </div>
-
-    </form>
-
-</div>
-
-
-</body>
-<script src="js/api.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/pages/signup-technician.js"></script> 
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/signup-technician.js"></script>
+  <script src="js/signup-progress.js"></script>
 
 </body>
 </html>

@@ -377,3 +377,77 @@ img { max-width: 100%; }
 /* page styles for old empty states must not resize the shared icon */
 .tr-empty .tr-empty-icon i { font-size: inherit !important; margin: 0 !important; color: inherit !important; }
 .tr-empty h3 { margin-top: 0 !important; }
+
+/* ---------------------------------------------------------- 3h. action menus (js/ui.js) */
+.tr-menu { position: relative; display: inline-block; }
+.tr-menu-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 9px;
+  border: 1px solid var(--tr-border); background: var(--tr-surface);
+  color: var(--tr-primary-700); font-size: .82rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap; position: relative;
+}
+.tr-menu-btn:hover, .tr-menu.open .tr-menu-btn { border-color: var(--tr-primary-400); background: var(--tr-primary-50); }
+.tr-menu-btn .chev { font-size: .7rem; transition: transform .15s; }
+.tr-menu.open .tr-menu-btn .chev { transform: rotate(180deg); }
+/* a dot when something on this job needs you (a quote to send, unread messages) */
+.tr-menu.needs .tr-menu-btn::after,
+.tr-menu:has(.tr-chat-count) .tr-menu-btn::after {
+  content: ""; position: absolute; top: -4px; right: -4px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--tr-danger); border: 2px solid var(--tr-surface);
+}
+.tr-menu-list {
+  z-index: 100002;
+  background: var(--tr-surface);
+  border: 1px solid var(--tr-border);
+  border-radius: 12px;
+  box-shadow: var(--tr-shadow-lg);
+  padding: 6px;
+  display: flex; flex-direction: column;
+  animation: trPop .12s ease-out;
+}
+.tr-menu-list[hidden] { display: none; }
+.tr-menu-item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 9px 12px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--tr-text);
+  font-size: .85rem; font-weight: 500; text-align: left; cursor: pointer;
+  position: relative; white-space: nowrap;
+}
+.tr-menu-item i { width: 16px; text-align: center; color: var(--tr-primary-500); }
+.tr-menu-item:hover, .tr-menu-item:focus-visible { background: var(--tr-primary-50); outline: none; box-shadow: none; }
+.tr-menu-item.primary { color: var(--tr-primary-700); font-weight: 600; }
+.tr-menu-item.danger { color: var(--tr-danger); }
+.tr-menu-item.danger i { color: var(--tr-danger); }
+.tr-menu-item.danger:hover { background: var(--tr-danger-bg); }
+.tr-menu-item:disabled { color: var(--tr-text-soft); cursor: default; background: transparent; }
+.tr-menu-item .tr-chat-count { position: static; margin-left: auto; }
+.tr-menu-sep { height: 1px; background: var(--tr-border); margin: 4px 6px; }
+
+/* ---------------------------------------------------------- 3i. sidebar badges (js/badges.js) */
+.tr-has-badge { position: relative; }
+.tr-nav-badge {
+  margin-left: auto;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  border-radius: 999px;
+  background: var(--tr-danger); color: #fff;
+  font-size: .7rem; font-weight: 700; line-height: 20px; text-align: center;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, .25);
+  flex-shrink: 0;
+}
+.tr-nav-badge.pop { animation: trBadgePop .35s ease-out; }
+@keyframes trBadgePop { 0% { transform: scale(.4); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+/* admin sidebar folded to icons: the badge sits on the icon's corner */
+.sidebar.collapsed .tr-nav-badge { position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; line-height: 16px; font-size: .6rem; padding: 0 4px; }
+
+/* ---------------------------------------------------------- 3j. page fade-in + scroll reveals (js/ui.js) */
+@keyframes trPageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+html.tr-motion body.tr-page-in { animation: trPageIn .45s ease-out both; }
+html.tr-motion .tr-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .55s ease-out, transform .55s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--tr-delay, 0ms);
+}
+html.tr-motion .tr-reveal.tr-in { opacity: 1; transform: none; }

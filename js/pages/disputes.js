@@ -144,3 +144,8 @@ function goBack(){
 
 /* Live updates: refresh as soon as the server says something changed */
 TechRiderAPI.onUpdate(loadDisputes);
+
+/* Opening this page clears its sidebar badge (marks these updates as seen) */
+TechRiderAPI.ready.then(user => {
+  if(user) TechRiderAPI.patch('/notifications/read-all', { types: ['dispute', 'dispute_settled'] }).catch(() => {});
+});
