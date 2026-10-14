@@ -82,6 +82,17 @@ if(currentTechnician.profileImage){
 
 }
 
+/* REMOVE PROFILE PHOTO (back to initials) */
+
+const removePhotoBtn = document.getElementById("removePhotoBtn");
+removePhotoBtn.hidden = !currentTechnician.profileImage;
+removePhotoBtn.addEventListener("click", async () => {
+  if(!(await TR.removeAvatar())) return;
+  currentTechnician.profileImage = null;
+  avatar.textContent = getInitials(technicianName);
+  removePhotoBtn.hidden = true;
+});
+
 /* DETAILS */
 
 document.getElementById(
@@ -158,6 +169,7 @@ document
             img.src = user.profileImageUrl;
             img.alt = 'Profile';
             avatar.appendChild(img);
+            removePhotoBtn.hidden = false;
 
           })
           .catch((err) => {

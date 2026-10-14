@@ -55,9 +55,6 @@
     const i = CHOICES.indexOf(saved());
     const choice = CHOICES[(i + 1) % CHOICES.length];
     set(choice);
-    if (window.TR && window.TR.toast) {
-      window.TR.toast(choice === "system" ? `Theme: matching your device (${resolve("system")})` : `Theme: ${LABELS[choice]}`, "info");
-    }
   }
 
   // other tabs of the site follow along

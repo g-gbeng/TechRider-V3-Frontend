@@ -341,6 +341,26 @@
     }
   });
 
+  /* Profile pages: remove the photo after asking. Resolves to the updated user, or null. */
+  TR.removeAvatar = async () => {
+    const ok = await TR.confirm({
+      title: "Remove your profile photo?",
+      message: "Your initials will show instead. You can upload a new photo at any time.",
+      confirmText: "Remove photo",
+      danger: true
+    });
+    if (!ok) return null;
+    try {
+      const { user } = await window.TechRiderAPI.del("/me/avatar");
+      window.TechRiderAPI.cacheSession(user);
+      TR.toast("Profile photo removed", "success");
+      return user;
+    } catch (err) {
+      TR.toast(err.message, "error");
+      return null;
+    }
+  };
+
   TR.paymentsBanner = async (container, where = "afterbegin") => {
     if (!container || !window.TechRiderAPI) return;
     try {

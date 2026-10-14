@@ -115,6 +115,7 @@
             img.src = user.profileImageUrl;
             img.alt = 'Profile';
             avatar.appendChild(img);
+            removePhotoBtn.hidden = false;
 
           })
           .catch((err) => {
@@ -130,6 +131,16 @@
 
       }
     );
+
+    // REMOVE PROFILE PHOTO (back to initials)
+    const removePhotoBtn = document.getElementById('removePhotoBtn');
+    removePhotoBtn.hidden = !currentCustomer.profileImage;
+    removePhotoBtn.addEventListener('click', async () => {
+      if(!(await TR.removeAvatar())) return;
+      currentCustomer.profileImage = null;
+      avatar.textContent = getInitials(currentCustomer.fullName);
+      removePhotoBtn.hidden = true;
+    });
 
     // REQUEST STATS (from the server)
     (async function loadStats(){

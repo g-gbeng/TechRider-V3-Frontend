@@ -593,4 +593,15 @@ html[data-theme="dark"] .btn.deleteBtn, html[data-theme="dark"] .badge.pending {
 html[data-theme="dark"] .badge.pending { background: #4b5563; }
 
 /* TechRider logo mark inside the brand squares */
-.brand-icon img, .logo img { width: 74%; height: 74%; object-fit: contain; display: block; }
+.brand-icon img, .logo img:not(.tr-avatar-img) { width: 74%; height: 74%; object-fit: contain; display: block; }
+
+/* "Remove photo" on the profile pages */
+.tr-remove-photo {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  margin-top: 10px; padding: 7px 12px; border-radius: 10px; cursor: pointer;
+  font: inherit; font-size: .8rem; font-weight: 600;
+  background: transparent; color: var(--tr-danger-text, var(--tr-danger));
+  border: 1px solid var(--tr-border);
+}
+.tr-remove-photo:hover { background: var(--tr-danger-bg); border-color: var(--tr-danger); }
+.tr-remove-photo[hidden] { display: none; }

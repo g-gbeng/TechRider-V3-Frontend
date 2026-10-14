@@ -117,6 +117,18 @@ initials;
 renderProfileImage();
 
 /* =========================
+REMOVE PROFILE IMAGE (back to initials)
+========================= */
+const removePhotoBtn = document.getElementById('removePhotoBtn');
+removePhotoBtn.hidden = !currentRider.profileImage;
+removePhotoBtn.addEventListener('click', async () => {
+if(!(await TR.removeAvatar())) return;
+currentRider.profileImage = null;
+renderProfileImage();
+removePhotoBtn.hidden = true;
+});
+
+/* =========================
 UPLOAD PROFILE IMAGE
 ========================= */
 
@@ -146,6 +158,7 @@ if(!file) return;
               user.profileImageUrl;
 
             renderProfileImage();
+            removePhotoBtn.hidden = false;
 
           })
           .catch((err) => {
