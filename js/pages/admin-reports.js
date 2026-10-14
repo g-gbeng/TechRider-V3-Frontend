@@ -69,19 +69,8 @@ function render(){
             `(customers pay two trips). Change these on Job Monitoring.`);
     }
 
-    // Delivery payouts per rider
-    const payouts = report.deliveryPayouts || [];
-    document.getElementById("payoutTable").innerHTML = payouts.length
-        ? payouts.map(p => `
-<tr>
-<td>${TR.esc(p.fullName)}</td>
-<td>${TR.esc(p.phone || "—")}</td>
-<td>${p.trips}</td>
-<td>${p.lastDeliveredAt ? new Date(p.lastDeliveredAt).toLocaleDateString("en-NG", { day:"numeric", month:"short", year:"numeric" }) : "—"}</td>
-<td><strong>${formatNaira(p.payout)}</strong></td>
-</tr>`).join("")
-        : `<tr><td colspan="5" class="emptyRow">No delivered trips yet.</td></tr>`;
-    setMetric("payoutTotal", formatNaira(financial.deliveryPayouts));
+    setMetric("technicianOwedNote", financial.technicianOwed ? `Settled on Payouts · ${formatNaira(financial.technicianOwed)} still owed` : "Settled on the Payouts page");
+    setMetric("deliveryOwedNote", financial.deliveryOwed ? `Settled on Payouts · ${formatNaira(financial.deliveryOwed)} still owed` : "Settled on the Payouts page");
 
     // Customers
     setMetric("customerTotal", customers.total);
@@ -145,19 +134,17 @@ function generateFinancial(){
 
     textReport("TECHRIDER FINANCIAL REPORT", [
         "Paid jobs: " + f.paidJobs,
-        "Customer Payments: " + formatNaira(f.customerPayments),
+        "Total Revenue (customer payments): " + formatNaira(f.customerPayments),
         "  Repair Fees (technician quotes + commission): " + formatNaira(f.repairFees),
         "  Logistics Fees (pickup and return): " + formatNaira(f.logisticsFees),
-        "Technician Earnings: " + formatNaira(f.technicianEarnings),
-        "Platform Commission: " + formatNaira(f.platformCommission),
-        "Delivery Payouts (owed to riders): " + formatNaira(f.deliveryPayouts),
-        "TechRider Net (commission + logistics - payouts): " + formatNaira(f.platformNet),
+        "  Platform Commission: " + formatNaira(f.platformCommission),
+        "Technician Earnings Paid: " + formatNaira(f.technicianEarnings),
+        "Delivery Payouts Paid: " + formatNaira(f.deliveryPayouts),
+        "TechRider Net (total revenue - technician earnings - delivery payouts): " + formatNaira(f.platformNet),
+        "Still owed to technicians: " + formatNaira(f.technicianOwed),
+        "Still owed to riders: " + formatNaira(f.deliveryOwed),
         "Refunds Due: " + formatNaira(f.refundsDue),
         "Refunded through Paystack: " + formatNaira(f.refundsProcessed),
-        "",
-        "DELIVERY PAYOUTS BY RIDER",
-        ...((report.deliveryPayouts || []).map(p => `  ${p.fullName}: ${p.trips} trip${p.trips === 1 ? "" : "s"}, ${formatNaira(p.payout)}`)),
-        ...((report.deliveryPayouts || []).length ? [] : ["  No delivered trips yet."])
     ], "techrider-financial-report");
 
 }
@@ -217,12 +204,12 @@ function exportCSV(){
     const rows = [
         ["Report", "Metric", "Value"],
         ["Financial", "Paid Jobs", f.paidJobs],
-        ["Financial", "Customer Payments (NGN)", f.customerPayments],
+        ["Financial", "Total Revenue (NGN)", f.customerPayments],
         ["Financial", "Repair Fees (NGN)", f.repairFees],
         ["Financial", "Logistics Fees (NGN)", f.logisticsFees],
-        ["Financial", "Technician Earnings (NGN)", f.technicianEarnings],
+        ["Financial", "Technician Earnings Paid (NGN)", f.technicianEarnings],
         ["Financial", "Platform Commission (NGN)", f.platformCommission],
-        ["Financial", "Delivery Payouts (NGN)", f.deliveryPayouts],
+        ["Financial", "Delivery Payouts Paid (NGN)", f.deliveryPayouts],
         ["Financial", "TechRider Net (NGN)", f.platformNet],
         ["Financial", "Refunds Due (NGN)", f.refundsDue],
         ["Financial", "Refunded through Paystack (NGN)", f.refundsProcessed],
@@ -360,19 +347,3 @@ document.getElementById("overlay").addEventListener("click", function(){
     }, 60000);
 
 })();
-
-/* Delivery payouts per rider, as a spreadsheet */
-function exportPayoutsCSV(){
-
-    if(!report) return;
-    const cell = (v) => {
-        let t = v === undefined || v === null ? "" : String(v);
-        if(/^[=+\-@]/.test(t)) t = "'" + t;
-        return `"${t.replace(/"/g, '""')}"`;
-    };
-    const rows = [["Rider", "Phone", "Trips delivered", "Last delivery", "Payout (NGN)"]]
-        .concat((report.deliveryPayouts || []).map(p => [p.fullName, p.phone, p.trips, p.lastDeliveredAt ? String(p.lastDeliveredAt).slice(0, 10) : "", p.payout]))
-        .concat([["Total", "", "", "", report.financial.deliveryPayouts]]);
-    download("\ufeff" + rows.map(r => r.map(cell).join(",")).join("\r\n"), `techrider-delivery-payouts-${stamp()}.csv`, "text/csv;charset=utf-8");
-
-}

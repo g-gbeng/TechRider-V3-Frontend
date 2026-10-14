@@ -33,6 +33,7 @@
       "admin-pending-approvals.html": "pendingApprovals",
       "admin-job-monitoring.html": "jobMonitoring",
       "admin-communications.html": "communications",
+      "admin-payouts.html": "payouts",
       "admin-disputes.html": "disputes"
     }
   };
@@ -40,7 +41,7 @@
   const LABELS = {
     activeRepairs: "need your attention", history: "to rate or review", disputes: "dispute updates",
     notifications: "unread", availableJobs: "new", activeJobs: "to do", pendingApprovals: "to review",
-    jobMonitoring: "need action", communications: "waiting for a rider"
+    jobMonitoring: "need action", communications: "waiting for a rider", payouts: "waiting to be settled"
   };
 
   let role = null;

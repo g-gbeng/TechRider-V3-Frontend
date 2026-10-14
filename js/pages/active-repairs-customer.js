@@ -111,7 +111,7 @@ function getStatusMessage(repair){
         : 'Your quote is ready. Accept and pay to book the pickup, or decline it.';
     case 'quote_accepted':
       return riderComing
-        ? `Payment received. ${repair.rider.fullName} will collect your device.`
+        ? `Payment received. ${repair.rider.fullName} will collect your device. When they arrive, check their rider code here before you hand it over.`
         : 'Payment received. We are assigning a rider to collect your device.';
     case 'pickup_in_transit':
       return 'Your device has been collected and is on its way to the technician.';
@@ -177,6 +177,7 @@ function riderBlock(repair){
           <div class="code" aria-label="Handover code ${esc(rider.handoverCode.split('').join(' '))}">${esc(rider.handoverCode)}</div>
           <p><strong>Your handover code.</strong> Only read it out to the rider once your device is in your hands.</p>
         </div>` : ''}
+      ${TR.pickupCheck(repair)}
     </div>`;
 
 }
@@ -431,6 +432,9 @@ LOAD
 
 async function loadRepairs(){
 
+  // don't wipe a rider code someone is typing
+  if(document.activeElement && document.activeElement.closest('[data-pickup-form]')) return;
+
   // keep open "Repair details" sections open across refreshes
   const open = [...repairsGrid.querySelectorAll('details.more[open]')]
     .map(d => d.closest('.repair-card').querySelector('.request-id').textContent);
@@ -472,6 +476,7 @@ repairsGrid.innerHTML = TR.skeleton(2);
 
   /* Live updates: refresh as soon as the server says something changed */
   TechRiderAPI.onUpdate(loadRepairs);
+  window.addEventListener('tr:refresh', () => setTimeout(loadRepairs, 1200));
 
   // fallback when live updates aren't available
   setInterval(() => { if(!document.hidden && !document.querySelector('.tr-dialog-backdrop, .tr-chat-backdrop')) loadRepairs(); }, 60000);

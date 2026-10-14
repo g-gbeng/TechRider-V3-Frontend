@@ -94,7 +94,16 @@ body.signup-page { align-items: flex-start; padding-top: 32px; padding-bottom: 3
 
 /* the full-width fields */
 .signup-page[data-role="customer"] .section-grid > .group:first-child,
-.upload-group { grid-column: 1 / -1; }
+.upload-group,
+.section-grid > .group.full { grid-column: 1 / -1; }
+
+.section-note {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: .82rem; line-height: 1.5; color: var(--tr-text-muted);
+  background: var(--tr-primary-50); border: 1px solid var(--tr-primary-100);
+  border-radius: 12px; padding: 10px 12px; margin-bottom: 14px;
+}
+.section-note i { color: var(--tr-link); margin-top: 3px; }
 
 .input-wrap select {
   width: 100%;

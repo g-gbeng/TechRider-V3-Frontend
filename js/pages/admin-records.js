@@ -38,6 +38,7 @@ function toRecord(user){
         specialization:tech.specialization,
         vehicleType:rider.vehicleType,
         plateNumber:rider.plateNumber,
+        bank:user.bankDetails || null,
         suspended:user.suspended,
         submittedAt:user.createdAt,
         facialImage:docs.facialImage,
@@ -151,6 +152,64 @@ border-radius:10px;
 `;
 
 }
+
+/* -----------------------------
+   BANK DETAILS (for payouts)
+------------------------------ */
+
+function bankBox(rec){
+
+const b = rec.bank;
+const has = b && b.accountNumber;
+
+return `
+<div class="bankBox ${has ? "" : "missing"}">
+<div class="bankHead">
+<strong><i class="fas fa-building-columns"></i> Payout bank account</strong>
+<button type="button" class="bankEdit" data-bank-edit="${esc(rec.id)}">${has ? "Edit" : "Add"}</button>
+</div>
+${has ? `
+<div class="detailsGrid">
+<div class="field"><div class="label">Bank name</div><div class="value">${esc(b.bankName)}</div></div>
+<div class="field"><div class="label">Account number</div><div class="value bankNumber">${esc(b.accountNumber)}</div></div>
+<div class="field"><div class="label">Account name</div><div class="value">${esc(b.accountName)}</div></div>
+</div>` : `<p class="bankMissing">No bank details yet. Add them so this person can be paid.</p>`}
+</div>
+`;
+
+}
+
+document.addEventListener("click", async (e)=>{
+
+const btn = e.target.closest("[data-bank-edit]");
+if(!btn) return;
+
+const rec = [...technicians, ...riders].find(r=>r.id===btn.dataset.bankEdit);
+if(!rec) return;
+const b = rec.bank || {};
+
+const values = await TR.form({
+title:`Bank details for ${rec.fullName}`,
+confirmText:"Save",
+fields:[
+{ name:"bankName", label:"Bank name", value:b.bankName || "", required:true, maxLength:80 },
+{ name:"accountNumber", label:"Account number (10 digits)", value:b.accountNumber || "", required:true, maxLength:10, inputmode:"numeric" },
+{ name:"accountName", label:"Account name", value:b.accountName || "", required:true, maxLength:120 }
+]
+});
+if(!values) return;
+
+try{
+const data = await TechRiderAPI.patch(`/admin/users/${encodeURIComponent(rec.id)}/bank`, values);
+rec.bank = data.bankDetails;
+renderRecords();
+highlightSelectedRecord();
+TR.toast("Bank details saved","success");
+}catch(err){
+TR.toast(err.message,"error");
+}
+
+});
 
 /* -----------------------------
    RENDER TECHNICIAN
@@ -275,6 +334,8 @@ tech.submittedAt
 </div>
 
 </div>
+
+${bankBox(tech)}
 
 <button
 class="backBtn toggleDocs"
@@ -480,6 +541,8 @@ rider.submittedAt
 </div>
 
 </div>
+
+${bankBox(rider)}
 
 <button
 class="backBtn toggleDocs"

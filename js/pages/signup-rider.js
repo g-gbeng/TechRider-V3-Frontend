@@ -63,6 +63,13 @@ phoneInput.addEventListener("input",(e)=>{
 
 });
 
+/* account numbers are 10 digits */
+document.getElementById("accountNumber").addEventListener("input",(e)=>{
+
+    e.target.value = e.target.value.replace(/\D/g,"").slice(0,10);
+
+});
+
 /* -----------------------------
    PASSWORD STRENGTH
 ------------------------------*/
@@ -369,6 +376,15 @@ function validateForm(){
 
     }
 
+    if(!/^\d{10}$/.test(document.getElementById("accountNumber").value.trim())){
+
+        TR.toast("Account number must be exactly 10 digits.", "error");
+        document.getElementById("accountNumber").focus();
+
+        return false;
+
+    }
+
     return true;
 
 }
@@ -407,6 +423,9 @@ form.addEventListener("submit", async function (e) {
         data.append("vehicleType", document.getElementById("vehicleType").value);
         data.append("vehicleBrand", document.getElementById("vehicleBrand").value.trim());
         data.append("plateNumber", document.getElementById("plateNumber").value.trim().toUpperCase());
+        data.append("bankName", document.getElementById("bankName").value.trim());
+        data.append("accountNumber", document.getElementById("accountNumber").value.trim());
+        data.append("accountName", document.getElementById("accountName").value.trim());
         data.append("password", passwordInput.value);
 
         /* -----------------------------

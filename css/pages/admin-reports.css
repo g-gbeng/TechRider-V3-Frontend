@@ -453,3 +453,11 @@ tfoot td { border-top: 2px solid var(--tr-border); }
 table.financialTable { min-width: 0; }
 table.financialTable td:last-child { text-align: right; white-space: nowrap; }
 .card{ min-width:0; } /* let wide tables scroll inside their card on phones */
+
+/* Financial card: sub-rows of revenue, payouts subtracted, net total */
+table.financialTable tr.sub td:first-child { padding-left: 28px; color: var(--tr-text-muted); font-size: .92em; }
+table.financialTable tr.sub strong { font-weight: 500; color: var(--tr-text-muted); }
+table.financialTable tr.minus strong::before { content: "− "; }
+table.financialTable tr.total td { border-top: 2px solid var(--tr-border); background: var(--tr-primary-50); }
+table.financialTable tr.total strong { font-size: 1.08em; color: var(--tr-heading); }
+.pricingNote a { color: var(--tr-link); font-weight: 600; }

@@ -458,3 +458,22 @@ font-variant-numeric:tabular-nums;
 .handover-field small{ display:block; margin-top:6px; color:var(--tr-text-muted); font-size:.78rem; line-height:1.4; }
 .handover-error{ color:var(--tr-danger); font-size:.82rem; margin-top:6px; min-height:1em; }
 .payout-tag{ background:var(--tr-success-bg) !important; color:var(--tr-success-text) !important; } .payout-tag i{ margin-right:4px; }
+
+/* pickup code the rider shows to the person handing over the device */
+.pickup-code{
+display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+margin:16px 0 4px; padding:16px 18px; border-radius:16px;
+background:linear-gradient(135deg,var(--tr-primary-50),var(--tr-surface));
+border:1.5px dashed var(--tr-primary-400);
+}
+.pickup-code-text{ flex:1; min-width:200px; }
+.pickup-code-label{ font-weight:700; color:var(--tr-heading); display:inline-flex; gap:8px; align-items:center; }
+.pickup-code-label i{ color:var(--tr-link); }
+.pickup-code p{ font-size:.84rem; color:var(--tr-text-muted); margin-top:4px; line-height:1.5; }
+.pickup-code-digits{
+font-size:2rem; font-weight:700; letter-spacing:.35em; padding:8px 6px 8px 18px; border-radius:12px;
+background:var(--tr-primary-900); color:#fff; font-variant-numeric:tabular-nums;
+}
+.pickup-code.locked{ border-color:var(--tr-danger); background:var(--tr-danger-bg); justify-content:flex-start; }
+.pickup-code.locked i{ color:var(--tr-danger); font-size:1.2rem; }
+.btn.chat-btn{ background:var(--tr-surface); color:var(--tr-link); border:1px solid var(--tr-border); position:relative; }

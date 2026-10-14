@@ -288,3 +288,10 @@ text-decoration:none;
 .review-line{ margin-top:12px; font-size:.85rem; color:var(--tr-text-muted); }
 .review-line q{ display:block; margin-top:4px; font-style:italic; }
 #emptyState.empty{ padding:10px; }
+
+.chat-btn{
+  display:inline-flex; align-items:center; gap:8px; margin-top:14px; margin-left:6px;
+  padding:10px 16px; border-radius:10px; border:1px solid var(--tr-border);
+  background:var(--tr-surface); color:var(--tr-link); font-weight:600; font-size:.85rem; cursor:pointer;
+}
+.chat-btn:hover{ border-color:var(--tr-primary-400); }

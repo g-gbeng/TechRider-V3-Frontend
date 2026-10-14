@@ -490,3 +490,6 @@ max-width:100%;
 
 .unlockBtn{ background:var(--tr-warning-bg); color:var(--tr-warning); }
 .lockedNote{ color:var(--tr-danger); }
+
+.btn.chatBtn{ background:var(--tr-surface); color:var(--tr-link); border:1px solid var(--tr-border); position:relative; }
+.btn.chatBtn:hover{ border-color:var(--tr-primary-400); }

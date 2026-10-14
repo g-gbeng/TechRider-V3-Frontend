@@ -165,7 +165,8 @@ function riderCell(job){
 
     if(job.rider && job.rider.active){
         return `${esc(job.rider.fullName)}<br><span class="riderNote">${esc(job.rider.deliveryTypeLabel)}: ${esc(job.rider.deliveryStatusLabel)}</span>` +
-            (job.rider.handoverCode ? `<br><span class="riderNote" title="The receiver reads this to the rider">Handover code: <strong>${esc(job.rider.handoverCode)}</strong></span>` : '');
+            (job.rider.pickupCode ? `<br><span class="riderNote" title="The rider shows this; the person handing over enters it">Pickup code: <strong>${esc(job.rider.pickupCode)}</strong></span>` : '') +
+            (job.rider.handoverCode ? `<br><span class="riderNote" title="The receiver reads this to the rider">Drop-off code: <strong>${esc(job.rider.handoverCode)}</strong></span>` : '');
     }
 
     if(job.needsRider){

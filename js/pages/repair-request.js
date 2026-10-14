@@ -302,11 +302,7 @@ form.addEventListener("submit", async function(e){
   if(!user) return;
 
   // the server's fault list wins if it has changed
-  TechRiderAPI.get("/requests/options").then(({ faults, logistics, islandAreas }) => {
-    if(logistics){
-      document.getElementById("feeMainland").textContent = TR.naira(logistics.mainland);
-      document.getElementById("feeIsland").textContent = TR.naira(logistics.island);
-    }
+  TechRiderAPI.get("/requests/options").then(({ faults, islandAreas }) => {
     if(Array.isArray(islandAreas) && islandAreas.length){
       ISLAND_AREAS = islandAreas;
       if(!zoneChosen) setZone(suggestedZone());

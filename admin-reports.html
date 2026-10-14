@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#240046">
@@ -31,7 +33,7 @@ id="sidebar">
 
 <div class="brand"
 onclick="toggleSidebar()">
-<div class="logo">A</div>
+<div class="logo"><img src="images/logo-mark.png" alt="TechRider"></div>
 <span class="text">
 Admin Panel
 </span>
@@ -46,6 +48,7 @@ Admin Panel
 <a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
 <a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
 <a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-payouts.html"><i class="fas fa-money-check-dollar"></i><span class="text">Payouts</span></a>
 <a href="admin-disputes.html"><i class="fas fa-gavel"></i><span class="text">Disputes</span></a>
 <a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Records</span></a>
 <a href="admin-templates.html"><i class="fas fa-layer-group"></i><span class="text">Templates</span></a>
@@ -156,16 +159,16 @@ Financial Reports
 <div class="tableWrap">
 
 <table class="financialTable">
-<tr>
+<tr class="">
 <td>
-Customer Payments
+Total Revenue
 <div class="rowHint">Everything customers paid (excluding refunds)</div>
 </td>
 <td>
 <strong id="customerPayments">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="sub">
 <td>
 Repair Fees
 <div class="rowHint">Technician quotes plus commission</div>
@@ -174,16 +177,16 @@ Repair Fees
 <strong id="repairFees">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="sub">
 <td>
-Technician Earnings
-
+Logistics Fees
+<div class="rowHint">Pickup and return fees paid by customers</div>
 </td>
 <td>
-<strong id="technicianEarnings">₦0</strong>
+<strong id="logisticsFees">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="sub">
 <td>
 Platform Commission
 <div class="rowHint">Your % on top of technician quotes</div>
@@ -192,34 +195,34 @@ Platform Commission
 <strong id="platformCommission">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="minus">
 <td>
-Logistics Fees Collected
-<div class="rowHint">Pickup and return fees paid by customers</div>
+Technician Earnings Paid
+<div class="rowHint"><span id="technicianOwedNote">Settled on the Payouts page</span></div>
 </td>
 <td>
-<strong id="logisticsFees">₦0</strong>
+<strong id="technicianEarnings">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="minus">
 <td>
-Delivery Payouts
-<div class="rowHint">Owed to riders for delivered trips (see below)</div>
+Delivery Payouts Paid
+<div class="rowHint"><span id="deliveryOwedNote">Settled on the Payouts page</span></div>
 </td>
 <td>
 <strong id="deliveryPayouts">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="total">
 <td>
 TechRider Net
-<div class="rowHint">Commission + logistics fees − delivery payouts</div>
+<div class="rowHint">Total revenue − technician earnings − delivery payouts</div>
 </td>
 <td>
 <strong id="platformNet">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="">
 <td>
 Refunds Due
 <div class="rowHint">Paid jobs that were later cancelled</div>
@@ -228,7 +231,7 @@ Refunds Due
 <strong id="refundsDue">₦0</strong>
 </td>
 </tr>
-<tr>
+<tr class="">
 <td>
 Refunded through Paystack
 <div class="rowHint">Completed refunds</div>
@@ -237,12 +240,13 @@ Refunded through Paystack
 <strong id="refundsProcessed">₦0</strong>
 </td>
 </tr>
-
 </table>
 
 </div>
 
 <p class="pricingNote" id="pricingNote"></p>
+
+<p class="pricingNote">Technician and rider payouts only count here once they are marked settled on <a href="admin-payouts.html">Payouts</a>.</p>
 
 <button
 onclick="generateFinancial()">
@@ -252,56 +256,6 @@ Generate Financial Report
 </button>
 
 </div>
-
-
-<!-- Delivery payouts -->
-
-<div class="card">
-
-<h3>
-Delivery Payouts
-</h3>
-
-<p class="cardHint">Worked out automatically: each delivered trip earns the rider the trip fee priced into that job (mainland or island).</p>
-
-<div class="tableWrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Rider</th>
-<th>Phone</th>
-<th>Trips delivered</th>
-<th>Last delivery</th>
-<th>Payout</th>
-</tr>
-</thead>
-
-<tbody id="payoutTable">
-<tr><td colspan="5" class="emptyRow">No delivered trips yet.</td></tr>
-</tbody>
-
-<tfoot>
-<tr>
-<td colspan="4"><strong>Total</strong></td>
-<td><strong id="payoutTotal">₦0</strong></td>
-</tr>
-</tfoot>
-
-</table>
-
-</div>
-
-<button onclick="exportPayoutsCSV()">
-
-Download Payouts (CSV)
-
-</button>
-
-</div>
-
-
 
 
 <!-- Incidents -->

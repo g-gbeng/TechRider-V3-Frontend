@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#240046">
   <script src="js/theme.js"></script>
@@ -26,7 +28,7 @@
   <main class="login-shell signup-shell">
 
     <aside class="login-panel" aria-hidden="true">
-      <a href="index.html" class="panel-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
+      <a href="index.html" class="panel-brand"><span class="brand-icon"><img src="images/logo-mark-white.png" alt=""></span> TechRider</a>
       <div class="panel-body">
         <span class="panel-role"><i class="fas fa-motorcycle"></i> Riders</span>
         <h2>Deliver devices and earn on your own schedule.</h2>
@@ -38,7 +40,7 @@
 
     <section class="login-card signup-card" aria-labelledby="signupTitle">
 
-      <a href="index.html" class="mobile-brand"><span class="brand-icon"><i class="fas fa-bolt"></i></span> TechRider</a>
+      <a href="index.html" class="mobile-brand"><span class="brand-icon"><img src="images/logo-mark-white.png" alt=""></span> TechRider</a>
 
       <nav class="role-tabs" aria-label="Sign up as"><a href="signup-customer.html" class="role-tab"><i class="fas fa-user"></i> Customer</a><a href="signup-technician.html" class="role-tab"><i class="fas fa-screwdriver-wrench"></i> Technician</a><a href="signup-rider.html" class="role-tab active" aria-current="page"><i class="fas fa-motorcycle"></i> Rider</a></nav>
 
@@ -104,7 +106,29 @@
           </div>
         </fieldset>
         <fieldset class="form-section" data-section>
-          <legend><span class="step-no">3</span> Verification documents <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <legend><span class="step-no">3</span> Payout bank account <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <p class="section-note"><i class="fas fa-building-columns" aria-hidden="true"></i> TechRider pays your earnings into this account. The account name should match the name on your ID.</p>
+          <div class="section-grid">
+          <div class="group">
+            <label for="bankName">Bank name</label>
+            <div class="input-wrap has-icon"><i class="fas fa-building-columns input-icon" aria-hidden="true"></i><input type="text" id="bankName" list="bankList" autocomplete="off" maxlength="80" placeholder="Start typing your bank" required></div>
+            <datalist id="bankList"><option value="Access Bank"></option><option value="Citibank Nigeria"></option><option value="Ecobank Nigeria"></option><option value="Fidelity Bank"></option><option value="First Bank of Nigeria"></option><option value="First City Monument Bank (FCMB)"></option><option value="Globus Bank"></option><option value="Guaranty Trust Bank (GTBank)"></option><option value="Heritage Bank"></option><option value="Jaiz Bank"></option><option value="Keystone Bank"></option><option value="Kuda Bank"></option><option value="Moniepoint MFB"></option><option value="OPay"></option><option value="PalmPay"></option><option value="Parallex Bank"></option><option value="Polaris Bank"></option><option value="Providus Bank"></option><option value="Stanbic IBTC Bank"></option><option value="Standard Chartered Bank"></option><option value="Sterling Bank"></option><option value="SunTrust Bank"></option><option value="Titan Trust Bank"></option><option value="Union Bank of Nigeria"></option><option value="United Bank for Africa (UBA)"></option><option value="Unity Bank"></option><option value="VFD Microfinance Bank"></option><option value="Wema Bank (ALAT)"></option><option value="Zenith Bank"></option></datalist>
+            <small class="error-message"></small>
+          </div>
+          <div class="group">
+            <label for="accountNumber">Account number</label>
+            <div class="input-wrap has-icon"><i class="fas fa-hashtag input-icon" aria-hidden="true"></i><input type="text" id="accountNumber" inputmode="numeric" pattern="[0-9]{10}" autocomplete="off" placeholder="10-digit NUBAN" required></div>
+            <small class="error-message"></small>
+          </div>
+          <div class="group full">
+            <label for="accountName">Account name</label>
+            <div class="input-wrap has-icon"><i class="fas fa-user-check input-icon" aria-hidden="true"></i><input type="text" id="accountName" maxlength="120" autocomplete="off" placeholder="Name on the bank account" required></div>
+            <small class="error-message"></small>
+          </div>
+          </div>
+        </fieldset>
+        <fieldset class="form-section" data-section>
+          <legend><span class="step-no">4</span> Verification documents <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
           <div class="section-grid">
           <div class="group upload-group">
             <span class="upload-label" id="facialImageLabel">Passport / facial photograph</span>
@@ -148,7 +172,7 @@
           </div>
         </fieldset>
         <fieldset class="form-section" data-section>
-          <legend><span class="step-no">4</span> Choose a password <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
+          <legend><span class="step-no">5</span> Choose a password <i class="fas fa-circle-check section-done" aria-hidden="true"></i></legend>
           <div class="section-grid">
           <div class="group password-group">
             <label for="password">Password</label>

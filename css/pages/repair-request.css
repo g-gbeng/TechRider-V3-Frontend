@@ -294,7 +294,7 @@ textarea{
 }
 .zone-body strong { font-size: .9rem; color: var(--tr-text); font-weight: 600; }
 .zone-body strong i { color: var(--tr-primary-500); margin-right: 6px; }
-.zone-fee { font-size: 1.05rem; font-weight: 700; color: var(--tr-link); }
+.zone-areas { font-size: .8rem; color: var(--tr-text-muted); line-height: 1.4; }
 .zone-card input:checked + .zone-body { border-color: var(--tr-primary-500); background: var(--tr-primary-50); box-shadow: 0 0 0 3px var(--tr-primary-100); }
 .zone-card input:focus-visible + .zone-body { outline: 2px solid var(--tr-primary-500); outline-offset: 2px; }
 .zone-note { font-size: .78rem; color: var(--tr-text-muted); line-height: 1.45; }

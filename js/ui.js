@@ -110,7 +110,7 @@
     return (f.label ? `<label for="${id}">${esc(f.label)}</label>` : "") +
       (f.multiline
         ? `<textarea ${common} maxlength="${f.maxLength || 2000}">${esc(f.value || "")}</textarea>`
-        : `<input ${common} type="${f.type || "text"}" value="${esc(f.value || "")}" maxlength="${f.maxLength || 300}" autocomplete="off">`);
+        : `<input ${common} type="${f.type || "text"}" value="${esc(f.value || "")}" maxlength="${f.maxLength || 300}"${f.inputmode ? ` inputmode="${esc(f.inputmode)}"` : ""} autocomplete="off">`);
   }
 
   /*
@@ -285,6 +285,62 @@
   /* ------------------------------------------------------------ test-payments banner */
   /* Shows "Test mode: no real money" above payment areas while Paystack test keys are used */
   let paymentMode = null;
+  /* ------------------------------------------------------------ rider pickup check
+     The person handing a device to a rider (customer at pickup, technician at
+     return) types the code from the rider's app. Pass a repair from the API:
+       container.innerHTML += TR.pickupCheck(repair)
+     A right code marks the device collected and fires "tr:refresh". */
+  TR.pickupCheck = (repair) => {
+    const r = repair && repair.rider;
+    const c = r && r.pickupCheck;
+    if (!c || !c.needed) return "";
+    const device = `${repair.brand || ""} ${repair.model || ""}`.trim() || "device";
+    if (c.locked) {
+      return `<div class="tr-pickup-check locked" role="alert"><i class="fas fa-lock" aria-hidden="true"></i>
+        <div><strong>Don't hand over the ${esc(device)}</strong><p>The wrong rider code was entered too many times. Message TechRider support before giving the device to anyone.</p></div></div>`;
+    }
+    const id = `tr-pc-${esc(repair.id)}`;
+    return `<form class="tr-pickup-check" data-pickup-form="${esc(repair.id)}" novalidate>
+      <div class="tr-pc-text">
+        <strong><i class="fas fa-shield-halved" aria-hidden="true"></i> Check the rider before handing over</strong>
+        <p>Ask ${esc(r.fullName || "the rider")} for the 4-digit code in their TechRider app and enter it here. Only hand over the ${esc(device)} if it matches.</p>
+      </div>
+      <div class="tr-pc-row">
+        <label for="${id}" class="tr-visually-hidden">Rider's code</label>
+        <input id="${id}" inputmode="numeric" autocomplete="off" maxlength="4" pattern="[0-9]{4}" placeholder="0000" aria-describedby="${id}-err">
+        <button type="submit" class="tr-btn tr-btn-primary"><i class="fas fa-check" aria-hidden="true"></i> Confirm rider</button>
+      </div>
+      <div class="tr-pc-error" id="${id}-err" aria-live="polite"></div>
+    </form>`;
+  };
+
+  document.addEventListener("input", (e) => {
+    if (e.target.matches && e.target.matches("[data-pickup-form] input")) e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
+  });
+  document.addEventListener("submit", async (e) => {
+    const form = e.target.closest && e.target.closest("[data-pickup-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("input");
+    const btn = form.querySelector("button");
+    const err = form.querySelector(".tr-pc-error");
+    const code = input.value.replace(/\D/g, "");
+    if (code.length !== 4) { err.textContent = "Enter the 4-digit code from the rider's app."; input.focus(); return; }
+    btn.disabled = true;
+    err.textContent = "";
+    try {
+      const res = await window.TechRiderAPI.post(`/requests/${encodeURIComponent(form.dataset.pickupForm)}/confirm-pickup`, { code });
+      TR.toast(res.message || "Rider confirmed. You can hand over the device.", "success");
+      form.classList.add("ok");
+      form.innerHTML = `<div class="tr-pc-text"><strong><i class="fas fa-circle-check" aria-hidden="true"></i> Rider confirmed</strong><p>${esc(res.message || "You can hand over the device.")}</p></div>`;
+      window.dispatchEvent(new CustomEvent("tr:refresh"));
+    } catch (ex) {
+      err.textContent = ex.message;
+      btn.disabled = false;
+      input.select();
+    }
+  });
+
   TR.paymentsBanner = async (container, where = "afterbegin") => {
     if (!container || !window.TechRiderAPI) return;
     try {

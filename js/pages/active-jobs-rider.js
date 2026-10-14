@@ -38,6 +38,32 @@ done: 'Delivery completed. Well done!'
 }
 };
 
+/* At pickup the rider shows this code; the person handing over types it in their app */
+function pickupCodeBox(job){
+
+if(job.status !== 'accepted' || !job.needsPickupConfirm) return '';
+const giver = job.from.name;
+const who = job.giverLabel === 'technician' ? 'technician' : 'customer';
+
+if(job.pickupLocked){
+return `
+<div class="pickup-code locked" role="alert">
+<i class="fas fa-lock"></i>
+<div><strong>Pickup locked</strong><p>${esc(giver)} entered the wrong code too many times. Call the TechRider admin to unlock it.</p></div>
+</div>`;
+}
+
+return `
+<div class="pickup-code">
+<div class="pickup-code-text">
+<span class="pickup-code-label"><i class="fas fa-shield-halved"></i> Your pickup code</span>
+<p>Show this to ${esc(giver)} (the ${who}). They type it into their TechRider app before handing you the device. The trip moves to <strong>Picked up</strong> by itself.</p>
+</div>
+<div class="pickup-code-digits" aria-label="Pickup code ${esc((job.pickupCode || '').split('').join(' '))}">${esc(job.pickupCode || '····')}</div>
+</div>`;
+
+}
+
 function phoneLink(phone){
 return phone
 ? `<a class="phone-link" href="tel:${esc(phone)}"><i class="fas fa-phone"></i> ${esc(phone)}</a>`
@@ -103,6 +129,7 @@ TR.toast('Could not load deliveries: ' + err.message);
 }
 
 loadActiveDeliveries();
+if(TR.chat) TR.chat.refreshBadges();
 
 }
 
@@ -223,9 +250,13 @@ ${job.instructions ? `
 <span>${esc(job.instructions)}</span>
 </div>` : ''}
 
+${pickupCodeBox(job)}
+
 <div class="actions">
 
-${next ? `
+${job.request ? `<button type="button" class="btn chat-btn tr-chat-btn" data-chat="${esc(job.request.id)}" data-chat-title="${esc(job.request.code)} · ${esc(job.code)}"><i class="fas fa-headset"></i> Message TechRider</button>` : ''}
+
+${next && !(job.status === 'accepted' && job.needsPickupConfirm) ? `
 <button
 class="btn complete-btn"
 data-id="${esc(job.id)}">

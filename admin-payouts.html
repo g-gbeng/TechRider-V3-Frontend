@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#240046">
+<script src="js/theme.js"></script>
+<title>TechRider - Payouts</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/pages/admin-payouts.css">
+<script src="js/api.js" data-require-role="admin"></script>
+<script src="js/ui.js"></script>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="sidebar" id="sidebar">
+<div class="brand" onclick="toggleSidebar()">
+<div class="logo"><img src="images/logo-mark.png" alt="TechRider"></div>
+<span class="text">Admin Panel</span>
+</div>
+<div class="nav">
+<a href='admin-dashboard.html'><i class='fas fa-chart-line'></i><span class='text'>Dashboard</span></a>
+<a href="admin-pending-approvals.html"><i class="fas fa-user-check"></i><span class="text">Pending Approvals</span></a>
+<a href="admin-customers.html"><i class="fas fa-users"></i><span class="text">Customers</span></a>
+<a href="admin-technicians.html"><i class="fas fa-screwdriver-wrench"></i><span class="text">Technicians</span></a>
+<a href="admin-riders.html"><i class="fas fa-motorcycle"></i><span class="text">Riders</span></a>
+<a href="admin-job-monitoring.html"><i class="fas fa-briefcase"></i><span class="text">Jobs Monitoring</span></a>
+<a href="admin-communications.html"><i class="fas fa-envelope-open-text"></i><span class="text">Communications</span></a>
+<a href="admin-reports.html"><i class="fas fa-file-lines"></i><span class="text">Reports</span></a>
+<a href="admin-payouts.html" class="active"><i class="fas fa-money-check-dollar"></i><span class="text">Payouts</span></a>
+<a href="admin-disputes.html"><i class="fas fa-gavel"></i><span class="text">Disputes</span></a>
+<a href="admin-records.html"><i class="fas fa-id-card"></i><span class="text">Records</span></a>
+<a href="admin-templates.html"><i class="fas fa-layer-group"></i><span class="text">Templates</span></a>
+<a href="admin-login.html"><i class="fas fa-sign-out-alt"></i><span class="text">Logout</span></a>
+</div></div>
+
+<div class="main">
+
+<div class="topbar">
+<div class="hamburger" onclick="openSidebar()"><i class="fas fa-bars"></i></div>
+<div>
+<h3>Payouts</h3>
+<p class="topHint">Pay technicians and riders, then mark each job as settled.</p>
+</div>
+<button type="button" class="po-btn ghost" id="exportBtn"><i class="fas fa-file-csv"></i> Download CSV</button>
+</div>
+
+<div class="stats">
+<div class="stat" id="techOwedCard"><p>Owed to technicians</p><h2 id="techOwed">₦0</h2><small id="techOwedCount">0 jobs</small></div>
+<div class="stat" id="riderOwedCard"><p>Owed to riders</p><h2 id="riderOwed">₦0</h2><small id="riderOwedCount">0 trips</small></div>
+<div class="stat"><p>Paid to technicians</p><h2 id="techPaid">₦0</h2><small id="techPaidCount">0 jobs</small></div>
+<div class="stat"><p>Paid to riders</p><h2 id="riderPaid">₦0</h2><small id="riderPaidCount">0 trips</small></div>
+</div>
+
+<div class="toolbar">
+<div class="po-tabs" role="tablist" aria-label="Who to pay">
+<button type="button" role="tab" class="po-tab active" data-kind="technician" aria-selected="true"><i class="fas fa-screwdriver-wrench"></i> Technicians <span class="po-count" id="tabTechCount"></span></button>
+<button type="button" role="tab" class="po-tab" data-kind="rider" aria-selected="false"><i class="fas fa-motorcycle"></i> Riders <span class="po-count" id="tabRiderCount"></span></button>
+</div>
+<label class="po-search">
+<i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+<span class="tr-visually-hidden">Search payouts</span>
+<input id="searchBox" type="search" placeholder="Search by request ID, delivery ID or name">
+</label>
+</div>
+
+<!-- earnings per person -->
+<section class="card">
+<div class="cardHead">
+<h3 id="peopleTitle">Technician payouts</h3>
+<p class="cardHint" id="peopleHint">What each technician has earned from completed repairs, what has been paid and what is still owed.</p>
+</div>
+<div class="tableWrap">
+<table class="po-table">
+<thead><tr><th id="personHead">Technician</th><th>Bank account</th><th id="jobsHead">Jobs</th><th>Earned</th><th>Paid</th><th>Owed</th><th><span class="tr-visually-hidden">Actions</span></th></tr></thead>
+<tbody id="peopleTable"></tbody>
+</table>
+</div>
+</section>
+
+<!-- pending -->
+<section class="card">
+<div class="cardHead">
+<h3><i class="fas fa-hourglass-half"></i> Pending settlement</h3>
+<p class="cardHint">Send the transfer first, then mark the job as settled. Settled jobs move to the list below and count in Reports.</p>
+</div>
+<div class="bulkBar" id="bulkBar" hidden>
+<span id="bulkText">0 selected</span>
+<button type="button" class="po-btn" id="bulkSettle"><i class="fas fa-check-double"></i> Mark selected as settled</button>
+</div>
+<div class="tableWrap">
+<table class="po-table">
+<thead><tr><th class="checkCol"><input type="checkbox" id="checkAll" aria-label="Select all"></th><th>ID</th><th>Job</th><th id="pendingPerson">Technician</th><th>Amount</th><th>Earned</th><th><span class="tr-visually-hidden">Actions</span></th></tr></thead>
+<tbody id="pendingTable"></tbody>
+</table>
+</div>
+</section>
+
+<!-- settled -->
+<section class="card">
+<div class="cardHead">
+<h3><i class="fas fa-circle-check"></i> Settled</h3>
+<p class="cardHint">Jobs TechRider has already paid for.</p>
+</div>
+<div class="tableWrap">
+<table class="po-table">
+<thead><tr><th>ID</th><th>Job</th><th id="settledPerson">Technician</th><th>Amount</th><th>Settled</th><th>Reference</th><th><span class="tr-visually-hidden">Actions</span></th></tr></thead>
+<tbody id="settledTable"></tbody>
+</table>
+</div>
+</section>
+
+</div>
+
+<script src="js/badges.js"></script>
+<script src="js/pages/admin-payouts.js"></script>
+</body>
+</html>

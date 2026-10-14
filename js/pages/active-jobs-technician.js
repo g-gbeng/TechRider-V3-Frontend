@@ -171,7 +171,8 @@ ${job.rider.handoverCode ? `
 <div class="tr-handover">
 <div class="code" aria-label="Handover code ${esc(job.rider.handoverCode.split('').join(' '))}">${esc(job.rider.handoverCode)}</div>
 <p><strong>Handover code.</strong> Read it to the rider only once the device is in your hands.</p>
-</div>` : ''}`
+</div>` : ''}
+${TR.pickupCheck(job)}`
 : ''
 }
 
@@ -190,6 +191,10 @@ job.status === 'repair_in_progress'
 </button>`
 : ''
 }
+
+<button type="button" class="chat-btn tr-chat-btn" data-chat="${esc(job.id)}" data-chat-title="${esc(job.code)} · ${esc(job.brand)} ${esc(job.model)}">
+<i class="fas fa-headset"></i> Message TechRider
+</button>
 
 <div class="timestamp">
 <i class="fas fa-clock"></i>
@@ -245,6 +250,9 @@ LOAD (and refresh every 30 seconds)
 
 async function loadJobs(){
 
+// don't wipe a rider code someone is typing
+if(document.activeElement && document.activeElement.closest('[data-pickup-form]')) return;
+
 try{
 
 const data =
@@ -259,6 +267,7 @@ if(err.status !== 401) console.error(err);
 }
 
 renderJobs();
+if(TR.chat) TR.chat.refreshBadges();
 
 }
 
@@ -276,3 +285,4 @@ setInterval(loadJobs, 30000);
 
 /* Live updates: refresh as soon as the server says something changed */
 TechRiderAPI.onUpdate(loadJobs);
+window.addEventListener('tr:refresh', () => setTimeout(loadJobs, 1200));

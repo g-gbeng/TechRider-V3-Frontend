@@ -520,6 +520,7 @@ async function refreshAssignments(force = false){
     renderAvailableJobs();
     renderRiders();
     renderActiveDeliveries();
+    if(TR.chat) TR.chat.refreshBadges();
 
 }
 
@@ -729,11 +730,22 @@ function renderActiveDeliveries(){
                 <div class="deliveryMeta">
                     ${escapeHtml(d.rider ? d.rider.fullName : 'Rider')}
                     · <span class="deliveryStatus status-${escapeHtml(d.status)}">${escapeHtml(d.statusLabel)}</span>
-                    ${d.handoverCode ? `· Handover code <strong>${escapeHtml(d.handoverCode)}</strong>` : ''}
-                    ${d.handoverAttempts >= 5 ? '· <strong class="lockedNote">Locked: too many wrong codes</strong>' : ''}
+                    ${d.pickupCode ? `· Rider's pickup code <strong title="The rider shows this; the ${escapeHtml(d.giverLabel)} enters it">${escapeHtml(d.pickupCode)}</strong>` : ''}
+                    ${d.handoverCode ? `· Drop-off code <strong>${escapeHtml(d.handoverCode)}</strong>` : ''}
+                    ${d.pickupAttempts >= 5 ? `· <strong class="lockedNote">Pickup locked: the ${escapeHtml(d.giverLabel)} entered wrong codes</strong>` : ''}
+                    ${d.handoverAttempts >= 5 ? '· <strong class="lockedNote">Drop-off locked: too many wrong codes</strong>' : ''}
                 </div>
             </div>
-            ${d.handoverAttempts >= 5 ? `
+            ${d.request && d.rider ? `
+            <button
+                type="button"
+                class="btn smallBtn chatBtn tr-chat-btn"
+                data-chat="${escapeHtml(d.request.id)}"
+                data-chat-with="${escapeHtml(d.rider.id)}"
+                data-chat-title="${escapeHtml(d.request.code)} · ${escapeHtml(d.code)}">
+                <i class="fas fa-comments"></i> Message rider
+            </button>` : ''}
+            ${d.handoverAttempts >= 5 || d.pickupAttempts >= 5 ? `
             <button
                 type="button"
                 class="btn smallBtn unlockBtn"
@@ -759,7 +771,7 @@ async function unlockDelivery(id, button){
 
     const ok = await TR.confirm({
         title: 'Unlock this delivery?',
-        message: 'The rider gets 5 more tries at the handover code. Call the person receiving the device first to make sure the rider is really there.',
+        message: 'This resets the wrong-code count, giving 5 more tries. Call the customer or technician first to make sure the right rider is really there.',
         confirmText: 'Unlock',
         icon: 'fa-lock-open'
     });

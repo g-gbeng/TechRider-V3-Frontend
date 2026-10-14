@@ -205,3 +205,23 @@ grid-template-columns:1fr;
 }
 
 }
+
+/* Payout bank account */
+.bankBox{
+border:1px solid var(--tr-border);
+background:var(--tr-surface-2);
+border-radius:14px;
+padding:14px 16px;
+margin-bottom:18px;
+}
+.bankBox.missing{ border-style:dashed; border-color:var(--tr-warning); }
+.bankHead{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px; color:var(--tr-heading); }
+.bankHead i{ color:var(--tr-link); margin-right:6px; }
+.bankBox .detailsGrid{ margin-bottom:0; }
+.bankNumber{ font-variant-numeric:tabular-nums; letter-spacing:.04em; }
+.bankMissing{ color:var(--tr-text-muted); font-size:.88rem; }
+.bankEdit{
+border:1px solid var(--tr-border); background:var(--tr-surface); color:var(--tr-link);
+border-radius:9px; padding:6px 12px; font-weight:600; font-size:.8rem; cursor:pointer;
+}
+.bankEdit:hover{ border-color:var(--tr-primary-400); }
