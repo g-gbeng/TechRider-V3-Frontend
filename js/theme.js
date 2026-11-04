@@ -8,6 +8,21 @@
      - <div data-theme-picker></div>   Light / Dark / Device buttons
      - <button data-theme-toggle></button>  small icon that cycles
 ========================================================== */
+
+/* Clean addresses on the live site: /dashboard-customer instead of
+   /dashboard-customer.html. Vercel serves /dashboard-customer from the
+   .html file (see vercel.json); this just tidies the address bar, keeping
+   ?query and #hash. Skipped when testing locally. */
+(function () {
+  const local = location.protocol === "file:" ||
+    ["localhost", "127.0.0.1", ""].includes(location.hostname) ||
+    /^(192\.168|10)\./.test(location.hostname);
+  const path = location.pathname;
+  if (local || !/\.html$/i.test(path) || !window.history || !history.replaceState) return;
+  const clean = /(^|\/)index\.html$/i.test(path) ? path.replace(/index\.html$/i, "") : path.replace(/\.html$/i, "");
+  try { history.replaceState(history.state, "", clean + location.search + location.hash); } catch (e) { /* keep the .html address */ }
+})();
+
 (function () {
   const KEY = "techrider_theme";
   const CHOICES = ["system", "light", "dark"];
