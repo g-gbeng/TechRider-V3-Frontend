@@ -104,7 +104,7 @@ day:"numeric"
 
 }
 
-function imageBox(title,doc){
+function imageBox(title,doc,group){
 
 if(!doc){
 
@@ -137,17 +137,18 @@ return `
 <div class="imgBox">
 <strong>${esc(title)}</strong>
 <br><br>
-<a href="${esc(doc.url)}" target="_blank" rel="noopener">
 <img
 src="${esc(doc.url)}"
 alt="${esc(title)}"
+data-view
+data-view-group="${esc(group || 'records')}"
+data-view-title="${esc(title)}"
 style="
 width:100%;
 max-height:220px;
 object-fit:contain;
 border-radius:10px;
 ">
-</a>
 </div>
 `;
 
@@ -355,17 +356,20 @@ style="display:none;"
 
 ${imageBox(
 "Facial Verification",
-tech.facialImage
+tech.facialImage,
+"docs-" + tech.id
 )}
 
 ${imageBox(
 "Government ID",
-tech.governmentId
+tech.governmentId,
+"docs-" + tech.id
 )}
 
 ${imageBox(
 "Business License",
-tech.businessLicense
+tech.businessLicense,
+"docs-" + tech.id
 )}
 
 </div>
@@ -561,17 +565,20 @@ style="display:none;"
 
 ${imageBox(
 "Facial Verification",
-rider.facialImage
+rider.facialImage,
+"docs-" + rider.id
 )}
 
 ${imageBox(
 "Driver's License",
-rider.driversLicense
+rider.driversLicense,
+"docs-" + rider.id
 )}
 
 ${imageBox(
 "Government ID",
-rider.governmentId
+rider.governmentId,
+"docs-" + rider.id
 )}
 
 </div>

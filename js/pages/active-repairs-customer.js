@@ -307,7 +307,7 @@ function renderRepairs(){
             ${repair.quote && repair.status !== 'quote_sent' ? `<div><i class="fas fa-receipt"></i><strong>Price:</strong> ${formatNaira(repair.quote.customerPrice)}${repair.quote.logisticsFee ? ` (repair ${formatNaira(repair.quote.repairPrice)} + pickup &amp; return ${formatNaira(repair.quote.logisticsFee)})` : ''}</div>` : ''}
             <div><i class="fas fa-clock"></i><strong>Requested:</strong> ${esc(formatDate(repair.createdAt))}</div>
           </div>
-          <div class="desc"><strong>Problem</strong><br>${esc(issueText(repair))}</div>
+          <div class="desc"><strong>Problem</strong><br>${esc(issueText(repair))}${TR.photoStrip(repair.images, 'repair-' + repair.id, 'Your photo')}</div>
         </details>
 
         ${secondaryActions(repair)}

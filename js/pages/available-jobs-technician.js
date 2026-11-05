@@ -255,7 +255,10 @@ ${job.deviceImages.map(image => `
 <img
 src="${esc(image)}"
 class="device-image"
-alt="Device Image">
+alt="Device photo"
+data-view
+data-view-group="job-${esc(job.id)}"
+data-view-title="${esc(job.brand || '')} ${esc(job.model || '')}">
 
 `).join('')}
 

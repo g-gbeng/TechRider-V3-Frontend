@@ -158,6 +158,9 @@ const menuItem = (cls, icon, label, onclick) =>
     `<button type="button" role="menuitem" class="tr-menu-item ${cls}" onclick="${onclick}"><i class="fas ${icon}"></i> ${esc(label)}</button>`;
 
 const timelineItem = () => menuItem('viewBtn', 'fa-clock-rotate-left', 'View timeline', 'toggleTimeline(this)');
+const photosItem = (job) => (job.images || []).length
+    ? menuItem('', 'fa-images', `Device photos (${job.images.length})`, `TR.viewImages(${esc(JSON.stringify(job.images))}, 0, [])`)
+    : '';
 const cancelItem = (job) => menuItem('cancelStatusBtn danger', 'fa-ban', 'Cancel job', `cancelJob(${jsArg(job.id)}, this)`);
 const separator = '<div class="tr-menu-sep" role="separator"></div>';
 
@@ -260,6 +263,7 @@ ${actionMenu([
         ? menuItem('zoneBtn', 'fa-map', `Change to ${job.zone === 'island' ? 'Mainland' : 'Island'} pricing`, `changeZone(${jsArg(job.id)}, ${jsArg(job.zone === 'island' ? 'mainland' : 'island')}, this)`)
         : '',
     menuItem('', 'fa-circle-info', 'View issue', `showIssue(${jsArg(job.id)})`),
+    photosItem(job),
     chatButton(job),
     separator,
     cancelItem(job)
@@ -305,7 +309,7 @@ function renderAccepted(rows){
 <td>${riderCell(job)}</td>
 <td>${formatDate(job.updatedAt)}</td>
 <td class="actionsCell">
-${actionMenu([steps, timelineItem(), chatButton(job), separator, cancelItem(job)])}
+${actionMenu([steps, timelineItem(), photosItem(job), chatButton(job), separator, cancelItem(job)])}
 ${waiting}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
@@ -340,7 +344,7 @@ ${refundCell(job)}
 </td>
 <td>${formatDate(job.updatedAt)}</td>
 <td class="actionsCell">
-${actionMenu([timelineItem(), chatButton(job)])}
+${actionMenu([timelineItem(), photosItem(job), chatButton(job)])}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`;
@@ -368,7 +372,7 @@ function renderCompleted(rows){
 <td>${riderCell(job)}</td>
 <td>${formatDate(job.completedAt || job.updatedAt)}</td>
 <td class="actionsCell">
-${actionMenu([timelineItem(), chatButton(job)])}
+${actionMenu([timelineItem(), photosItem(job), chatButton(job)])}
 <div class="timeline">${timelineHtml(job)}</div>
 </td>
 </tr>`).join('');
@@ -678,6 +682,11 @@ function showIssue(id){
     document.getElementById('issueText').innerText =
         job
         ? `${job.brand} ${job.model} (${job.deviceType})\n\n${(job.faults || []).join(', ')}${job.faults && job.faults.length && job.description ? '\n' : ''}${job.description || ''}\n\nLocation: ${job.location}${job.landmark ? ' (' + job.landmark + ')' : ''}${job.contactPhone ? '\nContact phone: ' + job.contactPhone : ''}`
+        : '';
+
+    const photos = job && (job.images || []).length;
+    document.getElementById('issuePhotos').innerHTML = photos
+        ? `<p class="issuePhotosLabel">Device photos (tap to view)</p>${TR.photoStrip(job.images, 'issue-' + job.id, 'Device photo')}`
         : '';
 
     document.getElementById('issueModal').classList.add('show');

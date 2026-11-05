@@ -627,11 +627,10 @@ This applicant has no stored images.
 
         img.loading = "lazy";
 
-        img.addEventListener("click",()=>{
-
-            openLightbox(doc.image);
-
-        });
+        // click: full-screen viewer on this page (flick through all documents)
+        img.dataset.view = "";
+        img.dataset.viewGroup = "applicant-docs";
+        img.dataset.viewTitle = doc.title;
 
         img.onerror = function(){
 
@@ -649,7 +648,7 @@ This applicant has no stored images.
 
 <h4>${doc.title}</h4>
 
-<p>Click image to enlarge</p>
+<p>Click to view</p>
 
 `;
 

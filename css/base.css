@@ -605,3 +605,79 @@ html[data-theme="dark"] .badge.pending { background: #4b5563; }
 }
 .tr-remove-photo:hover { background: var(--tr-danger-bg); border-color: var(--tr-danger); }
 .tr-remove-photo[hidden] { display: none; }
+
+/* ---------------------------------------------------------- image viewer (TR.viewImages) */
+html.tr-viewer-open-lock, html.tr-viewer-open-lock body { overflow: hidden; }
+.tr-viewer {
+  position: fixed; inset: 0; z-index: 20000; display: flex; flex-direction: column;
+  background: rgba(12, 4, 22, .97); color: #fff; animation: trFade .18s ease;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+@keyframes trFade { from { opacity: 0; } to { opacity: 1; } }
+.tr-viewer-bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+.tr-viewer-title { flex: 1; font-weight: 600; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tr-viewer-count { font-size: .85rem; opacity: .75; font-variant-numeric: tabular-nums; }
+.tr-viewer-btn {
+  width: 42px; height: 42px; border-radius: 50%; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .12); color: #fff; font-size: 1.05rem; text-decoration: none;
+}
+.tr-viewer-btn:hover, .tr-viewer-nav:hover { background: rgba(255, 255, 255, .24); }
+.tr-viewer-stage { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 0 64px 8px; overflow: hidden; }
+.tr-viewer-img {
+  max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .5); cursor: zoom-in; user-select: none; background: #fff;
+}
+.tr-viewer.zoom .tr-viewer-stage { overflow: auto; display: block; padding: 8px; }
+.tr-viewer.zoom .tr-viewer-img { max-width: none; max-height: none; width: auto; cursor: zoom-out; margin: auto; display: block; }
+.tr-viewer-msg { padding: 20px; border-radius: 12px; background: rgba(255, 255, 255, .1); }
+.tr-viewer-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 1;
+  width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 1.1rem;
+}
+.tr-viewer-nav.prev { left: 10px; }
+.tr-viewer-nav.next { right: 10px; }
+.tr-viewer.zoom .tr-viewer-nav { display: none; }
+.tr-viewer-hint { text-align: center; font-size: .78rem; opacity: .6; padding: 0 0 calc(12px + env(safe-area-inset-bottom)); }
+@media (max-width: 600px) {
+  .tr-viewer-stage { padding: 0 8px 8px; }
+  .tr-viewer-nav { top: auto; bottom: 14px; transform: none; }
+}
+[data-view], [data-view-src] { cursor: zoom-in; }
+
+/* thumbnails from TR.photoStrip */
+.tr-photo-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.tr-photo-thumb {
+  width: 64px; height: 64px; padding: 0; border-radius: 10px; overflow: hidden; cursor: zoom-in;
+  border: 1px solid var(--tr-border); background: var(--tr-surface-2);
+}
+.tr-photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tr-photo-thumb:hover, .tr-photo-thumb:focus-visible { border-color: var(--tr-primary-500); box-shadow: var(--tr-focus); }
+
+/* ---------------------------------------------------------- sidebars on phones
+   The drawer fills the visible screen (dvh: not hidden behind the browser's
+   address bar), scrolls smoothly on its own without dragging the page
+   behind it, and leaves room above the phone's home bar. */
+@media (max-width: 950px) {
+  html body .sidebar {
+    height: 100vh;
+    height: 100dvh;
+    max-width: 85vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .35) transparent;
+  }
+  html body .sidebar .nav { padding-bottom: 8px; }
+  html:has(.sidebar.open), html:has(.sidebar.open) body { overflow: hidden; }
+}
+@media (max-width: 950px) and (max-height: 760px) {
+  html body .sidebar .nav { gap: 4px; }
+  html body .sidebar .nav a { padding-top: 10px; padding-bottom: 10px; }
+  html body .sidebar .brand { margin-bottom: 16px; }
+}

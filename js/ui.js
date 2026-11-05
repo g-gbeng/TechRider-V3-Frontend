@@ -361,6 +361,102 @@
     }
   };
 
+  /* ------------------------------------------------------------ image viewer
+     Shows photos full screen on the same page (no new tab).
+       TR.viewImages(["a.jpg", "b.jpg"], 0, ["Front", "Back"])
+     Or mark images in HTML, and a click opens them:
+       <img src="a.jpg" data-view data-view-group="job-12" data-view-title="Front">
+     Images in the same group can be flicked through with the arrows, the
+     arrow keys or a swipe. Click the photo to zoom in, Esc to close. */
+  TR.viewImages = (srcs, start = 0, titles = []) => {
+    const list = (srcs || []).filter(Boolean);
+    if (!list.length) return;
+    let i = Math.max(0, Math.min(start, list.length - 1));
+    const opener = document.activeElement;
+    const box = document.createElement("div");
+    box.className = "tr-viewer";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", "Image viewer");
+    box.innerHTML = `
+      <div class="tr-viewer-bar">
+        <span class="tr-viewer-title"></span>
+        <span class="tr-viewer-count"></span>
+        <a class="tr-viewer-btn tr-viewer-open" target="_blank" rel="noopener" aria-label="Open full size in a new tab" title="Open full size"><i class="fas fa-up-right-from-square"></i></a>
+        <button type="button" class="tr-viewer-btn tr-viewer-close" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="tr-viewer-stage">
+        <button type="button" class="tr-viewer-nav prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+        <img class="tr-viewer-img" alt="">
+        <div class="tr-viewer-msg" hidden>This image could not be loaded.</div>
+        <button type="button" class="tr-viewer-nav next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="tr-viewer-hint">Tap the photo to zoom</div>`;
+    const img = box.querySelector(".tr-viewer-img");
+    const msg = box.querySelector(".tr-viewer-msg");
+    const show = () => {
+      box.classList.remove("zoom");
+      msg.hidden = true;
+      img.hidden = false;
+      img.src = list[i];
+      img.alt = titles[i] || `Image ${i + 1}`;
+      box.querySelector(".tr-viewer-title").textContent = titles[i] || "";
+      box.querySelector(".tr-viewer-count").textContent = list.length > 1 ? `${i + 1} / ${list.length}` : "";
+      box.querySelector(".tr-viewer-open").href = list[i];
+      box.querySelectorAll(".tr-viewer-nav").forEach((b) => { b.hidden = list.length < 2; });
+    };
+    const go = (d) => { if (list.length > 1) { i = (i + d + list.length) % list.length; show(); } };
+    const close = () => {
+      document.removeEventListener("keydown", onKey, true);
+      box.remove();
+      document.documentElement.classList.remove("tr-viewer-open-lock");
+      if (opener && opener.focus) opener.focus();
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    };
+    img.addEventListener("error", () => { img.hidden = true; msg.hidden = false; });
+    img.addEventListener("click", (e) => { e.stopPropagation(); box.classList.toggle("zoom"); });
+    box.addEventListener("click", (e) => {
+      if (e.target.closest(".tr-viewer-close")) return close();
+      if (e.target.closest(".prev")) return go(-1);
+      if (e.target.closest(".next")) return go(1);
+      if (e.target === box || e.target.classList.contains("tr-viewer-stage")) close();
+    });
+    let touchX = null;
+    box.addEventListener("touchstart", (e) => { touchX = e.touches.length === 1 && !box.classList.contains("zoom") ? e.touches[0].clientX : null; }, { passive: true });
+    box.addEventListener("touchend", (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+      touchX = null;
+    });
+    document.addEventListener("keydown", onKey, true);
+    document.documentElement.classList.add("tr-viewer-open-lock");
+    document.body.appendChild(box);
+    show();
+    setTimeout(() => box.querySelector(".tr-viewer-close").focus(), 30);
+  };
+
+  /* Small clickable thumbnails for a list of photos */
+  TR.photoStrip = (srcs, group, label = "Photo") => (srcs || []).length
+    ? `<div class="tr-photo-strip">${srcs.map((src, n) => `<button type="button" class="tr-photo-thumb" data-view-src="${esc(src)}" data-view-group="${esc(group)}" data-view-title="${esc(label)} ${n + 1}" aria-label="View ${esc(label.toLowerCase())} ${n + 1}"><img src="${esc(src)}" alt="" loading="lazy"></button>`).join("")}</div>`
+    : "";
+
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest && e.target.closest("[data-view], [data-view-src]");
+    if (!el || e.defaultPrevented) return;
+    e.preventDefault();
+    const srcOf = (x) => x.dataset.viewSrc || x.currentSrc || x.src || x.getAttribute("href");
+    const group = el.dataset.viewGroup;
+    const items = group
+      ? [...document.querySelectorAll("[data-view], [data-view-src]")].filter((x) => x.dataset.viewGroup === group)
+      : [el];
+    TR.viewImages(items.map(srcOf), Math.max(0, items.indexOf(el)), items.map((x) => x.dataset.viewTitle || x.alt || ""));
+  });
+
   TR.paymentsBanner = async (container, where = "afterbegin") => {
     if (!container || !window.TechRiderAPI) return;
     try {

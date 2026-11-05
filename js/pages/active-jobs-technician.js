@@ -148,6 +148,7 @@ ${esc(job.model)}
 <strong>Problem:</strong>
 ${job.faults && job.faults.length ? `<div class="fault-tags">${job.faults.map(f => `<span class="tr-pill">${esc(f)}</span>`).join('')}</div>` : '<br>'}
 ${esc(job.description)}
+${TR.photoStrip(job.images, 'job-' + job.id, 'Device photo')}
 </div>
 
 <div class="price-box">
