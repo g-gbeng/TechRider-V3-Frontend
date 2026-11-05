@@ -227,6 +227,67 @@
   }
 
   /* ----------------------------------------------------------
+     CLOSING THE TAB LOGS YOU OUT
+     Each open TechRider tab is listed in localStorage (and checks
+     in every 20 seconds). A tab that starts fresh (not a reload,
+     not a click to another TechRider page in the same tab) looks
+     at that list: if no other TechRider tab is open, the last one
+     was closed, so the old login is ended before anything shows.
+     Closing one of two open tabs keeps you logged in in the other.
+     The login cookie also has no expiry date, so closing the
+     whole browser ends it too.
+  ---------------------------------------------------------- */
+  const TAB_ID_KEY = "techrider_tab_id";
+  const OPEN_TABS_KEY = "techrider_open_tabs";
+  const TAB_STALE_MS = 3 * 60 * 1000; // a tab silent this long is treated as closed
+
+  const readTabs = () => {
+    try { return JSON.parse(localStorage.getItem(OPEN_TABS_KEY)) || {}; } catch (e) { return {}; }
+  };
+  const writeTabs = (tabs) => {
+    try { localStorage.setItem(OPEN_TABS_KEY, JSON.stringify(tabs)); } catch (e) { /* storage blocked */ }
+  };
+
+  let tabId = null;
+  let freshTab = false;
+  try {
+    tabId = sessionStorage.getItem(TAB_ID_KEY);
+    if (!tabId) {
+      freshTab = true;
+      tabId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      sessionStorage.setItem(TAB_ID_KEY, tabId);
+    }
+  } catch (e) { /* sessionStorage blocked: skip the tab check */ }
+
+  if (tabId) {
+    const now = Date.now();
+    const tabs = readTabs();
+    const otherTabOpen = Object.entries(tabs).some(([id, seen]) => id !== tabId && now - seen < TAB_STALE_MS);
+    const loggedIn = Object.values(SESSION_KEYS).some((key) => {
+      try { return !!localStorage.getItem(key); } catch (e) { return false; }
+    });
+    if (freshTab && !otherTabOpen && loggedIn) logout(); // clears the saved user right away, then the cookie
+
+    const checkIn = () => {
+      const list = readTabs();
+      const t = Date.now();
+      Object.keys(list).forEach((id) => { if (t - list[id] >= TAB_STALE_MS) delete list[id]; });
+      list[tabId] = t;
+      writeTabs(list);
+    };
+    checkIn();
+    setInterval(checkIn, 20000);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) checkIn(); });
+    window.addEventListener("pageshow", checkIn);
+    // leaving the page (closing the tab, or moving to another page in it)
+    window.addEventListener("pagehide", () => {
+      const list = readTabs();
+      delete list[tabId];
+      writeTabs(list);
+    });
+  }
+
+  /* ----------------------------------------------------------
      PAGE GUARD
      await requireRole("technician") returns the user, or sends
      them to the right page if they are not allowed here.
