@@ -457,6 +457,27 @@
     TR.viewImages(items.map(srcOf), Math.max(0, items.indexOf(el)), items.map((x) => x.dataset.viewTitle || x.alt || ""));
   });
 
+  /* ------------------------------------------------------------ login forms: nothing pre-filled
+     Fields inside <form data-no-autofill> (or marked data-no-autofill)
+     start empty every time the page opens, including when the browser
+     reopens a closed tab or goes "back" to it. Anything the browser's
+     password manager fills in by itself on opening is wiped; people can
+     still pick a saved login from the browser's list on purpose. */
+  function noAutofill() {
+    const fields = [...document.querySelectorAll("form[data-no-autofill] input:not([type=hidden]):not([type=checkbox]), input[data-no-autofill]")];
+    if (!fields.length) return;
+    // once the person taps or types in the form (or picks a saved login), leave it alone
+    let acted = false;
+    const act = (e) => { if (e.isTrusted) acted = true; };
+    fields.forEach((f) => ["pointerdown", "keydown", "focus"].forEach((ev) => f.addEventListener(ev, act)));
+    const clear = (force) => { if (force || !acted) fields.forEach((f) => { f.value = ""; }); };
+    clear(true);
+    [50, 300, 800, 1500].forEach((ms) => setTimeout(() => clear(false), ms));
+    window.addEventListener("pageshow", (e) => { if (e.persisted) { acted = false; clear(true); } });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", noAutofill);
+  else noAutofill();
+
   TR.paymentsBanner = async (container, where = "afterbegin") => {
     if (!container || !window.TechRiderAPI) return;
     try {
