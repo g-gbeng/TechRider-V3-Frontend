@@ -3,6 +3,19 @@
   "routes": [
     {
       "src": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "techrider.vercel.app"
+        }
+      ],
+      "headers": {
+        "X-Robots-Tag": "noindex"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
       "headers": {
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
