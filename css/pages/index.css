@@ -444,7 +444,7 @@ a { color: inherit; }
 }
 
 @media (max-width: 800px) {
-  .nav-links { display: none; }
+  .nav-links, .nav-actions .link-btn, .nav-actions .pill-btn { display: none; }
   .hero { grid-template-columns: 1fr; }
   .hero-card { transform: none; max-width: 440px; }
 }
@@ -538,3 +538,86 @@ html[data-theme="dark"] .pill-btn { background: var(--tr-primary-700); }
 html[data-theme="dark"] .safe { background: #0b0812; }
 html[data-theme="dark"] .zoneTag.island { background: rgba(14, 165, 233, .15); color: #7dd3fc; }
 .nav-actions .tr-theme-toggle { width: 34px; height: 34px; }
+
+/* ---------- work with us: what you'll need ---------- */
+.join-card { align-items: flex-start; }
+.join-card .go { align-self: center; }
+.join-need { font-weight: 600; color: var(--tr-heading) !important; margin-top: 12px !important; font-size: .82rem !important; }
+.join-docs { list-style: none; margin-top: 6px; display: grid; gap: 5px; }
+.join-docs li { font-size: .82rem; color: var(--tr-text-muted); display: flex; gap: 8px; align-items: baseline; line-height: 1.45; }
+.join-docs i { color: var(--tr-primary-500); width: 14px; text-align: center; font-size: .78rem; flex-shrink: 0; }
+.join-note { max-width: 760px; margin: 14px 0 0; font-size: .84rem; color: var(--tr-text-muted); line-height: 1.6; }
+.join-note i { color: var(--tr-primary-500); margin-right: 4px; }
+.join-note a { color: var(--tr-link); font-weight: 600; }
+
+/* jumping to a section from the top bar: stop the heading hiding under the sticky bar */
+.section { scroll-margin-top: 70px; }
+@media (max-width: 800px) {
+}
+
+
+/* ---------- phones: hamburger + dropdown ---------- */
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--tr-primary-100);
+  background: var(--tr-surface);
+  cursor: pointer;
+  padding: 0;
+}
+.menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tr-heading);
+  transition: transform .25s ease, opacity .2s ease;
+}
+.menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.menu-btn:focus-visible { outline: 2px solid var(--tr-primary-500); outline-offset: 2px; }
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px clamp(16px, 5vw, 64px) 16px;
+  background: var(--tr-surface);
+  border-bottom: 1px solid var(--tr-primary-100);
+  box-shadow: 0 14px 30px rgba(36, 0, 70, .12);
+  animation: trMenu .2s ease-out;
+}
+.mobile-menu[hidden] { display: none; }
+.mobile-menu > a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 4px;
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--tr-text);
+  border-bottom: 1px solid var(--tr-primary-100);
+}
+.mobile-menu > a i { width: 18px; text-align: center; color: var(--tr-primary-500); }
+.mobile-menu > a:hover, .mobile-menu > a:focus-visible { color: var(--tr-link); }
+.mobile-menu-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.mobile-menu-actions a { text-align: center; padding: 11px 14px; border-radius: 999px; font-size: .9rem; font-weight: 600; text-decoration: none; }
+.mobile-menu-actions .mm-login { border: 1px solid var(--tr-primary-200); color: var(--tr-link); }
+@keyframes trMenu { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 800px) { .menu-btn { display: inline-flex; } }
+@media (min-width: 801px) { .mobile-menu { display: none !important; } }
+
+html[data-theme="dark"] .menu-btn { border-color: var(--tr-border); }
+html[data-theme="dark"] .mobile-menu { background: #15101e; border-bottom-color: var(--tr-border); box-shadow: 0 14px 30px rgba(0, 0, 0, .5); }
+html[data-theme="dark"] .mobile-menu > a { border-bottom-color: var(--tr-border); }
+html[data-theme="dark"] .mobile-menu-actions .mm-login { border-color: var(--tr-border); }

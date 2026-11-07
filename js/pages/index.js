@@ -1,6 +1,35 @@
 /* Scripts for index.html: scroll animations
    Sections slide gently into view as they reach the screen. Nothing moves
    for visitors who ask their device for reduced motion (see the <head>). */
+/* Phones: the hamburger opens a dropdown with the section links, Log in and Get started */
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if(!btn || !menu) return;
+
+  const setOpen = (open) => {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(menu.hidden);
+  });
+  // picking a link closes the menu (the page then scrolls to that section)
+  menu.addEventListener('click', (e) => { if(e.target.closest('a')) setOpen(false); });
+  // tapping anywhere else closes it
+  document.addEventListener('click', (e) => {
+    if(!menu.hidden && !menu.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && !menu.hidden){ setOpen(false); btn.focus(); }
+  });
+  // turning the phone or widening the window back to the full top bar
+  window.matchMedia('(min-width: 801px)').addEventListener('change', (m) => { if(m.matches) setOpen(false); });
+})();
+
 (function(){
 
   const root = document.documentElement;

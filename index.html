@@ -40,7 +40,7 @@
   <header class="nav">
     <a href="index.html" class="brand">
       <span class="brand-icon"><img src="images/logo-mark-white.png" alt=""></span>
-      TechRider
+      <span class="brand-text">TechRider</span>
     </a>
     <nav class="nav-links" aria-label="Main">
       <a href="#how">How it works</a>
@@ -52,7 +52,22 @@
       <button data-theme-toggle aria-label="Theme"></button>
       <a href="#login" class="link-btn">Log in</a>
       <a href="signup-customer.html" class="pill-btn">Get started</a>
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+
+    <!-- phones: everything above folds into this dropdown -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Menu" hidden>
+      <a href="#how"><i class="fas fa-list-ol" aria-hidden="true"></i> How it works</a>
+      <a href="#safe"><i class="fas fa-shield-halved" aria-hidden="true"></i> Why it's safe</a>
+      <a href="#join"><i class="fas fa-briefcase" aria-hidden="true"></i> Work with us</a>
+      <a href="faq.html"><i class="fas fa-circle-question" aria-hidden="true"></i> FAQ</a>
+      <div class="mobile-menu-actions">
+        <a href="#login" class="mm-login">Log in</a>
+        <a href="signup-customer.html" class="pill-btn">Get started</a>
+      </div>
+    </nav>
   </header>
 
   <main>
@@ -170,12 +185,20 @@
     <section class="section" id="join">
       <h2>Work with TechRider</h2>
       <p class="section-lead">Earn with your skills or your bike. Customers come to you.</p>
+      <p class="join-note"><i class="fas fa-shield-halved"></i> Photos and documents can be JPG, PNG, WebP or PDF (your face photo must be an image), up to 5 MB each. <a href="faq.html#signup-documents">More in the FAQ</a></p>
       <div class="join-grid">
         <a href="signup-technician.html" class="join-card">
           <i class="fas fa-screwdriver-wrench"></i>
           <div>
             <h3>Technicians</h3>
-            <p>Get repair jobs near you, set your price and build your rating.</p>
+            <p>Get repair jobs, set your price and build your rating.</p>
+            <p class="join-need">You'll need:</p>
+            <ul class="join-docs">
+              <li><i class="fas fa-camera"></i> A clear photo of your face</li>
+              <li><i class="fas fa-id-card"></i> Government ID (national ID, driver's licence or passport)</li>
+              <li><i class="fas fa-file-contract"></i> Business registration or licence</li>
+              <li><i class="fas fa-building-columns"></i> Bank account for payouts</li>
+            </ul>
           </div>
           <i class="fas fa-arrow-right go"></i>
         </a>
@@ -184,6 +207,14 @@
           <div>
             <h3>Riders</h3>
             <p>Collect and deliver devices between customers and technicians.</p>
+            <p class="join-need">You'll need:</p>
+            <ul class="join-docs">
+              <li><i class="fas fa-camera"></i> A clear photo of your face</li>
+              <li><i class="fas fa-id-card"></i> Valid driver's licence</li>
+              <li><i class="fas fa-passport"></i> Government ID (national ID or international passport)</li>
+              <li><i class="fas fa-motorcycle"></i> Vehicle type, brand and plate number</li>
+              <li><i class="fas fa-building-columns"></i> Bank account for payouts</li>
+            </ul>
           </div>
           <i class="fas fa-arrow-right go"></i>
         </a>
