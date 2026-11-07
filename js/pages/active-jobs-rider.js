@@ -311,7 +311,7 @@ document.getElementById('handoverError').textContent = job.handoverLocked
 ? 'Too many wrong codes. Call the TechRider admin to unlock this delivery.'
 : '';
 document.getElementById('handoverHelp').textContent =
-`Ask ${job.to.name} for the 4-digit code in their TechRider app, once they have the device.`;
+`Ask ${job.to.name} to read out the 4-digit code in their TechRider app. Enter it before you hand over the device.`;
 
 document
 .getElementById('completeModal')

@@ -171,7 +171,7 @@ ${job.rider.phone ? `· <a href="tel:${esc(job.rider.phone)}">${esc(job.rider.ph
 ${job.rider.handoverCode ? `
 <div class="tr-handover">
 <div class="code" aria-label="Handover code ${esc(job.rider.handoverCode.split('').join(' '))}">${esc(job.rider.handoverCode)}</div>
-<p><strong>Handover code.</strong> Read it to the rider only once the device is in your hands.</p>
+<p><strong>Handover code.</strong> When the rider arrives, read it out to them. They'll enter it, then hand you the device.</p>
 </div>` : ''}
 ${TR.pickupCheck(job)}`
 : ''

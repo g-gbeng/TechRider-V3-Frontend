@@ -175,7 +175,7 @@ function riderBlock(repair){
       ${rider.handoverCode ? `
         <div class="tr-handover">
           <div class="code" aria-label="Handover code ${esc(rider.handoverCode.split('').join(' '))}">${esc(rider.handoverCode)}</div>
-          <p><strong>Your handover code.</strong> Only read it out to the rider once your device is in your hands.</p>
+          <p><strong>Your handover code.</strong> When the rider arrives, read it out to them. They'll enter it, then hand you your device. Don't share it before the rider is with you.</p>
         </div>` : ''}
       ${TR.pickupCheck(repair)}
     </div>`;
