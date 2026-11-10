@@ -23,6 +23,24 @@
   try { history.replaceState(history.state, "", clean + location.search + location.hash); } catch (e) { /* keep the .html address */ }
 })();
 
+/* Vercel Web Analytics: page views and visitors, shown under Analytics in the
+   Vercel dashboard. Cookie-free. Only runs on the live domain (not local
+   testing or the techrider.vercel.app address). Anything after "?" or "#"
+   is removed before sending, so tokens in links (password resets, payment
+   references) never reach the stats. */
+(function () {
+  if (location.hostname !== "techrider.ng") return;
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.va("beforeSend", function (event) {
+    if (event && event.url) event.url = String(event.url).split(/[?#]/)[0];
+    return event;
+  });
+  var s = document.createElement("script");
+  s.defer = true;
+  s.src = "/_vercel/insights/script.js";
+  (document.head || document.documentElement).appendChild(s);
+})();
+
 (function () {
   const KEY = "techrider_theme";
   const CHOICES = ["system", "light", "dark"];
