@@ -258,7 +258,7 @@ function prepareUpload(file){
     );
 
     return Promise.race([
-        compressImage(file).then(result => result || file),
+        (window.TR && TR.shrinkImage ? TR.shrinkImage(file, { maxSide: 1600, quality: 0.85 }) : compressImage(file)).then(result => result || file),
         timeout
     ]).catch(() => file);
 
@@ -297,7 +297,11 @@ function setupPreview(
 
         }
 
-        filename.textContent=file.name;
+        const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+
+        filename.innerHTML = (isPdf ? '<i class="fas fa-file-pdf" aria-hidden="true"></i> ' : "") + TR.esc(file.name);
+
+        image.style.display = isPdf ? "none" : "";
 
         if(file.type.startsWith("image")){
 

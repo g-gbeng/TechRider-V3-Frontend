@@ -11,6 +11,7 @@
    TR.empty({...})               empty-state HTML
    TR.stars(rating, count?)      star rating HTML
    TR.setAvatar(el, user)        shows the user's photo in an initials circle
+   await TR.shrinkImage(file, {maxSide, quality})  smaller JPEG for uploading
 ========================================================== */
 (function () {
   const TR = (window.TR = window.TR || {});
@@ -19,6 +20,40 @@
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   TR.esc = esc;
+
+  /* ------------------------------------------------------------ photo shrinking
+     await TR.shrinkImage(file, { maxSide, quality })  -> a smaller JPEG, or the
+     original file when it isn't a photo (PDFs pass straight through), can't be
+     read by this browser, is already small, or shrinking takes over 8 seconds.
+     Keeps uploads light so they send faster on mobile data and take far less
+     storage, with no visible difference on screen. */
+  TR.shrinkImage = function shrinkImage(file, { maxSide = 1600, quality = 0.85 } = {}) {
+    if (!file || !/^image\/(jpeg|png|webp)$/i.test(file.type || "")) return Promise.resolve(file);
+    const work = new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const w = img.naturalWidth, h = img.naturalHeight;
+        if (!w || !h) return resolve(file);
+        const scale = Math.min(1, maxSide / Math.max(w, h));
+        if (scale === 1 && file.size < 400 * 1024) return resolve(file); // already small
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(w * scale);
+        canvas.height = Math.round(h * scale);
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff"; // transparent PNG areas become white, not black
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => resolve(blob && blob.size < file.size ? blob : file), "image/jpeg", quality);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(file), 8000));
+    return Promise.race([work, timeout]).catch(() => file);
+  };
 
   const onReady = (fn) => (document.body ? fn() : document.addEventListener("DOMContentLoaded", fn));
 

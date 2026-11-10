@@ -147,9 +147,11 @@ if(!file) return;
         const formData =
           new FormData();
 
-        formData.append('avatar', file);
-
-        TechRiderAPI.upload('/me/avatar', formData)
+        TR.shrinkImage(file, { maxSide: 800, quality: 0.85 })
+          .then((photo) => {
+            formData.append('avatar', photo, photo === file ? file.name : 'avatar.jpg');
+            return TechRiderAPI.upload('/me/avatar', formData);
+          })
           .then(({ user }) => {
 
             TechRiderAPI.cacheSession(user);

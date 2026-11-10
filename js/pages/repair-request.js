@@ -168,7 +168,7 @@ function compressImage(file){
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        const MAX_SIZE = 900;
+        const MAX_SIZE = 1280;
         let { width, height } = img;
         if(width > height && width > MAX_SIZE){ height *= MAX_SIZE / width; width = MAX_SIZE; }
         else if(height >= width && height > MAX_SIZE){ width *= MAX_SIZE / height; height = MAX_SIZE; }
@@ -176,7 +176,7 @@ function compressImage(file){
         canvas.width = width;
         canvas.height = height;
         canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL("image/jpeg", 0.7));
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
       };
       img.onerror = reject;
       img.src = e.target.result;
